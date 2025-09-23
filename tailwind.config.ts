@@ -13,6 +13,21 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['Cormorant Garamond', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-noor': 'var(--gradient-noor)',
+        'gradient-hero': 'var(--gradient-hero)',
+      },
+      boxShadow: {
+        'luxury': 'var(--shadow-luxury)',
+        'elegant': 'var(--shadow-elegant)',
+      },
+      transitionTimingFunction: {
+        'luxury': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
