@@ -6,6 +6,7 @@ import { TrustIndicators } from "@/components/TrustIndicators";
 import { Impact } from "@/components/Impact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
+import { EmailCaptureModal } from "@/components/EmailCaptureModal";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
@@ -23,6 +24,7 @@ const Index = () => {
         <Newsletter />
       </main>
       <Footer />
+      <EmailCaptureModal />
     </div>
   );
 };

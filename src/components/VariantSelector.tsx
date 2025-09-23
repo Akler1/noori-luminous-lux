@@ -1,0 +1,194 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ShopifyProduct, ShopifyVariant } from "@/types/shopify";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface VariantSelectorProps {
+  product: ShopifyProduct;
+  selectedVariant: ShopifyVariant | null;
+  onVariantChange: (variant: ShopifyVariant) => void;
+  className?: string;
+}
+
+export const VariantSelector = ({
+  product,
+  selectedVariant,
+  onVariantChange,
+  className = ""
+}: VariantSelectorProps) => {
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+
+  // Initialize selected options from selected variant
+  useEffect(() => {
+    if (selectedVariant) {
+      const options: Record<string, string> = {};
+      selectedVariant.selectedOptions.forEach(option => {
+        options[option.name] = option.value;
+      });
+      setSelectedOptions(options);
+    }
+  }, [selectedVariant]);
+
+  // Find matching variant when options change
+  useEffect(() => {
+    const matchingVariant = product.variants.edges.find(({ node }) =>
+      node.selectedOptions.every(option =>
+        selectedOptions[option.name] === option.value
+      )
+    )?.node;
+
+    if (matchingVariant && matchingVariant.id !== selectedVariant?.id) {
+      onVariantChange(matchingVariant);
+    }
+  }, [selectedOptions, product.variants.edges, selectedVariant, onVariantChange]);
+
+  const handleOptionChange = (optionName: string, value: string) => {
+    setSelectedOptions(prev => ({
+      ...prev,
+      [optionName]: value
+    }));
+  };
+
+  // Check if an option combination is available
+  const isOptionAvailable = (optionName: string, value: string): boolean => {
+    const testOptions = { ...selectedOptions, [optionName]: value };
+    
+    return product.variants.edges.some(({ node }) =>
+      node.availableForSale &&
+      node.selectedOptions.every(option =>
+        testOptions[option.name] === option.value
+      )
+    );
+  };
+
+  // Get variant stock for an option
+  const getOptionStock = (optionName: string, value: string): number => {
+    const testOptions = { ...selectedOptions, [optionName]: value };
+    
+    const variant = product.variants.edges.find(({ node }) =>
+      node.selectedOptions.every(option =>
+        testOptions[option.name] === option.value
+      )
+    )?.node;
+
+    return variant?.quantityAvailable || 0;
+  };
+
+  return (
+    <div className={`space-y-6 ${className}`}>
+      {product.options.map((option) => (
+        <motion.div
+          key={option.id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-3"
+        >
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium">
+              {option.name}
+            </label>
+            {selectedOptions[option.name] && (
+              <Badge variant="secondary" className="text-xs">
+                {selectedOptions[option.name]}
+              </Badge>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <AnimatePresence mode="popLayout">
+              {option.values.map((value) => {
+                const isSelected = selectedOptions[option.name] === value;
+                const isAvailable = isOptionAvailable(option.name, value);
+                const stock = getOptionStock(option.name, value);
+                
+                return (
+                  <motion.div
+                    key={value}
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ scale: isAvailable ? 1.02 : 1 }}
+                    whileTap={{ scale: isAvailable ? 0.98 : 1 }}
+                  >
+                    <Button
+                      variant={isSelected ? "default" : "outline"}
+                      className={`
+                        relative transition-all duration-200
+                        ${isSelected ? "btn-hero" : "btn-ghost-luxury"}
+                        ${!isAvailable ? "opacity-50 cursor-not-allowed" : ""}
+                        ${stock > 0 && stock <= 5 ? "border-amber-500/50" : ""}
+                      `}
+                      onClick={() => isAvailable && handleOptionChange(option.name, value)}
+                      disabled={!isAvailable}
+                    >
+                      {value}
+                      
+                      {/* Low stock indicator */}
+                      {stock > 0 && stock <= 5 && isAvailable && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                      )}
+                      
+                      {/* Out of stock indicator */}
+                      {!isAvailable && (
+                        <div className="absolute inset-0 bg-background/80 flex items-center justify-center rounded-lg">
+                          <span className="text-xs text-muted-foreground">Out of Stock</span>
+                        </div>
+                      )}
+                    </Button>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          {/* Stock information */}
+          {selectedOptions[option.name] && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="text-xs text-muted-foreground"
+            >
+              {(() => {
+                const stock = getOptionStock(option.name, selectedOptions[option.name]);
+                if (stock === 0) return "Out of stock";
+                if (stock <= 5) return `Only ${stock} left in stock`;
+                if (stock <= 10) return `${stock} in stock`;
+                return "In stock";
+              })()}
+            </motion.div>
+          )}
+        </motion.div>
+      ))}
+
+      {/* Selected variant info */}
+      {selectedVariant && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-muted/30 rounded-lg p-4"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="font-medium text-sm">{selectedVariant.title}</div>
+              <div className="text-xs text-muted-foreground">
+                SKU: {selectedVariant.sku}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-lg font-display font-normal text-accent">
+                CAD ${selectedVariant.price.amount}
+              </div>
+              {selectedVariant.compareAtPrice && (
+                <div className="text-sm text-muted-foreground line-through">
+                  CAD ${selectedVariant.compareAtPrice.amount}
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+};

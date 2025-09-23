@@ -1,0 +1,291 @@
+// Shopify Storefront API Client for Noori
+
+import { ShopifyProduct, ShopifyCart, ShopifyVariant } from '@/types/shopify';
+
+// Mock Shopify client - replace with real Storefront API in production
+class ShopifyClient {
+  private mockProducts: ShopifyProduct[] = [
+    {
+      id: 'gid://shopify/Product/1',
+      handle: 'diamond-stud-earrings',
+      title: 'Diamond Stud Earrings',
+      description: 'Timeless elegance meets modern ethics. Our lab-grown diamond studs offer the same brilliance and fire as mined diamonds.',
+      priceRange: {
+        minVariantPrice: { amount: '890.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '1490.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1200.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/1',
+              url: '/src/assets/earrings-hero.jpg',
+              altText: 'Diamond Stud Earrings',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/1',
+              title: 'Sterling Silver / Round Brilliant',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Sterling Silver' },
+                { name: 'Cut', value: 'Round Brilliant' }
+              ],
+              price: { amount: '890.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '1200.00', currencyCode: 'CAD' },
+              quantityAvailable: 10,
+              sku: 'NOORI-STUD-SS-RB',
+              model3d: '/models/earrings-silver-round.glb'
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/2',
+              title: '14K Gold / Round Brilliant',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Cut', value: 'Round Brilliant' }
+              ],
+              price: { amount: '1490.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-STUD-14K-RB',
+              model3d: '/models/earrings-gold-round.glb'
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/1',
+          name: 'Metal',
+          values: ['Sterling Silver', '9K Gold', '14K Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/2',
+          name: 'Cut',
+          values: ['Round Brilliant', 'Princess']
+        }
+      ],
+      reviews: { rating: 5, count: 124 }
+    },
+    {
+      id: 'gid://shopify/Product/2',
+      handle: 'bezel-necklace',
+      title: 'Bezel-less Necklace',
+      description: 'Refined minimalism showcasing a single lab-grown diamond in perfect suspension.',
+      priceRange: {
+        minVariantPrice: { amount: '1200.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2450.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1600.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/2',
+              url: '/src/assets/necklace-hero.jpg',
+              altText: 'Bezel-less Necklace',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3',
+              title: 'Sterling Silver / 1 ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Sterling Silver' },
+                { name: 'Size', value: '1 ct' }
+              ],
+              price: { amount: '1200.00', currencyCode: 'CAD' },
+              quantityAvailable: 8,
+              sku: 'NOORI-NECK-SS-1CT',
+              model3d: '/models/necklace-silver-1ct.glb'
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/3',
+          name: 'Metal',
+          values: ['Sterling Silver', '9K Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/4',
+          name: 'Size',
+          values: ['1 ct', '2 ct']
+        }
+      ],
+      reviews: { rating: 5, count: 89 }
+    },
+    {
+      id: 'gid://shopify/Product/3',
+      handle: 'solitaire-bracelet',
+      title: 'Solitaire Bracelet',
+      description: 'Modern heirloom design featuring single or five solitaire lab-grown diamonds.',
+      priceRange: {
+        minVariantPrice: { amount: '1190.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2890.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1590.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/3',
+              url: '/src/assets/bracelet-hero.jpg',
+              altText: 'Solitaire Bracelet',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/4',
+              title: 'Sterling Silver / Single Solitaire',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Sterling Silver' },
+                { name: 'Style', value: 'Single Solitaire' }
+              ],
+              price: { amount: '1190.00', currencyCode: 'CAD' },
+              quantityAvailable: 12,
+              sku: 'NOORI-BRAC-SS-SINGLE',
+              model3d: '/models/bracelet-silver-single.glb'
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/5',
+          name: 'Metal',
+          values: ['Sterling Silver', '9K Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/6',
+          name: 'Style',
+          values: ['Single Solitaire', 'Five-Solitaire']
+        }
+      ],
+      reviews: { rating: 5, count: 67 }
+    }
+  ];
+
+  async getProducts(): Promise<ShopifyProduct[]> {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return this.mockProducts;
+  }
+
+  async getProduct(handle: string): Promise<ShopifyProduct | null> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return this.mockProducts.find(p => p.handle === handle) || null;
+  }
+
+  async createCart(): Promise<ShopifyCart> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    return {
+      id: 'gid://shopify/Cart/' + Math.random().toString(36).substr(2, 9),
+      checkoutUrl: 'https://checkout.shopify.com/mock',
+      totalQuantity: 0,
+      lines: { edges: [] },
+      cost: {
+        totalAmount: { amount: '0.00', currencyCode: 'CAD' },
+        subtotalAmount: { amount: '0.00', currencyCode: 'CAD' }
+      },
+      discountCodes: []
+    };
+  }
+
+  async addToCart(cartId: string, variantId: string, quantity: number): Promise<ShopifyCart> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Mock cart with added item
+    const variant = this.findVariantById(variantId);
+    if (!variant) throw new Error('Variant not found');
+
+    return {
+      id: cartId,
+      checkoutUrl: 'https://checkout.shopify.com/mock',
+      totalQuantity: quantity,
+      lines: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/CartLine/1',
+              quantity,
+              merchandise: {
+                id: variantId,
+                title: variant.title,
+                product: {
+                  id: 'gid://shopify/Product/1',
+                  title: 'Diamond Stud Earrings',
+                  handle: 'diamond-stud-earrings'
+                },
+                selectedOptions: variant.selectedOptions,
+                image: variant.image
+              },
+              cost: {
+                totalAmount: {
+                  amount: (parseFloat(variant.price.amount) * quantity).toFixed(2),
+                  currencyCode: 'CAD'
+                },
+                subtotalAmount: {
+                  amount: (parseFloat(variant.price.amount) * quantity).toFixed(2),
+                  currencyCode: 'CAD'
+                }
+              }
+            }
+          }
+        ]
+      },
+      cost: {
+        totalAmount: {
+          amount: (parseFloat(variant.price.amount) * quantity).toFixed(2),
+          currencyCode: 'CAD'
+        },
+        subtotalAmount: {
+          amount: (parseFloat(variant.price.amount) * quantity).toFixed(2),
+          currencyCode: 'CAD'
+        }
+      },
+      discountCodes: []
+    };
+  }
+
+  private findVariantById(variantId: string): ShopifyVariant | null {
+    for (const product of this.mockProducts) {
+      const variant = product.variants.edges.find(v => v.node.id === variantId);
+      if (variant) return variant.node;
+    }
+    return null;
+  }
+}
+
+export const shopify = new ShopifyClient();
