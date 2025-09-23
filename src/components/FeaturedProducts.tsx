@@ -1,4 +1,4 @@
-import { RotatingProductCarousel } from "./RotatingProductCarousel";
+import { ProductCard } from "./ProductCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { ParallaxSection, RevealOnScroll } from "@/components/ScrollAnimations";
@@ -52,14 +52,27 @@ export const FeaturedProducts = () => {
           </p>
         </RevealOnScroll>
 
-        {/* 3D Rotating Product Carousel */}
-        <RevealOnScroll>
-          <RotatingProductCarousel 
-            products={products}
-            autoRotate={true}
-            rotationSpeed={4000}
-          />
-        </RevealOnScroll>
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {products.map((product, index) => (
+            <RevealOnScroll
+              key={product.id}
+              delay={index * 0.2}
+              direction="up"
+            >
+              <ProductCard
+                name={product.name}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                image={product.image}
+                rating={product.rating}
+                reviewCount={product.reviewCount}
+                onAddToCart={() => console.log(`Added ${product.name} to cart`)}
+                onToggleWishlist={() => console.log(`Toggled wishlist for ${product.name}`)}
+              />
+            </RevealOnScroll>
+          ))}
+        </div>
 
         {/* View All Button */}
         <RevealOnScroll className="text-center mt-12">
