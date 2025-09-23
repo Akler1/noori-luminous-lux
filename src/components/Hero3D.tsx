@@ -20,7 +20,11 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
     };
   }, []);
 
-  useHeroScroll({ group: ctx.group, camera: ctx.camera, pinPct: config?.scrollPinPct ?? 1.3, reducedMotion });
+  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const forceMotion = Boolean(params && (params.get('motion') === 'on' || params.get('forceMotion') === '1' || params.get('rm') === '0'));
+  const effectiveReducedMotion = forceMotion ? false : reducedMotion;
+
+  useHeroScroll({ group: ctx.group, camera: ctx.camera, pinPct: config?.scrollPinPct ?? 1.3, reducedMotion: effectiveReducedMotion });
 
   const handleReady = ({ camera, group }: HeroCanvasReady) => {
     setCtx({ camera, group });
@@ -32,7 +36,7 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
     }
   };
 
-  if (reducedMotion) {
+  if (effectiveReducedMotion) {
     return (
       <div className="absolute inset-0" aria-hidden="true">
         <picture>
@@ -45,6 +49,6 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
   if (!config) return null;
 
   return (
-    <HeroCanvas mode={config.mode === 'product' ? 'proxy' : config.mode} config={config} reducedMotion={reducedMotion} onReady={handleReady} />
+    <HeroCanvas mode={config.mode === 'product' ? 'proxy' : config.mode} config={config} reducedMotion={effectiveReducedMotion} onReady={handleReady} />
   );
 };
