@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -71,8 +71,8 @@ const ProductDetail = () => {
 
   // Get cross-sell products (other products in capsule)
   const crossSellProducts = [
-    { name: "Bezel-less Necklace", price: "CAD $1,450", image: "/src/assets/necklace-hero.jpg" },
-    { name: "Solitaire Bracelet", price: "CAD $1,190", image: "/src/assets/bracelet-hero.jpg" }
+    { name: "Bezel-less Necklace", handle: "bezel-necklace", price: "CAD $1,450", image: "/src/assets/necklace-hero.jpg" },
+    { name: "Solitaire Bracelet", handle: "solitaire-bracelet", price: "CAD $1,190", image: "/src/assets/bracelet-hero.jpg" }
   ].filter(p => p.name !== product?.title);
 
   // Prepare images for carousel
@@ -114,9 +114,9 @@ const ProductDetail = () => {
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 pt-24 pb-8">
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <a href="/" className="hover:text-accent transition-colors">Home</a>
+          <Link to="/" className="hover:text-accent transition-colors">Home</Link>
           <span>/</span>
-          <a href="/capsule" className="hover:text-accent transition-colors">Capsule</a>
+          <Link to="/capsule" className="hover:text-accent transition-colors">Capsule</Link>
           <span>/</span>
           <span className="text-foreground">{product.title}</span>
         </nav>
@@ -380,9 +380,11 @@ const ProductDetail = () => {
                   <h3 className="font-display text-xl font-normal mb-2">{item.name}</h3>
                   <div className="flex items-center justify-between">
                     <span className="text-accent font-medium">{item.price}</span>
-                    <Button size="sm" className="btn-hero group">
-                      View Details
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <Button size="sm" className="btn-hero group" asChild>
+                      <Link to={`/product/${(item as any).handle}`}>
+                        View Details
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
                     </Button>
                   </div>
                 </motion.div>

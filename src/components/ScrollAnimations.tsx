@@ -25,7 +25,7 @@ export const ParallaxSection = ({
     <motion.div
       ref={ref}
       style={{ y: smoothY }}
-      className={className}
+      className={`relative ${className}`}
     >
       {children}
     </motion.div>

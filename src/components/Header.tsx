@@ -3,6 +3,7 @@ import { ShoppingBag, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,8 +19,8 @@ export const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "Shop", href: "#shop" },
-    { name: "About", href: "#about" },
+    { name: "Shop", href: "/capsule" },
+    { name: "About", href: "/policies" },
     { name: "Impact", href: "#impact" },
     { name: "Journal", href: "#journal" },
   ];
@@ -38,9 +39,18 @@ export const Header = () => {
               </h1>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              item.href.startsWith('/') ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  {item.name}
+                </Link>
+              ) : (
                 <a
                   key={item.name}
                   href={item.href}
@@ -48,8 +58,9 @@ export const Header = () => {
                 >
                   {item.name}
                 </a>
-              ))}
-            </nav>
+              )
+            ))}
+          </nav>
 
             {/* Cart & Mobile Menu */}
             <div className="flex items-center space-x-4">
@@ -79,14 +90,25 @@ export const Header = () => {
             <div className="md:hidden py-4 border-t border-border/50">
               <nav className="flex flex-col space-y-4">
                 {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-sm font-medium py-2 transition-colors hover:text-accent"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
+                  item.href.startsWith('/') ? (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="text-sm font-medium py-2 transition-colors hover:text-accent"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="text-sm font-medium py-2 transition-colors hover:text-accent"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  )
                 ))}
               </nav>
             </div>

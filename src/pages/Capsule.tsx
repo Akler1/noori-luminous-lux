@@ -9,6 +9,7 @@ import { shopify } from "@/lib/shopify";
 import { ShopifyProduct } from "@/types/shopify";
 import { useCartActions } from "@/hooks/useCart";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const Capsule = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
@@ -159,9 +160,11 @@ const Capsule = () => {
                         <Button
                           variant="outline"
                           className="bg-background/90 backdrop-blur-sm hover:bg-background w-full"
-                          onClick={() => window.location.href = `/product/${product.handle}`}
+                          asChild
                         >
-                          View Details
+                          <Link to={`/product/${product.handle}`}>
+                            View Details
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -209,10 +212,12 @@ const Capsule = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => window.location.href = `/product/${product.handle}`}
+                        asChild
                         className="opacity-0 group-hover:opacity-100 transition-opacity"
                       >
-                        <ArrowRight className="h-4 w-4" />
+                        <Link to={`/product/${product.handle}`}>
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
                       </Button>
                     </div>
                   </div>

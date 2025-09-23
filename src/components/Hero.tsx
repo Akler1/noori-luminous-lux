@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-diamonds.jpg";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -34,12 +35,14 @@ export const Hero = () => {
         </div>
 
         <div className="reveal-up revealed flex flex-col sm:flex-row gap-4 justify-center items-center" style={{ animationDelay: "0.4s" }}>
-          <Button className="btn-hero group">
-            Shop the Capsule
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+          <Button className="btn-hero group" asChild>
+            <Link to="/capsule">
+              Shop the Capsule
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </Button>
-          <Button variant="outline" className="btn-ghost-luxury">
-            Learn About Our Diamonds
+          <Button variant="outline" className="btn-ghost-luxury" asChild>
+            <Link to="/policies#care">Learn About Our Diamonds</Link>
           </Button>
         </div>
 
