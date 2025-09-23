@@ -28,6 +28,29 @@ export function useHeroScroll({ group, camera, pinPct, reducedMotion }: UseHeroS
   useEffect(() => {
     if (!group || !camera || reducedMotion) return;
 
+    // Collect materials for opacity fade and shader intensity controls
+    const materials: any[] = [];
+    const intensityUniforms: Array<{ value: number }> = [];
+    group.traverse((obj: THREE.Object3D) => {
+      const mesh = obj as any;
+      const mat = mesh.material as any;
+      if (mat) {
+        const mats = Array.isArray(mat) ? mat : [mat];
+        mats.forEach((m: any) => {
+          if (typeof m.opacity === 'number') {
+            m.transparent = true;
+            m.opacity = 0;
+            materials.push(m);
+          }
+          if (m.uniforms && m.uniforms.intensity && typeof m.uniforms.intensity.value === 'number') {
+            // Start subtle, ramp up mid-scroll
+            m.uniforms.intensity.value = 0.6;
+            intensityUniforms.push(m.uniforms.intensity);
+          }
+        });
+      }
+    });
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#hero',
@@ -52,16 +75,8 @@ export function useHeroScroll({ group, camera, pinPct, reducedMotion }: UseHeroS
         { duration: 0.15, x: 1.0, y: 1.0, z: 1.0, ease: 'power2.inOut' },
         0,
       )
-      .fromTo(
-        group,
-        { visible: true, userData: { opacity: 0 } },
-        {
-          duration: 0.15,
-          userData: { opacity: 1 },
-          ease: 'power2.inOut',
-        },
-        0,
-      )
+      .to(materials as any, { duration: 0.15, opacity: 1, ease: 'power2.inOut' }, 0)
+      .to(intensityUniforms as any, { duration: 0.35, value: 1.2, ease: 'power2.inOut' }, 0.15)
 
       // 0.15–0.50: follow S-curve; camera yaw −25°→−10°; roll +4°
       .to(group.position, {

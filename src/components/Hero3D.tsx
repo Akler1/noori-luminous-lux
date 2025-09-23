@@ -8,20 +8,22 @@ interface Hero3DProps { reducedMotion: boolean; }
 
 export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
   const [config, setConfig] = useState<HeroConfig | null>(null);
-  const groupRef = useRef<THREE.Group | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const [ctx, setCtx] = useState<{ group: THREE.Group | null; camera: THREE.PerspectiveCamera | null }>({ group: null, camera: null });
 
   useEffect(() => {
     let mounted = true;
-    fetchHeroConfig().then((c) => { if (mounted) setConfig(c); });
-    return () => { mounted = false; };
+    fetchHeroConfig().then((c) => {
+      if (mounted) setConfig(c);
+    });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  useHeroScroll({ group: groupRef.current, camera: cameraRef.current, pinPct: config?.scrollPinPct ?? 1.3, reducedMotion });
+  useHeroScroll({ group: ctx.group, camera: ctx.camera, pinPct: config?.scrollPinPct ?? 1.3, reducedMotion });
 
   const handleReady = ({ camera, group }: HeroCanvasReady) => {
-    cameraRef.current = camera;
-    groupRef.current = group;
+    setCtx({ camera, group });
     // Fire analytics on first ready
     if ('gtag' in window) {
       (window as any).gtag('event', 'view_promotion', {
