@@ -1,7 +1,8 @@
-import { ProductCard } from "./ProductCard";
+import { RotatingProductCarousel } from "./RotatingProductCarousel";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { ParallaxSection, RevealOnScroll } from "@/components/ScrollAnimations";
+import { Link } from "react-router-dom";
 import earringsImage from "@/assets/earrings-hero.jpg";
 import necklaceImage from "@/assets/necklace-hero.jpg";
 import braceletImage from "@/assets/bracelet-hero.jpg";
@@ -51,33 +52,22 @@ export const FeaturedProducts = () => {
           </p>
         </RevealOnScroll>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {products.map((product, index) => (
-            <RevealOnScroll
-              key={product.id}
-              delay={index * 0.2}
-              direction="up"
-            >
-              <ProductCard
-                name={product.name}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                image={product.image}
-                rating={product.rating}
-                reviewCount={product.reviewCount}
-                onAddToCart={() => console.log(`Added ${product.name} to cart`)}
-                onToggleWishlist={() => console.log(`Toggled wishlist for ${product.name}`)}
-              />
-            </RevealOnScroll>
-          ))}
-        </div>
+        {/* 3D Rotating Product Carousel */}
+        <RevealOnScroll>
+          <RotatingProductCarousel 
+            products={products}
+            autoRotate={true}
+            rotationSpeed={4000}
+          />
+        </RevealOnScroll>
 
         {/* View All Button */}
-        <RevealOnScroll className="text-center">
-          <Button className="btn-hero group">
-            View All Products
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+        <RevealOnScroll className="text-center mt-12">
+          <Button className="btn-hero group" asChild>
+            <Link to="/capsule">
+              View All Products
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </Button>
         </RevealOnScroll>
       </div>
