@@ -75,12 +75,34 @@ const ProductDetail = () => {
     { name: "Solitaire Bracelet", handle: "solitaire-bracelet", price: "CAD $1,190", image: "/src/assets/bracelet-hero.jpg" }
   ].filter(p => p.name !== product?.title);
 
-  // Prepare images for carousel
-  const carouselImages = product?.images.edges.map(({ node }) => ({
-    id: node.id,
-    url: node.url,
-    altText: node.altText
-  })) || [];
+  // Prepare images for carousel - update based on selected variant
+  const carouselImages = (() => {
+    if (selectedVariant?.image) {
+      // Show variant-specific image first, then other product images
+      const variantImage = {
+        id: selectedVariant.image.id,
+        url: selectedVariant.image.url,
+        altText: selectedVariant.image.altText
+      };
+      
+      const otherImages = product?.images.edges
+        .filter(({ node }) => node.id !== selectedVariant.image?.id)
+        .map(({ node }) => ({
+          id: node.id,
+          url: node.url,
+          altText: node.altText
+        })) || [];
+      
+      return [variantImage, ...otherImages];
+    }
+    
+    // Fallback to all product images
+    return product?.images.edges.map(({ node }) => ({
+      id: node.id,
+      url: node.url,
+      altText: node.altText
+    })) || [];
+  })();
 
   if (isLoading) {
     return (

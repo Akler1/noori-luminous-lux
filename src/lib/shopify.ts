@@ -23,7 +23,16 @@ class ShopifyClient {
             node: {
               id: 'gid://shopify/ProductImage/1',
               url: '/src/assets/earrings-hero.jpg',
-              altText: 'Diamond Stud Earrings',
+              altText: 'Diamond Stud Earrings - Round Brilliant',
+              width: 800,
+              height: 600
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/2',
+              url: '/src/assets/earrings-princess.jpg',
+              altText: 'Diamond Stud Earrings - Princess Cut',
               width: 800,
               height: 600
             }
@@ -45,7 +54,12 @@ class ShopifyClient {
               compareAtPrice: { amount: '1200.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-STUD-SS-RB',
-              model3d: '/models/earrings-silver-round.glb'
+              model3d: '/models/earrings-silver-round.glb',
+              image: {
+                id: 'gid://shopify/ProductImage/1',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Sterling Silver Round Brilliant Diamond Studs'
+              }
             }
           },
           {
@@ -60,7 +74,53 @@ class ShopifyClient {
               price: { amount: '1490.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-STUD-14K-RB',
-              model3d: '/models/earrings-gold-round.glb'
+              model3d: '/models/earrings-gold-round.glb',
+              image: {
+                id: 'gid://shopify/ProductImage/1',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: '14K Gold Round Brilliant Diamond Studs'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3',
+              title: 'Sterling Silver / Princess',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Sterling Silver' },
+                { name: 'Cut', value: 'Princess' }
+              ],
+              price: { amount: '920.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '1250.00', currencyCode: 'CAD' },
+              quantityAvailable: 8,
+              sku: 'NOORI-STUD-SS-PR',
+              model3d: '/models/earrings-silver-princess.glb',
+              image: {
+                id: 'gid://shopify/ProductImage/2',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'Sterling Silver Princess Cut Diamond Studs'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/4',
+              title: '14K Gold / Princess',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Cut', value: 'Princess' }
+              ],
+              price: { amount: '1520.00', currencyCode: 'CAD' },
+              quantityAvailable: 3,
+              sku: 'NOORI-STUD-14K-PR',
+              model3d: '/models/earrings-gold-princess.glb',
+              image: {
+                id: 'gid://shopify/ProductImage/2',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: '14K Gold Princess Cut Diamond Studs'
+              }
             }
           }
         ]

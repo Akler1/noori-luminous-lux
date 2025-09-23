@@ -138,15 +138,17 @@ const Capsule = () => {
               >
                 <div className="card-luxury overflow-hidden">
                   {/* Product Image */}
-                  <div className="relative aspect-square overflow-hidden">
-                    <img
-                      src={product.images.edges[0]?.node.url}
-                      alt={product.images.edges[0]?.node.altText}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative aspect-square overflow-hidden">
+                      <Link to={`/product/${product.handle}`} className="block w-full h-full" aria-label={`View ${product.title}`}>
+                        <img
+                          src={product.images.edges[0]?.node.url}
+                          alt={product.images.edges[0]?.node.altText}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </Link>
+                      
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Quick Actions */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -180,7 +182,7 @@ const Capsule = () => {
                   {/* Product Info */}
                   <div className="p-6">
                     <h3 className="font-display text-xl font-normal mb-2 group-hover:text-accent transition-colors">
-                      {product.title}
+                      <Link to={`/product/${product.handle}`}>{product.title}</Link>
                     </h3>
                     
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-2">

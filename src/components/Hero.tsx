@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-diamonds.jpg";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { LightParticles } from "@/components/ScrollAnimations";
 
 export const Hero = () => {
   return (
@@ -14,27 +16,28 @@ export const Hero = () => {
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+        <LightParticles count={18} />
       </div>
 
       {/* Hero Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-        <div className="reveal-up revealed">
+        <motion.div initial={{ opacity: 0, y: 20, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6, ease: [0.25,0.46,0.45,0.94] }}>
           <h1 className="hero-text mb-6 text-primary">
             Light, made
             <br />
             <span className="noor-glow">forever</span>
           </h1>
-        </div>
+        </motion.div>
 
-        <div className="reveal-up revealed" style={{ animationDelay: "0.2s" }}>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-muted-foreground font-light leading-relaxed">
             Certified lab-grown diamonds. Ethical. Enduring.
             <br />
             <span className="text-accent font-medium">Exquisitely priced.</span>
           </p>
-        </div>
+        </motion.div>
 
-        <div className="reveal-up revealed flex flex-col sm:flex-row gap-4 justify-center items-center" style={{ animationDelay: "0.4s" }}>
+        <motion.div className="flex flex-col sm:flex-row gap-4 justify-center items-center" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}>
           <Button className="btn-hero group" asChild>
             <Link to="/capsule">
               Shop the Capsule
@@ -44,7 +47,7 @@ export const Hero = () => {
           <Button variant="outline" className="btn-ghost-luxury" asChild>
             <Link to="/policies#care">Learn About Our Diamonds</Link>
           </Button>
-        </div>
+        </motion.div>
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
