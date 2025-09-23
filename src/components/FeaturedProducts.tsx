@@ -1,6 +1,7 @@
 import { ProductCard } from "./ProductCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { ParallaxSection, RevealOnScroll } from "@/components/ScrollAnimations";
 import earringsImage from "@/assets/earrings-hero.jpg";
 import necklaceImage from "@/assets/necklace-hero.jpg";
 import braceletImage from "@/assets/bracelet-hero.jpg";
@@ -36,10 +37,10 @@ const products = [
 
 export const FeaturedProducts = () => {
   return (
-    <section className="py-20 bg-gradient-hero">
+    <ParallaxSection speed={0.3} className="py-20 bg-gradient-hero">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 reveal-up">
+        <RevealOnScroll className="text-center mb-16">
           <h2 className="display-text mb-6">
             The Capsule
           </h2>
@@ -48,15 +49,15 @@ export const FeaturedProducts = () => {
             <br />
             <span className="text-accent">Modern heirlooms, built to be worn for life.</span>
           </p>
-        </div>
+        </RevealOnScroll>
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {products.map((product, index) => (
-            <div
+            <RevealOnScroll
               key={product.id}
-              className="reveal-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              delay={index * 0.2}
+              direction="up"
             >
               <ProductCard
                 name={product.name}
@@ -68,18 +69,18 @@ export const FeaturedProducts = () => {
                 onAddToCart={() => console.log(`Added ${product.name} to cart`)}
                 onToggleWishlist={() => console.log(`Toggled wishlist for ${product.name}`)}
               />
-            </div>
+            </RevealOnScroll>
           ))}
         </div>
 
         {/* View All Button */}
-        <div className="text-center reveal-up">
+        <RevealOnScroll className="text-center">
           <Button className="btn-hero group">
             View All Products
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
-        </div>
+        </RevealOnScroll>
       </div>
-    </section>
+    </ParallaxSection>
   );
 };

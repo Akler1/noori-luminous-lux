@@ -1,39 +1,111 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award } from "lucide-react";
+import { Star, Heart, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import earringsImage from "@/assets/earrings-hero.jpg";
+import { ProductCarousel } from "@/components/ProductCarousel";
+import { ThreeDViewer } from "@/components/ThreeDViewer";
+import { VariantSelector } from "@/components/VariantSelector";
+import { ReviewsStub } from "@/components/ReviewsStub";
+import { shopify } from "@/lib/shopify";
+import { ShopifyProduct, ShopifyVariant } from "@/types/shopify";
+import { useCartActions } from "@/hooks/useCart";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const ProductDetail = () => {
-  const [selectedMetal, setSelectedMetal] = useState("14k-gold");
-  const [selectedCut, setSelectedCut] = useState("round-brilliant");
+  const { handle } = useParams<{ handle: string }>();
+  const [product, setProduct] = useState<ShopifyProduct | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<ShopifyVariant | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { addToCart, isLoading: cartLoading } = useCartActions();
 
-  const metalOptions = [
-    { id: "silver", label: "Sterling Silver", price: "CAD $890" },
-    { id: "9k-gold", label: "9K Gold", price: "CAD $1,190" },
-    { id: "14k-gold", label: "14K Gold", price: "CAD $1,490" },
-  ];
+  // Load product data
+  useEffect(() => {
+    const loadProduct = async () => {
+      if (!handle) return;
+      
+      setIsLoading(true);
+      try {
+        const productData = await shopify.getProduct(handle);
+        setProduct(productData);
+        
+        // Set first available variant as default
+        if (productData?.variants.edges.length) {
+          const firstVariant = productData.variants.edges.find(
+            ({ node }) => node.availableForSale
+          )?.node || productData.variants.edges[0].node;
+          setSelectedVariant(firstVariant);
+        }
+      } catch (error) {
+        console.error('Failed to load product:', error);
+        toast.error('Failed to load product');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const cutOptions = [
-    { id: "round-brilliant", label: "Round Brilliant" },
-    { id: "princess", label: "Princess Cut" },
-  ];
+    loadProduct();
+  }, [handle]);
 
-  const currentPrice = metalOptions.find(m => m.id === selectedMetal)?.price || "CAD $890";
-
-  const handleAddToCart = () => {
-    toast.success("Added to cart! Continue shopping or view your cart.");
+  const handleAddToCart = async () => {
+    if (!selectedVariant) return;
+    
+    try {
+      await addToCart(selectedVariant.id, quantity);
+    } catch (error) {
+      toast.error('Failed to add to cart');
+    }
   };
 
   const handleBuyNow = () => {
+    handleAddToCart();
+    // In real implementation, redirect to checkout
     toast.success("Redirecting to secure checkout...");
   };
+
+  // Get cross-sell products (other products in capsule)
+  const crossSellProducts = [
+    { name: "Bezel-less Necklace", price: "CAD $1,450", image: "/src/assets/necklace-hero.jpg" },
+    { name: "Solitaire Bracelet", price: "CAD $1,190", image: "/src/assets/bracelet-hero.jpg" }
+  ].filter(p => p.name !== product?.title);
+
+  // Prepare images for carousel
+  const carouselImages = product?.images.edges.map(({ node }) => ({
+    id: node.id,
+    url: node.url,
+    altText: node.altText
+  })) || [];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 mx-auto mb-4 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+          <p className="text-muted-foreground">Loading product...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-display mb-4">Product not found</h1>
+          <Button onClick={() => window.history.back()}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Go Back
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -44,97 +116,110 @@ const ProductDetail = () => {
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
           <a href="/" className="hover:text-accent transition-colors">Home</a>
           <span>/</span>
-          <a href="#shop" className="hover:text-accent transition-colors">Shop</a>
+          <a href="/capsule" className="hover:text-accent transition-colors">Capsule</a>
           <span>/</span>
-          <span className="text-foreground">Diamond Stud Earrings</span>
+          <span className="text-foreground">{product.title}</span>
         </nav>
       </div>
 
       <main className="container mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Images */}
-          <div className="space-y-4">
-            <div className="aspect-square bg-gradient-to-br from-muted/20 to-muted/5 rounded-xl overflow-hidden">
-              <img
-                src={earringsImage}
-                alt="Diamond Stud Earrings"
-                className="w-full h-full object-cover"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+          {/* Product Media */}
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ProductCarousel 
+                images={carouselImages}
+                showThumbs={true}
+                className="mb-6"
               />
-            </div>
+            </motion.div>
             
-            {/* 3D Viewer Placeholder */}
-            <div className="bg-muted/10 rounded-lg p-8 text-center border-2 border-dashed border-muted/30">
-              <div className="w-16 h-16 mx-auto mb-4 bg-accent/20 rounded-full flex items-center justify-center">
-                <div className="w-8 h-8 bg-accent/40 rounded-full animate-pulse" />
-              </div>
-              <p className="text-muted-foreground mb-2">3D Viewer</p>
-              <p className="text-sm text-muted-foreground">Rotate and zoom to explore every detail</p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <ThreeDViewer 
+                variant={selectedVariant}
+                autoRotate={false}
+              />
+            </motion.div>
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="space-y-8"
+          >
             {/* Title & Rating */}
             <div>
               <h1 className="font-display text-3xl md:text-4xl font-normal mb-4">
-                Diamond Stud Earrings
+                {product.title}
               </h1>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-6">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-accent text-accent" />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">(124 reviews)</span>
+                <span className="text-sm text-muted-foreground">
+                  ({product.reviews?.count || 0} reviews)
+                </span>
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Timeless elegance meets modern ethics. Our lab-grown diamond studs offer the same brilliance 
-                and fire as mined diamonds, certified for quality and crafted to last generations.
+                {product.description}
               </p>
             </div>
 
             {/* Price */}
             <div className="border-t border-b border-border py-6">
               <div className="text-3xl font-display font-normal text-accent mb-2">
-                {currentPrice}
+                CAD ${selectedVariant?.price.amount}
               </div>
+              {selectedVariant?.compareAtPrice && (
+                <div className="text-lg text-muted-foreground line-through mb-2">
+                  CAD ${selectedVariant.compareAtPrice.amount}
+                </div>
+              )}
               <div className="text-sm text-muted-foreground">
                 Free shipping across Canada • 30-day returns
               </div>
             </div>
 
-            {/* Variants */}
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium mb-3">Metal</label>
-                <div className="flex flex-wrap gap-2">
-                  {metalOptions.map((metal) => (
-                    <Button
-                      key={metal.id}
-                      variant={selectedMetal === metal.id ? "default" : "outline"}
-                      className={selectedMetal === metal.id ? "btn-hero" : "btn-ghost-luxury"}
-                      onClick={() => setSelectedMetal(metal.id)}
-                    >
-                      {metal.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+            {/* Variant Selector */}
+            <VariantSelector
+              product={product}
+              selectedVariant={selectedVariant}
+              onVariantChange={setSelectedVariant}
+            />
 
-              <div>
-                <label className="block text-sm font-medium mb-3">Diamond Cut</label>
-                <div className="flex flex-wrap gap-2">
-                  {cutOptions.map((cut) => (
-                    <Button
-                      key={cut.id}
-                      variant={selectedCut === cut.id ? "default" : "outline"}
-                      className={selectedCut === cut.id ? "btn-hero" : "btn-ghost-luxury"}
-                      onClick={() => setSelectedCut(cut.id)}
-                    >
-                      {cut.label}
-                    </Button>
-                  ))}
-                </div>
+            {/* Quantity */}
+            <div>
+              <label className="block text-sm font-medium mb-3">Quantity</label>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  -
+                </Button>
+                <span className="w-12 text-center font-medium">{quantity}</span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(quantity + 1)}
+                  disabled={selectedVariant ? quantity >= selectedVariant.quantityAvailable : false}
+                >
+                  +
+                </Button>
               </div>
             </div>
 
@@ -143,10 +228,11 @@ const ProductDetail = () => {
               <div className="flex gap-4">
                 <Button 
                   onClick={handleAddToCart}
+                  disabled={!selectedVariant?.availableForSale || cartLoading}
                   className="flex-1 btn-hero"
                 >
                   <ShoppingBag className="mr-2 h-5 w-5" />
-                  Add to Cart
+                  {cartLoading ? "Adding..." : "Add to Cart"}
                 </Button>
                 <Button
                   variant="outline"
@@ -160,6 +246,7 @@ const ProductDetail = () => {
               
               <Button 
                 onClick={handleBuyNow}
+                disabled={!selectedVariant?.availableForSale || cartLoading}
                 variant="outline" 
                 className="w-full btn-ghost-luxury"
               >
@@ -186,11 +273,16 @@ const ProductDetail = () => {
                 <span>30-Day Returns</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Product Details Accordion */}
-        <div className="max-w-4xl mx-auto mt-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="max-w-4xl mx-auto mb-20"
+        >
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="diamonds">
               <AccordionTrigger className="text-left font-medium">
@@ -250,7 +342,67 @@ const ProductDetail = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-        </div>
+        </motion.div>
+
+        {/* Complete the Set */}
+        {crossSellProducts.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mb-20"
+          >
+            <div className="text-center mb-12">
+              <h2 className="font-display text-2xl font-normal mb-4">
+                Complete the Set
+              </h2>
+              <p className="text-muted-foreground">
+                Create your perfect capsule collection
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {crossSellProducts.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  className="card-luxury p-6 group cursor-pointer"
+                >
+                  <div className="aspect-square bg-muted/10 rounded-lg mb-4 overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <h3 className="font-display text-xl font-normal mb-2">{item.name}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-accent font-medium">{item.price}</span>
+                    <Button size="sm" className="btn-hero group">
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Reviews */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <ReviewsStub
+            productId={product.id}
+            averageRating={product.reviews?.rating || 5}
+            totalReviews={product.reviews?.count || 124}
+          />
+        </motion.div>
       </main>
 
       <Footer />
