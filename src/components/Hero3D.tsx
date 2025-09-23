@@ -4,9 +4,10 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
-// Register GSAP plugin
-gsap.registerPlugin(ScrollTrigger);
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 interface Hero3DProps {
   reducedMotion: boolean;
@@ -19,6 +20,7 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const modelRef = useRef<THREE.Group>();
   const animationFrameRef = useRef<number>();
+  const materialsRef = useRef<THREE.Material[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Keyframe data for bezier path animation
@@ -61,6 +63,7 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
     // Camera setup
     camera.position.set(0, 0, 3);
     camera.lookAt(0, 0, 0);
+    camera.rotation.y = THREE.MathUtils.degToRad(-25);
 
     // Lighting setup
     const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
@@ -90,11 +93,12 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
         roughness: 0.05,
         transmission: 0.9,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.6,
         ior: 2.4,
         clearcoat: 1.0,
         clearcoatRoughness: 0.1
       });
+      materialsRef.current.push(pendantMaterial);
       const pendant = new THREE.Mesh(pendantGeometry, pendantMaterial);
       group.add(pendant);
 
@@ -103,8 +107,11 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
       const chainMaterial = new THREE.MeshPhysicalMaterial({
         color: 0xc0c0c0,
         metalness: 1.0,
-        roughness: 0.1
+        roughness: 0.1,
+        transparent: true,
+        opacity: 0.6
       });
+      materialsRef.current.push(chainMaterial);
       const chain = new THREE.Mesh(chainGeometry, chainMaterial);
       chain.rotation.x = Math.PI / 2;
       group.add(chain);
@@ -170,10 +177,9 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
       scrollTrigger: {
         trigger: "#hero",
         start: "top top",
-        end: "140% top",
+        end: "+=140%",
         scrub: 0.6,
-        pin: true,
-        pinSpacing: false
+        pin: true
       }
     });
 
@@ -192,9 +198,7 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
       z: 1.0,
       ease: "power2.inOut"
     }, 0)
-    .fromTo(model, {
-      opacity: 0
-    }, {
+    .to(materialsRef.current as any, {
       duration: 0.15,
       opacity: 1,
       ease: "power2.inOut"
@@ -204,9 +208,16 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
     .to(model.position, {
       duration: 0.35,
       motionPath: {
-        path: `M${keyframes.path[1][0]},${keyframes.path[1][1]} C${keyframes.path[2][0]},${keyframes.path[2][1]} ${keyframes.path[3][0]},${keyframes.path[3][1]} 0,0`,
+        path: [
+          { x: keyframes.path[1][0], y: keyframes.path[1][1] },
+          { x: keyframes.path[2][0], y: keyframes.path[2][1] },
+          { x: keyframes.path[3][0], y: keyframes.path[3][1] },
+          { x: 0, y: 0 }
+        ],
+        curviness: 1,
         autoRotate: false
       },
+      z: 0,
       ease: "power2.inOut"
     })
     
@@ -229,7 +240,7 @@ export const Hero3D = ({ reducedMotion }: Hero3DProps) => {
       duration: 0.3,
       y: "+=0.02",
       yoyo: true,
-      repeat: -1,
+      repeat: 1,
       ease: "sine.inOut"
     }, 0.5);
 

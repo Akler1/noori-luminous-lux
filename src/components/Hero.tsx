@@ -39,7 +39,7 @@ export const Hero = () => {
       />
 
       {/* 3D Canvas */}
-      <div id="hero-3d" className="absolute inset-0" aria-hidden="true">
+      <div id="hero-3d" className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <Hero3D reducedMotion={reducedMotion} />
       </div>
 
@@ -55,7 +55,7 @@ export const Hero = () => {
           </p>
           <div className="mt-10 flex gap-3 flex-col sm:flex-row">
             <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
-              <Link to="/capsule">
+              <Link to="/shop" onClick={() => console.log('select_promotion: hero_primary')}>
                 Shop the Capsule
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -65,7 +65,7 @@ export const Hero = () => {
               className="border-[#E7E5DC]/30 text-[#E7E5DC] hover:bg-[#E7E5DC]/10 px-8 py-3 rounded-full transition-all duration-300" 
               asChild
             >
-              <Link to="/policies#care">About Our Diamonds</Link>
+              <Link to="/about" onClick={() => console.log('select_promotion: hero_secondary')}>About Our Diamonds</Link>
             </Button>
           </div>
         </div>
