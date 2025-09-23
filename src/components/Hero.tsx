@@ -54,7 +54,21 @@ export const Hero = () => {
             <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
           </p>
           <div className="mt-10 flex gap-3 flex-col sm:flex-row">
-            <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
+            <Button 
+              className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" 
+              asChild
+              onClick={() => {
+                // Analytics: fire select_promotion on CTA click
+                if ('gtag' in window) {
+                  (window as any).gtag('event', 'select_promotion', {
+                    promotion_id: 'hero_shop_capsule',
+                    promotion_name: 'Shop the Capsule',
+                    creative_name: 'Primary CTA',
+                    creative_slot: 'hero'
+                  });
+                }
+              }}
+            >
               <Link to="/capsule">
                 Shop the Capsule
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -64,6 +78,17 @@ export const Hero = () => {
               variant="outline" 
               className="border-[#E7E5DC]/30 text-[#E7E5DC] hover:bg-[#E7E5DC]/10 px-8 py-3 rounded-full transition-all duration-300" 
               asChild
+              onClick={() => {
+                // Analytics: fire select_promotion on CTA click
+                if ('gtag' in window) {
+                  (window as any).gtag('event', 'select_promotion', {
+                    promotion_id: 'hero_about_diamonds',
+                    promotion_name: 'About Our Diamonds',
+                    creative_name: 'Secondary CTA',
+                    creative_slot: 'hero'
+                  });
+                }
+              }}
             >
               <Link to="/policies#care">About Our Diamonds</Link>
             </Button>
