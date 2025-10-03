@@ -1,5 +1,4 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import Product3DCarousel from "@/components/Product3DCarousel";
 import { BrandStory } from "@/components/BrandStory";
@@ -17,10 +16,9 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <Hero />
+        <Product3DCarousel />
         <TrustIndicators />
         <FeaturedProducts />
-        <Product3DCarousel />
         <BrandStory />
         <Impact />
         <Newsletter />

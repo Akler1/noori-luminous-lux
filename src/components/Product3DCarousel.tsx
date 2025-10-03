@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -31,7 +31,6 @@ interface CarouselConfig {
 export default function Product3DCarousel() {
   const [config, setConfig] = useState<CarouselConfig | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isRotateMode, setIsRotateMode] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -113,14 +112,12 @@ export default function Product3DCarousel() {
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
         goToNext();
-      } else if (e.key === "Escape" && isRotateMode) {
-        toggleRotateMode();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [config, currentIndex, isRotateMode]);
+  }, [config, currentIndex]);
 
   const goToNext = useCallback(() => {
     if (!config) return;
@@ -135,22 +132,13 @@ export default function Product3DCarousel() {
     setCurrentIndex(index);
   }, []);
 
-  const toggleRotateMode = useCallback(() => {
-    setIsRotateMode((prev) => {
-      const newMode = !prev;
-      console.log(`Analytics: rotate_mode_${newMode ? "on" : "off"}`);
-      return newMode;
-    });
-  }, []);
-
   // Touch handling
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (isRotateMode) return;
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (isRotateMode || !config) return;
+    if (!config) return;
 
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
@@ -195,11 +183,14 @@ export default function Product3DCarousel() {
     return usingSingle ? config.placeholder.poster : slide.poster || config.placeholder.poster;
   };
 
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : null;
+  const nextIndex = currentIndex < config.slides.length - 1 ? currentIndex + 1 : null;
+
   return (
     <section
       id="product-3d-carousel"
       ref={carouselRef}
-      className="w-full py-24 bg-[#0B0B0B] relative overflow-hidden"
+      className="w-full min-h-screen bg-[#0B0B0B] relative overflow-hidden flex items-center"
       role="region"
       aria-label="3D product carousel"
       data-analytics="carousel_view"
@@ -208,94 +199,139 @@ export default function Product3DCarousel() {
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
         style={{
-          background: `radial-gradient(ellipse 800px 600px at ${50 + currentIndex * 5}% 50%, rgba(201, 162, 39, 0.08), transparent 60%)`,
+          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)`,
         }}
       />
 
-      <div className="container mx-auto px-[clamp(16px,5vw,64px)] max-w-[1280px] relative z-10">
+      <div className="container mx-auto px-[clamp(16px,3vw,48px)] max-w-[1600px] relative z-10 py-12">
         {/* Title */}
-        <h2 className="text-4xl md:text-5xl font-serif text-[#F8F7F3] text-center mb-16">
-          {config.carouselTitle}
-        </h2>
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-5xl md:text-7xl font-serif text-[#F8F7F3] mb-4">
+            {config.carouselTitle}
+          </h1>
+          <p className="text-[#E7E5DC] text-lg">Explore our collection in 3D — Click to rotate</p>
+        </div>
 
-        {/* Carousel Container */}
+        {/* Carousel Container with 3 slides visible */}
         <div className="relative">
-          {/* 3D Viewer */}
           <div
-            className="relative aspect-[16/9] max-h-[600px] mb-8"
+            className="flex items-center justify-center gap-4 md:gap-8 mb-8"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {isLoaded ? (
-              <model-viewer
-                ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
-                src={getModelSource(currentSlide)}
-                poster={getPosterSource(currentSlide)}
-                camera-controls={isRotateMode}
-                camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
-                field-of-view={`${currentSlide.camera.fov}deg`}
-                min-camera-orbit="auto 0deg auto"
-                max-camera-orbit="auto 25deg auto"
-                disable-zoom
-                interaction-prompt="none"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  background: "transparent",
-                  "--progress-bar-color": "#C9A227",
-                  "--poster-color": "transparent",
-                } as any}
-                className={cn(
-                  "rounded-lg transition-opacity duration-300",
-                  isRotateMode ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"
+            {/* Previous Slide */}
+            {prevIndex !== null && (
+              <div className="hidden md:block w-1/4 opacity-40 hover:opacity-60 transition-opacity duration-300">
+                {isLoaded && (
+                  <model-viewer
+                    src={getModelSource(config.slides[prevIndex])}
+                    poster={getPosterSource(config.slides[prevIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[prevIndex].camera.azimuthDeg}deg ${config.slides[prevIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[prevIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg pointer-events-none"
+                  />
                 )}
-                onClick={!isRotateMode ? toggleRotateMode : undefined}
-                ar-modes="webxr scene-viewer quick-look"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
-                <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
               </div>
             )}
 
-            {/* Rotate Mode Indicator */}
-            {isRotateMode && (
-              <Button
-                onClick={toggleRotateMode}
-                className="absolute top-4 right-4 bg-[#C9A227] hover:bg-[#A88620] text-[#0B0B0B] font-medium px-4 py-2 gap-2"
-                aria-label="Exit rotate mode"
-              >
-                Exit Rotate <X className="w-4 h-4" />
-              </Button>
-            )}
+            {/* Current Slide - Main */}
+            <div className="flex-1 max-w-3xl">
+              <div className="relative aspect-square max-h-[70vh]">
+                {isLoaded ? (
+                  <model-viewer
+                    ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
+                    src={getModelSource(currentSlide)}
+                    poster={getPosterSource(currentSlide)}
+                    camera-controls
+                    camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
+                    field-of-view={`${currentSlide.camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "transparent",
+                      "--progress-bar-color": "#C9A227",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className={cn(
+                      "rounded-lg transition-opacity duration-300",
+                      "cursor-grab active:cursor-grabbing"
+                    )}
+                    ar-modes="webxr scene-viewer quick-look"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
+                    <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
+                  </div>
+                )}
 
-            {/* Slide Content Overlay */}
-            <div
-              className={cn(
-                "absolute bottom-0 left-0 right-0 md:left-8 md:right-auto md:bottom-8 p-6 md:p-8 bg-gradient-to-t from-black/80 via-black/60 to-transparent md:bg-black/70 md:backdrop-blur-sm rounded-t-lg md:rounded-lg max-w-md transition-opacity duration-300",
-                currentIndex >= 0 ? "opacity-100" : "opacity-0"
-              )}
-            >
-              <h3 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
-                {currentSlide.title}
-              </h3>
-              <p className="text-sm text-[#E7E5DC] mb-4">{currentSlide.subtitle}</p>
-              <a
-                href={currentSlide.pdpUrl}
-                onClick={() => handleCTAClick(currentSlide.pdpUrl)}
-                data-analytics="cta_click"
-                className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
-              >
-                View Product
-              </a>
+                {/* Slide Content Overlay */}
+                <div
+                  className={cn(
+                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
+                    currentIndex >= 0 ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
+                    {currentSlide.title}
+                  </h2>
+                  <p className="text-sm text-[#E7E5DC] mb-4">{currentSlide.subtitle}</p>
+                  <a
+                    href={currentSlide.pdpUrl}
+                    onClick={() => handleCTAClick(currentSlide.pdpUrl)}
+                    data-analytics="cta_click"
+                    className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                  >
+                    View Product
+                  </a>
+                </div>
+              </div>
             </div>
+
+            {/* Next Slide */}
+            {nextIndex !== null && (
+              <div className="hidden md:block w-1/4 opacity-40 hover:opacity-60 transition-opacity duration-300">
+                {isLoaded && (
+                  <model-viewer
+                    src={getModelSource(config.slides[nextIndex])}
+                    poster={getPosterSource(config.slides[nextIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[nextIndex].camera.azimuthDeg}deg ${config.slides[nextIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[nextIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg pointer-events-none"
+                  />
+                )}
+              </div>
+            )}
           </div>
 
           {/* Navigation Arrows */}
           <Button
             onClick={goToPrevious}
-            disabled={currentIndex === 0 || isRotateMode}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled={currentIndex === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-20 disabled:cursor-not-allowed z-20"
             size="icon"
             aria-label="Previous slide"
           >
@@ -304,8 +340,8 @@ export default function Product3DCarousel() {
 
           <Button
             onClick={goToNext}
-            disabled={currentIndex === config.slides.length - 1 || isRotateMode}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled={currentIndex === config.slides.length - 1}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-20 disabled:cursor-not-allowed z-20"
             size="icon"
             aria-label="Next slide"
           >
@@ -323,7 +359,6 @@ export default function Product3DCarousel() {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                disabled={isRotateMode}
                 className={cn(
                   "w-2 h-2 rounded-full transition-all duration-300",
                   index === currentIndex
