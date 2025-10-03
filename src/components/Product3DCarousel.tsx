@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import "@google/model-viewer";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -32,7 +33,7 @@ interface CarouselConfig {
 export default function Product3DCarousel() {
   const [config, setConfig] = useState<CarouselConfig | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
@@ -70,11 +71,6 @@ export default function Product3DCarousel() {
     script.onload = () => setIsLoaded(true);
     document.head.appendChild(script);
 
-    return () => {
-      const existing = document.querySelector('script[src*="model-viewer"]');
-      if (existing) existing.remove();
-    };
-  }, []);
 
   // Analytics tracking
   useEffect(() => {
@@ -103,15 +99,6 @@ export default function Product3DCarousel() {
     }
   }, [currentIndex, config]);
 
-  // Ensure camera controls toggle correctly when the center item changes
-  useEffect(() => {
-    modelViewerRefs.current.forEach((el: any, i: number) => {
-      if (!el) return;
-      try {
-        el.cameraControls = i === currentIndex;
-      } catch {}
-    });
-  }, [currentIndex]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -311,9 +298,6 @@ export default function Product3DCarousel() {
                             ref={(el: any) => {
                               if (!el) return;
                               modelViewerRefs.current[index] = el;
-                              try {
-                                (el as any).cameraControls = position.isCenter;
-                              } catch {}
                             }}
                             src={getModelSource(slide)}
                             poster={getPosterSource(slide)}
