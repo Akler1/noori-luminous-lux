@@ -188,7 +188,7 @@ export default function Product3DCarousel() {
   const getItemPosition = (index: number) => {
     const totalSlides = config.slides.length;
     const angle = ((index - currentIndex) / totalSlides) * Math.PI * 2;
-    const radius = 450;
+    const radius = 500;
     const x = Math.sin(angle) * radius;
     const z = Math.cos(angle) * radius;
     
@@ -259,7 +259,7 @@ export default function Product3DCarousel() {
         {/* Carousel Container - Full Circle */}
         <div className="relative">
           <div
-            className="relative h-[700px] w-full flex items-center justify-center overflow-hidden"
+            className="relative h-[800px] w-full flex items-center justify-center overflow-hidden"
             style={{ perspective: '2000px' }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -287,14 +287,14 @@ export default function Product3DCarousel() {
                     }}
                     onClick={() => !position.isCenter && goToSlide(index)}
                   >
-                    <div className="relative w-[350px] h-[350px]">
+                    <div className="relative w-[450px] h-[450px]">
                       {isLoaded ? (
                         <>
                           <model-viewer
                             ref={(el: any) => position.isCenter && (modelViewerRefs.current[currentIndex] = el)}
                             src={getModelSource(slide)}
                             poster={getPosterSource(slide)}
-                            camera-controls={position.isCenter}
+                            camera-controls={position.isCenter ? true : undefined}
                             auto-rotate={!position.isCenter}
                             auto-rotate-delay="0"
                             rotation-per-second={!position.isCenter ? "15deg" : undefined}
