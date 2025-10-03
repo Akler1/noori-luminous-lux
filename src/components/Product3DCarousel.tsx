@@ -324,9 +324,12 @@ export default function Product3DCarousel() {
                             field-of-view={`${slide.camera.fov}deg`}
                             disable-zoom
                             interaction-prompt="none"
+                            camera-controls={position.isCenter ? true : undefined}
                             onPointerDown={(e: any) => e.stopPropagation()}
                             onPointerMove={(e: any) => e.stopPropagation()}
                             onPointerUp={(e: any) => e.stopPropagation()}
+                            onDragStart={(e: any) => e.preventDefault()}
+                            onWheel={(e: any) => e.stopPropagation()}
                             style={{
                               width: "100%",
                               height: "100%",
