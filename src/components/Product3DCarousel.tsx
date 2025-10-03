@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import "@google/model-viewer";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -33,12 +32,11 @@ interface CarouselConfig {
 export default function Product3DCarousel() {
   const [config, setConfig] = useState<CarouselConfig | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
   const modelViewerRefs = useRef<Array<any>>([]);
-  const skipSwipe = useRef(false);
 
   // Load config
   useEffect(() => {
@@ -56,6 +54,25 @@ export default function Product3DCarousel() {
     const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  // Load model-viewer script
+  useEffect(() => {
+    if (document.querySelector('script[src*="model-viewer"]')) {
+      setIsLoaded(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
+    script.onload = () => setIsLoaded(true);
+    document.head.appendChild(script);
+
+    return () => {
+      const existing = document.querySelector('script[src*="model-viewer"]');
+      if (existing) existing.remove();
+    };
   }, []);
 
   // Analytics tracking
@@ -84,7 +101,6 @@ export default function Product3DCarousel() {
       });
     }
   }, [currentIndex, config]);
-
 
   // Keyboard navigation
   useEffect(() => {
@@ -120,16 +136,10 @@ export default function Product3DCarousel() {
 
   // Touch handling
   const handleTouchStart = (e: React.TouchEvent) => {
-    const target = e.target as HTMLElement;
-    skipSwipe.current = !!target.closest('model-viewer');
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (skipSwipe.current) {
-      skipSwipe.current = false;
-      return;
-    }
     if (!config) return;
 
     const touchEndX = e.changedTouches[0].clientX;
@@ -175,31 +185,8 @@ export default function Product3DCarousel() {
     return usingSingle ? config.placeholder.poster : slide.poster || config.placeholder.poster;
   };
 
-  const getItemPosition = (index: number) => {
-    const totalSlides = config.slides.length;
-    const angle = ((index - currentIndex) / totalSlides) * Math.PI * 2;
-    const radius = 500;
-    const x = Math.sin(angle) * radius;
-    const z = Math.cos(angle) * radius;
-    
-    // Scale based on z-position (items further back are smaller)
-    const scale = 0.5 + (z + radius) / (radius * 2) * 0.5;
-    
-    // Opacity based on position
-    const opacity = z > 0 ? 1 : 0.4;
-    
-    // Rotate items to face the center
-    const rotateY = -angle * (180 / Math.PI);
-    
-    return {
-      x,
-      z,
-      scale,
-      opacity,
-      rotateY,
-      isCenter: index === currentIndex,
-    };
-  };
+  const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
+  const nextIndex = (currentIndex + 1) % config.slides.length;
 
   return (
     <section
@@ -246,107 +233,124 @@ export default function Product3DCarousel() {
           <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
-        {/* Carousel Container - Full Circle */}
+        {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
-            className="relative h-[800px] w-full flex items-center justify-center overflow-hidden"
-            style={{ perspective: '2000px' }}
+            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {/* All items in circular arrangement */}
-            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
-              {config.slides.map((slide, index) => {
-                const position = getItemPosition(index);
-                
-                return (
-                  <div
-                    key={index}
-                    className="absolute top-1/2 left-1/2 cursor-pointer transition-all duration-700 ease-out"
+            {/* Previous Slide */}
+            <div className="hidden md:block">
+              {isLoaded && (
+                <div 
+                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                  onClick={() => goToPrevious()}
+                >
+                  <model-viewer
+                    src={getModelSource(config.slides[prevIndex])}
+                    poster={getPosterSource(config.slides[prevIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[prevIndex].camera.azimuthDeg}deg ${config.slides[prevIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[prevIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
                     style={{
-                      transformStyle: 'preserve-3d',
-                      transform: `
-                        translate(-50%, -50%)
-                        translateX(${position.x}px)
-                        translateZ(${position.z}px)
-                        rotateY(${position.rotateY}deg)
-                        scale(${position.scale})
-                      `,
-                      opacity: position.opacity,
-                      zIndex: Math.round((position.z + 500) * 10),
-                    }}
-                    onClick={() => !position.isCenter && goToSlide(index)}
-                  >
-                    <div className="relative w-[450px] h-[450px]">
-                      {isLoaded ? (
-                        <>
-                          <model-viewer
-                            ref={(el: any) => {
-                              if (!el) return;
-                              modelViewerRefs.current[index] = el;
-                            }}
-                            src={getModelSource(slide)}
-                            poster={getPosterSource(slide)}
-                            auto-rotate={!position.isCenter}
-                            auto-rotate-delay="0"
-                            rotation-per-second={!position.isCenter ? "15deg" : undefined}
-                            camera-orbit="180deg 0deg auto"
-                            field-of-view={`${slide.camera.fov}deg`}
-                            disable-zoom
-                            interaction-prompt="none"
-                            camera-controls={position.isCenter ? true : undefined}
-                            onPointerDown={(e: any) => e.stopPropagation()}
-                            onPointerMove={(e: any) => e.stopPropagation()}
-                            onPointerUp={(e: any) => e.stopPropagation()}
-                            onDragStart={(e: any) => e.preventDefault()}
-                            onWheel={(e: any) => e.stopPropagation()}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              background: "transparent",
-                              "--progress-bar-color": "#C9A227",
-                              "--poster-color": "transparent",
-                              filter: position.isCenter ? 'none' : 'brightness(0.8)',
-                              pointerEvents: position.isCenter ? 'auto' : 'none',
-                              touchAction: 'none',
-                            } as any}
-                            className={cn(
-                              "transition-all duration-300",
-                              position.isCenter && "cursor-grab active:cursor-grabbing"
-                            )}
-                            ar-modes="webxr scene-viewer quick-look"
-                          />
-                          
-                          {/* Content overlay for center item only */}
-                          {position.isCenter && (
-                            <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 text-center w-[400px] pointer-events-none">
-                              <h2 className="text-2xl font-serif text-[#F8F7F3] mb-1">
-                                {slide.title}
-                              </h2>
-                              <p className="text-sm text-[#E7E5DC] mb-3">{slide.subtitle}</p>
-                              <a
-                                href={slide.pdpUrl}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleCTAClick(slide.pdpUrl);
-                                }}
-                                data-analytics="cta_click"
-                                className="pointer-events-auto inline-block px-5 py-2 text-sm border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
-                              >
-                                View Product
-                              </a>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
-                          <div className="text-[#E7E5DC] text-sm">Loading...</div>
-                        </div>
-                      )}
-                    </div>
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Current Slide - Main */}
+            <div className="w-full max-w-3xl mx-auto">
+              <div className="relative aspect-square max-h-[70vh]">
+                {isLoaded ? (
+                  <model-viewer
+                    ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
+                    src={getModelSource(currentSlide)}
+                    poster={getPosterSource(currentSlide)}
+                    camera-controls
+                    camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
+                    field-of-view={`${currentSlide.camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "transparent",
+                      "--progress-bar-color": "#C9A227",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className={cn(
+                      "rounded-lg transition-opacity duration-300",
+                      "cursor-grab active:cursor-grabbing"
+                    )}
+                    ar-modes="webxr scene-viewer quick-look"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
+                    <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
                   </div>
-                );
-              })}
+                )}
+
+                {/* Slide Content Overlay */}
+                <div
+                  className={cn(
+                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
+                    currentIndex >= 0 ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
+                    {currentSlide.title}
+                  </h2>
+                  <p className="text-sm text-[#E7E5DC] mb-4">{currentSlide.subtitle}</p>
+                  <a
+                    href={currentSlide.pdpUrl}
+                    onClick={() => handleCTAClick(currentSlide.pdpUrl)}
+                    data-analytics="cta_click"
+                    className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                  >
+                    View Product
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Next Slide */}
+            <div className="hidden md:block">
+              {isLoaded && (
+                <div 
+                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                  onClick={() => goToNext()}
+                >
+                  <model-viewer
+                    src={getModelSource(config.slides[nextIndex])}
+                    poster={getPosterSource(config.slides[nextIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[nextIndex].camera.azimuthDeg}deg ${config.slides[nextIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[nextIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
