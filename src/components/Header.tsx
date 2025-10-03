@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
+import { ShoppingBag, Menu, X, ChevronDown, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
@@ -46,7 +46,12 @@ export const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center space-x-4">
+              <Link to="/">
+                <Button variant="ghost" size="icon" className="hover:text-accent">
+                  <Home className="h-5 w-5" />
+                </Button>
+              </Link>
               <h1 className="font-display text-2xl md:text-3xl font-normal tracking-wide">
                 <span className="noor-glow">Noori</span>
               </h1>
