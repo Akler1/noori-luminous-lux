@@ -246,30 +246,26 @@ export default function Product3DCarousel() {
               const absD = Math.abs(d);
               const isCurrent = absD === 0;
 
-              // Circular arc parameters (shallow U)
-              const RADIUS = 1200;     // arc radius controlling spacing
-              const STEP_DEG = 18;     // degrees between items along the arc
-              const LIFT_MAX = 140;    // max vertical lift at the far sides
-              const DEPTH_BOOST = 0;   // extra linear depth per step (optional)
-              const YAW_PER_DEG = 1;   // yaw inward proportional to arc angle
-              const TILT_FORWARD = -6; // negative => bottom edge slightly nearer
-              const TILT_STEP = -1.2;  // more forward tilt at sides (negative)
-              const SCALE_CENTER = 1.15; // center size
-              const SCALE_STEP = 0.10;   // shrink per step away from center
+              // Full 360° circular carousel
+              const totalSlides = config.slides.length;
+              const RADIUS = 600;      // circle radius
+              const angleStep = 360 / totalSlides; // degrees per item
+              const angleDeg = d * angleStep;
+              const angleRad = (angleDeg * Math.PI) / 180;
 
-              // Angle on the arc
-              const thetaDeg = d * STEP_DEG;
-              const theta = (Math.PI / 180) * thetaDeg;
-
-              // Arc-based transforms
-              const x = RADIUS * Math.sin(theta);
-              const z = -RADIUS * (1 - Math.cos(theta)) - absD * DEPTH_BOOST; // center closest
-              const y = -LIFT_MAX * Math.sin(Math.abs(theta)); // negative => higher on page at sides
-              const yaw = -thetaDeg * YAW_PER_DEG; // inward toward center
-              const tilt = TILT_FORWARD + absD * TILT_STEP;   // slight forward tilt
-              const scale = Math.max(0.6, SCALE_CENTER - SCALE_STEP * absD);
-              const opacity = Math.max(0.2, 1 - 0.2 * absD);
-              const zIndex = 100 - absD; // ensure proper layering
+              // Position on circle
+              const x = RADIUS * Math.sin(angleRad);
+              const z = RADIUS * Math.cos(angleRad) - RADIUS; // center at z=0, others behind
+              const y = 0; // all on same horizontal plane
+              
+              // Rotation to face center
+              const yaw = -angleDeg; // turn to face inward
+              const tilt = -8; // slight forward tilt
+              
+              // Scale and visibility
+              const scale = isCurrent ? 1.2 : 0.75;
+              const opacity = z > -RADIUS * 1.5 ? (isCurrent ? 1 : 0.6) : 0.3;
+              const zIndex = Math.round(100 + z); // closer = higher z-index
               
               return (
                 <div
