@@ -103,6 +103,16 @@ export default function Product3DCarousel() {
     }
   }, [currentIndex, config]);
 
+  // Ensure camera controls toggle correctly when the center item changes
+  useEffect(() => {
+    modelViewerRefs.current.forEach((el: any, i: number) => {
+      if (!el) return;
+      try {
+        el.cameraControls = i === currentIndex;
+      } catch {}
+    });
+  }, [currentIndex]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -298,10 +308,15 @@ export default function Product3DCarousel() {
                       {isLoaded ? (
                         <>
                           <model-viewer
-                            ref={(el: any) => position.isCenter && (modelViewerRefs.current[currentIndex] = el)}
+                            ref={(el: any) => {
+                              if (!el) return;
+                              modelViewerRefs.current[index] = el;
+                              try {
+                                (el as any).cameraControls = position.isCenter;
+                              } catch {}
+                            }}
                             src={getModelSource(slide)}
                             poster={getPosterSource(slide)}
-                            camera-controls={position.isCenter ? true : undefined}
                             auto-rotate={!position.isCenter}
                             auto-rotate-delay="0"
                             rotation-per-second={!position.isCenter ? "15deg" : undefined}
@@ -309,6 +324,9 @@ export default function Product3DCarousel() {
                             field-of-view={`${slide.camera.fov}deg`}
                             disable-zoom
                             interaction-prompt="none"
+                            onPointerDown={(e: any) => e.stopPropagation()}
+                            onPointerMove={(e: any) => e.stopPropagation()}
+                            onPointerUp={(e: any) => e.stopPropagation()}
                             style={{
                               width: "100%",
                               height: "100%",
@@ -317,6 +335,7 @@ export default function Product3DCarousel() {
                               "--poster-color": "transparent",
                               filter: position.isCenter ? 'none' : 'brightness(0.8)',
                               pointerEvents: position.isCenter ? 'auto' : 'none',
+                              touchAction: 'none',
                             } as any}
                             className={cn(
                               "transition-all duration-300",
