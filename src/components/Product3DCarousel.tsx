@@ -223,7 +223,7 @@ export default function Product3DCarousel() {
             </Button>
             <Button 
               variant="outline" 
-              className="border-[#E7E5DC]/30 text-[#E7E5DC] hover:bg-[#E7E5DC]/10 px-8 py-3 rounded-full transition-all duration-300" 
+              className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
               asChild
             >
               <Link to="/policies">About Our Diamonds</Link>
