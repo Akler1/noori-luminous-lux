@@ -36,8 +36,6 @@ export default function Product3DCarousel() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
-  const mouseStartX = useRef<number>(0);
-  const isDragging = useRef<boolean>(false);
   const modelViewerRefs = useRef<Array<any>>([]);
 
   // Load config
@@ -156,39 +154,6 @@ export default function Product3DCarousel() {
     }
   };
 
-  // Mouse drag handling
-  const handleMouseDown = (e: React.MouseEvent) => {
-    mouseStartX.current = e.clientX;
-    isDragging.current = true;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-  };
-
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    isDragging.current = false;
-
-    if (!config) return;
-
-    const mouseEndX = e.clientX;
-    const diff = mouseStartX.current - mouseEndX;
-
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        goToNext();
-      } else {
-        goToPrevious();
-      }
-    }
-  };
-
-  const handleMouseLeave = () => {
-    isDragging.current = false;
-  };
-
   const handleCTAClick = (pdpUrl: string) => {
     console.log("Analytics: cta_click", { pdpUrl });
   };
@@ -274,10 +239,6 @@ export default function Product3DCarousel() {
             className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave}
           >
             {/* Previous Slide */}
             <div className="hidden md:block">
