@@ -247,19 +247,19 @@ export default function Product3DCarousel() {
               const isCurrent = absD === 0;
 
               // Shallow U-shape layout constants
-              const SPACING_X = 240;   // horizontal spacing between items
+              const SPACING_X = 380;   // horizontal spacing between items
               const DEPTH_Z = 120;     // how much depth per step away from center
-              const LIFT_Y = 60;       // vertical lift per step away from center
+              const LIFT_Y = 100;      // vertical lift per step away from center
               const YAW_DEG = 12;      // inward yaw per step
               const TILT_BASE = 6;     // base forward tilt
               const TILT_STEP = 1.5;   // extra tilt per step
               const SCALE_CENTER = 1.1;// center size
               const SCALE_STEP = 0.12; // shrink per step
 
-              // Derived transforms
+              // Derived transforms - U shape with sides HIGHER
               const x = d * SPACING_X;
               const z = -absD * DEPTH_Z; // farther from center -> further back
-              const y = -absD * LIFT_Y;  // side items sit higher on the page
+              const y = absD * LIFT_Y;   // side items rise UP to form U-shape
               const yaw = -YAW_DEG * d;  // turn inward toward center
               const tilt = TILT_BASE + absD * TILT_STEP; // slight forward tilt
               const scale = Math.max(0.6, SCALE_CENTER - SCALE_STEP * absD);
