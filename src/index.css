@@ -7,40 +7,40 @@
 @layer base {
   :root {
     /* Core Brand Colors - Dark Navy Theme */
-    --background: 226 40% 12%; /* Dark Navy #171B2E */
+    --background: 226 45% 8%; /* Very Dark Navy matching logo */
     --foreground: 45 70% 70%; /* Gold #D4AF37 */
 
-    --card: 226 35% 15%;
+    --card: 226 40% 10%;
     --card-foreground: 45 70% 70%;
 
-    --popover: 226 35% 15%;
+    --popover: 226 40% 10%;
     --popover-foreground: 45 70% 70%;
 
     /* Gold as Primary */
     --primary: 45 70% 60%; /* Warm Gold */
-    --primary-foreground: 226 40% 12%;
+    --primary-foreground: 226 45% 8%;
 
     /* Subtle Secondary */
-    --secondary: 226 30% 20%;
+    --secondary: 226 35% 15%;
     --secondary-foreground: 45 70% 70%;
 
     /* Muted Elements */
-    --muted: 226 25% 25%;
+    --muted: 226 30% 18%;
     --muted-foreground: 45 30% 60%;
 
     /* Gold Accent */
     --accent: 45 70% 60%; /* Warm Gold #D4AF37 */
-    --accent-foreground: 226 40% 12%;
+    --accent-foreground: 226 45% 8%;
 
     /* Noor Glow Gradient */
     --glow-start: 45 70% 60%;
     --glow-end: 45 70% 75%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 226 40% 12%;
+    --destructive-foreground: 226 45% 8%;
 
-    --border: 226 25% 25%;
-    --input: 226 25% 25%;
+    --border: 226 30% 20%;
+    --input: 226 30% 20%;
     --ring: 45 70% 60%;
 
     --radius: 0.5rem;
