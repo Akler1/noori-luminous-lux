@@ -287,10 +287,7 @@ export default function Product3DCarousel() {
                     }}
                     onClick={() => !position.isCenter && goToSlide(index)}
                   >
-                    <div className="relative w-[350px] h-[350px] bg-black/10 rounded-xl backdrop-blur-sm border border-white/10"
-                         style={{ 
-                           boxShadow: position.isCenter ? '0 20px 60px rgba(201, 162, 39, 0.3)' : '0 10px 30px rgba(0,0,0,0.3)',
-                         }}>
+                    <div className="relative w-[350px] h-[350px]">
                       {isLoaded ? (
                         <>
                           <model-viewer
@@ -311,11 +308,11 @@ export default function Product3DCarousel() {
                               background: "transparent",
                               "--progress-bar-color": "#C9A227",
                               "--poster-color": "transparent",
-                              filter: position.isCenter ? 'none' : 'brightness(0.7)',
+                              filter: position.isCenter ? 'none' : 'brightness(0.8)',
                               pointerEvents: position.isCenter ? 'auto' : 'none',
                             } as any}
                             className={cn(
-                              "rounded-lg transition-all duration-300",
+                              "transition-all duration-300",
                               position.isCenter && "cursor-grab active:cursor-grabbing"
                             )}
                             ar-modes="webxr scene-viewer quick-look"
@@ -323,11 +320,11 @@ export default function Product3DCarousel() {
                           
                           {/* Content overlay for center item only */}
                           {position.isCenter && (
-                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/70 to-transparent rounded-b-lg">
-                              <h2 className="text-xl font-serif text-[#F8F7F3] mb-1">
+                            <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 text-center w-[400px]">
+                              <h2 className="text-2xl font-serif text-[#F8F7F3] mb-1">
                                 {slide.title}
                               </h2>
-                              <p className="text-xs text-[#E7E5DC] mb-2">{slide.subtitle}</p>
+                              <p className="text-sm text-[#E7E5DC] mb-3">{slide.subtitle}</p>
                               <a
                                 href={slide.pdpUrl}
                                 onClick={(e) => {
@@ -335,7 +332,7 @@ export default function Product3DCarousel() {
                                   handleCTAClick(slide.pdpUrl);
                                 }}
                                 data-analytics="cta_click"
-                                className="inline-block px-4 py-2 text-sm border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                                className="inline-block px-5 py-2 text-sm border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
                               >
                                 View Product
                               </a>
