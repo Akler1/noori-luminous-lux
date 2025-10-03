@@ -105,6 +105,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setClearColor(0x000000, 0);
     mountRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -121,10 +122,13 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
     );
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    const hemi = new THREE.HemisphereLight(0xffffff, 0x222222, 0.4);
+    scene.add(hemi);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
     keyLight.position.set(2, 3, 2);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 2048;
@@ -145,6 +149,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
     loader.load(
       "/models/noori_placeholder.glb",
       (gltf) => {
+        console.log("GLB loaded", gltf);
         const baseModel = gltf.scene;
         
         // Normalize model width to ~1.0 scene unit
@@ -159,13 +164,27 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
         const centerScaled = boxScaled.getCenter(new THREE.Vector3());
         baseModel.position.sub(centerScaled);
 
+        // Brighten materials for visibility
+        baseModel.traverse((child) => {
+          if ((child as any).isMesh) {
+            const mesh = child as THREE.Mesh;
+            const mat = (mesh.material as any);
+            if (mat && 'metalness' in mat) {
+              mat.metalness = 0.8;
+              mat.roughness = 0.25;
+              if (!mat.color?.isColor) mat.color = new THREE.Color(0xC9A227);
+            }
+          }
+        });
+
         // Create 5 instances
         for (let i = 0; i < 5; i++) {
-          const instance = baseModel.clone();
+          const instance = baseModel.clone(true);
           instance.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-              child.castShadow = true;
-              child.receiveShadow = true;
+            if ((child as any).isMesh) {
+              const mesh = child as THREE.Mesh;
+              mesh.castShadow = true;
+              mesh.receiveShadow = true;
             }
           });
           
@@ -197,7 +216,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
           model.rotation.set(t.rotation.x, t.rotation.y, 0);
           model.scale.set(t.scale, t.scale, t.scale);
           // Shadow sizing per scale
-          const shadow = (model as any).children?.find((c: any) => c.geometry instanceof THREE.CircleGeometry) as THREE.Mesh | undefined;
+          const shadow = (model as any).children?.find((c: any) => (c as any).geometry instanceof THREE.CircleGeometry) as THREE.Mesh | undefined;
           if (shadow) {
             shadow.scale.set(t.scale, t.scale, 1);
             (model as any).shadowBlob.opacity = d === 0 ? 0.35 : Math.abs(d) === 1 ? 0.25 : 0.18;
@@ -205,7 +224,9 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
         });
       },
       undefined,
-      (error) => console.error("Model load error:", error)
+      (error) => {
+        console.error("Model load error:", error);
+      }
     );
 
     // Animation loop
