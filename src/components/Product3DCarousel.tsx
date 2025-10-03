@@ -233,37 +233,45 @@ export default function Product3DCarousel() {
           <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
-        {/* Circular Carousel Container */}
+        {/* Arc Carousel Container */}
         <div className="relative">
           <div
             className="relative h-[600px] md:h-[700px] w-full flex items-center justify-center"
-            style={{ perspective: '2000px' }}
+            style={{ perspective: '1800px' }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             {isLoaded && config.slides.map((slide, index) => {
-              const totalSlides = config.slides.length;
-              const angleStep = 360 / totalSlides;
-              const angle = ((index - currentIndex) * angleStep) * (Math.PI / 180);
-              const radius = 400;
+              // Distance from active index (positive = right, negative = left)
+              const d = index - currentIndex;
               
-              // Calculate position on circle
-              const x = Math.sin(angle) * radius;
-              const z = Math.cos(angle) * radius - radius; // Subtract radius to bring current to front
+              // Shallow arc positioning
+              const x = d * 230; // Horizontal spread (1.15 * 200px normalized width)
+              const z = -Math.abs(d) * 70; // Push neighbors back (0.35 * 200px)
+              const y = 0; // Keep level
+              
+              // Rotation (in degrees)
+              const rotY = -12 * d; // Yaw inward toward center
+              const rotX = -8 - 2 * Math.abs(d); // Forward tilt, more at edges
+              const rotZ = 0;
+              
+              // Scale (center largest, edges smaller)
+              const scale = 1.15 - 0.12 * Math.abs(d);
+              
+              // Opacity depth cue
+              const opacity = 1.0 - 0.08 * Math.abs(d);
               
               const isCurrent = index === currentIndex;
-              const scale = isCurrent ? 1 : 0.6;
-              const opacity = z > -radius - 100 ? (isCurrent ? 1 : 0.5) : 0.2;
               
               return (
                 <div
                   key={index}
                   className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out"
                   style={{
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) scale(${scale})`,
+                    transform: `translate(-50%, -50%) translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale})`,
                     transformStyle: 'preserve-3d',
                     opacity,
-                    zIndex: isCurrent ? 20 : Math.round(10 - Math.abs(z) / 50),
+                    zIndex: Math.round(20 + z / 10), // Items further back have lower z-index
                     pointerEvents: isCurrent ? 'auto' : 'none',
                   }}
                 >
