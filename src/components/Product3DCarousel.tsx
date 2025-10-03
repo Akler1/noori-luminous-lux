@@ -58,20 +58,6 @@ export default function Product3DCarousel() {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  // Load model-viewer script
-  useEffect(() => {
-    if (document.querySelector('script[src*="model-viewer"]')) {
-      setIsLoaded(true);
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
-    script.onload = () => setIsLoaded(true);
-    document.head.appendChild(script);
-
-
   // Analytics tracking
   useEffect(() => {
     if (!carouselRef.current) return;
