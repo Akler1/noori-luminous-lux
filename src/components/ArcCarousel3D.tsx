@@ -25,6 +25,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
   const animationFrameRef = useRef<number>();
   const mouseRef = useRef({ x: 0, y: 0 });
   const touchStartX = useRef<number>(0);
+  const activeIndexRef = useRef<number>(2);
   
   const [activeIndex, setActiveIndex] = useState(2); // Start at center
   const [isLoaded, setIsLoaded] = useState(false);
@@ -45,7 +46,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
       position: {
         x: d * 1.15,
         y: 0,
-        z: Math.abs(d) * 0.35
+        z: -Math.abs(d) * 0.35
       },
       rotation: {
         x: THREE.MathUtils.degToRad(-8 - 2 * Math.abs(d)),
@@ -146,16 +147,17 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
       (gltf) => {
         const baseModel = gltf.scene;
         
-        // Normalize model scale
+        // Normalize model width to ~1.0 scene unit
         const box = new THREE.Box3().setFromObject(baseModel);
         const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1.0 / maxDim;
-        baseModel.scale.multiplyScalar(scale);
+        const width = Math.max(size.x, 1e-6);
+        const scale = 1.0 / width;
+        baseModel.scale.setScalar(scale);
 
-        // Center the model
-        const center = box.getCenter(new THREE.Vector3());
-        baseModel.position.sub(center.multiplyScalar(scale));
+        // Recompute bounds after scaling and center the model at origin
+        const boxScaled = new THREE.Box3().setFromObject(baseModel);
+        const centerScaled = boxScaled.getCenter(new THREE.Vector3());
+        baseModel.position.sub(centerScaled);
 
         // Create 5 instances
         for (let i = 0; i < 5; i++) {
@@ -186,6 +188,21 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
         }
 
         setIsLoaded(true);
+
+        // Set initial transforms immediately
+        modelsRef.current.forEach((model, i) => {
+          const d = i - activeIndexRef.current;
+          const t = getTransform(d);
+          model.position.set(t.position.x, t.position.y, t.position.z);
+          model.rotation.set(t.rotation.x, t.rotation.y, 0);
+          model.scale.set(t.scale, t.scale, t.scale);
+          // Shadow sizing per scale
+          const shadow = (model as any).children?.find((c: any) => c.geometry instanceof THREE.CircleGeometry) as THREE.Mesh | undefined;
+          if (shadow) {
+            shadow.scale.set(t.scale, t.scale, 1);
+            (model as any).shadowBlob.opacity = d === 0 ? 0.35 : Math.abs(d) === 1 ? 0.25 : 0.18;
+          }
+        });
       },
       undefined,
       (error) => console.error("Model load error:", error)
@@ -195,33 +212,34 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
     const animate = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
 
-      if (isLoaded && modelsRef.current.length > 0) {
+      if (modelsRef.current.length > 0) {
         // Update each model position based on activeIndex
         modelsRef.current.forEach((model, i) => {
-          const d = i - activeIndex;
+          const d = i - activeIndexRef.current;
           const transform = getTransform(d);
 
+          // Target position with optional bobbing
+          const bob = d === 0 && !prefersReducedMotion ? Math.sin(Date.now() * 0.001) * 0.01 : 0;
+          const targetPos = new THREE.Vector3(transform.position.x, transform.position.y + bob, transform.position.z);
+
           // Smooth transition to target transform
-          model.position.lerp(
-            new THREE.Vector3(transform.position.x, transform.position.y, transform.position.z),
-            0.1
-          );
-          model.rotation.x += (transform.rotation.x - model.rotation.x) * 0.1;
-          model.rotation.y += (transform.rotation.y - model.rotation.y) * 0.1;
+          model.position.lerp(targetPos, 0.12);
+          model.rotation.x += (transform.rotation.x - model.rotation.x) * 0.12;
+          model.rotation.y += (transform.rotation.y - model.rotation.y) * 0.12;
           model.scale.lerp(
             new THREE.Vector3(transform.scale, transform.scale, transform.scale),
-            0.1
+            0.12
           );
 
-          // Update shadow opacity based on distance
+          // Update shadow opacity and size based on distance
           if ((model as any).shadowBlob) {
             const shadowOpacity = d === 0 ? 0.35 : Math.abs(d) === 1 ? 0.25 : 0.18;
-            (model as any).shadowBlob.opacity += (shadowOpacity - (model as any).shadowBlob.opacity) * 0.1;
-          }
-
-          // Subtle bob on active item
-          if (d === 0 && !prefersReducedMotion) {
-            model.position.y = Math.sin(Date.now() * 0.001) * 0.01;
+            (model as any).shadowBlob.opacity += (shadowOpacity - (model as any).shadowBlob.opacity) * 0.12;
+            const shadowMesh = (model as any).children?.find((c: any) => c.geometry instanceof THREE.CircleGeometry) as THREE.Mesh | undefined;
+            if (shadowMesh) {
+              const s = transform.scale;
+              shadowMesh.scale.set(s, s, 1);
+            }
           }
         });
 
@@ -260,7 +278,7 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
       }
       renderer.dispose();
     };
-  }, [isLoaded, activeIndex, prefersReducedMotion]);
+  }, []);
 
   // Navigation handlers
   const goToNext = useCallback(() => {
@@ -308,6 +326,10 @@ export const ArcCarousel3D = ({ slides, className }: ArcCarousel3DProps) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrevious]);
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   const currentSlide = slides[activeIndex];
 
