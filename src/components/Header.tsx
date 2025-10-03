@@ -54,7 +54,7 @@ export const Header = () => {
                 </Button>
               </Link>
               <Link to="/">
-                <img src={nooriLogo} alt="Noori" className="h-8 md:h-10 w-auto" />
+                <img src={nooriLogo} alt="Noori" className="h-12 md:h-16 w-auto" />
               </Link>
             </div>
 
