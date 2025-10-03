@@ -37,6 +37,7 @@ export default function Product3DCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
   const modelViewerRefs = useRef<Array<any>>([]);
+  const skipSwipe = useRef(false);
 
   // Load config
   useEffect(() => {
@@ -136,10 +137,16 @@ export default function Product3DCarousel() {
 
   // Touch handling
   const handleTouchStart = (e: React.TouchEvent) => {
+    const target = e.target as HTMLElement;
+    skipSwipe.current = !!target.closest('model-viewer');
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    if (skipSwipe.current) {
+      skipSwipe.current = false;
+      return;
+    }
     if (!config) return;
 
     const touchEndX = e.changedTouches[0].clientX;
@@ -298,7 +305,7 @@ export default function Product3DCarousel() {
                             auto-rotate={!position.isCenter}
                             auto-rotate-delay="0"
                             rotation-per-second={!position.isCenter ? "15deg" : undefined}
-                            camera-orbit={`${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`}
+                            camera-orbit="180deg 0deg auto"
                             field-of-view={`${slide.camera.fov}deg`}
                             disable-zoom
                             interaction-prompt="none"
@@ -320,7 +327,7 @@ export default function Product3DCarousel() {
                           
                           {/* Content overlay for center item only */}
                           {position.isCenter && (
-                            <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 text-center w-[400px]">
+                            <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 text-center w-[400px] pointer-events-none">
                               <h2 className="text-2xl font-serif text-[#F8F7F3] mb-1">
                                 {slide.title}
                               </h2>
@@ -332,7 +339,7 @@ export default function Product3DCarousel() {
                                   handleCTAClick(slide.pdpUrl);
                                 }}
                                 data-analytics="cta_click"
-                                className="inline-block px-5 py-2 text-sm border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                                className="pointer-events-auto inline-block px-5 py-2 text-sm border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
                               >
                                 View Product
                               </a>
