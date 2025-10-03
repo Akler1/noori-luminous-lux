@@ -235,14 +235,14 @@ export default function Product3DCarousel() {
         {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
-            className="flex items-center justify-center gap-4 md:gap-8 mb-8"
+            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             {/* Previous Slide */}
-            {prevIndex !== null && (
-              <div className="hidden md:block w-1/4 opacity-40 hover:opacity-60 transition-opacity duration-300">
-                {isLoaded && (
+            <div className="hidden md:block">
+              {prevIndex !== null && isLoaded && (
+                <div className="opacity-40 hover:opacity-60 transition-opacity duration-300">
                   <model-viewer
                     src={getModelSource(config.slides[prevIndex])}
                     poster={getPosterSource(config.slides[prevIndex])}
@@ -261,12 +261,12 @@ export default function Product3DCarousel() {
                     } as any}
                     className="rounded-lg pointer-events-none"
                   />
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
 
             {/* Current Slide - Main */}
-            <div className="flex-1 max-w-3xl">
+            <div className="w-full max-w-3xl mx-auto">
               <div className="relative aspect-square max-h-[70vh]">
                 {isLoaded ? (
                   <model-viewer
@@ -321,9 +321,9 @@ export default function Product3DCarousel() {
             </div>
 
             {/* Next Slide */}
-            {nextIndex !== null && (
-              <div className="hidden md:block w-1/4 opacity-40 hover:opacity-60 transition-opacity duration-300">
-                {isLoaded && (
+            <div className="hidden md:block">
+              {nextIndex !== null && isLoaded && (
+                <div className="opacity-40 hover:opacity-60 transition-opacity duration-300">
                   <model-viewer
                     src={getModelSource(config.slides[nextIndex])}
                     poster={getPosterSource(config.slides[nextIndex])}
@@ -342,9 +342,9 @@ export default function Product3DCarousel() {
                     } as any}
                     className="rounded-lg pointer-events-none"
                   />
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Navigation Arrows */}
