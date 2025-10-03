@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { ProductDialog } from "@/components/ProductDialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
@@ -20,9 +19,6 @@ const Capsule = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [countdown, setCountdown] = useState({ days: 14, hours: 23, minutes: 45 });
-  const [selectedProduct, setSelectedProduct] = useState<{ slug: string; title: string; subtitle: string; modelUrl: string; poster: string } | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [modelUrl, setModelUrl] = useState("/models/noori_placeholder.glb");
 
   // Load capsule products from carousel config
   useEffect(() => {
@@ -30,7 +26,6 @@ const Capsule = () => {
       try {
         const response = await fetch('/data/carousel-config.json');
         const config = await response.json();
-        setModelUrl(config.placeholder.glb);
         const slides = config.slides.map((slide: any) => ({
           slug: slide.slug,
           title: slide.title,
@@ -159,18 +154,11 @@ const Capsule = () => {
                       <Button
                         variant="outline"
                         className="bg-background/90 backdrop-blur-sm hover:bg-background"
-                        onClick={() => {
-                          setSelectedProduct({
-                            slug: product.slug,
-                            title: product.title,
-                            subtitle: product.subtitle,
-                            modelUrl: modelUrl,
-                            poster: product.poster || "/placeholder.svg",
-                          });
-                          setDialogOpen(true);
-                        }}
+                        asChild
                       >
-                        View Details
+                        <Link to={product.pdpUrl}>
+                          View Product
+                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -325,14 +313,6 @@ const Capsule = () => {
       </section>
 
       <Footer />
-      
-      {selectedProduct && (
-        <ProductDialog
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-          product={selectedProduct}
-        />
-      )}
     </div>
   );
 };

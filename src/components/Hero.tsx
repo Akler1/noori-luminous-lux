@@ -3,11 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Hero3D } from "@/components/Hero3D";
-import { ProductDialog } from "@/components/ProductDialog";
 
 export const Hero = () => {
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -58,13 +56,12 @@ export const Hero = () => {
           <div className="mt-10 flex gap-3 flex-col sm:flex-row">
             <Button 
               className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300"
-              onClick={() => {
-                console.log('select_promotion: hero_primary');
-                setDialogOpen(true);
-              }}
+              asChild
             >
-              View Product
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <Link to="/product/necklace-1ct-silver" onClick={() => console.log('select_promotion: hero_primary')}>
+                View Product
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
             <Button 
               variant="outline" 
@@ -94,18 +91,6 @@ export const Hero = () => {
         <span className="block text-xs tracking-[0.2em] mb-1">SCROLL TO EXPLORE</span>
         <span className="block text-lg animate-bounce">⌄</span>
       </div>
-
-      <ProductDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        product={{
-          slug: "featured-necklace",
-          title: "1ct Bezel-less Necklace",
-          subtitle: "Certified Lab-Grown Diamond",
-          modelUrl: "/models/noori_placeholder.glb",
-          poster: "/media/noori_placeholder.avif",
-        }}
-      />
     </section>
   );
 };
