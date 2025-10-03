@@ -246,24 +246,29 @@ export default function Product3DCarousel() {
               const absD = Math.abs(d);
               const isCurrent = absD === 0;
 
-              // Shallow U-shape layout constants
-              const SPACING_X = 380;   // horizontal spacing between items
-              const DEPTH_Z = 120;     // how much depth per step away from center
-              const LIFT_Y = 100;      // vertical lift per step away from center
-              const YAW_DEG = 12;      // inward yaw per step
-              const TILT_BASE = 6;     // base forward tilt
-              const TILT_STEP = 1.5;   // extra tilt per step
-              const SCALE_CENTER = 1.1;// center size
-              const SCALE_STEP = 0.12; // shrink per step
+              // Circular arc parameters (shallow U)
+              const RADIUS = 1200;     // arc radius controlling spacing
+              const STEP_DEG = 18;     // degrees between items along the arc
+              const LIFT_MAX = 140;    // max vertical lift at the far sides
+              const DEPTH_BOOST = 0;   // extra linear depth per step (optional)
+              const YAW_PER_DEG = 1;   // yaw inward proportional to arc angle
+              const TILT_FORWARD = -6; // negative => bottom edge slightly nearer
+              const TILT_STEP = -1.2;  // more forward tilt at sides (negative)
+              const SCALE_CENTER = 1.15; // center size
+              const SCALE_STEP = 0.10;   // shrink per step away from center
 
-              // Derived transforms - U shape with sides HIGHER
-              const x = d * SPACING_X;
-              const z = -absD * DEPTH_Z; // farther from center -> further back
-              const y = absD * LIFT_Y;   // side items rise UP to form U-shape
-              const yaw = -YAW_DEG * d;  // turn inward toward center
-              const tilt = TILT_BASE + absD * TILT_STEP; // slight forward tilt
+              // Angle on the arc
+              const thetaDeg = d * STEP_DEG;
+              const theta = (Math.PI / 180) * thetaDeg;
+
+              // Arc-based transforms
+              const x = RADIUS * Math.sin(theta);
+              const z = -RADIUS * (1 - Math.cos(theta)) - absD * DEPTH_BOOST; // center closest
+              const y = -LIFT_MAX * Math.sin(Math.abs(theta)); // negative => higher on page at sides
+              const yaw = -thetaDeg * YAW_PER_DEG; // inward toward center
+              const tilt = TILT_FORWARD + absD * TILT_STEP;   // slight forward tilt
               const scale = Math.max(0.6, SCALE_CENTER - SCALE_STEP * absD);
-              const opacity = Math.max(0.25, 1 - 0.18 * absD);
+              const opacity = Math.max(0.2, 1 - 0.2 * absD);
               const zIndex = 100 - absD; // ensure proper layering
               
               return (
