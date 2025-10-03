@@ -4,10 +4,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
-import { toast } from "sonner";
+import { useCartActions } from "@/hooks/useCart";
 
 interface ProductDialogProps {
   open: boolean;
@@ -39,14 +40,27 @@ export const ProductDialog = ({ open, onOpenChange, product }: ProductDialogProp
   const [selectedMaterial, setSelectedMaterial] = useState("14k-gold");
   const [selectedCarat, setSelectedCarat] = useState("1ct");
   const [quantity, setQuantity] = useState(1);
+  const { addToCart, isLoading } = useCartActions();
 
   const currentPrice = CARATS.find(c => c.id === selectedCarat)?.price || 1299;
 
-  const handleAddToCart = () => {
-    toast.success("Added to cart", {
-      description: `${product.title} - ${MATERIALS.find(m => m.id === selectedMaterial)?.label}, ${CARATS.find(c => c.id === selectedCarat)?.label}`,
-    });
-    onOpenChange(false);
+  const handleAddToCart = async () => {
+    // Create a mock variant ID based on the product and selected options
+    const variantId = `gid://shopify/ProductVariant/${product.slug}-${selectedMaterial}-${selectedCarat}`;
+    
+    try {
+      await addToCart(variantId, quantity);
+      console.log('Product added to cart:', {
+        product: product.title,
+        material: MATERIALS.find(m => m.id === selectedMaterial)?.label,
+        carat: CARATS.find(c => c.id === selectedCarat)?.label,
+        quantity,
+        variantId
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+    }
   };
 
   return (
@@ -54,7 +68,7 @@ export const ProductDialog = ({ open, onOpenChange, product }: ProductDialogProp
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-display">{product.title}</DialogTitle>
-          <p className="text-muted-foreground">{product.subtitle}</p>
+          <DialogDescription className="text-muted-foreground">{product.subtitle}</DialogDescription>
         </DialogHeader>
 
         <div className="grid md:grid-cols-2 gap-8 mt-4">
@@ -140,10 +154,15 @@ export const ProductDialog = ({ open, onOpenChange, product }: ProductDialogProp
               className="w-full"
               size="lg"
               onClick={handleAddToCart}
+              disabled={isLoading}
             >
               <ShoppingCart className="mr-2 h-5 w-5" />
-              Add to Cart - ${currentPrice * quantity}
+              {isLoading ? "Adding..." : `Add to Cart - $${currentPrice * quantity}`}
             </Button>
+            
+            <p className="text-xs text-muted-foreground text-center mt-2">
+              Free shipping over $150 • 30-day returns
+            </p>
           </div>
         </div>
       </DialogContent>
