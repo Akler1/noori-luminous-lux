@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -203,13 +204,32 @@ export default function Product3DCarousel() {
         }}
       />
 
-      <div className="container mx-auto px-[clamp(16px,3vw,48px)] max-w-[1600px] relative z-10 py-12">
-        {/* Title */}
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-5xl md:text-7xl font-serif text-[#F8F7F3] mb-4">
-            {config.carouselTitle}
+      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12">
+        {/* Hero Content */}
+        <div className="text-center mb-12 md:mb-16">
+          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6">
+            Light, made forever.
           </h1>
-          <p className="text-[#E7E5DC] text-lg">Explore our collection in 3D — Click to rotate</p>
+          <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
+            Certified lab-grown diamonds. Ethical. Enduring.{" "}
+            <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
+          </p>
+          <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
+            <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
+              <Link to="/capsule">
+                Shop the Capsule
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-[#E7E5DC]/30 text-[#E7E5DC] hover:bg-[#E7E5DC]/10 px-8 py-3 rounded-full transition-all duration-300" 
+              asChild
+            >
+              <Link to="/policies">About Our Diamonds</Link>
+            </Button>
+          </div>
+          <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
         {/* Carousel Container with 3 slides visible */}
