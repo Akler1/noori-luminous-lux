@@ -19,7 +19,7 @@ export const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "Shop", href: "/capsule" },
+    { name: "Collection", href: "/capsule" },
     { name: "About", href: "/policies" },
     { name: "Impact", href: "#impact" },
     { name: "Journal", href: "#journal" },

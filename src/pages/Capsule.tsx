@@ -5,27 +5,37 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { shopify } from "@/lib/shopify";
-import { ShopifyProduct } from "@/types/shopify";
-import { useCartActions } from "@/hooks/useCart";
-import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
+interface Product {
+  slug: string;
+  title: string;
+  subtitle: string;
+  pdpUrl: string;
+  poster?: string;
+}
+
 const Capsule = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [countdown, setCountdown] = useState({ days: 14, hours: 23, minutes: 45 });
-  const { addToCart } = useCartActions();
 
-  // Load capsule products
+  // Load capsule products from carousel config
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const allProducts = await shopify.getProducts();
-        setProducts(allProducts);
+        const response = await fetch('/data/carousel-config.json');
+        const config = await response.json();
+        const slides = config.slides.map((slide: any) => ({
+          slug: slide.slug,
+          title: slide.title,
+          subtitle: slide.subtitle,
+          pdpUrl: slide.pdpUrl,
+          poster: config.placeholder.poster
+        }));
+        setProducts(slides);
       } catch (error) {
         console.error('Failed to load products:', error);
-        toast.error('Failed to load capsule collection');
       } finally {
         setIsLoading(false);
       }
@@ -47,17 +57,6 @@ const Capsule = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleQuickAdd = async (productId: string) => {
-    // Get first available variant
-    const product = products.find(p => p.id === productId);
-    const firstVariant = product?.variants.edges.find(
-      ({ node }) => node.availableForSale
-    )?.node;
-    
-    if (firstVariant) {
-      await addToCart(firstVariant.id, 1);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -130,7 +129,7 @@ const Capsule = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => (
               <motion.div
-                key={product.id}
+                key={product.slug}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -138,90 +137,52 @@ const Capsule = () => {
               >
                 <div className="card-luxury overflow-hidden">
                   {/* Product Image */}
-                    <div className="relative aspect-square overflow-hidden">
-                      <Link to={`/product/${product.handle}`} className="block w-full h-full" aria-label={`View ${product.title}`}>
-                        <img
-                          src={product.images.edges[0]?.node.url}
-                          alt={product.images.edges[0]?.node.altText}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      </Link>
-                      
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative aspect-square overflow-hidden bg-gradient-subtle">
+                    <Link to={product.pdpUrl} className="block w-full h-full" aria-label={`View ${product.title}`}>
+                      <img
+                        src={product.poster || "/placeholder.svg"}
+                        alt={product.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    </Link>
                     
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
                     {/* Quick Actions */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="space-y-2">
-                        <Button
-                          onClick={() => handleQuickAdd(product.id)}
-                          className="btn-hero transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
-                        >
-                          Quick Add
-                        </Button>
-                        <Button
-                          variant="outline"
-                          className="bg-background/90 backdrop-blur-sm hover:bg-background w-full"
-                          asChild
-                        >
-                          <Link to={`/product/${product.handle}`}>
-                            View Details
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Price Badge */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-background/90 backdrop-blur-sm text-foreground border-0">
-                        From CAD ${product.priceRange.minVariantPrice.amount}
-                      </Badge>
+                      <Button
+                        variant="outline"
+                        className="bg-background/90 backdrop-blur-sm hover:bg-background"
+                        asChild
+                      >
+                        <Link to={product.pdpUrl}>
+                          View Details
+                        </Link>
+                      </Button>
                     </div>
                   </div>
 
                   {/* Product Info */}
                   <div className="p-6">
                     <h3 className="font-display text-xl font-normal mb-2 group-hover:text-accent transition-colors">
-                      <Link to={`/product/${product.handle}`}>{product.title}</Link>
+                      <Link to={product.pdpUrl}>{product.title}</Link>
                     </h3>
                     
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                      {product.description}
+                    <p className="text-muted-foreground text-sm mb-4">
+                      {product.subtitle}
                     </p>
 
-                    {/* Options Preview */}
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {product.options.map((option) => (
-                        <Badge key={option.id} variant="outline" className="text-xs">
-                          {option.values.length} {option.name} options
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Price Range */}
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-lg font-medium text-accent">
-                          CAD ${product.priceRange.minVariantPrice.amount}
-                        </span>
-                        {product.compareAtPriceRange.minVariantPrice.amount !== "0.00" && (
-                          <span className="text-sm text-muted-foreground line-through ml-2">
-                            CAD ${product.compareAtPriceRange.minVariantPrice.amount}
-                          </span>
-                        )}
-                      </div>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        asChild
-                        className="opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Link to={`/product/${product.handle}`}>
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="opacity-0 group-hover:opacity-100 transition-opacity -ml-2"
+                    >
+                      <Link to={product.pdpUrl}>
+                        Explore <ArrowRight className="ml-1 h-4 w-4" />
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </motion.div>
