@@ -122,12 +122,13 @@ export default function Product3DCarousel() {
 
   const goToNext = useCallback(() => {
     if (!config) return;
-    setCurrentIndex((prev) => Math.min(prev + 1, config.slides.length - 1));
+    setCurrentIndex((prev) => (prev + 1) % config.slides.length);
   }, [config]);
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
-  }, []);
+    if (!config) return;
+    setCurrentIndex((prev) => (prev - 1 + config.slides.length) % config.slides.length);
+  }, [config]);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
@@ -184,8 +185,8 @@ export default function Product3DCarousel() {
     return usingSingle ? config.placeholder.poster : slide.poster || config.placeholder.poster;
   };
 
-  const prevIndex = currentIndex > 0 ? currentIndex - 1 : null;
-  const nextIndex = currentIndex < config.slides.length - 1 ? currentIndex + 1 : null;
+  const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
+  const nextIndex = (currentIndex + 1) % config.slides.length;
 
   return (
     <section
@@ -241,7 +242,7 @@ export default function Product3DCarousel() {
           >
             {/* Previous Slide */}
             <div className="hidden md:block">
-              {prevIndex !== null && isLoaded && (
+              {isLoaded && (
                 <div className="opacity-40 hover:opacity-60 transition-opacity duration-300">
                   <model-viewer
                     src={getModelSource(config.slides[prevIndex])}
@@ -322,7 +323,7 @@ export default function Product3DCarousel() {
 
             {/* Next Slide */}
             <div className="hidden md:block">
-              {nextIndex !== null && isLoaded && (
+              {isLoaded && (
                 <div className="opacity-40 hover:opacity-60 transition-opacity duration-300">
                   <model-viewer
                     src={getModelSource(config.slides[nextIndex])}
@@ -350,8 +351,7 @@ export default function Product3DCarousel() {
           {/* Navigation Arrows */}
           <Button
             onClick={goToPrevious}
-            disabled={currentIndex === 0}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-20 disabled:cursor-not-allowed z-20"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
             size="icon"
             aria-label="Previous slide"
           >
@@ -360,8 +360,7 @@ export default function Product3DCarousel() {
 
           <Button
             onClick={goToNext}
-            disabled={currentIndex === config.slides.length - 1}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 disabled:opacity-20 disabled:cursor-not-allowed z-20"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
             size="icon"
             aria-label="Next slide"
           >
