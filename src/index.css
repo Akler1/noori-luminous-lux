@@ -6,42 +6,42 @@
 
 @layer base {
   :root {
-    /* Core Brand Colors - HSL Format */
-    --background: 30 12% 97%; /* Porcelain #F8F7F3 */
-    --foreground: 0 0% 4%; /* Deep Black #0B0B0B */
+    /* Core Brand Colors - Dark Navy Theme */
+    --background: 226 40% 12%; /* Dark Navy #171B2E */
+    --foreground: 45 70% 70%; /* Gold #D4AF37 */
 
-    --card: 30 12% 97%;
-    --card-foreground: 0 0% 4%;
+    --card: 226 35% 15%;
+    --card-foreground: 45 70% 70%;
 
-    --popover: 30 12% 97%;
-    --popover-foreground: 0 0% 4%;
+    --popover: 226 35% 15%;
+    --popover-foreground: 45 70% 70%;
 
-    /* Luxury Black as Primary */
-    --primary: 0 0% 4%; /* Deep Black #0B0B0B */
-    --primary-foreground: 30 12% 97%; /* Porcelain */
+    /* Gold as Primary */
+    --primary: 45 70% 60%; /* Warm Gold */
+    --primary-foreground: 226 40% 12%;
 
     /* Subtle Secondary */
-    --secondary: 30 8% 92%; /* Softer neutral */
-    --secondary-foreground: 0 0% 4%;
+    --secondary: 226 30% 20%;
+    --secondary-foreground: 45 70% 70%;
 
     /* Muted Elements */
-    --muted: 30 8% 92%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 226 25% 25%;
+    --muted-foreground: 45 30% 60%;
 
-    /* Gold Accent - Sparingly Used */
-    --accent: 45 65% 47%; /* Warm Gold #C9A227 */
-    --accent-foreground: 30 12% 97%;
+    /* Gold Accent */
+    --accent: 45 70% 60%; /* Warm Gold #D4AF37 */
+    --accent-foreground: 226 40% 12%;
 
     /* Noor Glow Gradient */
-    --glow-start: 45 65% 85%;
-    --glow-end: 30 12% 97%;
+    --glow-start: 45 70% 60%;
+    --glow-end: 45 70% 75%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 30 12% 97%;
+    --destructive-foreground: 226 40% 12%;
 
-    --border: 30 8% 88%;
-    --input: 30 8% 88%;
-    --ring: 45 65% 47%;
+    --border: 226 25% 25%;
+    --input: 226 25% 25%;
+    --ring: 45 70% 60%;
 
     --radius: 0.5rem;
 

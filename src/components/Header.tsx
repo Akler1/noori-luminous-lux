@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
 import { Link } from "react-router-dom";
+import nooriLogo from "@/assets/noori-logo.png";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -52,9 +53,9 @@ export const Header = () => {
                   <Home className="h-5 w-5" />
                 </Button>
               </Link>
-              <h1 className="font-display text-2xl md:text-3xl font-normal tracking-wide">
-                <span className="noor-glow">Noori</span>
-              </h1>
+              <Link to="/">
+                <img src={nooriLogo} alt="Noori" className="h-8 md:h-10 w-auto" />
+              </Link>
             </div>
 
           {/* Desktop Navigation */}
