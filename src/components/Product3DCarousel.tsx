@@ -186,19 +186,27 @@ export default function Product3DCarousel() {
   };
 
   const getItemPosition = (index: number) => {
-    const angle = ((index - currentIndex) * (360 / config.slides.length)) * (Math.PI / 180);
-    const radius = 400;
+    const totalSlides = config.slides.length;
+    const angle = ((index - currentIndex) / totalSlides) * Math.PI * 2;
+    const radius = 450;
     const x = Math.sin(angle) * radius;
     const z = Math.cos(angle) * radius;
-    const scale = z > 0 ? 1 : 0.6;
-    const opacity = z > -300 ? (z > 0 ? 1 : 0.5) : 0.3;
+    
+    // Scale based on z-position (items further back are smaller)
+    const scale = 0.5 + (z + radius) / (radius * 2) * 0.5;
+    
+    // Opacity based on position
+    const opacity = z > 0 ? 1 : 0.4;
+    
+    // Rotate items to face the center
+    const rotateY = -angle * (180 / Math.PI);
     
     return {
       x,
       z,
       scale,
       opacity,
-      rotateY: -angle * (180 / Math.PI),
+      rotateY,
       isCenter: index === currentIndex,
     };
   };
@@ -251,30 +259,38 @@ export default function Product3DCarousel() {
         {/* Carousel Container - Full Circle */}
         <div className="relative">
           <div
-            className="relative h-[600px] w-full flex items-center justify-center"
-            style={{ perspective: '1500px' }}
+            className="relative h-[700px] w-full flex items-center justify-center overflow-hidden"
+            style={{ perspective: '2000px' }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             {/* All items in circular arrangement */}
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
               {config.slides.map((slide, index) => {
                 const position = getItemPosition(index);
                 
                 return (
                   <div
                     key={index}
-                    className="absolute top-1/2 left-1/2 cursor-pointer"
+                    className="absolute top-1/2 left-1/2 cursor-pointer transition-all duration-700 ease-out"
                     style={{
                       transformStyle: 'preserve-3d',
-                      transform: `translate(-50%, -50%) translateX(${position.x}px) translateZ(${position.z}px) rotateY(${position.rotateY}deg) scale(${position.scale})`,
+                      transform: `
+                        translate(-50%, -50%)
+                        translateX(${position.x}px)
+                        translateZ(${position.z}px)
+                        rotateY(${position.rotateY}deg)
+                        scale(${position.scale})
+                      `,
                       opacity: position.opacity,
-                      transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                      zIndex: position.isCenter ? 10 : 1,
+                      zIndex: Math.round((position.z + 500) * 10),
                     }}
                     onClick={() => !position.isCenter && goToSlide(index)}
                   >
-                    <div className="relative w-[300px] h-[300px]">
+                    <div className="relative w-[350px] h-[350px] bg-black/10 rounded-xl backdrop-blur-sm border border-white/10"
+                         style={{ 
+                           boxShadow: position.isCenter ? '0 20px 60px rgba(201, 162, 39, 0.3)' : '0 10px 30px rgba(0,0,0,0.3)',
+                         }}>
                       {isLoaded ? (
                         <>
                           <model-viewer
