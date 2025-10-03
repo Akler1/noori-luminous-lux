@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
 import { Link } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,8 +26,13 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const collectionItems = [
+    { name: "Earrings", href: "/collections/earrings" },
+    { name: "Necklaces", href: "/collections/necklaces" },
+    { name: "Bracelets", href: "/collections/bracelets" },
+  ];
+
   const navItems = [
-    { name: "Collection", href: "/capsule" },
     { name: "About", href: "/policies" },
     { name: "Impact", href: "#impact" },
     { name: "Journal", href: "#journal" },
@@ -41,6 +54,32 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent hover:bg-transparent data-[state=open]:bg-transparent">
+                    Collections
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-3 p-4">
+                      {collectionItems.map((item) => (
+                        <li key={item.name}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to={item.href}
+                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent focus:bg-accent/10 focus:text-accent"
+                            >
+                              <div className="text-sm font-medium leading-none">{item.name}</div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+            
             {navItems.map((item) => (
               item.href.startsWith('/') ? (
                 <Link
@@ -89,6 +128,19 @@ export const Header = () => {
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-border/50">
               <nav className="flex flex-col space-y-4">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-muted-foreground">Collections</div>
+                  {collectionItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="text-sm font-medium py-2 pl-4 block transition-colors hover:text-accent"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
                 {navItems.map((item) => (
                   item.href.startsWith('/') ? (
                     <Link
