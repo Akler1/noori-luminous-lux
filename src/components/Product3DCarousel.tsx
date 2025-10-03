@@ -312,7 +312,7 @@ export default function Product3DCarousel() {
                     {isCurrent && (
                       <div
                         className={cn(
-                          "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
+                          "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300 pointer-events-none",
                           "opacity-100"
                         )}
                       >
@@ -324,7 +324,7 @@ export default function Product3DCarousel() {
                           href={slide.pdpUrl}
                           onClick={() => handleCTAClick(slide.pdpUrl)}
                           data-analytics="cta_click"
-                          className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                          className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium pointer-events-auto"
                         >
                           View Product
                         </a>
