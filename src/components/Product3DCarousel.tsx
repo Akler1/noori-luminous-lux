@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ArcCarousel3D } from "./ArcCarousel3D";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -31,12 +31,6 @@ interface CarouselConfig {
 
 export default function Product3DCarousel() {
   const [config, setConfig] = useState<CarouselConfig | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number>(0);
-  const modelViewerRefs = useRef<Array<any>>([]);
 
   // Load config
   useEffect(() => {
@@ -46,125 +40,9 @@ export default function Product3DCarousel() {
       .catch((err) => console.error("Failed to load carousel config:", err));
   }, []);
 
-  // Check for reduced motion preference
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  // Load model-viewer script
-  useEffect(() => {
-    if (document.querySelector('script[src*="model-viewer"]')) {
-      setIsLoaded(true);
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
-    script.onload = () => setIsLoaded(true);
-    document.head.appendChild(script);
-
-    return () => {
-      const existing = document.querySelector('script[src*="model-viewer"]');
-      if (existing) existing.remove();
-    };
-  }, []);
-
-  // Analytics tracking
-  useEffect(() => {
-    if (!carouselRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          console.log("Analytics: carousel_view");
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(carouselRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // Track slide changes
-  useEffect(() => {
-    if (config) {
-      console.log("Analytics: slide_change", {
-        index: currentIndex,
-        slug: config.slides[currentIndex].slug,
-      });
-    }
-  }, [currentIndex, config]);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!config) return;
-
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        goToPrevious();
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault();
-        goToNext();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [config, currentIndex]);
-
-  const goToNext = useCallback(() => {
-    if (!config) return;
-    setCurrentIndex((prev) => (prev + 1) % config.slides.length);
-  }, [config]);
-
-  const goToPrevious = useCallback(() => {
-    if (!config) return;
-    setCurrentIndex((prev) => (prev - 1 + config.slides.length) % config.slides.length);
-  }, [config]);
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentIndex(index);
-  }, []);
-
-  // Touch handling
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!config) return;
-
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
-
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        goToNext();
-      } else {
-        goToPrevious();
-      }
-    }
-  };
-
-  const handleCTAClick = (pdpUrl: string) => {
-    console.log("Analytics: cta_click", { pdpUrl });
-  };
-
   if (!config) {
     return (
-      <section
-        id="product-3d-carousel"
-        className="w-full py-24 bg-[#0B0B0B]"
-        aria-label="Loading 3D product carousel"
-      >
+      <section className="w-full py-24 bg-[#0B0B0B]">
         <div className="container mx-auto px-4">
           <div className="animate-pulse text-center text-[#E7E5DC]">
             Loading carousel...
@@ -174,199 +52,41 @@ export default function Product3DCarousel() {
     );
   }
 
-  const usingSingle = config.mode === "singleGlb";
-  const currentSlide = config.slides[currentIndex];
-
-  const getModelSource = (slide: typeof currentSlide) => {
-    return usingSingle ? config.placeholder.glb : slide.glb || config.placeholder.glb;
-  };
-
-  const getPosterSource = (slide: typeof currentSlide) => {
-    return usingSingle ? config.placeholder.poster : slide.poster || config.placeholder.poster;
-  };
-
-  const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
-  const nextIndex = (currentIndex + 1) % config.slides.length;
-
   return (
     <section
       id="product-3d-carousel"
-      ref={carouselRef}
-      className="w-full min-h-screen bg-[#0B0B0B] relative overflow-hidden flex items-center"
+      className="w-full relative overflow-hidden"
       role="region"
       aria-label="3D product carousel"
-      data-analytics="carousel_view"
     >
-      {/* Radial glow behind active slide */}
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)`,
-        }}
-      />
-
-      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12">
-        {/* Hero Content */}
-        <div className="text-center mb-12 md:mb-16">
-          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6">
-            Light, made forever.
-          </h1>
-          <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
-            Certified lab-grown diamonds. Ethical. Enduring.{" "}
-            <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
-          </p>
-          <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
-            <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
-              <Link to="/capsule">
-                Shop the Capsule
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
-              asChild
-            >
-              <Link to="/policies">About Our Diamonds</Link>
-            </Button>
-          </div>
-          <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
-        </div>
-
-        {/* Circular Carousel Container */}
-        <div className="relative">
-          <div
-            className="relative h-[600px] md:h-[700px] w-full flex items-center justify-center"
-            style={{ perspective: '2000px' }}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {isLoaded && config.slides.map((slide, index) => {
-              const totalSlides = config.slides.length;
-              const angleStep = 360 / totalSlides;
-              const angle = ((index - currentIndex) * angleStep) * (Math.PI / 180);
-              const radius = 400;
-              
-              // Calculate position on circle
-              const x = Math.sin(angle) * radius;
-              const z = Math.cos(angle) * radius - radius; // Subtract radius to bring current to front
-              
-              const isCurrent = index === currentIndex;
-              const scale = isCurrent ? 1 : 0.6;
-              const opacity = z > -radius - 100 ? (isCurrent ? 1 : 0.5) : 0.2;
-              
-              return (
-                <div
-                  key={index}
-                  className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out"
-                  style={{
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) scale(${scale})`,
-                    transformStyle: 'preserve-3d',
-                    opacity,
-                    zIndex: isCurrent ? 20 : Math.round(10 - Math.abs(z) / 50),
-                    pointerEvents: isCurrent ? 'auto' : 'none',
-                  }}
-                >
-                  <div className="w-[500px] h-[500px] relative">
-                    <model-viewer
-                      ref={(el: any) => {
-                        if (isCurrent) modelViewerRefs.current[currentIndex] = el;
-                      }}
-                      src={getModelSource(slide)}
-                      poster={getPosterSource(slide)}
-                      camera-controls={isCurrent}
-                      auto-rotate={!isCurrent}
-                      auto-rotate-delay="0"
-                      rotation-per-second={!isCurrent ? "15deg" : undefined}
-                      camera-orbit={`${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`}
-                      field-of-view={`${slide.camera.fov}deg`}
-                      disable-zoom
-                      interaction-prompt="none"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "transparent",
-                        "--progress-bar-color": "#C9A227",
-                        "--poster-color": "transparent",
-                      } as any}
-                      className={cn(
-                        "rounded-lg transition-opacity duration-300",
-                        isCurrent && "cursor-grab active:cursor-grabbing"
-                      )}
-                      ar-modes="webxr scene-viewer quick-look"
-                    />
-
-                    {/* Slide Content Overlay - Only show on current */}
-                    {isCurrent && (
-                      <div
-                        className={cn(
-                          "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
-                          "opacity-100"
-                        )}
-                      >
-                        <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
-                          {slide.title}
-                        </h2>
-                        <p className="text-sm text-[#E7E5DC] mb-4">{slide.subtitle}</p>
-                        <a
-                          href={slide.pdpUrl}
-                          onClick={() => handleCTAClick(slide.pdpUrl)}
-                          data-analytics="cta_click"
-                          className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
-                        >
-                          View Product
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Navigation Arrows */}
-          <Button
-            onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
-            size="icon"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-6 h-6 text-[#F8F7F3]" />
+      {/* Hero Content */}
+      <div className="absolute top-12 left-0 right-0 z-10 text-center px-4">
+        <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6">
+          Light, made forever.
+        </h1>
+        <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
+          Certified lab-grown diamonds. Ethical. Enduring.{" "}
+          <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
+        </p>
+        <div className="flex gap-3 flex-col sm:flex-row justify-center">
+          <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
+            <Link to="/capsule">
+              Shop the Capsule
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
-
-          <Button
-            onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
-            size="icon"
-            aria-label="Next slide"
+          <Button 
+            variant="outline" 
+            className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
+            asChild
           >
-            <ChevronRight className="w-6 h-6 text-[#F8F7F3]" />
+            <Link to="/policies">About Our Diamonds</Link>
           </Button>
-        </div>
-
-        {/* Dot Navigation */}
-        <div className="flex items-center justify-center gap-6 mt-8">
-          <span className="text-[#E7E5DC] font-mono text-sm">
-            {String(currentIndex + 1).padStart(2, "0")} / {String(config.slides.length).padStart(2, "0")}
-          </span>
-          <div className="flex gap-2">
-            {config.slides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
-                  index === currentIndex
-                    ? "bg-[#C9A227] w-8"
-                    : "bg-white/30 hover:bg-white/50"
-                )}
-                aria-label={`Go to slide ${index + 1}`}
-                aria-current={index === currentIndex ? "true" : "false"}
-              />
-            ))}
-          </div>
         </div>
       </div>
+
+      {/* Three.js Arc Carousel */}
+      <ArcCarousel3D slides={config.slides} />
     </section>
   );
 }
