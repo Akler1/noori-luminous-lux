@@ -242,28 +242,39 @@ export default function Product3DCarousel() {
             onTouchEnd={handleTouchEnd}
           >
             {isLoaded && config.slides.map((slide, index) => {
-              const totalSlides = config.slides.length;
-              const angleStep = 360 / totalSlides;
-              const angle = ((index - currentIndex) * angleStep) * (Math.PI / 180);
-              const radius = 400;
-              
-              // Calculate position on circle
-              const x = Math.sin(angle) * radius;
-              const z = Math.cos(angle) * radius - radius; // Subtract radius to bring current to front
-              
-              const isCurrent = index === currentIndex;
-              const scale = isCurrent ? 1 : 0.6;
-              const opacity = z > -radius - 100 ? (isCurrent ? 1 : 0.5) : 0.2;
+              const d = index - currentIndex;
+              const absD = Math.abs(d);
+              const isCurrent = absD === 0;
+
+              // Shallow U-shape layout constants
+              const SPACING_X = 240;   // horizontal spacing between items
+              const DEPTH_Z = 120;     // how much depth per step away from center
+              const LIFT_Y = 60;       // vertical lift per step away from center
+              const YAW_DEG = 12;      // inward yaw per step
+              const TILT_BASE = 6;     // base forward tilt
+              const TILT_STEP = 1.5;   // extra tilt per step
+              const SCALE_CENTER = 1.1;// center size
+              const SCALE_STEP = 0.12; // shrink per step
+
+              // Derived transforms
+              const x = d * SPACING_X;
+              const z = -absD * DEPTH_Z; // farther from center -> further back
+              const y = -absD * LIFT_Y;  // side items sit higher on the page
+              const yaw = -YAW_DEG * d;  // turn inward toward center
+              const tilt = TILT_BASE + absD * TILT_STEP; // slight forward tilt
+              const scale = Math.max(0.6, SCALE_CENTER - SCALE_STEP * absD);
+              const opacity = Math.max(0.25, 1 - 0.18 * absD);
+              const zIndex = 100 - absD; // ensure proper layering
               
               return (
                 <div
                   key={index}
                   className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out"
                   style={{
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) scale(${scale})`,
+                    transform: `translate(-50%, -50%) translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateY(${yaw}deg) rotateX(${tilt}deg) scale(${scale})`,
                     transformStyle: 'preserve-3d',
                     opacity,
-                    zIndex: isCurrent ? 20 : Math.round(10 - Math.abs(z) / 50),
+                    zIndex,
                     pointerEvents: isCurrent ? 'auto' : 'none',
                   }}
                 >
