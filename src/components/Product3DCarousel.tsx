@@ -233,125 +233,95 @@ export default function Product3DCarousel() {
           <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
-        {/* Carousel Container with 3 slides visible */}
+        {/* Circular Carousel Container */}
         <div className="relative">
           <div
-            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
+            className="relative h-[600px] md:h-[700px] w-full flex items-center justify-center"
+            style={{ perspective: '2000px' }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Previous Slide */}
-            <div className="hidden md:block">
-              {isLoaded && (
-                <div 
-                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
-                  onClick={() => goToPrevious()}
-                >
-                  <model-viewer
-                    src={getModelSource(config.slides[prevIndex])}
-                    poster={getPosterSource(config.slides[prevIndex])}
-                    auto-rotate
-                    auto-rotate-delay="0"
-                    rotation-per-second="15deg"
-                    camera-orbit={`${config.slides[prevIndex].camera.azimuthDeg}deg ${config.slides[prevIndex].camera.elevationDeg}deg auto`}
-                    field-of-view={`${config.slides[prevIndex].camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "300px",
-                      background: "transparent",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className="rounded-lg"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Current Slide - Main */}
-            <div className="w-full max-w-3xl mx-auto">
-              <div className="relative aspect-square max-h-[70vh]">
-                {isLoaded ? (
-                  <model-viewer
-                    ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
-                    src={getModelSource(currentSlide)}
-                    poster={getPosterSource(currentSlide)}
-                    camera-controls
-                    camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
-                    field-of-view={`${currentSlide.camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "transparent",
-                      "--progress-bar-color": "#C9A227",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className={cn(
-                      "rounded-lg transition-opacity duration-300",
-                      "cursor-grab active:cursor-grabbing"
-                    )}
-                    ar-modes="webxr scene-viewer quick-look"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
-                    <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
-                  </div>
-                )}
-
-                {/* Slide Content Overlay */}
+            {isLoaded && config.slides.map((slide, index) => {
+              const totalSlides = config.slides.length;
+              const angleStep = 360 / totalSlides;
+              const angle = ((index - currentIndex) * angleStep) * (Math.PI / 180);
+              const radius = 400;
+              
+              // Calculate position on circle
+              const x = Math.sin(angle) * radius;
+              const z = Math.cos(angle) * radius - radius; // Subtract radius to bring current to front
+              
+              const isCurrent = index === currentIndex;
+              const scale = isCurrent ? 1 : 0.6;
+              const opacity = z > -radius - 100 ? (isCurrent ? 1 : 0.5) : 0.2;
+              
+              return (
                 <div
-                  className={cn(
-                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
-                    currentIndex >= 0 ? "opacity-100" : "opacity-0"
-                  )}
+                  key={index}
+                  className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out"
+                  style={{
+                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) scale(${scale})`,
+                    transformStyle: 'preserve-3d',
+                    opacity,
+                    zIndex: isCurrent ? 20 : Math.round(10 - Math.abs(z) / 50),
+                    pointerEvents: isCurrent ? 'auto' : 'none',
+                  }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
-                    {currentSlide.title}
-                  </h2>
-                  <p className="text-sm text-[#E7E5DC] mb-4">{currentSlide.subtitle}</p>
-                  <a
-                    href={currentSlide.pdpUrl}
-                    onClick={() => handleCTAClick(currentSlide.pdpUrl)}
-                    data-analytics="cta_click"
-                    className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
-                  >
-                    View Product
-                  </a>
-                </div>
-              </div>
-            </div>
+                  <div className="w-[500px] h-[500px] relative">
+                    <model-viewer
+                      ref={(el: any) => {
+                        if (isCurrent) modelViewerRefs.current[currentIndex] = el;
+                      }}
+                      src={getModelSource(slide)}
+                      poster={getPosterSource(slide)}
+                      camera-controls={isCurrent}
+                      auto-rotate={!isCurrent}
+                      auto-rotate-delay="0"
+                      rotation-per-second={!isCurrent ? "15deg" : undefined}
+                      camera-orbit={`${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`}
+                      field-of-view={`${slide.camera.fov}deg`}
+                      disable-zoom
+                      interaction-prompt="none"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        background: "transparent",
+                        "--progress-bar-color": "#C9A227",
+                        "--poster-color": "transparent",
+                      } as any}
+                      className={cn(
+                        "rounded-lg transition-opacity duration-300",
+                        isCurrent && "cursor-grab active:cursor-grabbing"
+                      )}
+                      ar-modes="webxr scene-viewer quick-look"
+                    />
 
-            {/* Next Slide */}
-            <div className="hidden md:block">
-              {isLoaded && (
-                <div 
-                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
-                  onClick={() => goToNext()}
-                >
-                  <model-viewer
-                    src={getModelSource(config.slides[nextIndex])}
-                    poster={getPosterSource(config.slides[nextIndex])}
-                    auto-rotate
-                    auto-rotate-delay="0"
-                    rotation-per-second="15deg"
-                    camera-orbit={`${config.slides[nextIndex].camera.azimuthDeg}deg ${config.slides[nextIndex].camera.elevationDeg}deg auto`}
-                    field-of-view={`${config.slides[nextIndex].camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "300px",
-                      background: "transparent",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className="rounded-lg"
-                  />
+                    {/* Slide Content Overlay - Only show on current */}
+                    {isCurrent && (
+                      <div
+                        className={cn(
+                          "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
+                          "opacity-100"
+                        )}
+                      >
+                        <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
+                          {slide.title}
+                        </h2>
+                        <p className="text-sm text-[#E7E5DC] mb-4">{slide.subtitle}</p>
+                        <a
+                          href={slide.pdpUrl}
+                          onClick={() => handleCTAClick(slide.pdpUrl)}
+                          data-analytics="cta_click"
+                          className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                        >
+                          View Product
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
+              );
+            })}
           </div>
 
           {/* Navigation Arrows */}
