@@ -3,9 +3,6 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -35,13 +32,11 @@ interface CarouselConfig {
 export default function Product3DCarousel() {
   const [config, setConfig] = useState<CarouselConfig | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
-  const canvasRefs = useRef<Array<HTMLCanvasElement | null>>([]);
-  const scenesRef = useRef<Array<{ scene: THREE.Scene; camera: THREE.PerspectiveCamera; renderer: THREE.WebGLRenderer; controls: OrbitControls; mixer?: THREE.AnimationMixer } | null>>([]);
-  const animationFrameIds = useRef<Array<number>>([]);
+  const modelViewerRefs = useRef<Array<any>>([]);
 
   // Load config
   useEffect(() => {
@@ -61,204 +56,24 @@ export default function Product3DCarousel() {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  // Setup Three.js scenes
-  const setupScene = useCallback((canvas: HTMLCanvasElement, modelPath: string, camera: { azimuthDeg: number; elevationDeg: number; fov: number }, index: number, autoRotate = false) => {
-    const scene = new THREE.Scene();
-    const threeCamera = new THREE.PerspectiveCamera(
-      camera.fov,
-      canvas.clientWidth / canvas.clientHeight,
-      0.1,
-      1000
-    );
+  // Load model-viewer script
+  useEffect(() => {
+    if (document.querySelector('script[src*="model-viewer"]')) {
+      setIsLoaded(true);
+      return;
+    }
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
-
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    fillLight.position.set(-5, 0, -5);
-    scene.add(fillLight);
-
-    // Controls
-    const controls = new OrbitControls(threeCamera, canvas);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = false;
-    controls.autoRotate = autoRotate;
-    controls.autoRotateSpeed = 1.5;
-
-    // Set camera position based on config
-    const azimuthRad = (camera.azimuthDeg * Math.PI) / 180;
-    const elevationRad = (camera.elevationDeg * Math.PI) / 180;
-    const radius = 2;
-    
-    threeCamera.position.x = radius * Math.cos(elevationRad) * Math.sin(azimuthRad);
-    threeCamera.position.y = radius * Math.sin(elevationRad);
-    threeCamera.position.z = radius * Math.cos(elevationRad) * Math.cos(azimuthRad);
-    threeCamera.lookAt(0, 0, 0);
-
-    // Load model
-    const loader = new GLTFLoader();
-    loader.load(
-      modelPath,
-      (gltf) => {
-        // Apply diamond material settings to transparent materials
-        gltf.scene.traverse((o: any) => {
-          if (o.isMesh && o.material && o.material.type === "MeshPhysicalMaterial") {
-            const m = o.material as THREE.MeshPhysicalMaterial;
-            // Treat as diamond:
-            m.metalness = 0.0;
-            m.roughness = 0.02;
-            m.specularIntensity = 1.0;
-            m.clearcoat = 0.15;
-            m.clearcoatRoughness = 0.08;
-            m.ior = 2.4;
-            m.transmission = 1.0;
-            // Volume:
-            m.thickness = 1.5;
-            m.attenuationColor = new THREE.Color(0.96, 0.96, 0.98);
-            m.attenuationDistance = 0.006;
-            m.needsUpdate = true;
-          }
-        });
-
-        // Center and scale model
-        const box = new THREE.Box3().setFromObject(gltf.scene);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1.5 / maxDim;
-        
-        gltf.scene.scale.multiplyScalar(scale);
-        gltf.scene.position.sub(center.multiplyScalar(scale));
-        
-        scene.add(gltf.scene);
-
-        if (gltf.animations.length > 0) {
-          const mixer = new THREE.AnimationMixer(gltf.scene);
-          gltf.animations.forEach((clip) => {
-            mixer.clipAction(clip).play();
-          });
-          if (scenesRef.current[index]) {
-            scenesRef.current[index]!.mixer = mixer;
-          }
-        }
-      },
-      undefined,
-      (error) => {
-        console.error("Error loading model:", error);
-      }
-    );
-
-    scenesRef.current[index] = { scene, camera: threeCamera, renderer, controls };
-
-    // Animation loop
-    const clock = new THREE.Clock();
-    const animate = () => {
-      const delta = clock.getDelta();
-      controls.update();
-      
-      if (scenesRef.current[index]?.mixer) {
-        scenesRef.current[index]!.mixer!.update(delta);
-      }
-      
-      renderer.render(scene, threeCamera);
-      animationFrameIds.current[index] = requestAnimationFrame(animate);
-    };
-    animate();
-
-    // Handle resize
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      threeCamera.aspect = width / height;
-      threeCamera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-    window.addEventListener("resize", handleResize);
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
+    script.onload = () => setIsLoaded(true);
+    document.head.appendChild(script);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      if (animationFrameIds.current[index]) {
-        cancelAnimationFrame(animationFrameIds.current[index]);
-      }
-      controls.dispose();
-      renderer.dispose();
-      scene.traverse((object) => {
-        if (object instanceof THREE.Mesh) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((mat) => mat.dispose());
-          } else {
-            object.material.dispose();
-          }
-        }
-      });
+      const existing = document.querySelector('script[src*="model-viewer"]');
+      if (existing) existing.remove();
     };
   }, []);
-
-  // Initialize scenes when config loads
-  useEffect(() => {
-    if (!config || !isLoaded) return;
-
-    const cleanups: Array<() => void> = [];
-
-    // Setup current slide
-    const currentCanvas = canvasRefs.current[1];
-    if (currentCanvas) {
-      const cleanup = setupScene(
-        currentCanvas,
-        getModelSource(config.slides[currentIndex]),
-        config.slides[currentIndex].camera,
-        1,
-        false
-      );
-      cleanups.push(cleanup);
-    }
-
-    // Setup prev slide
-    const prevCanvas = canvasRefs.current[0];
-    if (prevCanvas) {
-      const cleanup = setupScene(
-        prevCanvas,
-        getModelSource(config.slides[prevIndex]),
-        config.slides[prevIndex].camera,
-        0,
-        true
-      );
-      cleanups.push(cleanup);
-    }
-
-    // Setup next slide
-    const nextCanvas = canvasRefs.current[2];
-    if (nextCanvas) {
-      const cleanup = setupScene(
-        nextCanvas,
-        getModelSource(config.slides[nextIndex]),
-        config.slides[nextIndex].camera,
-        2,
-        true
-      );
-      cleanups.push(cleanup);
-    }
-
-    return () => {
-      cleanups.forEach((cleanup) => cleanup());
-      scenesRef.current = [null, null, null];
-    };
-  }, [config, currentIndex, isLoaded, setupScene]);
 
   // Analytics tracking
   useEffect(() => {
@@ -359,13 +174,19 @@ export default function Product3DCarousel() {
     );
   }
 
+  const usingSingle = config.mode === "singleGlb";
   const currentSlide = config.slides[currentIndex];
-  const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
-  const nextIndex = (currentIndex + 1) % config.slides.length;
 
   const getModelSource = (slide: typeof currentSlide) => {
-    return config.mode === "singleGlb" ? config.placeholder.glb : slide.glb || config.placeholder.glb;
+    return usingSingle ? config.placeholder.glb : slide.glb || config.placeholder.glb;
   };
+
+  const getPosterSource = (slide: typeof currentSlide) => {
+    return usingSingle ? config.placeholder.poster : slide.poster || config.placeholder.poster;
+  };
+
+  const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
+  const nextIndex = (currentIndex + 1) % config.slides.length;
 
   return (
     <section
@@ -421,27 +242,64 @@ export default function Product3DCarousel() {
           >
             {/* Previous Slide */}
             <div className="hidden md:block">
-              <div 
-                className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
-                onClick={() => goToPrevious()}
-              >
-                <canvas
-                  ref={(el) => (canvasRefs.current[0] = el)}
-                  className="rounded-lg w-full h-[300px]"
-                />
-              </div>
+              {isLoaded && (
+                <div 
+                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                  onClick={() => goToPrevious()}
+                >
+                  <model-viewer
+                    src={getModelSource(config.slides[prevIndex])}
+                    poster={getPosterSource(config.slides[prevIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[prevIndex].camera.azimuthDeg}deg ${config.slides[prevIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[prevIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Current Slide - Main */}
             <div className="w-full max-w-3xl mx-auto">
               <div className="relative aspect-square max-h-[70vh]">
-                <canvas
-                  ref={(el) => (canvasRefs.current[1] = el)}
-                  className={cn(
-                    "rounded-lg transition-opacity duration-300 w-full h-full",
-                    "cursor-grab active:cursor-grabbing"
-                  )}
-                />
+                {isLoaded ? (
+                  <model-viewer
+                    ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
+                    src={getModelSource(currentSlide)}
+                    poster={getPosterSource(currentSlide)}
+                    camera-controls
+                    camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
+                    field-of-view={`${currentSlide.camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "transparent",
+                      "--progress-bar-color": "#C9A227",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className={cn(
+                      "rounded-lg transition-opacity duration-300",
+                      "cursor-grab active:cursor-grabbing"
+                    )}
+                    ar-modes="webxr scene-viewer quick-look"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
+                    <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
+                  </div>
+                )}
 
                 {/* Slide Content Overlay */}
                 <div
@@ -468,15 +326,31 @@ export default function Product3DCarousel() {
 
             {/* Next Slide */}
             <div className="hidden md:block">
-              <div 
-                className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
-                onClick={() => goToNext()}
-              >
-                <canvas
-                  ref={(el) => (canvasRefs.current[2] = el)}
-                  className="rounded-lg w-full h-[300px]"
-                />
-              </div>
+              {isLoaded && (
+                <div 
+                  className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                  onClick={() => goToNext()}
+                >
+                  <model-viewer
+                    src={getModelSource(config.slides[nextIndex])}
+                    poster={getPosterSource(config.slides[nextIndex])}
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="15deg"
+                    camera-orbit={`${config.slides[nextIndex].camera.azimuthDeg}deg ${config.slides[nextIndex].camera.elevationDeg}deg auto`}
+                    field-of-view={`${config.slides[nextIndex].camera.fov}deg`}
+                    disable-zoom
+                    interaction-prompt="none"
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "transparent",
+                      "--poster-color": "transparent",
+                    } as any}
+                    className="rounded-lg"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
