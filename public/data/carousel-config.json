@@ -1,6 +1,6 @@
 {
   "carouselTitle": "The Capsule in 3D",
-  "mode": "singleGlb",
+  "mode": "perSlide",
   "placeholder": {
     "glb": "/models/noori_placeholder.glb",
     "poster": "/media/noori_placeholder.avif",
@@ -20,7 +20,8 @@
       "title": "Stud — Round Brilliant, 14K Gold",
       "subtitle": "Heirloom-Quality Lab Diamond",
       "pdpUrl": "/product/stud-round-14k",
-      "camera": { "azimuthDeg": -22, "elevationDeg": 12, "fov": 35 }
+      "camera": { "azimuthDeg": -22, "elevationDeg": 12, "fov": 35 },
+      "glb": "/models/stud-round-14k.glb"
     },
     {
       "slug": "bracelet-five-9k",
