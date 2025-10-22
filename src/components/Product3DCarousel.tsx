@@ -120,6 +120,87 @@ export default function Product3DCarousel() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [config, currentIndex]);
 
+  // Apply diamond material settings to stud model only
+  useEffect(() => {
+    if (!config || !isLoaded) return;
+
+    const currentModelViewer = modelViewerRefs.current[currentIndex];
+    if (!currentModelViewer) return;
+
+    const currentSlide = config.slides[currentIndex];
+    
+    // Only apply diamond settings to the stud model
+    if (currentSlide.slug !== "stud-round-14k") return;
+
+    const applyDiamondMaterial = async () => {
+      try {
+        const materials = await currentModelViewer.model?.materials;
+        if (!materials) return;
+
+        // Find diamond/stone materials by name or transparency properties
+        for (const material of materials) {
+          const name = (material.name || '').toLowerCase();
+          const looksLikeStone = 
+            name.includes('stone') || 
+            name.includes('gem') || 
+            name.includes('diamond');
+
+          // Also check for existing transmission/alpha properties
+          const params = await material.getEffectiveParams?.();
+          const hasTransmission = (params?.transmissionFactor ?? 0) > 0;
+          const isTransparent = (params?.alphaMode ?? '') !== 'OPAQUE';
+
+          if (looksLikeStone || hasTransmission || isTransparent) {
+            console.log('Applying diamond material to:', material.name);
+
+            // Base properties - pure white, no tint
+            await material.setBaseColorFactor?.([1.0, 1.0, 1.0, 1.0]);
+            await material.setMetallicFactor?.(0.0);
+            await material.setRoughnessFactor?.(0.01);
+
+            // Transmission & IOR
+            await material.setTransmissionFactor?.(1.0);
+            await material.setIor?.(2.4);
+
+            // Volume attenuation (units in meters)
+            await material.setThicknessFactor?.(0.0015); // ~1.5mm
+            await material.setAttenuationColor?.([0.98, 0.98, 0.995]);
+            await material.setAttenuationDistance?.(0.006); // ~6mm
+
+            // Specular & clearcoat
+            await material.setSpecularFactor?.(1.0);
+            await material.setClearcoatFactor?.(0.12);
+            await material.setClearcoatRoughnessFactor?.(0.08);
+
+            // Remove ORM texture if it's causing issues
+            try {
+              await material.setMetallicRoughnessTexture?.(null);
+            } catch (e) {
+              // Ignore if not supported
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error applying diamond material:', error);
+      }
+    };
+
+    const handleLoad = () => {
+      applyDiamondMaterial();
+    };
+
+    currentModelViewer.addEventListener('load', handleLoad);
+
+    // Apply immediately if already loaded
+    if (currentModelViewer.loaded) {
+      applyDiamondMaterial();
+    }
+
+    return () => {
+      currentModelViewer.removeEventListener('load', handleLoad);
+    };
+  }, [config, currentIndex, isLoaded]);
+
   const goToNext = useCallback(() => {
     if (!config) return;
     setCurrentIndex((prev) => (prev + 1) % config.slides.length);
@@ -282,6 +363,8 @@ export default function Product3DCarousel() {
                     field-of-view={`${currentSlide.camera.fov}deg`}
                     disable-zoom
                     interaction-prompt="none"
+                    tone-mapping={currentSlide.slug === "stud-round-14k" ? "aces" : undefined}
+                    exposure={currentSlide.slug === "stud-round-14k" ? "1.12" : undefined}
                     style={{
                       width: "100%",
                       height: "100%",
