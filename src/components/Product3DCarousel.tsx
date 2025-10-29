@@ -188,6 +188,64 @@ export default function Product3DCarousel() {
   const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
   const nextIndex = (currentIndex + 1) % config.slides.length;
 
+  // Helper to check if a slide is the stud earring
+  const isStudSlide = (slide: typeof currentSlide) => slide.slug === "stud-round-14k";
+
+  // Render function for 3D viewer or iframe
+  const renderViewer = (slide: typeof currentSlide, isMain: boolean = false) => {
+    if (isStudSlide(slide)) {
+      return (
+        <iframe
+          src="https://akler1.github.io/Emerald-XR-test.1/XR%20test%2028.10.2.html"
+          className="w-full h-full rounded-lg border-0"
+          style={{
+            width: "100%",
+            height: isMain ? "100%" : "300px",
+            background: "transparent",
+          }}
+          allow="xr-spatial-tracking; fullscreen; autoplay"
+          allowFullScreen
+          title={slide.title}
+        />
+      );
+    }
+
+    return (
+      <model-viewer
+        ref={isMain ? (el: any) => (modelViewerRefs.current[currentIndex] = el) : undefined}
+        src={getModelSource(slide)}
+        poster={getPosterSource(slide)}
+        {...(isMain ? {
+          "camera-controls": true,
+          "camera-orbit": `${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`,
+          "field-of-view": `${slide.camera.fov}deg`,
+          "disable-zoom": true,
+          "interaction-prompt": "none",
+          "ar-modes": "webxr scene-viewer quick-look",
+        } : {
+          "auto-rotate": true,
+          "auto-rotate-delay": "0",
+          "rotation-per-second": "15deg",
+          "camera-orbit": `${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`,
+          "field-of-view": `${slide.camera.fov}deg`,
+          "disable-zoom": true,
+          "interaction-prompt": "none",
+        })}
+        style={{
+          width: "100%",
+          height: isMain ? "100%" : "300px",
+          background: "transparent",
+          "--progress-bar-color": "#C9A227",
+          "--poster-color": "transparent",
+        } as any}
+        className={cn(
+          "rounded-lg transition-opacity duration-300",
+          isMain && "cursor-grab active:cursor-grabbing"
+        )}
+      />
+    );
+  };
+
   return (
     <section
       id="product-3d-carousel"
@@ -247,24 +305,7 @@ export default function Product3DCarousel() {
                   className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
                   onClick={() => goToPrevious()}
                 >
-                  <model-viewer
-                    src={getModelSource(config.slides[prevIndex])}
-                    poster={getPosterSource(config.slides[prevIndex])}
-                    auto-rotate
-                    auto-rotate-delay="0"
-                    rotation-per-second="15deg"
-                    camera-orbit={`${config.slides[prevIndex].camera.azimuthDeg}deg ${config.slides[prevIndex].camera.elevationDeg}deg auto`}
-                    field-of-view={`${config.slides[prevIndex].camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "300px",
-                      background: "transparent",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className="rounded-lg"
-                  />
+                  {renderViewer(config.slides[prevIndex])}
                 </div>
               )}
             </div>
@@ -273,28 +314,7 @@ export default function Product3DCarousel() {
             <div className="w-full max-w-3xl mx-auto">
               <div className="relative aspect-square max-h-[70vh]">
                 {isLoaded ? (
-                  <model-viewer
-                    ref={(el: any) => (modelViewerRefs.current[currentIndex] = el)}
-                    src={getModelSource(currentSlide)}
-                    poster={getPosterSource(currentSlide)}
-                    camera-controls
-                    camera-orbit={`${currentSlide.camera.azimuthDeg}deg ${currentSlide.camera.elevationDeg}deg auto`}
-                    field-of-view={`${currentSlide.camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "transparent",
-                      "--progress-bar-color": "#C9A227",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className={cn(
-                      "rounded-lg transition-opacity duration-300",
-                      "cursor-grab active:cursor-grabbing"
-                    )}
-                    ar-modes="webxr scene-viewer quick-look"
-                  />
+                  renderViewer(currentSlide, true)
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
                     <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
@@ -331,24 +351,7 @@ export default function Product3DCarousel() {
                   className="opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
                   onClick={() => goToNext()}
                 >
-                  <model-viewer
-                    src={getModelSource(config.slides[nextIndex])}
-                    poster={getPosterSource(config.slides[nextIndex])}
-                    auto-rotate
-                    auto-rotate-delay="0"
-                    rotation-per-second="15deg"
-                    camera-orbit={`${config.slides[nextIndex].camera.azimuthDeg}deg ${config.slides[nextIndex].camera.elevationDeg}deg auto`}
-                    field-of-view={`${config.slides[nextIndex].camera.fov}deg`}
-                    disable-zoom
-                    interaction-prompt="none"
-                    style={{
-                      width: "100%",
-                      height: "300px",
-                      background: "transparent",
-                      "--poster-color": "transparent",
-                    } as any}
-                    className="rounded-lg"
-                  />
+                  {renderViewer(config.slides[nextIndex])}
                 </div>
               )}
             </div>
