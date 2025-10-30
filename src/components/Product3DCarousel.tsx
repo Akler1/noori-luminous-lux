@@ -259,7 +259,7 @@ export default function Product3DCarousel() {
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
         style={{
-          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)`,
+          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.06), rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 1) 80%)`,
         }}
       />
 
