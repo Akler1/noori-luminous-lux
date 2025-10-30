@@ -324,19 +324,18 @@ export default function Product3DCarousel() {
                 {/* Slide Content Overlay */}
                 <div
                   className={cn(
-                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-md transition-opacity duration-300",
+                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-4 md:p-5 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-sm transition-opacity duration-300",
                     currentIndex >= 0 ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <h2 className="text-2xl md:text-3xl font-serif text-[#F8F7F3] mb-2">
+                  <h2 className="text-xl md:text-2xl font-serif text-[#F8F7F3] mb-3">
                     {currentSlide.title}
                   </h2>
-                  <p className="text-sm text-[#E7E5DC] mb-4">{currentSlide.subtitle}</p>
                   <a
                     href={currentSlide.pdpUrl}
                     onClick={() => handleCTAClick(currentSlide.pdpUrl)}
                     data-analytics="cta_click"
-                    className="inline-block px-6 py-3 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium"
+                    className="inline-block px-5 py-2 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium text-sm"
                   >
                     View Product
                   </a>
