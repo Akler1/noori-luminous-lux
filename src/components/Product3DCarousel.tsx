@@ -193,7 +193,10 @@ export default function Product3DCarousel() {
 
   // Render function for 3D viewer or iframe
   const renderViewer = (slide: typeof currentSlide, isMain: boolean = false) => {
+    console.log('renderViewer called for slide:', slide.slug, 'isStudSlide:', isStudSlide(slide));
+    
     if (isStudSlide(slide)) {
+      console.log('Rendering iframe for stud earrings');
       return (
         <iframe
           src="https://akler1.github.io/Emerald-XR-test.1/XR%20test%2028.10.2.html"
