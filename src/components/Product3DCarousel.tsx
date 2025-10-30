@@ -294,7 +294,7 @@ export default function Product3DCarousel() {
         {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
-            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
+            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8 bg-black"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
