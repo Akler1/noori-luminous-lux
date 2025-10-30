@@ -250,7 +250,7 @@ export default function Product3DCarousel() {
     <section
       id="product-3d-carousel"
       ref={carouselRef}
-      className="w-full min-h-screen bg-background relative overflow-hidden flex items-center"
+      className="w-full min-h-screen bg-black relative overflow-hidden flex items-center"
       role="region"
       aria-label="3D product carousel"
       data-analytics="carousel_view"
