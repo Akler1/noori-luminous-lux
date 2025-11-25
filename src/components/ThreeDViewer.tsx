@@ -117,10 +117,10 @@ export const ThreeDViewer = ({
           ref={modelViewerRef}
           src={iframeUrl}
           title={`3D viewer of ${variant?.title}`}
-          className="w-full h-[400px] border-0"
+          className="w-full h-[600px] md:h-[700px] border-0"
           style={{
             width: '100%',
-            height: '400px',
+            height: '700px',
             border: 'none',
             backgroundColor: 'transparent'
           }}
@@ -143,7 +143,7 @@ export const ThreeDViewer = ({
           max-camera-orbit="auto auto 200%"
           style={{
             width: '100%',
-            height: '400px',
+            height: '700px',
             backgroundColor: 'transparent'
           }}
           className="w-full h-full"
