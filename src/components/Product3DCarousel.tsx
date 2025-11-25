@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
@@ -34,6 +34,7 @@ export default function Product3DCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [showRotateHint, setShowRotateHint] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
   const modelViewerRefs = useRef<Array<any>>([]);
@@ -312,12 +313,29 @@ export default function Product3DCarousel() {
 
             {/* Current Slide - Main */}
             <div className="w-full max-w-3xl mx-auto">
-              <div className="relative aspect-square max-h-[70vh]">
+              <div 
+                className="relative aspect-square max-h-[70vh]"
+                onMouseDown={() => setShowRotateHint(false)}
+                onTouchStart={(e) => {
+                  handleTouchStart(e);
+                  setShowRotateHint(false);
+                }}
+              >
                 {isLoaded ? (
                   renderViewer(currentSlide, true)
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
                     <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
+                  </div>
+                )}
+
+                {/* Rotation Hint Overlay */}
+                {showRotateHint && isLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/70 backdrop-blur-sm px-6 py-4 rounded-full border border-[#C9A227]/30 flex items-center gap-3 animate-pulse">
+                      <RotateCw className="w-6 h-6 text-[#C9A227] animate-spin" style={{ animationDuration: '3s' }} />
+                      <span className="text-[#F8F7F3] font-medium">Click & Drag to Rotate</span>
+                    </div>
                   </div>
                 )}
 
