@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const necklacesProducts = [
   {
     id: "necklace-princess",
-    name: "Princess-Cut Necklace — Platinum",
+    name: "Princess Necklace",
     price: "$3,299",
     image: "/src/assets/necklace-hero.jpg",
     pdpUrl: "/product/necklace-princess-platinum",
@@ -15,7 +15,7 @@ const necklacesProducts = [
   },
   {
     id: "necklace-round",
-    name: "1ct Bezel-less Necklace — Silver",
+    name: "Bezel-less Necklace",
     price: "$2,799",
     image: "/src/assets/necklace-hero.jpg",
     pdpUrl: "/product/necklace-1ct-silver",
@@ -24,7 +24,7 @@ const necklacesProducts = [
   },
   {
     id: "necklace-emerald",
-    name: "Emerald-Cut Necklace — 18K Gold",
+    name: "Emerald Necklace",
     price: "$3,599",
     image: "/src/assets/necklace-hero.jpg",
     pdpUrl: "/product/necklace-emerald-18k",

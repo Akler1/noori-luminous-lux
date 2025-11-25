@@ -254,6 +254,175 @@ class ShopifyClient {
         }
       ],
       reviews: { rating: 5, count: 67 }
+    },
+    {
+      id: 'gid://shopify/Product/4',
+      handle: 'stud-round-14k',
+      title: 'Round Brilliant Stud',
+      description: 'Classic elegance in lab-grown diamonds. Available in gold, white gold, and rose gold with your choice of 1ct or 2ct stones.',
+      priceRange: {
+        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/4',
+              url: '/src/assets/earrings-hero.jpg',
+              altText: 'Round Brilliant Stud Earrings',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/5',
+              title: 'Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
+              quantityAvailable: 15,
+              sku: 'NOORI-STUD-GOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Gold Round Brilliant Stud - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/6',
+              title: 'Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
+              quantityAvailable: 8,
+              sku: 'NOORI-STUD-GOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Gold Round Brilliant Stud - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/7',
+              title: 'White Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
+              quantityAvailable: 12,
+              sku: 'NOORI-STUD-WGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-White.1/XR%20Rounds%20White.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'White Gold Round Brilliant Stud - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/8',
+              title: 'White Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
+              quantityAvailable: 6,
+              sku: 'NOORI-STUD-WGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-White.1/XR%20Rounds%20White.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'White Gold Round Brilliant Stud - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/9',
+              title: 'Rose Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1690.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
+              quantityAvailable: 10,
+              sku: 'NOORI-STUD-RGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-Rose.1/XR%20Rounds%20Rose.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Rose Gold Round Brilliant Stud - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/10',
+              title: 'Rose Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2990.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-STUD-RGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Round-Rose.1/XR%20Rounds%20Rose.1.html',
+              image: {
+                id: 'gid://shopify/ProductImage/4',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Rose Gold Round Brilliant Stud - 2ct'
+              }
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/7',
+          name: 'Material',
+          values: ['Gold', 'White Gold', 'Rose Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/8',
+          name: 'Size',
+          values: ['1ct', '2ct']
+        }
+      ],
+      reviews: { rating: 5, count: 156 }
     }
   ];
 

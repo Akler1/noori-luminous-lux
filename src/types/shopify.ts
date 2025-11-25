@@ -72,6 +72,7 @@ export interface ShopifyVariant {
   quantityAvailable: number;
   sku?: string;
   model3d?: string; // GLB file URL for 3D viewer
+  iframeUrl?: string; // External iframe URL for 3D viewer (alternative to model3d)
 }
 
 export interface CartLine {
