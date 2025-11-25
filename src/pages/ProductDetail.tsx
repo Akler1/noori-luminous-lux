@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight } from "lucide-react";
+import { Star, Heart, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ThreeDViewer } from "@/components/ThreeDViewer";
@@ -23,6 +23,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'3d' | 'images'>('3d');
   const { addToCart, isLoading: cartLoading } = useCartActions();
 
   // Load product data
@@ -147,28 +148,47 @@ const ProductDetail = () => {
       <main className="container mx-auto px-4 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {/* Product Media */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
+              className="space-y-4"
             >
-              <ProductCarousel 
-                images={carouselImages}
-                showThumbs={true}
-                className="mb-6"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <ThreeDViewer 
-                variant={selectedVariant}
-                autoRotate={false}
-              />
+              {/* 3D Viewer or Image Gallery */}
+              {viewMode === '3d' ? (
+                <ThreeDViewer 
+                  variant={selectedVariant}
+                  autoRotate={false}
+                />
+              ) : (
+                <ProductCarousel 
+                  images={carouselImages}
+                  showThumbs={true}
+                />
+              )}
+              
+              {/* Toggle Button */}
+              <div className="flex justify-center gap-2">
+                <Button
+                  variant={viewMode === '3d' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('3d')}
+                  className={viewMode === '3d' ? 'btn-hero' : 'btn-ghost-luxury'}
+                >
+                  <Box className="mr-2 h-4 w-4" />
+                  3D View
+                </Button>
+                <Button
+                  variant={viewMode === 'images' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('images')}
+                  className={viewMode === 'images' ? 'btn-hero' : 'btn-ghost-luxury'}
+                >
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  Images
+                </Button>
+              </div>
             </motion.div>
           </div>
 
