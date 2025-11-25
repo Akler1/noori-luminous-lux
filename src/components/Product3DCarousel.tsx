@@ -196,7 +196,7 @@ export default function Product3DCarousel() {
     if (isStudSlide(slide)) {
       return (
         <iframe
-          src="https://akler1.github.io/Emerald-XR-test.1/XR%20test%2028.10.2.html"
+          src="https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
           className="w-full h-full rounded-lg border-0"
           style={{
             width: "100%",
