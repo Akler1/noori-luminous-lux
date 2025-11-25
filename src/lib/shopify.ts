@@ -337,7 +337,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
               quantityAvailable: 12,
               sku: 'NOORI-STUD-WGOLD-1CT',
-              iframeUrl: 'https://akler1.github.io/XR-Round-White.1/XR%20Rounds%20White.1.html',
+              iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
@@ -358,7 +358,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
               quantityAvailable: 6,
               sku: 'NOORI-STUD-WGOLD-2CT',
-              iframeUrl: 'https://akler1.github.io/XR-Round-White.1/XR%20Rounds%20White.1.html',
+              iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
@@ -379,7 +379,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-STUD-RGOLD-1CT',
-              iframeUrl: 'https://akler1.github.io/XR-Round-Rose.1/XR%20Rounds%20Rose.1.html',
+              iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
@@ -400,7 +400,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-STUD-RGOLD-2CT',
-              iframeUrl: 'https://akler1.github.io/XR-Round-Rose.1/XR%20Rounds%20Rose.1.html',
+              iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
