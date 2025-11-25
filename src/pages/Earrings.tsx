@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const earringsProducts = [
   {
     id: "earrings-princess",
-    name: "Princess-Cut Earrings — 18K White Gold",
+    name: "Princess Earrings",
     price: "$1,899",
     image: "/src/assets/earrings-princess.jpg",
     pdpUrl: "/product/earrings-princess-18k",
@@ -15,7 +15,7 @@ const earringsProducts = [
   },
   {
     id: "earrings-round",
-    name: "Round Brilliant Studs — 14K Gold",
+    name: "Round Brilliant Stud",
     price: "$1,599",
     image: "/src/assets/earrings-hero.jpg",
     pdpUrl: "/product/stud-round-14k",
@@ -24,7 +24,7 @@ const earringsProducts = [
   },
   {
     id: "earrings-emerald",
-    name: "Emerald-Cut Earrings — Platinum",
+    name: "Emerald Earrings",
     price: "$2,299",
     image: "/src/assets/earrings-hero.jpg",
     pdpUrl: "/product/earrings-emerald-platinum",

@@ -10,14 +10,14 @@
   "slides": [
     {
       "slug": "necklace-1ct-silver",
-      "title": "1ct Bezel-less Necklace — Silver",
+      "title": "Bezel-less Necklace",
       "subtitle": "Certified Lab-Grown Diamond",
       "pdpUrl": "/product/necklace-1ct-silver",
       "camera": { "azimuthDeg": -18, "elevationDeg": 10, "fov": 35 }
     },
     {
       "slug": "stud-round-14k",
-      "title": "Stud — Round Brilliant, 14K Gold",
+      "title": "Round Brilliant Stud",
       "subtitle": "Heirloom-Quality Lab Diamond",
       "pdpUrl": "/product/stud-round-14k",
       "camera": { "azimuthDeg": -22, "elevationDeg": 12, "fov": 35 },
@@ -25,21 +25,21 @@
     },
     {
       "slug": "bracelet-five-9k",
-      "title": "Five-Solitaire Bracelet — 9K Gold",
+      "title": "Five-Solitaire Bracelet",
       "subtitle": "Van-Cleef-Style Placement",
       "pdpUrl": "/product/bracelet-five-9k",
       "camera": { "azimuthDeg": -15, "elevationDeg": 9, "fov": 38 }
     },
     {
       "slug": "earrings-princess-18k",
-      "title": "Princess-Cut Earrings — 18K White Gold",
+      "title": "Princess Earrings",
       "subtitle": "Classic Elegance",
       "pdpUrl": "/product/earrings-princess-18k",
       "camera": { "azimuthDeg": -20, "elevationDeg": 11, "fov": 36 }
     },
     {
       "slug": "ring-emerald-platinum",
-      "title": "Emerald-Cut Ring — Platinum",
+      "title": "Emerald Ring",
       "subtitle": "Timeless Beauty",
       "pdpUrl": "/product/ring-emerald-platinum",
       "camera": { "azimuthDeg": -16, "elevationDeg": 8, "fov": 37 }

@@ -64,9 +64,10 @@ export const ThreeDViewer = ({
     }
   };
 
-  // Mock 3D model URL - in production, this would come from variant.model3d
+  // Check for iframe URL first, then fall back to 3D model
+  const iframeUrl = variant?.iframeUrl;
   const modelUrl = variant?.model3d || '/models/placeholder-diamond.glb';
-  const hasModel = variant?.model3d;
+  const hasModel = variant?.model3d || variant?.iframeUrl;
 
   if (error) {
     return (
@@ -110,29 +111,46 @@ export const ThreeDViewer = ({
       transition={{ duration: 0.3 }}
       className={`relative rounded-xl overflow-hidden shadow-elegant ${className}`}
     >
-      {/* 3D Viewer */}
-      <model-viewer
-        ref={modelViewerRef}
-        src={modelUrl}
-        alt={`3D model of ${variant?.title}`}
-        auto-rotate={autoRotate}
-        camera-controls
-        touch-action="pan-y"
-        environment-image="/hdris/studio.hdr"
-        exposure="1"
-        shadow-intensity="1"
-        camera-orbit="0deg 75deg 105%"
-        min-camera-orbit="auto auto 50%"
-        max-camera-orbit="auto auto 200%"
-        style={{
-          width: '100%',
-          height: '400px',
-          backgroundColor: 'transparent'
-        }}
-        className="w-full h-full"
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setError('Failed to load 3D model')}
-      />
+      {/* 3D Viewer - Iframe or Model Viewer */}
+      {iframeUrl ? (
+        <iframe
+          ref={modelViewerRef}
+          src={iframeUrl}
+          title={`3D viewer of ${variant?.title}`}
+          className="w-full h-[400px] border-0"
+          style={{
+            width: '100%',
+            height: '400px',
+            border: 'none',
+            backgroundColor: 'transparent'
+          }}
+          allow="xr-spatial-tracking; accelerometer; gyroscope"
+          allowFullScreen
+        />
+      ) : (
+        <model-viewer
+          ref={modelViewerRef}
+          src={modelUrl}
+          alt={`3D model of ${variant?.title}`}
+          auto-rotate={autoRotate}
+          camera-controls
+          touch-action="pan-y"
+          environment-image="/hdris/studio.hdr"
+          exposure="1"
+          shadow-intensity="1"
+          camera-orbit="0deg 75deg 105%"
+          min-camera-orbit="auto auto 50%"
+          max-camera-orbit="auto auto 200%"
+          style={{
+            width: '100%',
+            height: '400px',
+            backgroundColor: 'transparent'
+          }}
+          className="w-full h-full"
+          onLoad={() => setIsLoaded(true)}
+          onError={() => setError('Failed to load 3D model')}
+        />
+      )}
 
       {/* Controls Overlay */}
       <div className="absolute top-4 right-4 flex gap-2">
