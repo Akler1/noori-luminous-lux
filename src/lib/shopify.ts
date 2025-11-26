@@ -506,6 +506,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-EMERALD-WGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-White.1/XR%20Emerald%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
@@ -526,6 +527,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-EMERALD-WGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-White.1/XR%20Emerald%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
@@ -546,6 +548,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
               quantityAvailable: 9,
               sku: 'NOORI-EMERALD-RGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
@@ -566,6 +569,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
               quantityAvailable: 4,
               sku: 'NOORI-EMERALD-RGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
