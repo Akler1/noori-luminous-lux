@@ -38,10 +38,10 @@
       "camera": { "azimuthDeg": -20, "elevationDeg": 11, "fov": 36 }
     },
     {
-      "slug": "ring-emerald-platinum",
-      "title": "Emerald Ring",
+      "slug": "earrings-emerald-gold",
+      "title": "Emerald Earring",
       "subtitle": "Timeless Beauty",
-      "pdpUrl": "/product/ring-emerald-platinum",
+      "pdpUrl": "/product/earrings-emerald-gold",
       "camera": { "azimuthDeg": -16, "elevationDeg": 8, "fov": 37 }
     }
   ]

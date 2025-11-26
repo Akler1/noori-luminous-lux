@@ -191,6 +191,9 @@ export default function Product3DCarousel() {
 
   // Helper to check if a slide is the stud earring
   const isStudSlide = (slide: typeof currentSlide) => slide.slug === "stud-round-14k";
+  
+  // Helper to check if a slide is the emerald earring
+  const isEmeraldSlide = (slide: typeof currentSlide) => slide.slug === "earrings-emerald-gold";
 
   // Render function for 3D viewer or iframe
   const renderViewer = (slide: typeof currentSlide, isMain: boolean = false) => {
@@ -198,6 +201,23 @@ export default function Product3DCarousel() {
       return (
         <iframe
           src="https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
+          className="w-full h-full rounded-lg border-0"
+          style={{
+            width: "100%",
+            height: isMain ? "100%" : "300px",
+            background: "transparent",
+          }}
+          allow="xr-spatial-tracking; fullscreen; autoplay"
+          allowFullScreen
+          title={slide.title}
+        />
+      );
+    }
+
+    if (isEmeraldSlide(slide)) {
+      return (
+        <iframe
+          src="https://akler1.github.io/XR-Emerald-gold.1/"
           className="w-full h-full rounded-lg border-0"
           style={{
             width: "100%",
