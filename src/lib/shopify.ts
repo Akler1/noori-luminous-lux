@@ -423,6 +423,334 @@ class ShopifyClient {
         }
       ],
       reviews: { rating: 5, count: 156 }
+    },
+    {
+      id: 'gid://shopify/Product/5',
+      handle: 'earrings-emerald-gold',
+      title: 'Emerald Cut Earring',
+      description: 'Elegant emerald cut lab-grown diamonds in premium metals. A timeless design that showcases the emerald cut\'s unique step-cut faceting.',
+      priceRange: {
+        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/5',
+              url: '/src/assets/earrings-hero.jpg',
+              altText: 'Emerald Cut Earrings',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/11',
+              title: 'Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
+              quantityAvailable: 12,
+              sku: 'NOORI-EMERALD-GOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Gold Emerald Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/12',
+              title: 'Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
+              quantityAvailable: 7,
+              sku: 'NOORI-EMERALD-GOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Gold Emerald Cut Earrings - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/13',
+              title: 'White Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
+              quantityAvailable: 10,
+              sku: 'NOORI-EMERALD-WGOLD-1CT',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'White Gold Emerald Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/14',
+              title: 'White Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-EMERALD-WGOLD-2CT',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'White Gold Emerald Cut Earrings - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/15',
+              title: 'Rose Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1690.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
+              quantityAvailable: 9,
+              sku: 'NOORI-EMERALD-RGOLD-1CT',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Rose Gold Emerald Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/16',
+              title: 'Rose Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2990.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
+              quantityAvailable: 4,
+              sku: 'NOORI-EMERALD-RGOLD-2CT',
+              image: {
+                id: 'gid://shopify/ProductImage/5',
+                url: '/src/assets/earrings-hero.jpg',
+                altText: 'Rose Gold Emerald Cut Earrings - 2ct'
+              }
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/9',
+          name: 'Material',
+          values: ['Gold', 'White Gold', 'Rose Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/10',
+          name: 'Size',
+          values: ['1ct', '2ct']
+        }
+      ],
+      reviews: { rating: 5, count: 142 }
+    },
+    {
+      id: 'gid://shopify/Product/6',
+      handle: 'earrings-princess-18k',
+      title: 'Princess Cut Earring',
+      description: 'Classic princess cut lab-grown diamonds in premium metals. The square silhouette offers a modern twist on timeless elegance.',
+      priceRange: {
+        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductImage/6',
+              url: '/src/assets/earrings-princess.jpg',
+              altText: 'Princess Cut Earrings',
+              width: 800,
+              height: 600
+            }
+          }
+        ]
+      },
+      variants: {
+        edges: [
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/17',
+              title: 'Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
+              quantityAvailable: 14,
+              sku: 'NOORI-PRINCESS-GOLD-1CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'Gold Princess Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/18',
+              title: 'Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2490.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
+              quantityAvailable: 8,
+              sku: 'NOORI-PRINCESS-GOLD-2CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'Gold Princess Cut Earrings - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/19',
+              title: 'White Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
+              quantityAvailable: 11,
+              sku: 'NOORI-PRINCESS-WGOLD-1CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'White Gold Princess Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/20',
+              title: 'White Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'White Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2590.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
+              quantityAvailable: 6,
+              sku: 'NOORI-PRINCESS-WGOLD-2CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'White Gold Princess Cut Earrings - 2ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/21',
+              title: 'Rose Gold / 1ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '1ct' }
+              ],
+              price: { amount: '1690.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
+              quantityAvailable: 10,
+              sku: 'NOORI-PRINCESS-RGOLD-1CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'Rose Gold Princess Cut Earrings - 1ct'
+              }
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/22',
+              title: 'Rose Gold / 2ct',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Material', value: 'Rose Gold' },
+                { name: 'Size', value: '2ct' }
+              ],
+              price: { amount: '2990.00', currencyCode: 'CAD' },
+              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-PRINCESS-RGOLD-2CT',
+              image: {
+                id: 'gid://shopify/ProductImage/6',
+                url: '/src/assets/earrings-princess.jpg',
+                altText: 'Rose Gold Princess Cut Earrings - 2ct'
+              }
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          id: 'gid://shopify/ProductOption/11',
+          name: 'Material',
+          values: ['Gold', 'White Gold', 'Rose Gold']
+        },
+        {
+          id: 'gid://shopify/ProductOption/12',
+          name: 'Size',
+          values: ['1ct', '2ct']
+        }
+      ],
+      reviews: { rating: 5, count: 128 }
     }
   ];
 

@@ -27,7 +27,7 @@ const earringsProducts = [
     name: "Emerald Earrings",
     price: "$2,299",
     image: "/src/assets/earrings-hero.jpg",
-    pdpUrl: "/product/earrings-emerald-platinum",
+    pdpUrl: "/product/earrings-emerald-gold",
     rating: 5,
     reviewCount: 18
   }
