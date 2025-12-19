@@ -30,11 +30,18 @@ export const WhyLabDiamonds = () => {
                   backgroundSize: '20px 20px'
                 }} />
               </div>
-              {/* Horizontal scanning line */}
+              {/* Vertical scanning line (first) */}
               <div 
                 className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-60"
                 style={{
-                  animation: 'scanLine 3s ease-in-out infinite',
+                  animation: 'scanLineVertical 4s ease-in-out infinite',
+                }}
+              />
+              {/* Horizontal scanning line (second, after vertical) */}
+              <div 
+                className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-emerald-400 to-transparent opacity-60"
+                style={{
+                  animation: 'scanLineHorizontal 4s ease-in-out infinite',
                 }}
               />
               {/* Crosshair center */}
@@ -57,22 +64,25 @@ export const WhyLabDiamonds = () => {
 
           {/* Superior Clarity - Glimmer + Shine Effect */}
           <div className="relative bg-secondary/50 backdrop-blur-sm rounded-xl p-6 border border-amber-500/20 overflow-hidden group">
-            {/* Diagonal shimmer effect */}
+            {/* Full-card gold shimmer + shine effect */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {/* Continuous diagonal shimmer */}
+              {/* Full-card diagonal gold shimmer */}
               <div 
-                className="absolute -inset-full w-[200%] h-[200%] opacity-30"
+                className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(135deg, transparent 40%, hsl(45 100% 70% / 0.4) 45%, hsl(45 100% 90% / 0.6) 50%, hsl(45 100% 70% / 0.4) 55%, transparent 60%)',
-                  animation: 'shimmerDiagonal 3s ease-in-out infinite',
+                  background: 'linear-gradient(105deg, transparent 0%, transparent 35%, hsl(45 100% 60% / 0.15) 42%, hsl(45 100% 70% / 0.2) 50%, hsl(45 100% 60% / 0.15) 58%, transparent 65%, transparent 100%)',
+                  backgroundSize: '300% 100%',
+                  animation: 'goldShimmer 3.5s ease-in-out infinite',
                 }}
               />
-              {/* Sparkle points */}
-              <div className="absolute top-4 right-6 w-1 h-1 bg-amber-200 rounded-full animate-pulse" style={{ animationDelay: '0s' }} />
-              <div className="absolute top-1/3 left-4 w-1.5 h-1.5 bg-amber-100 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-              <div className="absolute bottom-8 right-10 w-1 h-1 bg-white rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-              <div className="absolute bottom-1/4 left-8 w-0.5 h-0.5 bg-amber-200 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
-              <div className="absolute top-1/2 right-4 w-1 h-1 bg-amber-100 rounded-full animate-pulse" style={{ animationDelay: '0.8s' }} />
+              {/* Bright shine flash after shimmer */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(45 100% 85% / 0.25) 0%, transparent 70%)',
+                  animation: 'shineFlash 3.5s ease-in-out infinite',
+                }}
+              />
             </div>
 
             <div className="relative z-10">
@@ -141,16 +151,31 @@ export const WhyLabDiamonds = () => {
 
       {/* Custom animations */}
       <style>{`
-        @keyframes scanLine {
+        @keyframes scanLineVertical {
           0%, 100% { top: 10%; opacity: 0; }
-          10% { opacity: 0.6; }
-          50% { top: 85%; opacity: 0.6; }
-          60% { opacity: 0; }
+          5% { opacity: 0.6; }
+          45% { top: 85%; opacity: 0.6; }
+          50%, 100% { opacity: 0; }
         }
         
-        @keyframes shimmerDiagonal {
-          0% { transform: translateX(-50%) translateY(-50%); }
-          100% { transform: translateX(0%) translateY(0%); }
+        @keyframes scanLineHorizontal {
+          0%, 50% { left: 10%; opacity: 0; }
+          55% { opacity: 0.6; }
+          95% { left: 85%; opacity: 0.6; }
+          100% { opacity: 0; }
+        }
+        
+        @keyframes goldShimmer {
+          0% { background-position: 200% 0; }
+          60% { background-position: -100% 0; }
+          100% { background-position: -100% 0; }
+        }
+        
+        @keyframes shineFlash {
+          0%, 55% { opacity: 0; }
+          65% { opacity: 1; }
+          85% { opacity: 0; }
+          100% { opacity: 0; }
         }
         
         @keyframes pulseGlow {
