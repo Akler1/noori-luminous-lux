@@ -2,7 +2,7 @@ import { Microscope, Gem, Leaf } from "lucide-react";
 
 export const WhyLabDiamonds = () => {
   return (
-    <section className="py-20 px-4 bg-secondary">
+    <section className="py-20 px-4 bg-muted/30">
       <div className="max-w-4xl mx-auto text-center">
         {/* Header */}
         <div className="reveal-up mb-12">
