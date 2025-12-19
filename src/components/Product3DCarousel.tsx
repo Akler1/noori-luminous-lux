@@ -349,12 +349,12 @@ export default function Product3DCarousel() {
                   </div>
                 )}
 
-                {/* Rotation Hint Overlay */}
+                {/* Rotation Hint Overlay - Bottom Right Corner */}
                 {showRotateHint && isLoaded && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="bg-black/70 backdrop-blur-sm px-6 py-4 rounded-full border border-[#C9A227]/30 flex items-center gap-3 animate-pulse">
-                      <RotateCw className="w-6 h-6 text-[#C9A227] animate-spin" style={{ animationDuration: '3s' }} />
-                      <span className="text-[#F8F7F3] font-medium">Click & Drag to Rotate</span>
+                  <div className="absolute bottom-4 right-4 pointer-events-none z-10">
+                    <div className="bg-black/70 backdrop-blur-sm px-4 py-2 rounded-full border border-[#C9A227]/30 flex items-center gap-2 animate-pulse">
+                      <RotateCw className="w-4 h-4 text-[#C9A227] animate-spin" style={{ animationDuration: '3s' }} />
+                      <span className="text-[#F8F7F3] text-sm font-medium">Click & Drag to Rotate</span>
                     </div>
                   </div>
                 )}
