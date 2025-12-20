@@ -26,7 +26,7 @@ export const HowLabDiamondsMade = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 px-4 bg-background overflow-hidden">
+    <section ref={sectionRef} className="py-20 px-4 bg-muted/30 overflow-hidden">
       <div className="max-w-5xl mx-auto text-center">
         {/* Header */}
         <div className="reveal-up mb-16">
@@ -114,7 +114,7 @@ export const HowLabDiamondsMade = () => {
               <ProcessNode
                 icon={<Gem className="w-7 h-7 text-primary" />}
                 title="Diamond Seed"
-                subtitle="Where it all begins"
+                description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
                 delay={0}
                 isVisible={isVisible}
@@ -126,7 +126,7 @@ export const HowLabDiamondsMade = () => {
                 <ProcessNode
                   icon={<Flame className="w-7 h-7 text-orange-500" />}
                   title="2,700°F"
-                  subtitle="Extreme heat applied"
+                  description="Plasma environments recreate Earth's mantle conditions."
                   accentColor="orange"
                   delay={300}
                   isVisible={isVisible}
@@ -136,7 +136,7 @@ export const HowLabDiamondsMade = () => {
                 <ProcessNode
                   icon={<Zap className="w-7 h-7 text-blue-400" />}
                   title="870,000 PSI"
-                  subtitle="Crushing pressure"
+                  description="Crushing pressure fuses carbon into crystalline lattice."
                   accentColor="blue"
                   delay={300}
                   isVisible={isVisible}
@@ -149,7 +149,7 @@ export const HowLabDiamondsMade = () => {
               <ProcessNode
                 icon={<Sparkles className="w-7 h-7 text-primary" />}
                 title="Diamond"
-                subtitle="Pure brilliance emerges"
+                description="Weeks later, a stone emerges—optically, chemically identical."
                 accentColor="primary"
                 delay={600}
                 isVisible={isVisible}
@@ -166,7 +166,7 @@ export const HowLabDiamondsMade = () => {
               <ProcessNode
                 icon={<Gem className="w-7 h-7 text-primary" />}
                 title="Diamond Seed"
-                subtitle="Where it all begins"
+                description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
                 delay={0}
                 isVisible={isVisible}
@@ -187,7 +187,7 @@ export const HowLabDiamondsMade = () => {
                   <ProcessNode
                     icon={<Flame className="w-6 h-6 text-orange-500" />}
                     title="2,700°F"
-                    subtitle="Extreme heat"
+                    description="Recreates Earth's mantle heat."
                     accentColor="orange"
                     delay={300}
                     isVisible={isVisible}
@@ -197,7 +197,7 @@ export const HowLabDiamondsMade = () => {
                   <ProcessNode
                     icon={<Zap className="w-6 h-6 text-blue-400" />}
                     title="870,000 PSI"
-                    subtitle="Crushing pressure"
+                    description="Fuses carbon atoms together."
                     accentColor="blue"
                     delay={300}
                     isVisible={isVisible}
@@ -217,7 +217,7 @@ export const HowLabDiamondsMade = () => {
               <ProcessNode
                 icon={<Sparkles className="w-7 h-7 text-primary" />}
                 title="Diamond"
-                subtitle="Pure brilliance emerges"
+                description="Weeks later, a stone emerges—optically, chemically identical."
                 accentColor="primary"
                 delay={600}
                 isVisible={isVisible}
@@ -258,7 +258,7 @@ export const HowLabDiamondsMade = () => {
 interface ProcessNodeProps {
   icon: React.ReactNode;
   title: string;
-  subtitle: string;
+  description: string;
   accentColor: 'primary' | 'orange' | 'blue';
   delay: number;
   isVisible: boolean;
@@ -271,7 +271,7 @@ interface ProcessNodeProps {
 const ProcessNode = ({ 
   icon, 
   title, 
-  subtitle, 
+  description, 
   accentColor, 
   delay, 
   isVisible, 
@@ -299,9 +299,9 @@ const ProcessNode = ({
   };
 
   const sizeClasses = {
-    normal: 'p-6 min-w-[160px]',
-    small: 'p-4 min-w-[140px]',
-    compact: 'p-3'
+    normal: 'p-6 min-w-[180px] max-w-[200px]',
+    small: 'p-5 min-w-[160px] max-w-[180px]',
+    compact: 'p-4'
   };
 
   return (
@@ -313,7 +313,7 @@ const ProcessNode = ({
         border overflow-hidden
         transition-all duration-300 ease-out
         hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5
-        ${fullWidth ? 'w-full' : ''}
+        ${fullWidth ? 'w-full max-w-none' : ''}
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
       `}
       style={{ transitionDelay: `${delay}ms` }}
@@ -323,15 +323,15 @@ const ProcessNode = ({
       {effect}
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center text-center">
         <div className={`w-12 h-12 rounded-full ${bgColors[accentColor]} flex items-center justify-center mb-3 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <div className={`font-bold text-foreground mb-1 ${size === 'compact' ? 'text-lg' : 'text-xl'}`}>
+        <div className={`font-bold text-foreground mb-2 ${size === 'compact' ? 'text-lg' : 'text-xl'}`}>
           {title}
         </div>
-        <div className="text-xs text-muted-foreground">
-          {subtitle}
+        <div className={`text-muted-foreground leading-relaxed ${size === 'compact' ? 'text-xs' : 'text-sm'}`}>
+          {description}
         </div>
       </div>
     </div>
