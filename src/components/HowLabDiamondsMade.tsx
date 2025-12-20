@@ -7,7 +7,7 @@ export const HowLabDiamondsMade = () => {
         {/* Header */}
         <div className="reveal-up mb-12">
           <h2 className="text-3xl md:text-4xl font-serif mb-4">
-            Forged in <span className="noor-glow">Light</span>, Not Earth
+            How <span className="noor-glow">Lab Diamonds</span> Are Made
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             We recreate the forces of nature—the same conditions found 100 miles beneath the Earth's surface—to craft diamonds of extraordinary purity.
