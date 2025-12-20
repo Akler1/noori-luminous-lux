@@ -2,8 +2,7 @@ import { Header } from "@/components/Header";
 import Product3DCarousel from "@/components/Product3DCarousel";
 import { BrandStory } from "@/components/BrandStory";
 import { TrustIndicators } from "@/components/TrustIndicators";
-import { WhyLabDiamonds } from "@/components/WhyLabDiamonds";
-import { HowLabDiamondsMade } from "@/components/HowLabDiamondsMade";
+import { LabDiamondsSection } from "@/components/LabDiamondsSection";
 import { Impact } from "@/components/Impact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
@@ -20,8 +19,7 @@ const Index = () => {
         <Product3DCarousel />
         <TrustIndicators />
         <BrandStory />
-        <WhyLabDiamonds />
-        <HowLabDiamondsMade />
+        <LabDiamondsSection />
         <Impact />
         <Newsletter />
       </main>
