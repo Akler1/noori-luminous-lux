@@ -312,24 +312,22 @@ export const Impact = () => {
 
       {/* All custom animations */}
       <style>{`
-        /* Coin Purse Animation */
+        /* Coin Purse Animation - Subtle */
         @keyframes coinFall {
-          0% { transform: translateY(-40px) rotate(0deg); opacity: 0; }
-          20% { opacity: 1; }
-          70% { transform: translateY(0px) rotate(360deg); }
-          80% { transform: translateY(-6px) rotate(380deg); }
-          90% { transform: translateY(0px) rotate(360deg); }
-          95% { transform: translateY(-2px) rotate(365deg); }
-          100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+          0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.4; }
+          70% { transform: translateY(55px) rotate(180deg); opacity: 0.4; }
+          85% { transform: translateY(50px) rotate(190deg); }
+          100% { transform: translateY(55px) rotate(180deg); opacity: 0.3; }
         }
         @keyframes purseWobble {
           0%, 100% { transform: translateX(-50%) rotate(0deg); }
-          25% { transform: translateX(-50%) rotate(-3deg); }
-          75% { transform: translateX(-50%) rotate(3deg); }
+          25% { transform: translateX(-50%) rotate(-2deg); }
+          75% { transform: translateX(-50%) rotate(2deg); }
         }
         @keyframes coinShine {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.4; }
         }
 
         /* ID Card Animation */
@@ -347,8 +345,8 @@ export const Impact = () => {
           100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
         @keyframes cardGlow {
-          0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
-          50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+          0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.05); }
+          50% { box-shadow: 0 0 8px rgba(59, 130, 246, 0.1); }
         }
 
         /* School Build Animation */
@@ -467,80 +465,62 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
 
 // ========== Card Effects ==========
 
-// Coins Falling into Coin Purse
+// Coins Falling into Coin Purse - Subtle Background Version
 const CoinEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Coin Purse */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
+    {/* Coin Purse - positioned at bottom center */}
     <svg 
-      className="absolute bottom-3 left-1/2 w-14 h-12"
+      className="absolute bottom-4 left-1/2 w-12 h-10"
       viewBox="0 0 56 48"
-      style={{ animation: 'purseWobble 2s ease-in-out infinite', animationDelay: '0.8s' }}
+      style={{ animation: 'purseWobble 3s ease-in-out infinite', animationDelay: '1s' }}
     >
       {/* Purse body */}
-      <ellipse cx="28" cy="34" rx="22" ry="12" fill="rgba(180, 83, 9, 0.4)" stroke="rgba(217, 119, 6, 0.6)" strokeWidth="1.5"/>
+      <ellipse cx="28" cy="34" rx="20" ry="10" fill="rgba(180, 83, 9, 0.5)" stroke="rgba(217, 119, 6, 0.4)" strokeWidth="1"/>
       {/* Purse opening */}
-      <path d="M12 28 Q28 20 44 28" fill="none" stroke="rgba(217, 119, 6, 0.7)" strokeWidth="2" strokeLinecap="round"/>
-      {/* Clasp */}
-      <circle cx="28" cy="24" r="3" fill="rgba(234, 179, 8, 0.6)" stroke="rgba(250, 204, 21, 0.8)" strokeWidth="1"/>
+      <path d="M14 30 Q28 24 42 30" fill="none" stroke="rgba(217, 119, 6, 0.5)" strokeWidth="1.5" strokeLinecap="round"/>
     </svg>
     
-    {/* Falling Coins */}
-    {[0, 1, 2, 3].map((i) => (
+    {/* Falling Coins - start from top, fall into purse */}
+    {[0, 1, 2].map((i) => (
       <div
         key={i}
-        className="absolute w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 border border-amber-400"
+        className="absolute w-3 h-3 rounded-full bg-gradient-to-br from-amber-400/60 to-amber-600/60"
         style={{
-          left: `${42 + (i % 2) * 8}%`,
-          bottom: '28%',
-          animation: 'coinFall 2.5s ease-in-out infinite',
-          animationDelay: `${i * 0.4}s`,
-          boxShadow: '0 0 6px rgba(251, 191, 36, 0.4), inset 0 -2px 4px rgba(0,0,0,0.2)'
+          left: `${46 + (i - 1) * 6}%`,
+          top: '20%',
+          animation: 'coinFall 3s ease-in infinite',
+          animationDelay: `${i * 0.6}s`,
         }}
-      >
-        {/* Coin shine */}
-        <div 
-          className="absolute top-0.5 left-0.5 w-2 h-2 rounded-full bg-amber-200/60"
-          style={{ animation: 'coinShine 1s ease-in-out infinite', animationDelay: `${i * 0.3}s` }}
-        />
-      </div>
+      />
     ))}
-    
-    {/* Ambient glow under purse */}
-    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-6 bg-amber-400/10 rounded-full blur-md" />
   </div>
 );
 
-// ID Card Being Filled Out
+// ID Card Being Filled Out - Subtle Background Version
 const StampEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center">
-    {/* ID Card */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+    {/* ID Card - positioned in bottom corner */}
     <div 
-      className="relative w-20 h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border-2 border-blue-300/50 shadow-lg overflow-hidden"
-      style={{ animation: 'cardGlow 3s ease-in-out infinite' }}
+      className="absolute bottom-4 right-4 w-16 h-11 bg-blue-100/50 rounded border border-blue-300/30 overflow-hidden"
+      style={{ animation: 'cardGlow 4s ease-in-out infinite' }}
     >
       {/* Header stripe */}
-      <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-blue-400 to-blue-500" />
+      <div className="absolute top-0 left-0 right-0 h-2 bg-blue-400/40" />
       
       {/* Photo placeholder */}
       <div 
-        className="absolute top-4 left-1.5 w-5 h-6 bg-blue-200 rounded-sm border border-blue-300"
-        style={{ animation: 'photoFadeIn 1s ease-out forwards', animationDelay: '0.5s', opacity: 0 }}
-      >
-        {/* Person silhouette */}
-        <svg viewBox="0 0 20 24" className="w-full h-full p-0.5 text-blue-400/60">
-          <circle cx="10" cy="7" r="4" fill="currentColor"/>
-          <path d="M2 22 Q2 14 10 14 Q18 14 18 22" fill="currentColor"/>
-        </svg>
-      </div>
+        className="absolute top-3 left-1 w-4 h-5 bg-blue-200/50 rounded-sm"
+        style={{ animation: 'photoFadeIn 1.5s ease-out forwards', animationDelay: '0.5s', opacity: 0 }}
+      />
       
       {/* Text lines that write in */}
       {[0, 1, 2].map((i) => (
-        <div key={i} className="absolute right-1.5 overflow-hidden" style={{ top: `${18 + i * 10}px`, width: '50%' }}>
+        <div key={i} className="absolute right-1 overflow-hidden" style={{ top: `${14 + i * 8}px`, width: '45%' }}>
           <div 
-            className="h-1.5 bg-gradient-to-r from-blue-300 to-blue-400 rounded-full origin-left"
+            className="h-1 bg-blue-300/50 rounded-full origin-left"
             style={{ 
-              animation: 'lineWrite 0.8s ease-out forwards',
-              animationDelay: `${1 + i * 0.4}s`,
+              animation: 'lineWrite 1s ease-out forwards',
+              animationDelay: `${1.5 + i * 0.5}s`,
               width: '0%'
             }}
           />
@@ -549,72 +529,68 @@ const StampEffect = () => (
       
       {/* Checkmark */}
       <svg 
-        className="absolute bottom-1 right-1 w-4 h-4 text-green-500"
+        className="absolute bottom-0.5 right-0.5 w-3 h-3 text-green-500/60"
         viewBox="0 0 24 24"
-        style={{ animation: 'checkAppear 0.5s ease-out forwards', animationDelay: '2.5s', opacity: 0 }}
+        style={{ animation: 'checkAppear 0.6s ease-out forwards', animationDelay: '3.5s', opacity: 0 }}
       >
-        <circle cx="12" cy="12" r="10" fill="rgba(34, 197, 94, 0.2)" stroke="currentColor" strokeWidth="2"/>
-        <path d="M8 12 L11 15 L16 9" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 12 L11 15 L16 9" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </div>
   </div>
 );
 
-// School Being Built
+// School Being Built - Subtle Background Version
 const BlockEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-end justify-center pb-4">
-    <div className="relative w-24 h-20">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-20 h-16">
       {/* Foundation */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-green-600 to-green-500 rounded-sm origin-center"
-        style={{ animation: 'foundationBuild 0.6s ease-out forwards', animationDelay: '0s' }}
+        className="absolute bottom-0 left-0 right-0 h-1.5 bg-green-600/50 rounded-sm origin-center"
+        style={{ animation: 'foundationBuild 0.8s ease-out forwards', animationDelay: '0s' }}
       />
       
       {/* Left Wall */}
       <div 
-        className="absolute bottom-2 left-1 w-8 h-10 bg-gradient-to-t from-green-400 to-green-300 rounded-t-sm origin-bottom"
-        style={{ animation: 'wallsRise 0.7s ease-out forwards', animationDelay: '0.5s', opacity: 0 }}
+        className="absolute bottom-1.5 left-1 w-6 h-8 bg-green-400/40 rounded-t-sm origin-bottom"
+        style={{ animation: 'wallsRise 0.8s ease-out forwards', animationDelay: '0.6s', opacity: 0 }}
       >
         {/* Window */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-3 bg-blue-200/60 border border-green-500/40 rounded-sm" />
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-2 bg-blue-200/30 rounded-sm" />
       </div>
       
       {/* Right Wall */}
       <div 
-        className="absolute bottom-2 right-1 w-8 h-10 bg-gradient-to-t from-green-400 to-green-300 rounded-t-sm origin-bottom"
-        style={{ animation: 'wallsRise 0.7s ease-out forwards', animationDelay: '0.7s', opacity: 0 }}
+        className="absolute bottom-1.5 right-1 w-6 h-8 bg-green-400/40 rounded-t-sm origin-bottom"
+        style={{ animation: 'wallsRise 0.8s ease-out forwards', animationDelay: '0.8s', opacity: 0 }}
       >
         {/* Window */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-3 bg-blue-200/60 border border-green-500/40 rounded-sm" />
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-2 bg-blue-200/30 rounded-sm" />
       </div>
       
       {/* Roof */}
       <svg 
-        className="absolute -top-1 left-1/2 -translate-x-1/2 w-28 h-8 origin-bottom"
+        className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-24 h-6 origin-bottom"
         viewBox="0 0 112 32"
-        style={{ animation: 'roofDrop 0.6s ease-out forwards', animationDelay: '1.3s', opacity: 0 }}
+        style={{ animation: 'roofDrop 0.7s ease-out forwards', animationDelay: '1.5s', opacity: 0 }}
       >
-        <path d="M4 30 L56 4 L108 30 Z" fill="rgba(220, 38, 38, 0.5)" stroke="rgba(185, 28, 28, 0.6)" strokeWidth="2"/>
+        <path d="M8 28 L56 6 L104 28 Z" fill="rgba(220, 38, 38, 0.35)" />
       </svg>
       
       {/* Door */}
       <div 
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 w-5 h-7 bg-gradient-to-b from-amber-600 to-amber-700 rounded-t-md"
-        style={{ animation: 'doorFadeIn 0.5s ease-out forwards', animationDelay: '1.8s', opacity: 0 }}
-      >
-        {/* Door handle */}
-        <div className="absolute top-1/2 right-0.5 w-1 h-1 rounded-full bg-amber-300" />
-      </div>
+        className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-5 bg-amber-700/40 rounded-t-sm"
+        style={{ animation: 'doorFadeIn 0.5s ease-out forwards', animationDelay: '2s', opacity: 0 }}
+      />
       
-      {/* Flag pole & flag */}
+      {/* Flag */}
       <div 
-        className="absolute -top-4 left-1/2 -translate-x-1/2 flex flex-col items-center"
-        style={{ animation: 'doorFadeIn 0.4s ease-out forwards', animationDelay: '2.2s', opacity: 0 }}
+        className="absolute -top-3 left-1/2 ml-3"
+        style={{ animation: 'flagWave 2s ease-in-out infinite', animationDelay: '2.5s', transformOrigin: 'bottom center' }}
       >
-        <div className="w-0.5 h-5 bg-stone-500" />
+        <div className="w-0.5 h-4 bg-gray-500/40" />
         <div 
-          className="absolute top-0 left-0.5 w-4 h-2.5 bg-gradient-to-r from-green-500 to-green-400 rounded-r-sm origin-left"
-          style={{ animation: 'flagWave 1s ease-in-out infinite', animationDelay: '2.5s' }}
+          className="absolute top-0 left-0.5 w-3 h-2 bg-green-500/40"
+          style={{ animation: 'doorFadeIn 0.5s ease-out forwards', animationDelay: '2.6s', opacity: 0 }}
         />
       </div>
     </div>
