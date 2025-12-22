@@ -1,4 +1,4 @@
-import { Coins, FileCheck, School, Mountain, HeartHandshake, GraduationCap, Sparkles } from "lucide-react";
+import { Coins, IdCard, School, Mountain, HeartHandshake, GraduationCap, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const Impact = () => {
@@ -61,7 +61,7 @@ export const Impact = () => {
             effect="coins"
           />
           <InterventionCard
-            icon={<FileCheck className="w-11 h-11 text-blue-400" />}
+            icon={<IdCard className="w-11 h-11 text-blue-400" />}
             title="Documentation"
             description="Birth certificates unlock school enrollment and legal protection for every child."
             accentColor="blue"
@@ -314,21 +314,20 @@ export const Impact = () => {
       <style>{`
         /* Simple Floating Coins */
         @keyframes coinFloat {
-          0%, 100% { transform: translateY(0); opacity: 0.6; }
-          50% { transform: translateY(-8px); opacity: 1; }
+          0%, 100% { transform: translateY(0); opacity: 0.7; }
+          50% { transform: translateY(-10px); opacity: 1; }
         }
 
-        /* Stamp Press Effect */
-        @keyframes stampPress {
-          0% { transform: scale(1.2) translateY(-10px); opacity: 0; }
-          50% { transform: scale(0.95) translateY(2px); opacity: 0.8; }
-          100% { transform: scale(1) translateY(0); opacity: 0.6; }
+        /* Pulsing Glow Effect for Documentation */
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.03); }
         }
 
         /* Floating Hearts */
         @keyframes heartFloat {
-          0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
-          50% { transform: translateY(-10px) scale(1.1); opacity: 0.8; }
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+          50% { transform: translateY(-12px) scale(1.15); opacity: 1; }
         }
 
         /* Existing Journey Effects */
@@ -424,24 +423,29 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
 
 // ========== Card Effects ==========
 
-// Simple Floating Coins - Subtle Background
+// Enhanced Floating Coins with Glow
 const CoinEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
     {[
-      { top: '15%', left: '12%', delay: '0s', size: 'w-3 h-3' },
-      { top: '20%', right: '15%', delay: '0.7s', size: 'w-2.5 h-2.5' },
-      { top: '45%', left: '8%', delay: '1.4s', size: 'w-2 h-2' },
-      { top: '35%', right: '10%', delay: '2.1s', size: 'w-3 h-3' },
-      { top: '55%', right: '18%', delay: '0.4s', size: 'w-2 h-2' },
+      { top: '8%', left: '6%', delay: '0s', size: 'w-4 h-4' },
+      { top: '12%', right: '10%', delay: '0.4s', size: 'w-3.5 h-3.5' },
+      { top: '22%', left: '14%', delay: '0.9s', size: 'w-3 h-3' },
+      { top: '28%', right: '6%', delay: '1.3s', size: 'w-4 h-4' },
+      { top: '40%', left: '5%', delay: '1.8s', size: 'w-3.5 h-3.5' },
+      { top: '48%', right: '12%', delay: '0.2s', size: 'w-3 h-3' },
+      { top: '58%', left: '10%', delay: '0.7s', size: 'w-4 h-4' },
+      { top: '65%', right: '5%', delay: '1.5s', size: 'w-3.5 h-3.5' },
+      { top: '75%', left: '7%', delay: '1.1s', size: 'w-3 h-3' },
+      { top: '72%', right: '14%', delay: '2.1s', size: 'w-4 h-4' },
     ].map((coin, i) => (
       <div
         key={i}
-        className={`absolute ${coin.size} rounded-full bg-gradient-to-br from-amber-400 to-amber-600`}
+        className={`absolute ${coin.size} rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg shadow-amber-400/60`}
         style={{
           top: coin.top,
           left: coin.left,
           right: coin.right,
-          animation: 'coinFloat 3s ease-in-out infinite',
+          animation: 'coinFloat 2.5s ease-in-out infinite',
           animationDelay: coin.delay,
         }}
       />
@@ -449,50 +453,57 @@ const CoinEffect = () => (
   </div>
 );
 
-// Stamp Effect - Positioned Over Icon
+// Simple Pulsing Glow Effect for Documentation
 const StampEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-    {/* Stamp positioned over the icon */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+    {/* Subtle pulsing border glow */}
     <div 
-      className="absolute left-1/2 -translate-x-1/2"
-      style={{ top: '60px' }}
-    >
-      {/* Outer stamp ring */}
-      <div 
-        className="w-24 h-24 rounded-full border-4 border-blue-500 border-dashed flex items-center justify-center"
-        style={{ animation: 'stampPress 2s ease-out forwards' }}
-      >
-        {/* Inner ring */}
-        <div className="w-16 h-16 rounded-full border-2 border-blue-400 flex items-center justify-center">
-          {/* Checkmark in center */}
-          <svg className="w-8 h-8 text-blue-500" viewBox="0 0 24 24">
-            <path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
+      className="absolute inset-4 rounded-lg border-2 border-blue-400/60"
+      style={{ animation: 'pulseGlow 3s ease-in-out infinite' }}
+    />
+    {/* Corner accent dots with glow */}
+    {[
+      { top: '12%', left: '10%' },
+      { top: '12%', right: '10%' },
+      { bottom: '18%', left: '10%' },
+      { bottom: '18%', right: '10%' },
+      { top: '50%', left: '6%' },
+      { top: '50%', right: '6%' },
+    ].map((pos, i) => (
+      <div
+        key={i}
+        className="absolute w-2.5 h-2.5 rounded-full bg-blue-400 shadow-lg shadow-blue-400/60"
+        style={{ ...pos, animation: 'pulseGlow 3s ease-in-out infinite', animationDelay: `${i * 0.4}s` }}
+      />
+    ))}
   </div>
 );
 
-// Floating Hearts - Subtle Background
+// Enhanced Floating Hearts with Glow
 const BlockEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
     {[
-      { top: '20%', left: '10%', delay: '0s', size: 'w-3 h-3' },
-      { top: '30%', right: '12%', delay: '0.8s', size: 'w-2.5 h-2.5' },
-      { top: '50%', left: '15%', delay: '1.5s', size: 'w-2 h-2' },
-      { top: '40%', right: '8%', delay: '2.2s', size: 'w-3 h-3' },
-      { top: '60%', left: '8%', delay: '0.5s', size: 'w-2 h-2' },
+      { top: '8%', left: '6%', delay: '0s', size: 'w-4 h-4' },
+      { top: '14%', right: '8%', delay: '0.5s', size: 'w-3.5 h-3.5' },
+      { top: '24%', left: '12%', delay: '1.1s', size: 'w-3 h-3' },
+      { top: '32%', right: '5%', delay: '1.6s', size: 'w-4 h-4' },
+      { top: '42%', left: '5%', delay: '0.3s', size: 'w-3.5 h-3.5' },
+      { top: '50%', right: '10%', delay: '0.9s', size: 'w-3 h-3' },
+      { top: '60%', left: '8%', delay: '1.4s', size: 'w-4 h-4' },
+      { top: '68%', right: '6%', delay: '2s', size: 'w-3.5 h-3.5' },
+      { top: '76%', left: '6%', delay: '0.7s', size: 'w-3 h-3' },
+      { top: '72%', right: '12%', delay: '1.8s', size: 'w-4 h-4' },
     ].map((heart, i) => (
       <div
         key={i}
-        className={`absolute ${heart.size} text-green-500`}
+        className={`absolute ${heart.size} text-green-400`}
         style={{
           top: heart.top,
           left: heart.left,
           right: heart.right,
-          animation: 'heartFloat 3.5s ease-in-out infinite',
+          animation: 'heartFloat 3s ease-in-out infinite',
           animationDelay: heart.delay,
+          filter: 'drop-shadow(0 0 8px rgba(74, 222, 128, 0.7))',
         }}
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
