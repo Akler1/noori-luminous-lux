@@ -312,19 +312,69 @@ export const Impact = () => {
 
       {/* All custom animations */}
       <style>{`
-        @keyframes coinStack {
-          0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-          50% { transform: translateY(-4px) scale(1.1); opacity: 1; }
+        /* Coin Purse Animation */
+        @keyframes coinFall {
+          0% { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+          20% { opacity: 1; }
+          70% { transform: translateY(0px) rotate(360deg); }
+          80% { transform: translateY(-6px) rotate(380deg); }
+          90% { transform: translateY(0px) rotate(360deg); }
+          95% { transform: translateY(-2px) rotate(365deg); }
+          100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
         }
-        @keyframes stampSeal {
-          0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-          50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
-          100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+        @keyframes purseWobble {
+          0%, 100% { transform: translateX(-50%) rotate(0deg); }
+          25% { transform: translateX(-50%) rotate(-3deg); }
+          75% { transform: translateX(-50%) rotate(3deg); }
         }
-        @keyframes blockBuild {
-          0% { transform: translateY(10px); opacity: 0; }
-          100% { transform: translateY(0); opacity: 0.7; }
+        @keyframes coinShine {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
         }
+
+        /* ID Card Animation */
+        @keyframes lineWrite {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+        @keyframes photoFadeIn {
+          0% { opacity: 0; transform: scale(0.8); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes checkAppear {
+          0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+          60% { transform: scale(1.2) rotate(10deg); }
+          100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes cardGlow {
+          0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+          50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        }
+
+        /* School Build Animation */
+        @keyframes foundationBuild {
+          0% { transform: scaleX(0); opacity: 0; }
+          100% { transform: scaleX(1); opacity: 1; }
+        }
+        @keyframes wallsRise {
+          0% { transform: scaleY(0); opacity: 0; }
+          100% { transform: scaleY(1); opacity: 1; }
+        }
+        @keyframes roofDrop {
+          0% { transform: translateY(-20px) scaleY(0); opacity: 0; }
+          60% { transform: translateY(3px) scaleY(1); }
+          100% { transform: translateY(0) scaleY(1); opacity: 1; }
+        }
+        @keyframes doorFadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes flagWave {
+          0%, 100% { transform: rotate(-5deg); }
+          50% { transform: rotate(5deg); }
+        }
+
+        /* Existing Journey Effects */
         @keyframes dustFloat {
           0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
           50% { transform: translateY(-6px) translateX(3px); opacity: 0.5; }
@@ -416,47 +466,157 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
 };
 
 // ========== Card Effects ==========
+
+// Coins Falling into Coin Purse
 const CoinEffect = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-      {[0, 1, 2].map((i) => (
-        <div 
-          key={i} 
-          className="w-3 h-3 rounded-full bg-amber-400/40 border border-amber-400/60"
-          style={{ 
-            animation: 'coinStack 2s ease-in-out infinite',
-            animationDelay: `${i * 0.2}s`
-          }}
-        />
-      ))}
-    </div>
-  </div>
-);
-
-const StampEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div 
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border-2 border-blue-400/30"
-      style={{ animation: 'stampSeal 3s ease-in-out infinite' }}
+    {/* Coin Purse */}
+    <svg 
+      className="absolute bottom-3 left-1/2 w-14 h-12"
+      viewBox="0 0 56 48"
+      style={{ animation: 'purseWobble 2s ease-in-out infinite', animationDelay: '0.8s' }}
     >
-      <div className="absolute inset-2 rounded-full bg-blue-400/10" />
+      {/* Purse body */}
+      <ellipse cx="28" cy="34" rx="22" ry="12" fill="rgba(180, 83, 9, 0.4)" stroke="rgba(217, 119, 6, 0.6)" strokeWidth="1.5"/>
+      {/* Purse opening */}
+      <path d="M12 28 Q28 20 44 28" fill="none" stroke="rgba(217, 119, 6, 0.7)" strokeWidth="2" strokeLinecap="round"/>
+      {/* Clasp */}
+      <circle cx="28" cy="24" r="3" fill="rgba(234, 179, 8, 0.6)" stroke="rgba(250, 204, 21, 0.8)" strokeWidth="1"/>
+    </svg>
+    
+    {/* Falling Coins */}
+    {[0, 1, 2, 3].map((i) => (
+      <div
+        key={i}
+        className="absolute w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 border border-amber-400"
+        style={{
+          left: `${42 + (i % 2) * 8}%`,
+          bottom: '28%',
+          animation: 'coinFall 2.5s ease-in-out infinite',
+          animationDelay: `${i * 0.4}s`,
+          boxShadow: '0 0 6px rgba(251, 191, 36, 0.4), inset 0 -2px 4px rgba(0,0,0,0.2)'
+        }}
+      >
+        {/* Coin shine */}
+        <div 
+          className="absolute top-0.5 left-0.5 w-2 h-2 rounded-full bg-amber-200/60"
+          style={{ animation: 'coinShine 1s ease-in-out infinite', animationDelay: `${i * 0.3}s` }}
+        />
+      </div>
+    ))}
+    
+    {/* Ambient glow under purse */}
+    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-6 bg-amber-400/10 rounded-full blur-md" />
+  </div>
+);
+
+// ID Card Being Filled Out
+const StampEffect = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center">
+    {/* ID Card */}
+    <div 
+      className="relative w-20 h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border-2 border-blue-300/50 shadow-lg overflow-hidden"
+      style={{ animation: 'cardGlow 3s ease-in-out infinite' }}
+    >
+      {/* Header stripe */}
+      <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-blue-400 to-blue-500" />
+      
+      {/* Photo placeholder */}
+      <div 
+        className="absolute top-4 left-1.5 w-5 h-6 bg-blue-200 rounded-sm border border-blue-300"
+        style={{ animation: 'photoFadeIn 1s ease-out forwards', animationDelay: '0.5s', opacity: 0 }}
+      >
+        {/* Person silhouette */}
+        <svg viewBox="0 0 20 24" className="w-full h-full p-0.5 text-blue-400/60">
+          <circle cx="10" cy="7" r="4" fill="currentColor"/>
+          <path d="M2 22 Q2 14 10 14 Q18 14 18 22" fill="currentColor"/>
+        </svg>
+      </div>
+      
+      {/* Text lines that write in */}
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="absolute right-1.5 overflow-hidden" style={{ top: `${18 + i * 10}px`, width: '50%' }}>
+          <div 
+            className="h-1.5 bg-gradient-to-r from-blue-300 to-blue-400 rounded-full origin-left"
+            style={{ 
+              animation: 'lineWrite 0.8s ease-out forwards',
+              animationDelay: `${1 + i * 0.4}s`,
+              width: '0%'
+            }}
+          />
+        </div>
+      ))}
+      
+      {/* Checkmark */}
+      <svg 
+        className="absolute bottom-1 right-1 w-4 h-4 text-green-500"
+        viewBox="0 0 24 24"
+        style={{ animation: 'checkAppear 0.5s ease-out forwards', animationDelay: '2.5s', opacity: 0 }}
+      >
+        <circle cx="12" cy="12" r="10" fill="rgba(34, 197, 94, 0.2)" stroke="currentColor" strokeWidth="2"/>
+        <path d="M8 12 L11 15 L16 9" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     </div>
   </div>
 );
 
+// School Being Built
 const BlockEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
-      {[0, 1, 2].map((i) => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-end justify-center pb-4">
+    <div className="relative w-24 h-20">
+      {/* Foundation */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-green-600 to-green-500 rounded-sm origin-center"
+        style={{ animation: 'foundationBuild 0.6s ease-out forwards', animationDelay: '0s' }}
+      />
+      
+      {/* Left Wall */}
+      <div 
+        className="absolute bottom-2 left-1 w-8 h-10 bg-gradient-to-t from-green-400 to-green-300 rounded-t-sm origin-bottom"
+        style={{ animation: 'wallsRise 0.7s ease-out forwards', animationDelay: '0.5s', opacity: 0 }}
+      >
+        {/* Window */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-3 bg-blue-200/60 border border-green-500/40 rounded-sm" />
+      </div>
+      
+      {/* Right Wall */}
+      <div 
+        className="absolute bottom-2 right-1 w-8 h-10 bg-gradient-to-t from-green-400 to-green-300 rounded-t-sm origin-bottom"
+        style={{ animation: 'wallsRise 0.7s ease-out forwards', animationDelay: '0.7s', opacity: 0 }}
+      >
+        {/* Window */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-3 bg-blue-200/60 border border-green-500/40 rounded-sm" />
+      </div>
+      
+      {/* Roof */}
+      <svg 
+        className="absolute -top-1 left-1/2 -translate-x-1/2 w-28 h-8 origin-bottom"
+        viewBox="0 0 112 32"
+        style={{ animation: 'roofDrop 0.6s ease-out forwards', animationDelay: '1.3s', opacity: 0 }}
+      >
+        <path d="M4 30 L56 4 L108 30 Z" fill="rgba(220, 38, 38, 0.5)" stroke="rgba(185, 28, 28, 0.6)" strokeWidth="2"/>
+      </svg>
+      
+      {/* Door */}
+      <div 
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 w-5 h-7 bg-gradient-to-b from-amber-600 to-amber-700 rounded-t-md"
+        style={{ animation: 'doorFadeIn 0.5s ease-out forwards', animationDelay: '1.8s', opacity: 0 }}
+      >
+        {/* Door handle */}
+        <div className="absolute top-1/2 right-0.5 w-1 h-1 rounded-full bg-amber-300" />
+      </div>
+      
+      {/* Flag pole & flag */}
+      <div 
+        className="absolute -top-4 left-1/2 -translate-x-1/2 flex flex-col items-center"
+        style={{ animation: 'doorFadeIn 0.4s ease-out forwards', animationDelay: '2.2s', opacity: 0 }}
+      >
+        <div className="w-0.5 h-5 bg-stone-500" />
         <div 
-          key={i} 
-          className="w-4 h-2 rounded-sm bg-green-400/30 border border-green-400/50"
-          style={{ 
-            animation: 'blockBuild 2.5s ease-out infinite',
-            animationDelay: `${(2 - i) * 0.3}s`
-          }}
+          className="absolute top-0 left-0.5 w-4 h-2.5 bg-gradient-to-r from-green-500 to-green-400 rounded-r-sm origin-left"
+          style={{ animation: 'flagWave 1s ease-in-out infinite', animationDelay: '2.5s' }}
         />
-      ))}
+      </div>
     </div>
   </div>
 );
