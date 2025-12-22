@@ -49,9 +49,9 @@ export const LabDiamondsSection = () => {
         </div>
 
         {/* 3 Benefit Cards */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-20">
+        <div className="grid md:grid-cols-3 gap-8 md:gap-10 mb-20">
           <BenefitCard
-            icon={<Microscope className="w-7 h-7 text-emerald-400" />}
+            icon={<Microscope className="w-9 h-9 text-emerald-400" />}
             title="Scientifically Identical"
             description="Same crystal structure, same 10 Mohs hardness, certified by GIA & IGI. Even experts can't tell the difference."
             accentColor="emerald"
@@ -60,7 +60,7 @@ export const LabDiamondsSection = () => {
             effect="scan"
           />
           <BenefitCard
-            icon={<Gem className="w-7 h-7 text-amber-400" />}
+            icon={<Gem className="w-9 h-9 text-amber-400" />}
             title="Superior Clarity"
             description="Lab-controlled environments mean fewer inclusions and defects. Exceptional brilliance and fire in every stone."
             accentColor="amber"
@@ -69,7 +69,7 @@ export const LabDiamondsSection = () => {
             effect="shimmer"
           />
           <BenefitCard
-            icon={<Leaf className="w-7 h-7 text-green-400" />}
+            icon={<Leaf className="w-9 h-9 text-green-400" />}
             title="Ethically Pure"
             description="Zero mining, no conflict financing, no displaced communities. Complete traceability from lab to jewelry box."
             accentColor="green"
@@ -395,7 +395,7 @@ const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, 
   return (
     <div 
       className={`
-        relative bg-secondary/50 backdrop-blur-sm rounded-xl p-6 
+        relative bg-secondary/50 backdrop-blur-sm rounded-xl p-8 
         border ${borderColors[accentColor]} overflow-hidden
         transition-all duration-500 ease-out
         hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10
@@ -409,11 +409,11 @@ const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, 
       {effect === 'organic' && <OrganicEffect />}
 
       <div className="relative z-10">
-        <div className={`w-14 h-14 rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-4 border ${iconBorderColors[accentColor]}`}>
+        <div className={`w-[4.5rem] h-[4.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-5 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <h3 className="text-lg font-semibold mb-2 text-center">{title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed text-center">{description}</p>
+        <h3 className="text-xl font-semibold mb-3 text-center">{title}</h3>
+        <p className="text-base text-muted-foreground leading-relaxed text-center">{description}</p>
       </div>
     </div>
   );

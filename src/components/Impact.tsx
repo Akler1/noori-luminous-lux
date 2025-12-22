@@ -50,9 +50,9 @@ export const Impact = () => {
         </div>
 
         {/* 3 Intervention Cards */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-20">
+        <div className="grid md:grid-cols-3 gap-8 md:gap-10 mb-20">
           <InterventionCard
-            icon={<Coins className="w-7 h-7 text-amber-400" />}
+            icon={<Coins className="w-9 h-9 text-amber-400" />}
             title="Cash Transfers"
             description="Direct support to families so parents don't need children's income from the mines."
             accentColor="amber"
@@ -61,7 +61,7 @@ export const Impact = () => {
             effect="coins"
           />
           <InterventionCard
-            icon={<FileCheck className="w-7 h-7 text-blue-400" />}
+            icon={<FileCheck className="w-9 h-9 text-blue-400" />}
             title="Documentation"
             description="Birth certificates unlock school enrollment and legal protection for every child."
             accentColor="blue"
@@ -70,7 +70,7 @@ export const Impact = () => {
             effect="stamp"
           />
           <InterventionCard
-            icon={<School className="w-7 h-7 text-green-400" />}
+            icon={<School className="w-9 h-9 text-green-400" />}
             title="Safe Spaces"
             description="Child-Friendly Spaces provide catch-up classes, school kits, and psychosocial support."
             accentColor="green"
@@ -391,7 +391,7 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
   return (
     <div 
       className={`
-        relative bg-background/50 backdrop-blur-sm rounded-xl p-6 
+        relative bg-background/50 backdrop-blur-sm rounded-xl p-8 
         border ${borderColors[accentColor]} overflow-hidden
         transition-all duration-500 ease-out
         hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10
@@ -405,11 +405,11 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
       {effect === 'blocks' && <BlockEffect />}
 
       <div className="relative z-10">
-        <div className={`w-14 h-14 rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-4 border ${iconBorderColors[accentColor]}`}>
+        <div className={`w-[4.5rem] h-[4.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-5 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <h3 className="text-lg font-semibold mb-2 text-center">{title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed text-center">{description}</p>
+        <h3 className="text-xl font-semibold mb-3 text-center">{title}</h3>
+        <p className="text-base text-muted-foreground leading-relaxed text-center">{description}</p>
       </div>
     </div>
   );
