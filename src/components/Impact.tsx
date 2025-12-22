@@ -36,23 +36,23 @@ export const Impact = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-green-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '11s', animationDelay: '3s' }} />
       </div>
 
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         {/* ========== PART 1: Mission Statement ========== */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-3xl md:text-4xl font-serif mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif mb-5">
               Beauty with <span className="noor-glow">Purpose</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Every Noori purchase helps children transition from mining to education through UNICEF's "From Mine to School" initiative.
             </p>
           </div>
         </div>
 
         {/* 3 Intervention Cards */}
-        <div className="grid md:grid-cols-3 gap-8 md:gap-10 mb-20">
+        <div className="grid md:grid-cols-3 gap-10 md:gap-12 mb-24">
           <InterventionCard
-            icon={<Coins className="w-9 h-9 text-amber-400" />}
+            icon={<Coins className="w-11 h-11 text-amber-400" />}
             title="Cash Transfers"
             description="Direct support to families so parents don't need children's income from the mines."
             accentColor="amber"
@@ -61,7 +61,7 @@ export const Impact = () => {
             effect="coins"
           />
           <InterventionCard
-            icon={<FileCheck className="w-9 h-9 text-blue-400" />}
+            icon={<FileCheck className="w-11 h-11 text-blue-400" />}
             title="Documentation"
             description="Birth certificates unlock school enrollment and legal protection for every child."
             accentColor="blue"
@@ -70,7 +70,7 @@ export const Impact = () => {
             effect="stamp"
           />
           <InterventionCard
-            icon={<School className="w-9 h-9 text-green-400" />}
+            icon={<School className="w-11 h-11 text-green-400" />}
             title="Safe Spaces"
             description="Child-Friendly Spaces provide catch-up classes, school kits, and psychosocial support."
             accentColor="green"
@@ -81,21 +81,21 @@ export const Impact = () => {
         </div>
 
         {/* ========== Visual Connector ========== */}
-        <div className={`flex items-center justify-center mb-16 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`flex items-center justify-center mb-20 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-amber-500/50" />
-          <div className="px-6 py-2 bg-background/80 backdrop-blur-sm border border-amber-500/20 rounded-full mx-4">
-            <span className="text-xs uppercase tracking-widest text-amber-500/80 font-medium">The Journey</span>
+          <div className="px-8 py-3 bg-background/80 backdrop-blur-sm border border-amber-500/20 rounded-full mx-4">
+            <span className="text-sm uppercase tracking-widest text-amber-500/80 font-medium">The Journey</span>
           </div>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent via-amber-500/30 to-amber-500/50" />
         </div>
 
         {/* ========== PART 2: The Journey Process Flow ========== */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h3 className="text-2xl md:text-3xl font-serif mb-4">
+            <h3 className="text-3xl md:text-4xl font-serif mb-5">
               From <span className="noor-glow">Mine to School</span>
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               A holistic transition addressing root causes—poverty, documentation, and education.
             </p>
           </div>
@@ -179,9 +179,9 @@ export const Impact = () => {
             </svg>
 
             {/* Nodes Container */}
-            <div className="relative flex items-center justify-between gap-4" style={{ minHeight: '180px' }}>
+            <div className="relative flex items-center justify-between gap-6" style={{ minHeight: '225px' }}>
               <JourneyNode
-                icon={<Mountain className="w-6 h-6 text-stone-400" />}
+                icon={<Mountain className="w-8 h-8 text-stone-400" />}
                 title="The Mines"
                 description="Children as young as 5 work in cobalt mines."
                 accentColor="stone"
@@ -191,7 +191,7 @@ export const Impact = () => {
               />
 
               <JourneyNode
-                icon={<HeartHandshake className="w-6 h-6 text-amber-500" />}
+                icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                 title="UNICEF Steps In"
                 description="Holistic support addressing root causes."
                 accentColor="amber"
@@ -201,7 +201,7 @@ export const Impact = () => {
               />
 
               <JourneyNode
-                icon={<GraduationCap className="w-6 h-6 text-green-500" />}
+                icon={<GraduationCap className="w-8 h-8 text-green-500" />}
                 title="Education"
                 description="Catch-up classes, uniforms, and supplies."
                 accentColor="green"
@@ -211,7 +211,7 @@ export const Impact = () => {
               />
 
               <JourneyNode
-                icon={<Sparkles className="w-6 h-6 text-primary" />}
+                icon={<Sparkles className="w-8 h-8 text-primary" />}
                 title="Thriving"
                 description="A future of possibility, not labor."
                 accentColor="primary"
@@ -225,9 +225,9 @@ export const Impact = () => {
 
           {/* Mobile Layout */}
           <div className="md:hidden">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-5">
               <JourneyNode
-                icon={<Mountain className="w-6 h-6 text-stone-400" />}
+                icon={<Mountain className="w-8 h-8 text-stone-400" />}
                 title="The Mines"
                 description="Children as young as 5 work in cobalt mines."
                 accentColor="stone"
@@ -240,7 +240,7 @@ export const Impact = () => {
               <MobileConnector delay={500} isVisible={isVisible} />
 
               <JourneyNode
-                icon={<HeartHandshake className="w-6 h-6 text-amber-500" />}
+                icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                 title="UNICEF Steps In"
                 description="Holistic support addressing root causes."
                 accentColor="amber"
@@ -253,7 +253,7 @@ export const Impact = () => {
               <MobileConnector delay={800} isVisible={isVisible} />
 
               <JourneyNode
-                icon={<GraduationCap className="w-6 h-6 text-green-500" />}
+                icon={<GraduationCap className="w-8 h-8 text-green-500" />}
                 title="Education"
                 description="Catch-up classes, uniforms, and supplies."
                 accentColor="green"
@@ -266,7 +266,7 @@ export const Impact = () => {
               <MobileConnector delay={1100} isVisible={isVisible} />
 
               <JourneyNode
-                icon={<Sparkles className="w-6 h-6 text-primary" />}
+                icon={<Sparkles className="w-8 h-8 text-primary" />}
                 title="Thriving"
                 description="A future of possibility, not labor."
                 accentColor="primary"
@@ -292,15 +292,15 @@ export const Impact = () => {
         </div>
 
         {/* ========== Call to Action ========== */}
-        <div className={`mt-16 text-center transition-all duration-700 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="text-lg text-muted-foreground italic mb-6 max-w-xl mx-auto">
+        <div className={`mt-20 text-center transition-all duration-700 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p className="text-xl text-muted-foreground italic mb-8 max-w-2xl mx-auto">
             "When you choose Noori, you're choosing to be part of something bigger."
           </p>
           <a 
             href="https://www.unicef.org/drcongo/en" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-primary/30 rounded-full text-foreground hover:bg-primary hover:text-background transition-all duration-300 group"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-primary/30 rounded-full text-lg text-foreground hover:bg-primary hover:text-background transition-all duration-300 group"
           >
             Learn About Our Partnership
             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -391,7 +391,7 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
   return (
     <div 
       className={`
-        relative bg-background/50 backdrop-blur-sm rounded-xl p-8 
+        relative bg-background/50 backdrop-blur-sm rounded-xl p-10 
         border ${borderColors[accentColor]} overflow-hidden
         transition-all duration-500 ease-out
         hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10
@@ -405,11 +405,11 @@ const InterventionCard = ({ icon, title, description, accentColor, delay, isVisi
       {effect === 'blocks' && <BlockEffect />}
 
       <div className="relative z-10">
-        <div className={`w-[4.5rem] h-[4.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-5 border ${iconBorderColors[accentColor]}`}>
+        <div className={`w-[5.5rem] h-[5.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-6 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <h3 className="text-xl font-semibold mb-3 text-center">{title}</h3>
-        <p className="text-base text-muted-foreground leading-relaxed text-center">{description}</p>
+        <h3 className="text-2xl font-semibold mb-4 text-center">{title}</h3>
+        <p className="text-lg text-muted-foreground leading-relaxed text-center">{description}</p>
       </div>
     </div>
   );
@@ -492,10 +492,10 @@ const JourneyNode = ({ icon, title, description, accentColor, delay, isVisible, 
   return (
     <div 
       className={`
-        relative ${bgColors[accentColor]} backdrop-blur-sm rounded-xl p-5
+        relative ${bgColors[accentColor]} backdrop-blur-sm rounded-xl p-6
         border ${borderColors[accentColor]} overflow-hidden
         transition-all duration-500 ease-out
-        ${fullWidth ? 'w-full' : 'flex-1 max-w-[180px]'}
+        ${fullWidth ? 'w-full' : 'flex-1 max-w-[225px]'}
         ${highlight ? 'ring-2 ring-primary/50 shadow-lg shadow-primary/20' : ''}
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       `}
@@ -504,11 +504,11 @@ const JourneyNode = ({ icon, title, description, accentColor, delay, isVisible, 
       {effect}
 
       <div className="relative z-10 text-center">
-        <div className={`w-12 h-12 rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-3 border ${borderColors[accentColor]}`}>
+        <div className={`w-16 h-16 rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-4 border ${borderColors[accentColor]}`}>
           {icon}
         </div>
-        <h4 className="text-base font-semibold mb-1">{title}</h4>
-        <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+        <h4 className="text-lg font-semibold mb-2">{title}</h4>
+        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
       </div>
     </div>
   );
@@ -613,9 +613,9 @@ const StatItem = ({ number, label, delay, isVisible, isText }: { number: string;
     className={`text-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     style={{ transitionDelay: `${delay}ms` }}
   >
-    <div className={`font-serif ${isText ? 'text-lg' : 'text-2xl md:text-3xl'} text-primary mb-1`}>
+    <div className={`font-serif ${isText ? 'text-xl' : 'text-3xl md:text-4xl'} text-primary mb-2`}>
       {number}
     </div>
-    <div className="text-xs text-muted-foreground uppercase tracking-wider">{label}</div>
+    <div className="text-sm text-muted-foreground uppercase tracking-wider">{label}</div>
   </div>
 );

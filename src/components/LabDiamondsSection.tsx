@@ -35,23 +35,23 @@ export const LabDiamondsSection = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
       </div>
 
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         {/* ========== PART 1: Why Lab Diamonds ========== */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-3xl md:text-4xl font-serif mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif mb-5">
               Why <span className="noor-glow">Lab Diamonds</span>?
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               The choice is clear—lab-grown diamonds deliver the same brilliance with superior ethics and exceptional quality.
             </p>
           </div>
         </div>
 
         {/* 3 Benefit Cards */}
-        <div className="grid md:grid-cols-3 gap-8 md:gap-10 mb-20">
+        <div className="grid md:grid-cols-3 gap-10 md:gap-12 mb-24">
           <BenefitCard
-            icon={<Microscope className="w-9 h-9 text-emerald-400" />}
+            icon={<Microscope className="w-11 h-11 text-emerald-400" />}
             title="Scientifically Identical"
             description="Same crystal structure, same 10 Mohs hardness, certified by GIA & IGI. Even experts can't tell the difference."
             accentColor="emerald"
@@ -60,7 +60,7 @@ export const LabDiamondsSection = () => {
             effect="scan"
           />
           <BenefitCard
-            icon={<Gem className="w-9 h-9 text-amber-400" />}
+            icon={<Gem className="w-11 h-11 text-amber-400" />}
             title="Superior Clarity"
             description="Lab-controlled environments mean fewer inclusions and defects. Exceptional brilliance and fire in every stone."
             accentColor="amber"
@@ -69,7 +69,7 @@ export const LabDiamondsSection = () => {
             effect="shimmer"
           />
           <BenefitCard
-            icon={<Leaf className="w-9 h-9 text-green-400" />}
+            icon={<Leaf className="w-11 h-11 text-green-400" />}
             title="Ethically Pure"
             description="Zero mining, no conflict financing, no displaced communities. Complete traceability from lab to jewelry box."
             accentColor="green"
@@ -80,21 +80,21 @@ export const LabDiamondsSection = () => {
         </div>
 
         {/* ========== Visual Connector ========== */}
-        <div className={`flex items-center justify-center mb-16 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`flex items-center justify-center mb-20 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-primary/50" />
-          <div className="px-6 py-2 bg-secondary/80 backdrop-blur-sm border border-primary/20 rounded-full mx-4">
-            <span className="text-xs uppercase tracking-widest text-primary/80 font-medium">The Process</span>
+          <div className="px-8 py-3 bg-secondary/80 backdrop-blur-sm border border-primary/20 rounded-full mx-4">
+            <span className="text-sm uppercase tracking-widest text-primary/80 font-medium">The Process</span>
           </div>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent via-primary/30 to-primary/50" />
         </div>
 
         {/* ========== PART 2: How Lab Diamonds Are Made ========== */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h3 className="text-2xl md:text-3xl font-serif mb-4">
+            <h3 className="text-3xl md:text-4xl font-serif mb-5">
               How <span className="noor-glow">They're Made</span>
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               We recreate the forces of nature—the same conditions found 100 miles beneath the Earth's surface.
             </p>
           </div>
@@ -194,9 +194,9 @@ export const LabDiamondsSection = () => {
             </svg>
 
             {/* Nodes Container */}
-            <div className="relative flex items-center justify-between gap-4" style={{ minHeight: '280px' }}>
+            <div className="relative flex items-center justify-between gap-6" style={{ minHeight: '340px' }}>
               <ProcessNode
-                icon={<Gem className="w-7 h-7 text-primary" />}
+                icon={<Gem className="w-9 h-9 text-primary" />}
                 title="Diamond Seed"
                 description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
@@ -205,9 +205,9 @@ export const LabDiamondsSection = () => {
                 effect={<SeedEffect />}
               />
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-5">
                 <ProcessNode
-                  icon={<Flame className="w-7 h-7 text-orange-500" />}
+                  icon={<Flame className="w-9 h-9 text-orange-500" />}
                   title="2,700°F"
                   description="Plasma recreates Earth's mantle conditions."
                   accentColor="orange"
@@ -217,7 +217,7 @@ export const LabDiamondsSection = () => {
                   size="small"
                 />
                 <ProcessNode
-                  icon={<Zap className="w-7 h-7 text-blue-400" />}
+                  icon={<Zap className="w-9 h-9 text-blue-400" />}
                   title="870,000 PSI"
                   description="Pressure fuses carbon into crystal."
                   accentColor="blue"
@@ -229,7 +229,7 @@ export const LabDiamondsSection = () => {
               </div>
 
               <ProcessNode
-                icon={<Sparkles className="w-7 h-7 text-primary" />}
+                icon={<Sparkles className="w-9 h-9 text-primary" />}
                 title="Your Diamond"
                 description="Weeks later—optically, chemically, physically identical."
                 accentColor="primary"
@@ -243,9 +243,9 @@ export const LabDiamondsSection = () => {
 
           {/* Mobile Layout */}
           <div className="md:hidden">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-5">
               <ProcessNode
-                icon={<Gem className="w-7 h-7 text-primary" />}
+                icon={<Gem className="w-9 h-9 text-primary" />}
                 title="Diamond Seed"
                 description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
@@ -258,10 +258,10 @@ export const LabDiamondsSection = () => {
               <MobileConnector delay={500} isVisible={isVisible} />
 
               <div className="w-full">
-                <p className="text-xs text-primary/60 mb-3 uppercase tracking-widest text-center font-medium">Applied Simultaneously</p>
-                <div className="grid grid-cols-2 gap-3">
+                <p className="text-sm text-primary/60 mb-4 uppercase tracking-widest text-center font-medium">Applied Simultaneously</p>
+                <div className="grid grid-cols-2 gap-4">
                   <ProcessNode
-                    icon={<Flame className="w-6 h-6 text-orange-500" />}
+                    icon={<Flame className="w-8 h-8 text-orange-500" />}
                     title="2,700°F"
                     description="Recreates Earth's mantle heat."
                     accentColor="orange"
@@ -271,7 +271,7 @@ export const LabDiamondsSection = () => {
                     size="compact"
                   />
                   <ProcessNode
-                    icon={<Zap className="w-6 h-6 text-blue-400" />}
+                    icon={<Zap className="w-8 h-8 text-blue-400" />}
                     title="870,000 PSI"
                     description="Fuses carbon atoms together."
                     accentColor="blue"
@@ -286,7 +286,7 @@ export const LabDiamondsSection = () => {
               <MobileConnector delay={700} isVisible={isVisible} />
 
               <ProcessNode
-                icon={<Sparkles className="w-7 h-7 text-primary" />}
+                icon={<Sparkles className="w-9 h-9 text-primary" />}
                 title="Your Diamond"
                 description="Weeks later—optically, chemically, physically identical."
                 accentColor="primary"
@@ -395,7 +395,7 @@ const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, 
   return (
     <div 
       className={`
-        relative bg-secondary/50 backdrop-blur-sm rounded-xl p-8 
+        relative bg-secondary/50 backdrop-blur-sm rounded-xl p-10 
         border ${borderColors[accentColor]} overflow-hidden
         transition-all duration-500 ease-out
         hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10
@@ -409,11 +409,11 @@ const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, 
       {effect === 'organic' && <OrganicEffect />}
 
       <div className="relative z-10">
-        <div className={`w-[4.5rem] h-[4.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-5 border ${iconBorderColors[accentColor]}`}>
+        <div className={`w-[5.5rem] h-[5.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-6 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <h3 className="text-xl font-semibold mb-3 text-center">{title}</h3>
-        <p className="text-base text-muted-foreground leading-relaxed text-center">{description}</p>
+        <h3 className="text-2xl font-semibold mb-4 text-center">{title}</h3>
+        <p className="text-lg text-muted-foreground leading-relaxed text-center">{description}</p>
       </div>
     </div>
   );
@@ -492,9 +492,9 @@ const ProcessNode = ({ icon, title, description, accentColor, delay, isVisible, 
   };
 
   const sizeClasses = {
-    normal: 'p-6 min-w-[180px] max-w-[200px]',
-    small: 'p-5 min-w-[160px] max-w-[180px]',
-    compact: 'p-4'
+    normal: 'p-8 min-w-[225px] max-w-[250px]',
+    small: 'p-6 min-w-[200px] max-w-[225px]',
+    compact: 'p-5'
   };
 
   return (
@@ -514,11 +514,11 @@ const ProcessNode = ({ icon, title, description, accentColor, delay, isVisible, 
     >
       {effect}
       <div className="relative z-10 flex flex-col items-center text-center">
-        <div className={`w-12 h-12 rounded-full ${bgColors[accentColor]} flex items-center justify-center mb-3 border ${iconBorderColors[accentColor]}`}>
+        <div className={`w-16 h-16 rounded-full ${bgColors[accentColor]} flex items-center justify-center mb-4 border ${iconBorderColors[accentColor]}`}>
           {icon}
         </div>
-        <div className={`font-bold text-foreground mb-2 ${size === 'compact' ? 'text-lg' : 'text-xl'}`}>{title}</div>
-        <div className={`text-muted-foreground leading-relaxed ${size === 'compact' ? 'text-xs' : 'text-sm'}`}>{description}</div>
+        <div className={`font-bold text-foreground mb-3 ${size === 'compact' ? 'text-xl' : 'text-2xl'}`}>{title}</div>
+        <div className={`text-muted-foreground leading-relaxed ${size === 'compact' ? 'text-sm' : 'text-base'}`}>{description}</div>
       </div>
     </div>
   );
