@@ -357,10 +357,10 @@ export const LabDiamondsSection = () => {
           0%, 100% { transform: translateY(0) rotate(45deg); }
           50% { transform: translateY(3px) rotate(45deg); }
         }
-        @keyframes diamondFloat {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-          50% { transform: translateY(-8px) rotate(5deg); opacity: 0.5; }
-        }
+          @keyframes subtleGlow {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+          }
       `}</style>
     </section>
   );
@@ -602,49 +602,16 @@ const PressureEffect = () => (
 
 const DiamondEffect = ({ active }: { active: boolean }) => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Background glow - cyan */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-cyan-400/15 rounded-full blur-2xl animate-pulse" />
-    
-    {/* Floating diamond icons - subtle */}
-    {[
-      { top: '10%', left: '8%', delay: '0s', size: 'w-3 h-3' },
-      { top: '25%', right: '10%', delay: '0.8s', size: 'w-2.5 h-2.5' },
-      { top: '60%', left: '12%', delay: '1.6s', size: 'w-2 h-2' },
-      { top: '70%', right: '15%', delay: '0.4s', size: 'w-2.5 h-2.5' },
-      { top: '45%', right: '8%', delay: '1.2s', size: 'w-2 h-2' },
-    ].map((diamond, i) => (
-      <div
-        key={i}
-        className={`absolute ${diamond.size} text-cyan-300 opacity-40`}
-        style={{
-          top: diamond.top,
-          left: diamond.left,
-          right: diamond.right,
-          animation: 'diamondFloat 3s ease-in-out infinite',
-          animationDelay: diamond.delay,
-        }}
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-          <path d="M12 2L2 9l10 13 10-13-10-7z"/>
-        </svg>
-      </div>
-    ))}
-    
-    {/* Active shimmer effect - cyan tinted */}
+    {/* Simple centered turquoise glow */}
     <div 
-      className={`absolute inset-0 transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
-      style={{
-        background: 'linear-gradient(105deg, transparent 0%, transparent 35%, hsl(185 70% 60% / 0.2) 42%, hsl(185 70% 70% / 0.3) 50%, hsl(185 70% 60% / 0.2) 58%, transparent 65%, transparent 100%)',
-        backgroundSize: '300% 100%',
-        animation: active ? 'diamondShimmer 3s ease-in-out infinite' : 'none',
-      }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-cyan-400/20 rounded-full blur-2xl"
+      style={{ animation: 'subtleGlow 4s ease-in-out infinite' }}
     />
+    
+    {/* Very subtle outer glow ring */}
     <div 
-      className={`absolute inset-0 transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
-      style={{
-        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(185 70% 85% / 0.3) 0%, transparent 70%)',
-        animation: active ? 'diamondShine 3s ease-in-out infinite' : 'none',
-      }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-cyan-300/10 rounded-full blur-3xl"
+      style={{ animation: 'subtleGlow 4s ease-in-out infinite', animationDelay: '1s' }}
     />
   </div>
 );
