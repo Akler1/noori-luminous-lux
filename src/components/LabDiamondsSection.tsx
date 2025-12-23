@@ -66,7 +66,7 @@ export const LabDiamondsSection = () => {
             accentColor="amber"
             delay={200}
             isVisible={isVisible}
-            effect="shimmer"
+            effect="sparkle"
           />
           <BenefitCard
             icon={<Leaf className="w-11 h-11 text-green-400" />}
@@ -196,7 +196,7 @@ export const LabDiamondsSection = () => {
             {/* Nodes Container */}
             <div className="relative flex items-center justify-between gap-6" style={{ minHeight: '340px' }}>
               <ProcessNode
-                icon={<Gem className="w-9 h-9 text-primary" />}
+                icon={<Sparkles className="w-9 h-9 text-primary" />}
                 title="Diamond Seed"
                 description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
@@ -229,10 +229,10 @@ export const LabDiamondsSection = () => {
               </div>
 
               <ProcessNode
-                icon={<Sparkles className="w-9 h-9 text-primary" />}
+                icon={<Gem className="w-9 h-9 text-cyan-400" />}
                 title="Your Diamond"
                 description="Weeks later—optically, chemically, physically identical."
-                accentColor="primary"
+                accentColor="cyan"
                 delay={800}
                 isVisible={isVisible}
                 effect={<DiamondEffect active={diamondPayoff} />}
@@ -245,7 +245,7 @@ export const LabDiamondsSection = () => {
           <div className="md:hidden">
             <div className="flex flex-col items-center gap-5">
               <ProcessNode
-                icon={<Gem className="w-9 h-9 text-primary" />}
+                icon={<Sparkles className="w-9 h-9 text-primary" />}
                 title="Diamond Seed"
                 description="A tiny sliver of pure carbon—the blueprint for brilliance."
                 accentColor="primary"
@@ -286,10 +286,10 @@ export const LabDiamondsSection = () => {
               <MobileConnector delay={700} isVisible={isVisible} />
 
               <ProcessNode
-                icon={<Sparkles className="w-9 h-9 text-primary" />}
+                icon={<Gem className="w-9 h-9 text-cyan-400" />}
                 title="Your Diamond"
                 description="Weeks later—optically, chemically, physically identical."
-                accentColor="primary"
+                accentColor="cyan"
                 delay={800}
                 isVisible={isVisible}
                 effect={<DiamondEffect active={diamondPayoff} />}
@@ -357,6 +357,10 @@ export const LabDiamondsSection = () => {
           0%, 100% { transform: translateY(0) rotate(45deg); }
           50% { transform: translateY(3px) rotate(45deg); }
         }
+        @keyframes diamondFloat {
+          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+          50% { transform: translateY(-8px) rotate(5deg); opacity: 0.5; }
+        }
       `}</style>
     </section>
   );
@@ -370,7 +374,7 @@ interface BenefitCardProps {
   accentColor: 'emerald' | 'amber' | 'green';
   delay: number;
   isVisible: boolean;
-  effect: 'scan' | 'shimmer' | 'organic';
+  effect: 'scan' | 'shimmer' | 'organic' | 'sparkle';
 }
 
 const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, effect }: BenefitCardProps) => {
@@ -407,6 +411,7 @@ const BenefitCard = ({ icon, title, description, accentColor, delay, isVisible, 
       {effect === 'scan' && <ScanEffect />}
       {effect === 'shimmer' && <ShimmerEffect />}
       {effect === 'organic' && <OrganicEffect />}
+      {effect === 'sparkle' && <SparkleEffect />}
 
       <div className="relative z-10">
         <div className={`w-[5.5rem] h-[5.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-6 border ${iconBorderColors[accentColor]}`}>
@@ -458,12 +463,41 @@ const OrganicEffect = () => (
   </div>
 );
 
+const SparkleEffect = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-60">
+    {[
+      { top: '15%', left: '10%', delay: '0s', size: 'w-2 h-2' },
+      { top: '20%', right: '15%', delay: '0.5s', size: 'w-1.5 h-1.5' },
+      { top: '40%', left: '20%', delay: '1s', size: 'w-2.5 h-2.5' },
+      { top: '60%', right: '12%', delay: '1.5s', size: 'w-2 h-2' },
+      { top: '75%', left: '15%', delay: '0.8s', size: 'w-1.5 h-1.5' },
+      { top: '50%', right: '25%', delay: '2s', size: 'w-2 h-2' },
+    ].map((sparkle, i) => (
+      <div
+        key={i}
+        className={`absolute ${sparkle.size} text-amber-300`}
+        style={{
+          top: sparkle.top,
+          left: sparkle.left,
+          right: sparkle.right,
+          animation: 'sparkleFloat 2s ease-in-out infinite',
+          animationDelay: sparkle.delay,
+        }}
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+          <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+        </svg>
+      </div>
+    ))}
+  </div>
+);
+
 // ========== Process Node Component ==========
 interface ProcessNodeProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-  accentColor: 'primary' | 'orange' | 'blue';
+  accentColor: 'primary' | 'orange' | 'blue' | 'cyan';
   delay: number;
   isVisible: boolean;
   effect?: React.ReactNode;
@@ -476,19 +510,22 @@ const ProcessNode = ({ icon, title, description, accentColor, delay, isVisible, 
   const borderColors = {
     primary: 'border-primary/20 hover:border-primary/40',
     orange: 'border-orange-500/20 hover:border-orange-500/40',
-    blue: 'border-blue-400/20 hover:border-blue-400/40'
+    blue: 'border-blue-400/20 hover:border-blue-400/40',
+    cyan: 'border-cyan-400/20 hover:border-cyan-400/40'
   };
 
   const bgColors = {
     primary: 'bg-primary/10',
     orange: 'bg-orange-500/10',
-    blue: 'bg-blue-400/10'
+    blue: 'bg-blue-400/10',
+    cyan: 'bg-cyan-400/10'
   };
 
   const iconBorderColors = {
     primary: 'border-primary/30',
     orange: 'border-orange-500/30',
-    blue: 'border-blue-400/30'
+    blue: 'border-blue-400/30',
+    cyan: 'border-cyan-400/30'
   };
 
   const sizeClasses = {
@@ -565,11 +602,39 @@ const PressureEffect = () => (
 
 const DiamondEffect = ({ active }: { active: boolean }) => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-primary/15 rounded-full blur-2xl animate-pulse" />
+    {/* Background glow - cyan */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-cyan-400/15 rounded-full blur-2xl animate-pulse" />
+    
+    {/* Floating diamond icons - subtle */}
+    {[
+      { top: '10%', left: '8%', delay: '0s', size: 'w-3 h-3' },
+      { top: '25%', right: '10%', delay: '0.8s', size: 'w-2.5 h-2.5' },
+      { top: '60%', left: '12%', delay: '1.6s', size: 'w-2 h-2' },
+      { top: '70%', right: '15%', delay: '0.4s', size: 'w-2.5 h-2.5' },
+      { top: '45%', right: '8%', delay: '1.2s', size: 'w-2 h-2' },
+    ].map((diamond, i) => (
+      <div
+        key={i}
+        className={`absolute ${diamond.size} text-cyan-300 opacity-40`}
+        style={{
+          top: diamond.top,
+          left: diamond.left,
+          right: diamond.right,
+          animation: 'diamondFloat 3s ease-in-out infinite',
+          animationDelay: diamond.delay,
+        }}
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+          <path d="M12 2L2 9l10 13 10-13-10-7z"/>
+        </svg>
+      </div>
+    ))}
+    
+    {/* Active shimmer effect - cyan tinted */}
     <div 
       className={`absolute inset-0 transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
       style={{
-        background: 'linear-gradient(105deg, transparent 0%, transparent 35%, hsl(45 100% 60% / 0.2) 42%, hsl(45 100% 70% / 0.3) 50%, hsl(45 100% 60% / 0.2) 58%, transparent 65%, transparent 100%)',
+        background: 'linear-gradient(105deg, transparent 0%, transparent 35%, hsl(185 70% 60% / 0.2) 42%, hsl(185 70% 70% / 0.3) 50%, hsl(185 70% 60% / 0.2) 58%, transparent 65%, transparent 100%)',
         backgroundSize: '300% 100%',
         animation: active ? 'diamondShimmer 3s ease-in-out infinite' : 'none',
       }}
@@ -577,16 +642,9 @@ const DiamondEffect = ({ active }: { active: boolean }) => (
     <div 
       className={`absolute inset-0 transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
       style={{
-        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(45 100% 85% / 0.3) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(185 70% 85% / 0.3) 0%, transparent 70%)',
         animation: active ? 'diamondShine 3s ease-in-out infinite' : 'none',
       }}
     />
-    {active && (
-      <>
-        <div className="absolute top-2 right-3 w-1.5 h-1.5 bg-primary/80 rounded-full" style={{ animation: 'sparkleFloat 2s ease-in-out infinite' }} />
-        <div className="absolute top-1/4 left-4 w-1 h-1 bg-amber-300/70 rounded-full" style={{ animation: 'sparkleFloat 2.3s ease-in-out infinite 0.3s' }} />
-        <div className="absolute bottom-3 right-1/4 w-1 h-1 bg-primary/60 rounded-full" style={{ animation: 'sparkleFloat 1.8s ease-in-out infinite 0.6s' }} />
-      </>
-    )}
   </div>
 );
