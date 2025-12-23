@@ -1,4 +1,4 @@
-import { Coins, IdCard, School, Mountain, HeartHandshake, GraduationCap, Sparkles } from "lucide-react";
+import { Mountain, HeartHandshake, GraduationCap, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const Impact = () => {
@@ -44,59 +44,19 @@ export const Impact = () => {
               Beauty with <span className="noor-glow">Purpose</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Every Noori purchase helps children transition from mining to education through UNICEF's "From Mine to School" initiative.
+              Every Noori purchase directly supports UNICEF's mission to help children escape dangerous mining conditions and access education in the Democratic Republic of Congo.
             </p>
           </div>
-        </div>
-
-        {/* 3 Intervention Cards */}
-        <div className="grid md:grid-cols-3 gap-10 md:gap-12 mb-24">
-          <InterventionCard
-            icon={<Coins className="w-11 h-11 text-amber-400" />}
-            title="Cash Transfers"
-            description="Direct support to families so parents don't need children's income from the mines."
-            accentColor="amber"
-            delay={100}
-            isVisible={isVisible}
-            effect="coins"
-          />
-          <InterventionCard
-            icon={<IdCard className="w-11 h-11 text-blue-400" />}
-            title="Documentation"
-            description="Birth certificates unlock school enrollment and legal protection for every child."
-            accentColor="blue"
-            delay={200}
-            isVisible={isVisible}
-            effect="stamp"
-          />
-          <InterventionCard
-            icon={<School className="w-11 h-11 text-green-400" />}
-            title="Safe Spaces"
-            description="Child-Friendly Spaces provide catch-up classes, school kits, and psychosocial support."
-            accentColor="green"
-            delay={300}
-            isVisible={isVisible}
-            effect="blocks"
-          />
-        </div>
-
-        {/* ========== Visual Connector ========== */}
-        <div className={`flex items-center justify-center mb-20 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-amber-500/50" />
-          <div className="px-8 py-3 bg-background/80 backdrop-blur-sm border border-amber-500/20 rounded-full mx-4">
-            <span className="text-sm uppercase tracking-widest text-amber-500/80 font-medium">The Journey</span>
-          </div>
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent via-amber-500/30 to-amber-500/50" />
         </div>
 
         {/* ========== PART 2: The Journey Process Flow ========== */}
         <div className="text-center mb-16">
           <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h3 className="text-3xl md:text-4xl font-serif mb-5">
-              From <span className="noor-glow">Mine to School</span>
+              How Your Purchase <span className="noor-glow">Creates Change</span>
             </h3>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              A holistic transition addressing root causes—poverty, documentation, and education.
+              A step-by-step journey from mining to thriving.
             </p>
           </div>
         </div>
@@ -105,85 +65,12 @@ export const Impact = () => {
         <div className="relative">
           {/* Desktop Layout */}
           <div className="hidden md:block">
-            {/* SVG Connectors */}
-            <svg 
-              className="absolute inset-0 w-full h-full pointer-events-none" 
-              viewBox="0 0 800 180"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <defs>
-                <linearGradient id="impactPathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
-                  <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
-                </linearGradient>
-                <filter id="impactGlow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              
-              {/* Mine to Intervention */}
-              <path
-                d="M 150 90 Q 250 60 350 90"
-                fill="none"
-                stroke="url(#impactPathGradient)"
-                strokeWidth="2.5"
-                strokeDasharray="8 4"
-                filter="url(#impactGlow)"
-                className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-                style={{
-                  strokeDashoffset: isVisible ? 0 : 200,
-                  transition: 'stroke-dashoffset 1.2s ease-out 0.6s, opacity 0.5s ease-out 0.6s'
-                }}
-              />
-              <circle cx="150" cy="90" r="4" fill="hsl(45 50% 40%)" className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.5s' }} />
-              
-              {/* Intervention to School */}
-              <path
-                d="M 420 90 Q 520 120 620 90"
-                fill="none"
-                stroke="url(#impactPathGradient)"
-                strokeWidth="2.5"
-                strokeDasharray="8 4"
-                filter="url(#impactGlow)"
-                className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-                style={{
-                  strokeDashoffset: isVisible ? 0 : 200,
-                  transition: 'stroke-dashoffset 1.2s ease-out 1s, opacity 0.5s ease-out 1s'
-                }}
-              />
-              
-              {/* School to Future */}
-              <path
-                d="M 680 90 L 750 90"
-                fill="none"
-                stroke="url(#impactPathGradient)"
-                strokeWidth="2.5"
-                strokeDasharray="8 4"
-                filter="url(#impactGlow)"
-                className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-                style={{
-                  strokeDashoffset: isVisible ? 0 : 100,
-                  transition: 'stroke-dashoffset 1.2s ease-out 1.4s, opacity 0.5s ease-out 1.4s'
-                }}
-              />
-              
-              {/* End node */}
-              <circle cx="750" cy="90" r="5" fill="hsl(var(--primary))" className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '1.6s' }}>
-                <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" />
-              </circle>
-            </svg>
-
             {/* Nodes Container */}
             <div className="relative flex items-center justify-between gap-6" style={{ minHeight: '225px' }}>
               <JourneyNode
                 icon={<Mountain className="w-8 h-8 text-stone-400" />}
                 title="The Mines"
-                description="Children as young as 5 work in cobalt mines."
+                description="Over 360,000 children work in dangerous cobalt mines in the DRC."
                 accentColor="stone"
                 delay={400}
                 isVisible={isVisible}
@@ -193,7 +80,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                 title="UNICEF Steps In"
-                description="Holistic support addressing root causes."
+                description="Cash support, birth certificates, and safe spaces help families break the cycle."
                 accentColor="amber"
                 delay={700}
                 isVisible={isVisible}
@@ -203,7 +90,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<GraduationCap className="w-8 h-8 text-green-500" />}
                 title="Education"
-                description="Catch-up classes, uniforms, and supplies."
+                description="Children receive school supplies, uniforms, and catch-up classes."
                 accentColor="green"
                 delay={1000}
                 isVisible={isVisible}
@@ -213,7 +100,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<Sparkles className="w-8 h-8 text-primary" />}
                 title="Thriving"
-                description="A future of possibility, not labor."
+                description="A brighter future with endless possibilities ahead."
                 accentColor="primary"
                 delay={1300}
                 isVisible={isVisible}
@@ -229,7 +116,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<Mountain className="w-8 h-8 text-stone-400" />}
                 title="The Mines"
-                description="Children as young as 5 work in cobalt mines."
+                description="Over 360,000 children work in dangerous cobalt mines in the DRC."
                 accentColor="stone"
                 delay={400}
                 isVisible={isVisible}
@@ -242,7 +129,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                 title="UNICEF Steps In"
-                description="Holistic support addressing root causes."
+                description="Cash support, birth certificates, and safe spaces help families break the cycle."
                 accentColor="amber"
                 delay={700}
                 isVisible={isVisible}
@@ -255,7 +142,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<GraduationCap className="w-8 h-8 text-green-500" />}
                 title="Education"
-                description="Catch-up classes, uniforms, and supplies."
+                description="Children receive school supplies, uniforms, and catch-up classes."
                 accentColor="green"
                 delay={1000}
                 isVisible={isVisible}
@@ -268,7 +155,7 @@ export const Impact = () => {
               <JourneyNode
                 icon={<Sparkles className="w-8 h-8 text-primary" />}
                 title="Thriving"
-                description="A future of possibility, not labor."
+                description="A brighter future with endless possibilities ahead."
                 accentColor="primary"
                 delay={1300}
                 isVisible={isVisible}
@@ -277,6 +164,25 @@ export const Impact = () => {
                 fullWidth
               />
             </div>
+          </div>
+        </div>
+
+        {/* ========== UNICEF Video Embed ========== */}
+        <div className={`mt-16 mb-12 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="max-w-3xl mx-auto">
+            <h4 className="text-xl font-serif text-center mb-6">See the Impact in Action</h4>
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-primary/20 shadow-lg shadow-primary/10">
+              <iframe
+                src="https://www.youtube.com/embed/vSDqUcH5ne0"
+                title="UNICEF: Breaking the cycle of child labor in DRC mines"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-4">
+              UNICEF's work helping children transition from mines to schools
+            </p>
           </div>
         </div>
 
@@ -312,25 +218,7 @@ export const Impact = () => {
 
       {/* All custom animations */}
       <style>{`
-        /* Simple Floating Coins */
-        @keyframes coinFloat {
-          0%, 100% { transform: translateY(0); opacity: 0.7; }
-          50% { transform: translateY(-10px); opacity: 1; }
-        }
-
-        /* Pulsing Glow Effect for Documentation */
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.03); }
-        }
-
-        /* Floating Hearts */
-        @keyframes heartFloat {
-          0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-          50% { transform: translateY(-12px) scale(1.15); opacity: 1; }
-        }
-
-        /* Existing Journey Effects */
+        /* Journey Effects */
         @keyframes dustFloat {
           0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
           50% { transform: translateY(-6px) translateX(3px); opacity: 0.5; }
@@ -364,155 +252,6 @@ export const Impact = () => {
   );
 };
 
-// ========== Intervention Card Component ==========
-interface InterventionCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  accentColor: 'amber' | 'blue' | 'green';
-  delay: number;
-  isVisible: boolean;
-  effect: 'coins' | 'stamp' | 'blocks';
-}
-
-const InterventionCard = ({ icon, title, description, accentColor, delay, isVisible, effect }: InterventionCardProps) => {
-  const borderColors = {
-    amber: 'border-amber-500/20 hover:border-amber-500/40',
-    blue: 'border-blue-500/20 hover:border-blue-500/40',
-    green: 'border-green-500/20 hover:border-green-500/40'
-  };
-
-  const bgColors = {
-    amber: 'bg-amber-500/10',
-    blue: 'bg-blue-500/10',
-    green: 'bg-green-500/10'
-  };
-
-  const iconBorderColors = {
-    amber: 'border-amber-500/30',
-    blue: 'border-blue-500/30',
-    green: 'border-green-500/30'
-  };
-
-  return (
-    <div 
-      className={`
-        relative bg-background/50 backdrop-blur-sm rounded-xl p-10 
-        border ${borderColors[accentColor]} overflow-hidden
-        transition-all duration-500 ease-out
-        hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10
-        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-      `}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {/* Effect Layer */}
-      {effect === 'coins' && <CoinEffect />}
-      {effect === 'stamp' && <StampEffect />}
-      {effect === 'blocks' && <BlockEffect />}
-
-      <div className="relative z-10">
-        <div className={`w-[5.5rem] h-[5.5rem] rounded-full ${bgColors[accentColor]} flex items-center justify-center mx-auto mb-6 border ${iconBorderColors[accentColor]}`}>
-          {icon}
-        </div>
-        <h3 className="text-2xl font-semibold mb-4 text-center">{title}</h3>
-        <p className="text-lg text-muted-foreground leading-relaxed text-center">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-// ========== Card Effects ==========
-
-// Enhanced Floating Coins with Glow
-const CoinEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-    {[
-      { top: '8%', left: '6%', delay: '0s', size: 'w-4 h-4' },
-      { top: '12%', right: '10%', delay: '0.4s', size: 'w-3.5 h-3.5' },
-      { top: '22%', left: '14%', delay: '0.9s', size: 'w-3 h-3' },
-      { top: '28%', right: '6%', delay: '1.3s', size: 'w-4 h-4' },
-      { top: '40%', left: '5%', delay: '1.8s', size: 'w-3.5 h-3.5' },
-      { top: '48%', right: '12%', delay: '0.2s', size: 'w-3 h-3' },
-      { top: '58%', left: '10%', delay: '0.7s', size: 'w-4 h-4' },
-      { top: '65%', right: '5%', delay: '1.5s', size: 'w-3.5 h-3.5' },
-      { top: '75%', left: '7%', delay: '1.1s', size: 'w-3 h-3' },
-      { top: '72%', right: '14%', delay: '2.1s', size: 'w-4 h-4' },
-    ].map((coin, i) => (
-      <div
-        key={i}
-        className={`absolute ${coin.size} rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg shadow-amber-400/60`}
-        style={{
-          top: coin.top,
-          left: coin.left,
-          right: coin.right,
-          animation: 'coinFloat 2.5s ease-in-out infinite',
-          animationDelay: coin.delay,
-        }}
-      />
-    ))}
-  </div>
-);
-
-// Simple Pulsing Glow Effect for Documentation
-const StampEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
-    {/* Subtle pulsing border glow */}
-    <div 
-      className="absolute inset-4 rounded-lg border-2 border-blue-400/60"
-      style={{ animation: 'pulseGlow 3s ease-in-out infinite' }}
-    />
-    {/* Corner accent dots with glow */}
-    {[
-      { top: '12%', left: '10%' },
-      { top: '12%', right: '10%' },
-      { bottom: '18%', left: '10%' },
-      { bottom: '18%', right: '10%' },
-      { top: '50%', left: '6%' },
-      { top: '50%', right: '6%' },
-    ].map((pos, i) => (
-      <div
-        key={i}
-        className="absolute w-2.5 h-2.5 rounded-full bg-blue-400 shadow-lg shadow-blue-400/60"
-        style={{ ...pos, animation: 'pulseGlow 3s ease-in-out infinite', animationDelay: `${i * 0.4}s` }}
-      />
-    ))}
-  </div>
-);
-
-// Enhanced Floating Hearts with Glow
-const BlockEffect = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-    {[
-      { top: '8%', left: '6%', delay: '0s', size: 'w-4 h-4' },
-      { top: '14%', right: '8%', delay: '0.5s', size: 'w-3.5 h-3.5' },
-      { top: '24%', left: '12%', delay: '1.1s', size: 'w-3 h-3' },
-      { top: '32%', right: '5%', delay: '1.6s', size: 'w-4 h-4' },
-      { top: '42%', left: '5%', delay: '0.3s', size: 'w-3.5 h-3.5' },
-      { top: '50%', right: '10%', delay: '0.9s', size: 'w-3 h-3' },
-      { top: '60%', left: '8%', delay: '1.4s', size: 'w-4 h-4' },
-      { top: '68%', right: '6%', delay: '2s', size: 'w-3.5 h-3.5' },
-      { top: '76%', left: '6%', delay: '0.7s', size: 'w-3 h-3' },
-      { top: '72%', right: '12%', delay: '1.8s', size: 'w-4 h-4' },
-    ].map((heart, i) => (
-      <div
-        key={i}
-        className={`absolute ${heart.size} text-green-400`}
-        style={{
-          top: heart.top,
-          left: heart.left,
-          right: heart.right,
-          animation: 'heartFloat 3s ease-in-out infinite',
-          animationDelay: heart.delay,
-          filter: 'drop-shadow(0 0 8px rgba(74, 222, 128, 0.7))',
-        }}
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-      </div>
-    ))}
-  </div>
-);
 
 // ========== Journey Node Component ==========
 interface JourneyNodeProps {
