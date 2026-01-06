@@ -276,19 +276,35 @@ export default function Product3DCarousel() {
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      {/* Top gradient - Navy to Black */}
+      {/* Top gradient - Subtle Navy to Black blend */}
       <div 
-        className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-[1]"
+        className="absolute top-0 left-0 right-0 h-48 pointer-events-none z-[1]"
         style={{
-          background: 'linear-gradient(to bottom, hsl(226, 50%, 5%) 0%, transparent 100%)'
+          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 5% / 0.6) 40%, transparent 100%)'
         }}
       />
 
-      {/* Bottom gradient - Black to Navy */}
+      {/* Bottom gradient - Subtle Black to Navy blend */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-[1]"
+        className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-[1]"
         style={{
-          background: 'linear-gradient(to top, hsl(226, 50%, 5%) 0%, transparent 100%)'
+          background: 'linear-gradient(to top, hsl(226 50% 5%) 0%, hsl(226 50% 5% / 0.7) 30%, hsl(226 50% 5% / 0.3) 60%, transparent 100%)'
+        }}
+      />
+
+      {/* Left edge gradient */}
+      <div 
+        className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none z-[1]"
+        style={{
+          background: 'linear-gradient(to right, hsl(226 50% 5% / 0.5) 0%, transparent 100%)'
+        }}
+      />
+
+      {/* Right edge gradient */}
+      <div 
+        className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none z-[1]"
+        style={{
+          background: 'linear-gradient(to left, hsl(226 50% 5% / 0.5) 0%, transparent 100%)'
         }}
       />
 
@@ -331,7 +347,7 @@ export default function Product3DCarousel() {
         {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
-            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8 bg-[#050810]"
+            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8 bg-black"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
