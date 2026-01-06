@@ -278,9 +278,9 @@ export default function Product3DCarousel() {
     >
       {/* Gradient spacer from nav bar color to carousel background */}
       <div 
-        className="h-32 md:h-40 w-full flex-shrink-0"
+        className="h-24 md:h-30 w-full flex-shrink-0"
         style={{
-          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 4%) 40%, hsl(226 50% 3%) 100%)'
+          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 3%) 50%, hsl(226 50% 1%) 100%)'
         }}
       />
 
