@@ -276,43 +276,11 @@ export default function Product3DCarousel() {
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      {/* Top gradient - Subtle Navy to Black blend */}
-      <div 
-        className="absolute top-0 left-0 right-0 h-48 pointer-events-none z-[1]"
-        style={{
-          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 5% / 0.6) 40%, transparent 100%)'
-        }}
-      />
-
-      {/* Bottom gradient - Subtle Black to Navy blend */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-[1]"
-        style={{
-          background: 'linear-gradient(to top, hsl(226 50% 5%) 0%, hsl(226 50% 5% / 0.7) 30%, hsl(226 50% 5% / 0.3) 60%, transparent 100%)'
-        }}
-      />
-
-      {/* Left edge gradient */}
-      <div 
-        className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none z-[1]"
-        style={{
-          background: 'linear-gradient(to right, hsl(226 50% 5% / 0.5) 0%, transparent 100%)'
-        }}
-      />
-
-      {/* Right edge gradient */}
-      <div 
-        className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none z-[1]"
-        style={{
-          background: 'linear-gradient(to left, hsl(226 50% 5% / 0.5) 0%, transparent 100%)'
-        }}
-      />
-
       {/* Radial glow behind active slide */}
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
         style={{
-          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.06), hsl(226 50% 5% / 0.4) 50%, hsl(226 50% 5%) 80%)`,
+          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.08), transparent 70%)`,
         }}
       />
 
