@@ -278,9 +278,9 @@ export default function Product3DCarousel() {
     >
       {/* Gradient spacer from nav bar color to carousel background */}
       <div 
-        className="h-24 md:h-32 w-full flex-shrink-0"
+        className="h-32 md:h-40 w-full flex-shrink-0"
         style={{
-          background: 'linear-gradient(to bottom, hsl(226 50% 5%), hsl(226 50% 3%))'
+          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 4%) 40%, hsl(226 50% 3%) 100%)'
         }}
       />
 
@@ -295,8 +295,15 @@ export default function Product3DCarousel() {
       <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12 flex-1 flex items-center">
         <div className="w-full">
         {/* Hero Content */}
-        <div className="text-center mb-12 md:mb-16">
-          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6">
+        <div className="text-center mb-12 md:mb-16 relative">
+          {/* Subtle gold glow behind headline */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 600px 200px at 50% 30%, rgba(201, 162, 39, 0.15), transparent 70%)',
+            }}
+          />
+          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6 relative z-10">
             Light, made forever.
           </h1>
           <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
