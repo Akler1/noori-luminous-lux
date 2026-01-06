@@ -17,6 +17,15 @@ const Index = () => {
       <Header />
       <main>
         <Product3DCarousel />
+        
+        {/* Gradient transition section */}
+        <div 
+          className="h-16 md:h-24" 
+          style={{
+            background: 'linear-gradient(to bottom, hsl(226 50% 3%), hsl(226 50% 5%))'
+          }}
+        />
+        
         <TrustIndicators />
         <BrandStory />
         <LabDiamondsSection />
