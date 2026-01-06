@@ -276,13 +276,7 @@ export default function Product3DCarousel() {
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      {/* Gradient spacer from nav bar color to carousel background */}
-      <div 
-        className="h-24 md:h-30 w-full flex-shrink-0"
-        style={{
-          background: 'linear-gradient(to bottom, hsl(226 50% 5%) 0%, hsl(226 50% 3%) 50%, hsl(226 50% 1%) 100%)'
-        }}
-      />
+
 
       {/* Radial glow behind active slide */}
       <div
@@ -292,7 +286,7 @@ export default function Product3DCarousel() {
         }}
       />
 
-      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12 flex-1 flex items-center">
+      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 pt-36 md:pt-42 pb-12 flex-1 flex items-center">
         <div className="w-full">
         {/* Hero Content */}
         <div className="text-center mb-12 md:mb-16 relative">
