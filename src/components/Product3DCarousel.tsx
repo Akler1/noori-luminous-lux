@@ -344,10 +344,7 @@ export default function Product3DCarousel() {
             {/* Current Slide - Main */}
             <div className="w-full max-w-3xl mx-auto">
               <div 
-                className="relative aspect-square max-h-[70vh] rounded-2xl"
-                style={{
-                  boxShadow: '0 0 60px 20px rgba(201, 162, 39, 0.15), 0 0 120px 40px rgba(201, 162, 39, 0.08)',
-                }}
+                className="relative aspect-square max-h-[70vh]"
                 onMouseDown={() => setShowRotateHint(false)}
                 onTouchStart={(e) => {
                   handleTouchStart(e);
