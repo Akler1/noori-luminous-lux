@@ -286,15 +286,15 @@ export default function Product3DCarousel() {
         }}
       />
 
-      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 pt-36 md:pt-42 pb-12 flex-1 flex items-center">
+      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12 flex-1 flex items-center">
         <div className="w-full">
         {/* Hero Content */}
-        <div className="text-center mb-12 md:mb-16 relative">
-          {/* Subtle gold glow behind headline */}
+        <div className="text-center mb-12 md:mb-16 relative mt-24 md:mt-32">
+          {/* Gold glow behind text - extends upward into the margin space */}
           <div 
-            className="absolute inset-0 pointer-events-none"
+            className="absolute -top-24 md:-top-32 left-0 right-0 bottom-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse 600px 200px at 50% 30%, rgba(201, 162, 39, 0.15), transparent 70%)',
+              background: 'radial-gradient(ellipse 600px 300px at 50% 40%, rgba(201, 162, 39, 0.15), transparent 70%)',
             }}
           />
           <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6 relative z-10">
