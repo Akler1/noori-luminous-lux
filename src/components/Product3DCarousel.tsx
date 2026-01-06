@@ -271,11 +271,19 @@ export default function Product3DCarousel() {
     <section
       id="product-3d-carousel"
       ref={carouselRef}
-      className="w-full min-h-screen bg-background relative overflow-hidden flex items-center"
+      className="w-full min-h-screen bg-background relative overflow-hidden flex flex-col"
       role="region"
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
+      {/* Gradient spacer from nav bar color to carousel background */}
+      <div 
+        className="h-24 md:h-32 w-full flex-shrink-0"
+        style={{
+          background: 'linear-gradient(to bottom, hsl(226 50% 5%), hsl(226 50% 3%))'
+        }}
+      />
+
       {/* Radial glow behind active slide */}
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
@@ -284,7 +292,8 @@ export default function Product3DCarousel() {
         }}
       />
 
-      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12">
+      <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12 flex-1 flex items-center">
+        <div className="w-full">
         {/* Hero Content */}
         <div className="text-center mb-12 md:mb-16">
           <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6">
@@ -435,6 +444,7 @@ export default function Product3DCarousel() {
               />
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>
