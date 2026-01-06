@@ -45,16 +45,16 @@ export const Header = () => {
         isScrolled ? "bg-background/95 backdrop-blur-md border-b border-border/50" : "bg-[hsl(226_50%_5%)]"
       }`}>
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-20 md:h-28">
             {/* Logo */}
             <div className="flex items-center space-x-4">
               <Link to="/">
                 <Button variant="ghost" size="icon" className="hover:text-accent">
-                  <Home className="h-5 w-5" />
+                  <Home className="h-6 w-6" />
                 </Button>
               </Link>
               <Link to="/">
-                <img src={nooriLogo} alt="Noori" className="h-12 md:h-16 w-auto" />
+                <img src={nooriLogo} alt="Noori" className="h-16 md:h-24 w-auto" />
               </Link>
             </div>
 
@@ -63,7 +63,7 @@ export const Header = () => {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent hover:bg-transparent data-[state=open]:bg-transparent">
+                  <NavigationMenuTrigger className="bg-transparent hover:bg-transparent data-[state=open]:bg-transparent text-base hover:text-accent data-[state=open]:text-accent">
                     Collections
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -91,7 +91,7 @@ export const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
+                  className="text-base font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {item.name}
                 </Link>
@@ -99,7 +99,7 @@ export const Header = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
+                  className="text-base font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {item.name}
                 </a>
@@ -110,9 +110,9 @@ export const Header = () => {
             {/* Cart & Mobile Menu */}
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
-                <ShoppingBag className="h-5 w-5" />
+                <ShoppingBag className="h-7 w-7" />
                 {cart && cart.totalQuantity > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 w-4 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
                     {cart.totalQuantity}
                   </span>
                 )}
@@ -125,7 +125,7 @@ export const Header = () => {
                 className="md:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
               </Button>
             </div>
           </div>
