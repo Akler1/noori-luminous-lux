@@ -156,17 +156,26 @@ const ProductDetail = () => {
               className="space-y-4"
             >
               {/* 3D Viewer or Image Gallery */}
-              {viewMode === '3d' ? (
-                <ThreeDViewer 
-                  variant={selectedVariant}
-                  autoRotate={false}
+              <div className="relative">
+                {/* Golden glow effect */}
+                <div 
+                  className="absolute -inset-3 rounded-2xl opacity-40 blur-xl pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(ellipse at center, hsl(var(--accent) / 0.3), transparent 70%)'
+                  }}
                 />
-              ) : (
-                <ProductCarousel 
-                  images={carouselImages}
-                  showThumbs={true}
-                />
-              )}
+                {viewMode === '3d' ? (
+                  <ThreeDViewer 
+                    variant={selectedVariant}
+                    autoRotate={false}
+                  />
+                ) : (
+                  <ProductCarousel 
+                    images={carouselImages}
+                    showThumbs={true}
+                  />
+                )}
+              </div>
               
               {/* Toggle Button */}
               <div className="flex justify-center gap-2">
@@ -221,11 +230,11 @@ const ProductDetail = () => {
 
             {/* Price */}
             <div className="border-t border-b border-border py-6">
-              <div className="text-3xl font-display font-normal text-accent mb-2">
+              <div className="text-4xl md:text-5xl font-display font-medium text-accent mb-2 tracking-tight">
                 CAD ${selectedVariant?.price.amount}
               </div>
               {selectedVariant?.compareAtPrice && (
-                <div className="text-lg text-muted-foreground line-through mb-2">
+                <div className="text-xl text-muted-foreground line-through mb-2">
                   CAD ${selectedVariant.compareAtPrice.amount}
                 </div>
               )}
@@ -271,9 +280,9 @@ const ProductDetail = () => {
                 <Button 
                   onClick={handleAddToCart}
                   disabled={!selectedVariant?.availableForSale || cartLoading}
-                  className="flex-1 btn-hero"
+                  className="flex-1 bg-accent text-accent-foreground px-10 py-6 text-xl font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_hsl(var(--accent)/0.4)]"
                 >
-                  <ShoppingBag className="mr-2 h-5 w-5" />
+                  <ShoppingBag className="mr-3 h-6 w-6" />
                   {cartLoading ? "Adding..." : "Add to Cart"}
                 </Button>
                 <Button
