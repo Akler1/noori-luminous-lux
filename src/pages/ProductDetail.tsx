@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box } from "lucide-react";
+import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ThreeDViewer } from "@/components/ThreeDViewer";
@@ -21,7 +21,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<ShopifyProduct | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<ShopifyVariant | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'3d' | 'images'>('3d');
   const { addToCart, isLoading: cartLoading } = useCartActions();
@@ -64,11 +64,6 @@ const ProductDetail = () => {
     }
   };
 
-  const handleBuyNow = () => {
-    handleAddToCart();
-    // In real implementation, redirect to checkout
-    toast.success("Redirecting to secure checkout...");
-  };
 
   // Get cross-sell products (other products in capsule)
   const crossSellProducts = [
@@ -274,34 +269,15 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                <Button 
-                  onClick={handleAddToCart}
-                  disabled={!selectedVariant?.availableForSale || cartLoading}
-                  className="flex-1 bg-accent text-accent-foreground px-10 py-6 text-xl font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_hsl(var(--accent)/0.4)]"
-                >
-                  <ShoppingBag className="mr-3 h-6 w-6" />
-                  {cartLoading ? "Adding..." : "Add to Cart"}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setIsWishlisted(!isWishlisted)}
-                  className={isWishlisted ? "border-accent text-accent" : ""}
-                >
-                  <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-current' : ''}`} />
-                </Button>
-              </div>
-              
+            {/* CTA Button */}
+            <div>
               <Button 
-                onClick={handleBuyNow}
+                onClick={handleAddToCart}
                 disabled={!selectedVariant?.availableForSale || cartLoading}
-                variant="outline" 
-                className="w-full btn-ghost-luxury"
+                className="w-full bg-accent text-accent-foreground px-10 py-6 text-xl font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_hsl(var(--accent)/0.4)]"
               >
-                Buy Now
+                <ShoppingBag className="mr-3 h-6 w-6" />
+                {cartLoading ? "Adding..." : "Add to Cart"}
               </Button>
             </div>
 
