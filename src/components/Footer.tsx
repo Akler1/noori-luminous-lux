@@ -18,7 +18,7 @@ export const Footer = () => {
     <footer className="bg-background text-foreground py-16">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <h3 className="font-display text-3xl font-normal mb-4 noor-glow">
