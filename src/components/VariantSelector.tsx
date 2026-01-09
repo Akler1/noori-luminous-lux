@@ -201,33 +201,6 @@ export const VariantSelector = ({
         </motion.div>
       ))}
 
-      {/* Selected variant info */}
-      {selectedVariant && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-muted/30 rounded-lg p-4"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">{selectedKarat} {selectedVariant.title}</div>
-              <div className="text-xs text-muted-foreground">
-                SKU: {selectedVariant.sku}
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-lg font-display font-normal text-accent">
-                CAD ${selectedVariant.price.amount}
-              </div>
-              {selectedVariant.compareAtPrice && (
-                <div className="text-sm text-muted-foreground line-through">
-                  CAD ${selectedVariant.compareAtPrice.amount}
-                </div>
-              )}
-            </div>
-          </div>
-        </motion.div>
-      )}
     </div>
   );
 };
