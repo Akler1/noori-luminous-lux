@@ -142,8 +142,8 @@ const ProductDetail = () => {
 
       <main className="container mx-auto px-4 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-          {/* Product Media */}
-          <div className="space-y-4">
+          {/* Product Media - Sticky */}
+          <div className="lg:sticky lg:top-24 lg:self-start space-y-4">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -303,76 +303,71 @@ const ProductDetail = () => {
                 <span>30-Day Returns</span>
               </div>
             </div>
+
+            {/* Product Details Accordion */}
+            <div className="pt-6 border-t">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="diamonds">
+                  <AccordionTrigger className="text-left font-medium">
+                    Diamond & Certification
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground space-y-4">
+                    <p>
+                      Our lab-grown diamonds are created using advanced technology that replicates the natural 
+                      diamond formation process. Each stone is certified by leading gemological institutes 
+                      including GIA, ensuring the same quality standards as mined diamonds.
+                    </p>
+                    <ul className="list-disc list-inside space-y-2">
+                      <li>Type IIa lab-grown diamonds (the purest form)</li>
+                      <li>Certified by GIA or equivalent institute</li>
+                      <li>Identical optical, physical, and chemical properties to mined diamonds</li>
+                      <li>Conflict-free and ethically sourced</li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="materials">
+                  <AccordionTrigger className="text-left font-medium">
+                    Metal & Finish
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p>
+                      Available in recycled sterling silver, 9K gold, and 14K gold. All metals are 
+                      responsibly sourced and finished with our signature brushed texture that 
+                      complements the diamond's natural brilliance.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="sizing">
+                  <AccordionTrigger className="text-left font-medium">
+                    Sizing & Fit
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p>
+                      Standard butterfly backing ensures secure, comfortable wear. Each earring measures 
+                      approximately 6mm in diameter (0.75 carat total weight). Suitable for all ear 
+                      piercings and comfortable for extended wear.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="care">
+                  <AccordionTrigger className="text-left font-medium">
+                    Care & Warranty
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p>
+                      Your Noori jewelry comes with a lifetime warranty against manufacturing defects. 
+                      Clean with warm soapy water and a soft brush. Professional cleaning recommended 
+                      annually to maintain optimal brilliance.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </motion.div>
         </div>
-
-        {/* Product Details Accordion */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="max-w-4xl mx-auto mb-20"
-        >
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="diamonds">
-              <AccordionTrigger className="text-left font-medium">
-                Diamond & Certification
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground space-y-4">
-                <p>
-                  Our lab-grown diamonds are created using advanced technology that replicates the natural 
-                  diamond formation process. Each stone is certified by leading gemological institutes 
-                  including GIA, ensuring the same quality standards as mined diamonds.
-                </p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>Type IIa lab-grown diamonds (the purest form)</li>
-                  <li>Certified by GIA or equivalent institute</li>
-                  <li>Identical optical, physical, and chemical properties to mined diamonds</li>
-                  <li>Conflict-free and ethically sourced</li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="materials">
-              <AccordionTrigger className="text-left font-medium">
-                Metal & Finish
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p>
-                  Available in recycled sterling silver, 9K gold, and 14K gold. All metals are 
-                  responsibly sourced and finished with our signature brushed texture that 
-                  complements the diamond's natural brilliance.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="sizing">
-              <AccordionTrigger className="text-left font-medium">
-                Sizing & Fit
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p>
-                  Standard butterfly backing ensures secure, comfortable wear. Each earring measures 
-                  approximately 6mm in diameter (0.75 carat total weight). Suitable for all ear 
-                  piercings and comfortable for extended wear.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="care">
-              <AccordionTrigger className="text-left font-medium">
-                Care & Warranty
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p>
-                  Your Noori jewelry comes with a lifetime warranty against manufacturing defects. 
-                  Clean with warm soapy water and a soft brush. Professional cleaning recommended 
-                  annually to maintain optimal brilliance.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </motion.div>
 
         {/* Complete the Set */}
         {crossSellProducts.length > 0 && (
