@@ -218,9 +218,12 @@ const ProductDetail = () => {
                   ({product.reviews?.count || 0} reviews)
                 </span>
               </div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {product.description}
-              </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {product.description}
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Available in 14K and 18K Gold, White Gold, and Rose Gold.
+            </p>
             </div>
 
             {/* Price */}

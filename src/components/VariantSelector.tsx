@@ -11,6 +11,9 @@ interface VariantSelectorProps {
   className?: string;
 }
 
+const KARAT_OPTIONS = ['14K', '18K'] as const;
+type KaratOption = typeof KARAT_OPTIONS[number];
+
 export const VariantSelector = ({
   product,
   selectedVariant,
@@ -18,6 +21,7 @@ export const VariantSelector = ({
   className = ""
 }: VariantSelectorProps) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [selectedKarat, setSelectedKarat] = useState<KaratOption>('14K');
 
   // Initialize selected options from selected variant
   useEffect(() => {
@@ -101,6 +105,8 @@ export const VariantSelector = ({
                 const isSelected = selectedOptions[option.name] === value;
                 const isAvailable = isOptionAvailable(option.name, value);
                 const stock = getOptionStock(option.name, value);
+                const isMaterialOption = option.name.toLowerCase() === 'material';
+                const displayValue = isMaterialOption ? `${selectedKarat} ${value}` : value;
                 
                 return (
                   <motion.div
@@ -123,7 +129,7 @@ export const VariantSelector = ({
                       onClick={() => isAvailable && handleOptionChange(option.name, value)}
                       disabled={!isAvailable}
                     >
-                      {value}
+                      {displayValue}
                       
                       {/* Low stock indicator */}
                       {stock > 0 && stock <= 5 && isAvailable && (
@@ -142,6 +148,39 @@ export const VariantSelector = ({
               })}
             </AnimatePresence>
           </div>
+
+          {/* Karat Selector - appears after Material option */}
+          {option.name.toLowerCase() === 'material' && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-3 pt-3 border-t border-border/50"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-muted-foreground">Gold Karat:</span>
+                <div className="flex gap-2">
+                  {KARAT_OPTIONS.map((karat) => {
+                    const isSelected = selectedKarat === karat;
+                    return (
+                      <motion.div key={karat} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          variant={isSelected ? "default" : "outline"}
+                          size="sm"
+                          className={`
+                            text-xs px-3 py-1 h-7 transition-all duration-200
+                            ${isSelected ? "btn-hero" : "btn-ghost-luxury"}
+                          `}
+                          onClick={() => setSelectedKarat(karat)}
+                        >
+                          {karat}
+                        </Button>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Stock information */}
           {selectedOptions[option.name] && (
@@ -171,7 +210,7 @@ export const VariantSelector = ({
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-medium text-sm">{selectedVariant.title}</div>
+              <div className="font-medium text-sm">{selectedKarat} {selectedVariant.title}</div>
               <div className="text-xs text-muted-foreground">
                 SKU: {selectedVariant.sku}
               </div>
