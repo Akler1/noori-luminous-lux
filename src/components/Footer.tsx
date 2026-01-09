@@ -3,9 +3,26 @@ import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
   const footerLinks = {
-    Shop: ["All Products", "Earrings", "Necklaces", "Bracelets", "Gift Cards"],
-    Support: ["Size Guide", "Care Instructions", "Shipping & Returns", "Warranty", "Contact Us"],
-    Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+    Shop: [
+      { label: "All Products", href: "/" },
+      { label: "Earrings", href: "/collections/earrings" },
+      { label: "Necklaces", href: "/collections/necklaces" },
+      { label: "Bracelets", href: "/collections/bracelets" },
+      { label: "Gift Cards", href: "#" },
+    ],
+    Support: [
+      { label: "FAQ", href: "/faq" },
+      { label: "Size Guide", href: "/faq#sizing" },
+      { label: "Care Instructions", href: "/faq#care" },
+      { label: "Shipping & Returns", href: "/faq#shipping" },
+      { label: "Warranty", href: "/faq#warranty" },
+      { label: "Contact Us", href: "/faq#contact" },
+    ],
+    Legal: [
+      { label: "Privacy Policy", href: "/policies" },
+      { label: "Terms of Service", href: "/policies" },
+      { label: "Cookie Policy", href: "/policies" },
+    ],
   };
 
   const socialLinks = [
@@ -53,12 +70,12 @@ export const Footer = () => {
               <h4 className="font-medium mb-4 text-accent">{title}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-foreground/70 hover:text-foreground transition-colors text-sm"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}
