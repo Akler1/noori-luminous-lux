@@ -4,10 +4,8 @@ import { Button } from "@/components/ui/button";
 export const Footer = () => {
   const footerLinks = {
     Shop: [
-      { label: "All Products", href: "/" },
-      { label: "Earrings", href: "/collections/earrings" },
-      { label: "Necklaces", href: "/collections/necklaces" },
-      { label: "Bracelets", href: "/collections/bracelets" },
+      { label: "All Products", href: "/collections/solitaires" },
+      { label: "Solitaires", href: "/collections/solitaires" },
       { label: "Gift Cards", href: "#" },
     ],
     Support: [

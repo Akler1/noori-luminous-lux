@@ -28,9 +28,7 @@ export const Header = () => {
   }, []);
 
   const collectionItems = [
-    { name: "Earrings", href: "/collections/earrings" },
-    { name: "Necklaces", href: "/collections/necklaces" },
-    { name: "Bracelets", href: "/collections/bracelets" },
+    { name: "Solitaires", href: "/collections/solitaires" },
   ];
 
   const navItems = [
