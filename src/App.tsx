@@ -7,9 +7,7 @@ import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Capsule from "./pages/Capsule";
 import About from "./pages/About";
-import Earrings from "./pages/Earrings";
-import Necklaces from "./pages/Necklaces";
-import Bracelets from "./pages/Bracelets";
+import Solitaires from "./pages/Solitaires";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
@@ -26,9 +24,7 @@ const App = () => (
           <Route path="/product/:handle" element={<ProductDetail />} />
           <Route path="/capsule" element={<Capsule />} />
           <Route path="/policies" element={<About />} />
-          <Route path="/collections/earrings" element={<Earrings />} />
-          <Route path="/collections/necklaces" element={<Necklaces />} />
-          <Route path="/collections/bracelets" element={<Bracelets />} />
+          <Route path="/collections/solitaires" element={<Solitaires />} />
           <Route path="/faq" element={<FAQ />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
