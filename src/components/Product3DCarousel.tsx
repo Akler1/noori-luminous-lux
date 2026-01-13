@@ -306,7 +306,7 @@ export default function Product3DCarousel() {
           </p>
           <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
             <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
-              <Link to="/capsule">
+              <Link to="/collections/solitaires">
                 Shop the Capsule
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
