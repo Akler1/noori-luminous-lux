@@ -32,9 +32,9 @@ export const Header = () => {
   ];
 
   const navItems = [
+    { name: "Why Noori", href: "/why-noori" },
     { name: "About", href: "/policies" },
     { name: "FAQ", href: "/faq" },
-    { name: "Journal", href: "#journal" },
   ];
 
   return (

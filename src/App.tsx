@@ -9,6 +9,7 @@ import Capsule from "./pages/Capsule";
 import About from "./pages/About";
 import Solitaires from "./pages/Solitaires";
 import FAQ from "./pages/FAQ";
+import WhyNoori from "./pages/WhyNoori";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/policies" element={<About />} />
           <Route path="/collections/solitaires" element={<Solitaires />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/why-noori" element={<WhyNoori />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
