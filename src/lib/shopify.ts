@@ -633,6 +633,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
               quantityAvailable: 14,
               sku: 'NOORI-PRINCESS-GOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
@@ -653,6 +654,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
               quantityAvailable: 8,
               sku: 'NOORI-PRINCESS-GOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
@@ -673,6 +675,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
               quantityAvailable: 11,
               sku: 'NOORI-PRINCESS-WGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
@@ -693,6 +696,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
               quantityAvailable: 6,
               sku: 'NOORI-PRINCESS-WGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
@@ -713,6 +717,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-PRINCESS-RGOLD-1CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
@@ -733,6 +738,7 @@ class ShopifyClient {
               compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-PRINCESS-RGOLD-2CT',
+              iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',

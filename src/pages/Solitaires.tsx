@@ -29,7 +29,7 @@ const solitaireProducts = [
     name: "Princess Earrings",
     price: "$1,899",
     pdpUrl: "/product/earrings-princess-18k",
-    glb: "/models/noori_placeholder.glb",
+    iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
     rating: 5,
     reviewCount: 24
   },
