@@ -34,7 +34,16 @@ const solitaireProducts = [
     reviewCount: 24
   },
   {
-    id: "necklace-round",
+    id: "necklace-round-brilliant",
+    name: "Round Necklace",
+    price: "$2,599",
+    pdpUrl: "/product/necklace-round-brilliant",
+    glb: "/models/noori_placeholder.glb",
+    rating: 5,
+    reviewCount: 47
+  },
+  {
+    id: "necklace-bezel-less",
     name: "Bezel-less Necklace",
     price: "$2,799",
     pdpUrl: "/product/necklace-1ct-silver",
@@ -61,10 +70,10 @@ const solitaireProducts = [
     reviewCount: 38
   },
   {
-    id: "bracelet-five",
-    name: "Five-Solitaire Bracelet",
+    id: "bracelet-three-stone",
+    name: "3 Stone Solitaire Bracelet",
     price: "$2,499",
-    pdpUrl: "/product/bracelet-five-9k",
+    pdpUrl: "/product/bracelet-three-stone",
     glb: "/models/noori_placeholder.glb",
     rating: 5,
     reviewCount: 29
