@@ -134,7 +134,7 @@ const ProductDetail = () => {
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-accent transition-colors">Home</Link>
           <span>/</span>
-          <Link to="/capsule" className="hover:text-accent transition-colors">Capsule</Link>
+          <Link to="/collections/solitaires" className="hover:text-accent transition-colors">Solitaires</Link>
           <span>/</span>
           <span className="text-foreground">{product.title}</span>
         </nav>
