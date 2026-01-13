@@ -68,7 +68,7 @@ export const Hero = () => {
               className="border-[#E7E5DC]/30 text-[#E7E5DC] hover:bg-[#E7E5DC]/10 px-8 py-3 rounded-full transition-all duration-300" 
               asChild
             >
-              <Link to="/capsule" onClick={() => console.log('select_promotion: hero_secondary')}>Shop the Capsule</Link>
+              <Link to="/collections/solitaires" onClick={() => console.log('select_promotion: hero_secondary')}>Shop the Capsule</Link>
             </Button>
           </div>
         </div>
