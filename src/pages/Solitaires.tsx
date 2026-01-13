@@ -107,14 +107,12 @@ export default function Solitaires() {
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-                Three essential pieces. Infinite possibilities. Our inaugural collection captures 
-                the essence of modern luxury — refined, ethical, and built to transcend trends.
+                Three essential pieces. Three signature cuts — Round, Princess, and Emerald. 
+                Our inaugural collection captures the essence of modern luxury — refined, ethical, 
+                and built to transcend trends.
               </p>
 
               <div className="text-center mb-8">
-                <p className="text-sm text-muted-foreground mb-2">
-                  Each piece represents a different facet of light
-                </p>
                 <div className="flex items-center justify-center gap-8 text-sm">
                   <div className="text-center">
                     <div className="font-display text-2xl text-accent">Brilliance</div>
