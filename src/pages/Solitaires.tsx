@@ -1,6 +1,9 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Solitaire3DCard } from "@/components/Solitaire3DCard";
+import { Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 const solitaireProducts = [
   {
@@ -73,19 +76,61 @@ export default function Solitaires() {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          {/* Hero Section */}
-          <div className="text-center mb-12">
-            <h1 className="display-text mb-4">Solitaires</h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Light, captured in every facet. Our complete collection of certified lab-grown 
-              diamond solitaires — from timeless studs to statement necklaces.
-            </p>
-          </div>
+      <main className="flex-1">
+        {/* Capsule-Style Hero Section */}
+        <section className="pt-24 pb-16 bg-gradient-hero light-particles">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-4xl mx-auto"
+            >
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <Sparkles className="h-6 w-6 text-accent" />
+                <Badge variant="secondary" className="text-accent border-accent/20">
+                  Signature Collection
+                </Badge>
+              </div>
+              
+              <h1 className="font-display text-4xl md:text-6xl font-normal mb-6">
+                The Capsule Collection
+              </h1>
+              
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+                Three essential pieces. Infinite possibilities. Our inaugural collection captures 
+                the essence of modern luxury — refined, ethical, and built to transcend trends.
+              </p>
 
-          {/* Product Grid with 3D Viewers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+              <div className="text-center mb-8">
+                <p className="text-sm text-muted-foreground mb-2">
+                  Each piece represents a different facet of light
+                </p>
+                <div className="flex items-center justify-center gap-8 text-sm">
+                  <div className="text-center">
+                    <div className="font-display text-2xl text-accent">Brilliance</div>
+                    <div className="text-muted-foreground">Stud Earrings</div>
+                  </div>
+                  <div className="w-px h-8 bg-border" />
+                  <div className="text-center">
+                    <div className="font-display text-2xl text-accent">Elegance</div>
+                    <div className="text-muted-foreground">Necklace</div>
+                  </div>
+                  <div className="w-px h-8 bg-border" />
+                  <div className="text-center">
+                    <div className="font-display text-2xl text-accent">Grace</div>
+                    <div className="text-muted-foreground">Bracelet</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Product Grid with 3D Viewers */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {solitaireProducts.map((product) => (
               <Solitaire3DCard
                 key={product.id}
@@ -99,8 +144,9 @@ export default function Solitaires() {
                 reviewCount={product.reviewCount}
               />
             ))}
+            </div>
           </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
