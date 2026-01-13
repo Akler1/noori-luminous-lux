@@ -77,24 +77,33 @@ export default function Solitaires() {
       <Header />
       
       <main className="flex-1">
-        {/* Capsule-Style Hero Section */}
-        <section className="pt-28 md:pt-36 pb-16 bg-gradient-hero light-particles">
-          <div className="container mx-auto px-4">
+        {/* Solitaires Hero Section */}
+        <section className="pt-28 md:pt-36 pb-16 bg-gradient-hero light-particles relative overflow-hidden">
+          {/* Decorative Sparkles */}
+          <Sparkles className="absolute top-24 left-8 md:left-16 h-4 w-4 text-accent/40 animate-pulse" />
+          <Sparkles className="absolute top-32 right-12 md:right-24 h-5 w-5 text-accent/30 animate-pulse" style={{ animationDelay: '0.5s' }} />
+          <Sparkles className="absolute top-1/2 left-4 md:left-12 h-3 w-3 text-accent/25 animate-pulse" style={{ animationDelay: '1s' }} />
+          <Sparkles className="absolute top-1/2 right-4 md:right-12 h-3 w-3 text-accent/25 animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <Sparkles className="absolute bottom-32 left-16 md:left-32 h-5 w-5 text-accent/35 animate-pulse" style={{ animationDelay: '0.75s' }} />
+          <Sparkles className="absolute bottom-24 right-8 md:right-20 h-4 w-4 text-accent/40 animate-pulse" style={{ animationDelay: '1.25s' }} />
+          
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="text-center max-w-4xl mx-auto"
             >
-              <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
                 <Sparkles className="h-6 w-6 text-accent" />
-                <Badge variant="secondary" className="text-accent border-accent/20">
+                <Badge variant="secondary" className="text-accent border-accent/20 text-base md:text-lg px-4 py-1.5">
                   Signature Collection
                 </Badge>
+                <Sparkles className="h-6 w-6 text-accent" />
               </div>
               
               <h1 className="font-display text-4xl md:text-6xl font-normal mb-6">
-                The Capsule Collection
+                The Solitaires Collection
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
