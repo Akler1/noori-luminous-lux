@@ -78,7 +78,7 @@ export default function Solitaires() {
       
       <main className="flex-1">
         {/* Capsule-Style Hero Section */}
-        <section className="pt-24 pb-16 bg-gradient-hero light-particles">
+        <section className="pt-28 md:pt-36 pb-16 bg-gradient-hero light-particles">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
