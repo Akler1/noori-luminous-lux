@@ -43,15 +43,6 @@ const solitaireProducts = [
     reviewCount: 47
   },
   {
-    id: "necklace-bezel-less",
-    name: "Bezel-less Necklace",
-    price: "$2,799",
-    pdpUrl: "/product/necklace-1ct-silver",
-    glb: "/models/noori_placeholder.glb",
-    rating: 5,
-    reviewCount: 56
-  },
-  {
     id: "necklace-princess",
     name: "Princess Necklace",
     price: "$3,299",
