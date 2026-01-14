@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box } from "lucide-react";
+import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ThreeDViewer } from "@/components/ThreeDViewer";
@@ -24,6 +24,7 @@ const ProductDetail = () => {
   
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'3d' | 'images'>('3d');
+  const [showSparkles, setShowSparkles] = useState(false);
   const { addToCart, isLoading: cartLoading } = useCartActions();
 
   // Load product data
@@ -56,6 +57,10 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
+    
+    // Trigger sparkles animation
+    setShowSparkles(true);
+    setTimeout(() => setShowSparkles(false), 700);
     
     try {
       await addToCart(selectedVariant.id, quantity);
@@ -273,7 +278,18 @@ const ProductDetail = () => {
             </div>
 
             {/* CTA Button */}
-            <div>
+            <div className="relative">
+              {/* Animated Sparkles */}
+              {showSparkles && (
+                <>
+                  <Sparkles className="absolute left-1/4 top-1/2 h-4 w-4 text-accent animate-sparkle-1 pointer-events-none z-10" />
+                  <Sparkles className="absolute left-1/2 top-1/2 h-5 w-5 text-accent animate-sparkle-2 pointer-events-none z-10" />
+                  <Sparkles className="absolute right-1/4 top-1/2 h-4 w-4 text-accent animate-sparkle-3 pointer-events-none z-10" />
+                  <Sparkles className="absolute left-1/3 top-1/2 h-3 w-3 text-accent animate-sparkle-4 pointer-events-none z-10" />
+                  <Sparkles className="absolute right-1/3 top-1/2 h-3 w-3 text-accent animate-sparkle-5 pointer-events-none z-10" />
+                </>
+              )}
+              
               <Button 
                 onClick={handleAddToCart}
                 disabled={!selectedVariant?.availableForSale || cartLoading}

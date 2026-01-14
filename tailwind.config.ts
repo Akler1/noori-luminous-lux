@@ -95,10 +95,35 @@ export default {
             height: "0",
           },
         },
+        "sparkle-burst-1": {
+          "0%": { opacity: "1", transform: "translate(0, 0) scale(1)" },
+          "100%": { opacity: "0", transform: "translate(-30px, -40px) scale(0.5)" },
+        },
+        "sparkle-burst-2": {
+          "0%": { opacity: "1", transform: "translate(0, 0) scale(1)" },
+          "100%": { opacity: "0", transform: "translate(0, -50px) scale(0.5)" },
+        },
+        "sparkle-burst-3": {
+          "0%": { opacity: "1", transform: "translate(0, 0) scale(1)" },
+          "100%": { opacity: "0", transform: "translate(30px, -40px) scale(0.5)" },
+        },
+        "sparkle-burst-4": {
+          "0%": { opacity: "1", transform: "translate(0, 0) scale(1)" },
+          "100%": { opacity: "0", transform: "translate(-40px, -25px) scale(0.5)" },
+        },
+        "sparkle-burst-5": {
+          "0%": { opacity: "1", transform: "translate(0, 0) scale(1)" },
+          "100%": { opacity: "0", transform: "translate(40px, -25px) scale(0.5)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "sparkle-1": "sparkle-burst-1 0.6s ease-out forwards",
+        "sparkle-2": "sparkle-burst-2 0.6s ease-out forwards",
+        "sparkle-3": "sparkle-burst-3 0.6s ease-out forwards",
+        "sparkle-4": "sparkle-burst-4 0.6s ease-out 0.05s forwards",
+        "sparkle-5": "sparkle-burst-5 0.6s ease-out 0.05s forwards",
       },
     },
   },
