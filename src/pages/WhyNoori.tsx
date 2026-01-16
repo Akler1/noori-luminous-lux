@@ -56,26 +56,34 @@ const WhyNoori = () => {
     {
       name: "Cut",
       icon: <Sparkles className="w-6 h-6" />,
-      labGrown: "Precision-cut for maximum brilliance",
-      comparison: "Identical light performance to mined diamonds"
+      labGrown: "Excellent Grade — the highest cut rating",
+      comparison: "Maximum brilliance and fire",
+      scale: ["Poor", "Fair", "Good", "Very Good", "Excellent"],
+      nooriPosition: 4
     },
     {
       name: "Colour",
       icon: <Palette className="w-6 h-6" />,
-      labGrown: "D-F colorless grades available",
-      comparison: "Same grading scale, same visual appearance"
+      labGrown: "D-F Colorless — the purest diamond color",
+      comparison: "Completely colorless, no yellow tint",
+      scale: ["M-Z", "K-L", "G-J", "D-F"],
+      nooriPosition: 3
     },
     {
       name: "Clarity",
       icon: <Microscope className="w-6 h-6" />,
-      labGrown: "VVS1-VS2 clarity standard",
-      comparison: "Often cleaner than mined equivalents"
+      labGrown: "VVS1-VS1 — minimal to no imperfections",
+      comparison: "Inclusions invisible to the naked eye",
+      scale: ["I", "SI", "VS2", "VS1-VVS1"],
+      nooriPosition: 3
     },
     {
       name: "Carat",
       icon: <Scale className="w-6 h-6" />,
       labGrown: "Full range of sizes available",
-      comparison: "Same weight measurement, same sparkle"
+      comparison: "Same weight measurement, same sparkle",
+      scale: null,
+      nooriPosition: null
     }
   ];
 
@@ -217,7 +225,35 @@ const WhyNoori = () => {
                   <div className="text-accent mb-3 flex justify-center">{c.icon}</div>
                   <h4 className="text-xl font-serif mb-3">{c.name}</h4>
                   <p className="text-sm text-foreground mb-2">{c.labGrown}</p>
-                  <p className="text-xs text-muted-foreground">{c.comparison}</p>
+                  <p className="text-xs text-muted-foreground mb-4">{c.comparison}</p>
+                  
+                  {/* Visual Grade Scale */}
+                  {c.scale && (
+                    <div className="mt-auto pt-4 border-t border-border/50">
+                      <div className="flex gap-1 mb-2">
+                        {c.scale.map((grade, i) => (
+                          <div
+                            key={grade}
+                            className={`flex-1 h-2 rounded-full transition-all ${
+                              i === c.nooriPosition
+                                ? "bg-accent shadow-[0_0_8px_hsl(var(--accent)/0.5)]"
+                                : i < (c.nooriPosition ?? 0)
+                                ? "bg-muted-foreground/20"
+                                : "bg-muted-foreground/10"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex justify-between text-[10px] text-muted-foreground">
+                        <span>{c.scale[0]}</span>
+                        <span className="text-accent font-medium flex items-center gap-1">
+                          <Gem className="w-3 h-3" />
+                          {c.scale[c.nooriPosition!]}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-accent/80 mt-1">★ Noori Standard</p>
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -447,7 +483,7 @@ const WhyNoori = () => {
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl font-serif mb-6">
-                Common <span className="noor-glow">Questions</span>
+                Common Questions About <span className="noor-glow">Lab Diamonds</span>
               </h2>
             </motion.div>
 
