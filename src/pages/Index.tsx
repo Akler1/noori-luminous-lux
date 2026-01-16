@@ -21,7 +21,7 @@ const Index = () => {
         <div 
           className="h-16 md:h-24" 
           style={{
-            background: 'linear-gradient(to bottom, hsl(40 15% 94%), hsl(40 20% 98%))'
+            background: 'linear-gradient(to bottom, hsl(226 50% 3%), hsl(226 50% 5%))'
           }}
         />
         

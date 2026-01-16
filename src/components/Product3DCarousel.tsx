@@ -163,11 +163,11 @@ export default function Product3DCarousel() {
     return (
       <section
         id="product-3d-carousel"
-        className="w-full py-24 bg-background"
+        className="w-full py-24 bg-[#0B0B0B]"
         aria-label="Loading 3D product carousel"
       >
         <div className="container mx-auto px-4">
-          <div className="animate-pulse text-center text-foreground">
+          <div className="animate-pulse text-center text-[#E7E5DC]">
             Loading carousel...
           </div>
         </div>
@@ -282,7 +282,7 @@ export default function Product3DCarousel() {
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
         style={{
-          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.08), rgba(250, 249, 247, 0.3) 50%, rgba(250, 249, 247, 0.8) 80%)`,
+          background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.06), rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 1) 80%)`,
         }}
       />
 
@@ -294,18 +294,18 @@ export default function Product3DCarousel() {
           <div 
             className="absolute -top-24 md:-top-32 left-0 right-0 bottom-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse 600px 300px at 50% 40%, rgba(201, 162, 39, 0.12), transparent 70%)',
+              background: 'radial-gradient(ellipse 600px 300px at 50% 40%, rgba(201, 162, 39, 0.15), transparent 70%)',
             }}
           />
-          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-foreground mb-6 relative z-10">
+          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6 relative z-10">
             Light, made forever.
           </h1>
-          <p className="max-w-[48ch] mx-auto text-muted-foreground text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
+          <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
             Certified lab-grown diamonds. Ethical. Enduring.{" "}
-            <span className="text-accent font-medium">Exquisitely priced.</span>
+            <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
           </p>
           <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
+            <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
               <Link to="/collections/solitaires">
                 Shop the Capsule
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -313,19 +313,19 @@ export default function Product3DCarousel() {
             </Button>
             <Button 
               variant="outline" 
-              className="border-border text-foreground bg-card hover:bg-muted px-8 py-3 rounded-full transition-all duration-300" 
+              className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
               asChild
             >
               <Link to="/policies">About Our Diamonds</Link>
             </Button>
           </div>
-          <p className="text-muted-foreground/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
+          <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
         {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
-            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8 bg-background"
+            className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8 bg-black"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
@@ -354,17 +354,17 @@ export default function Product3DCarousel() {
                 {isLoaded ? (
                   renderViewer(currentSlide, true)
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-muted rounded-lg">
-                    <div className="text-foreground">Loading 3D viewer...</div>
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
+                    <div className="text-[#E7E5DC]">Loading 3D viewer...</div>
                   </div>
                 )}
 
                 {/* Rotation Hint Overlay - Bottom Right Corner */}
                 {showRotateHint && isLoaded && (
                   <div className="absolute bottom-4 right-4 pointer-events-none z-10">
-                    <div className="bg-card/90 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/30 shadow-md flex items-center gap-2 animate-pulse">
-                      <RotateCw className="w-4 h-4 text-accent animate-spin" style={{ animationDuration: '3s' }} />
-                      <span className="text-foreground text-sm font-medium">Click & Drag to Rotate</span>
+                    <div className="bg-black/70 backdrop-blur-sm px-4 py-2 rounded-full border border-[#C9A227]/30 flex items-center gap-2 animate-pulse">
+                      <RotateCw className="w-4 h-4 text-[#C9A227] animate-spin" style={{ animationDuration: '3s' }} />
+                      <span className="text-[#F8F7F3] text-sm font-medium">Click & Drag to Rotate</span>
                     </div>
                   </div>
                 )}
@@ -372,18 +372,18 @@ export default function Product3DCarousel() {
                 {/* Slide Content Overlay */}
                 <div
                   className={cn(
-                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-4 md:p-5 bg-gradient-to-t from-card/95 via-card/80 to-transparent md:bg-card/90 md:backdrop-blur-sm md:shadow-lg rounded-t-lg md:rounded-lg md:max-w-sm transition-opacity duration-300",
+                    "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-4 md:p-5 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-sm transition-opacity duration-300",
                     currentIndex >= 0 ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <h2 className="text-xl md:text-2xl font-serif text-foreground mb-3">
+                  <h2 className="text-xl md:text-2xl font-serif text-[#F8F7F3] mb-3">
                     {currentSlide.title}
                   </h2>
                   <a
                     href={currentSlide.pdpUrl}
                     onClick={() => handleCTAClick(currentSlide.pdpUrl)}
                     data-analytics="cta_click"
-                    className="inline-block px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors duration-200 rounded font-medium text-sm"
+                    className="inline-block px-5 py-2 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium text-sm"
                   >
                     View Product
                   </a>
@@ -407,26 +407,26 @@ export default function Product3DCarousel() {
           {/* Navigation Arrows */}
           <Button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-card/80 hover:bg-card border border-border shadow-md z-20"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
             size="icon"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-6 h-6 text-foreground" />
+            <ChevronLeft className="w-6 h-6 text-[#F8F7F3]" />
           </Button>
 
           <Button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-card/80 hover:bg-card border border-border shadow-md z-20"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
             size="icon"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-6 h-6 text-foreground" />
+            <ChevronRight className="w-6 h-6 text-[#F8F7F3]" />
           </Button>
         </div>
 
         {/* Dot Navigation */}
         <div className="flex items-center justify-center gap-6 mt-8">
-          <span className="text-muted-foreground font-mono text-sm">
+          <span className="text-[#E7E5DC] font-mono text-sm">
             {String(currentIndex + 1).padStart(2, "0")} / {String(config.slides.length).padStart(2, "0")}
           </span>
           <div className="flex gap-2">
@@ -437,8 +437,8 @@ export default function Product3DCarousel() {
                 className={cn(
                   "w-2 h-2 rounded-full transition-all duration-300",
                   index === currentIndex
-                    ? "bg-accent w-8"
-                    : "bg-foreground/20 hover:bg-foreground/40"
+                    ? "bg-[#C9A227] w-8"
+                    : "bg-white/30 hover:bg-white/50"
                 )}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={index === currentIndex ? "true" : "false"}
