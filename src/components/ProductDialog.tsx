@@ -32,8 +32,8 @@ const MATERIALS = [
 ];
 
 const CARATS = [
-  { id: "1ct", label: "1 Carat", price: 1299 },
-  { id: "2ct", label: "2 Carat", price: 2499 },
+  { id: "2cttw", label: "2 ct. tw.", price: 1299 },
+  { id: "4cttw", label: "4 ct. tw.", price: 2499 },
 ];
 
 export const ProductDialog = ({ open, onOpenChange, product }: ProductDialogProps) => {
