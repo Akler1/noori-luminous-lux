@@ -90,7 +90,7 @@ export const VariantSelector = ({
         >
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">
-              {option.name}
+              {option.name.toLowerCase() === 'size' ? 'Total Carat Weight:' : option.name}
             </label>
             {selectedOptions[option.name] && (
               <Badge variant="secondary" className="text-xs">
