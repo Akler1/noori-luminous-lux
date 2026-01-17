@@ -10,7 +10,6 @@ export const Footer = () => {
     ],
     Support: [
       { label: "FAQ", href: "/faq" },
-      { label: "Size Guide", href: "/faq#sizing" },
       { label: "Care Instructions", href: "/faq#care" },
       { label: "Shipping & Returns", href: "/faq#shipping" },
       { label: "Warranty", href: "/faq#warranty" },

@@ -18,7 +18,7 @@ const FAQ = () => {
       questions: [
         {
           q: "How do I clean my lab-grown diamond jewelry?",
-          a: "Clean your jewelry with warm water, mild dish soap, and a soft brush. Gently scrub to remove oils and dirt, then rinse thoroughly and pat dry with a lint-free cloth. For a deeper clean, you can use an ultrasonic cleaner or bring it to us for professional cleaning."
+          a: "Clean your jewelry with warm water, mild dish soap, and a soft brush. Gently scrub to remove oils and dirt, then rinse thoroughly and pat dry with a lint-free cloth. For a deeper clean, you can use an ultrasonic cleaner at home."
         },
         {
           q: "How should I store my jewelry?",
@@ -30,7 +30,7 @@ const FAQ = () => {
         },
         {
           q: "How often should I have my jewelry professionally inspected?",
-          a: "We recommend having your jewelry professionally inspected every 6-12 months to check prong security and overall condition. This service is complimentary for all Noori customers."
+          a: "We recommend having your jewelry professionally inspected by a local jeweler every 6-12 months to check prong security and overall condition. This helps ensure your pieces remain secure and beautiful for years to come."
         }
       ]
     },
@@ -68,7 +68,7 @@ const FAQ = () => {
       questions: [
         {
           q: "What is your return policy?",
-          a: "We offer a 30-day return policy for unworn items in original condition with all packaging. Custom or personalized pieces are final sale."
+          a: "We offer a 30-day return policy for unworn items in original condition with all packaging."
         },
         {
           q: "How do I initiate a return?",
@@ -99,7 +99,7 @@ const FAQ = () => {
         },
         {
           q: "Do you offer repairs for non-warranty issues?",
-          a: "Yes, we offer repair services for a reasonable fee. This includes ring resizing, re-polishing, and prong re-tipping. Contact us for a quote."
+          a: "Yes, we offer repair services for a reasonable fee. This includes re-polishing and prong re-tipping. Contact us for a quote."
         }
       ]
     },
@@ -150,18 +150,10 @@ const FAQ = () => {
       ]
     },
     {
-      id: "sizing",
+      id: "general",
       icon: <HelpCircle className="w-5 h-5" />,
       title: "General Questions",
       questions: [
-        {
-          q: "How do I find my ring size?",
-          a: "We offer a free ring sizer kit that you can order from our website. Alternatively, visit any local jeweler for a professional sizing, or use our printable ring size guide."
-        },
-        {
-          q: "Do you offer custom designs?",
-          a: "Yes! We offer customization services for engagement rings and special pieces. Contact us to discuss your vision and we'll create something unique for you."
-        },
         {
           q: "Can I see pieces in person before purchasing?",
           a: "While we're primarily online, we host pop-up events in major Canadian cities. Follow us on social media for announcements, or schedule a virtual consultation."
