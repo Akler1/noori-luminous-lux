@@ -66,19 +66,6 @@ export const VariantSelector = ({
     );
   };
 
-  // Get variant stock for an option
-  const getOptionStock = (optionName: string, value: string): number => {
-    const testOptions = { ...selectedOptions, [optionName]: value };
-    
-    const variant = product.variants.edges.find(({ node }) =>
-      node.selectedOptions.every(option =>
-        testOptions[option.name] === option.value
-      )
-    )?.node;
-
-    return variant?.quantityAvailable || 0;
-  };
-
   return (
     <div className={`space-y-6 ${className}`}>
       {product.options.map((option) => (
@@ -100,18 +87,16 @@ export const VariantSelector = ({
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode="wait">
               {option.values.map((value) => {
                 const isSelected = selectedOptions[option.name] === value;
                 const isAvailable = isOptionAvailable(option.name, value);
-                const stock = getOptionStock(option.name, value);
                 const isMaterialOption = option.name.toLowerCase() === 'material';
                 const displayValue = isMaterialOption ? `${selectedKarat} ${value}` : value;
                 
                 return (
                   <motion.div
                     key={value}
-                    layout
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
@@ -124,17 +109,11 @@ export const VariantSelector = ({
                         relative transition-all duration-200
                         ${isSelected ? "btn-hero" : "btn-ghost-luxury"}
                         ${!isAvailable ? "opacity-50 cursor-not-allowed" : ""}
-                        ${stock > 0 && stock <= 5 ? "border-amber-500/50" : ""}
                       `}
                       onClick={() => isAvailable && handleOptionChange(option.name, value)}
                       disabled={!isAvailable}
                     >
                       {displayValue}
-                      
-                      {/* Low stock indicator */}
-                      {stock > 0 && stock <= 5 && isAvailable && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-                      )}
                       
                       {/* Out of stock indicator */}
                       {!isAvailable && (
@@ -179,23 +158,6 @@ export const VariantSelector = ({
                   })}
                 </div>
               </div>
-            </motion.div>
-          )}
-
-          {/* Stock information */}
-          {selectedOptions[option.name] && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="text-xs text-muted-foreground"
-            >
-              {(() => {
-                const stock = getOptionStock(option.name, selectedOptions[option.name]);
-                if (stock === 0) return "Out of stock";
-                if (stock <= 5) return `Only ${stock} left in stock`;
-                if (stock <= 10) return `${stock} in stock`;
-                return "In stock";
-              })()}
             </motion.div>
           )}
         </motion.div>

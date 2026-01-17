@@ -285,10 +285,10 @@ class ShopifyClient {
           {
             node: {
               id: 'gid://shopify/ProductVariant/5',
-              title: 'Gold / 2 ct. tw.',
+              title: 'Yellow Gold / 2 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
               price: { amount: '1490.00', currencyCode: 'CAD' },
@@ -299,17 +299,17 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Gold Round Brilliant Stud - 2 ct. tw.'
+                altText: 'Yellow Gold Round Brilliant Stud - 2 ct. tw.'
               }
             }
           },
           {
             node: {
               id: 'gid://shopify/ProductVariant/6',
-              title: 'Gold / 4 ct. tw.',
+              title: 'Yellow Gold / 4 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
               price: { amount: '2490.00', currencyCode: 'CAD' },
@@ -320,7 +320,7 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Gold Round Brilliant Stud - 4 ct. tw.'
+                altText: 'Yellow Gold Round Brilliant Stud - 4 ct. tw.'
               }
             }
           },
@@ -414,7 +414,7 @@ class ShopifyClient {
         {
           id: 'gid://shopify/ProductOption/7',
           name: 'Material',
-          values: ['Gold', 'White Gold', 'Rose Gold']
+          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
         },
         {
           id: 'gid://shopify/ProductOption/8',
@@ -454,10 +454,10 @@ class ShopifyClient {
           {
             node: {
               id: 'gid://shopify/ProductVariant/11',
-              title: 'Gold / 2 ct. tw.',
+              title: 'Yellow Gold / 2 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
               price: { amount: '1490.00', currencyCode: 'CAD' },
@@ -468,17 +468,17 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Gold Emerald Cut Earrings - 2 ct. tw.'
+                altText: 'Yellow Gold Emerald Cut Earrings - 2 ct. tw.'
               }
             }
           },
           {
             node: {
               id: 'gid://shopify/ProductVariant/12',
-              title: 'Gold / 4 ct. tw.',
+              title: 'Yellow Gold / 4 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
               price: { amount: '2490.00', currencyCode: 'CAD' },
@@ -489,7 +489,7 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/5',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Gold Emerald Cut Earrings - 4 ct. tw.'
+                altText: 'Yellow Gold Emerald Cut Earrings - 4 ct. tw.'
               }
             }
           },
@@ -583,7 +583,7 @@ class ShopifyClient {
         {
           id: 'gid://shopify/ProductOption/9',
           name: 'Material',
-          values: ['Gold', 'White Gold', 'Rose Gold']
+          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
         },
         {
           id: 'gid://shopify/ProductOption/10',
@@ -623,10 +623,10 @@ class ShopifyClient {
           {
             node: {
               id: 'gid://shopify/ProductVariant/17',
-              title: 'Gold / 2 ct. tw.',
+              title: 'Yellow Gold / 2 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
               price: { amount: '1490.00', currencyCode: 'CAD' },
@@ -637,17 +637,17 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
-                altText: 'Gold Princess Cut Earrings - 2 ct. tw.'
+                altText: 'Yellow Gold Princess Cut Earrings - 2 ct. tw.'
               }
             }
           },
           {
             node: {
               id: 'gid://shopify/ProductVariant/18',
-              title: 'Gold / 4 ct. tw.',
+              title: 'Yellow Gold / 4 ct. tw.',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Material', value: 'Gold' },
+                { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
               price: { amount: '2490.00', currencyCode: 'CAD' },
@@ -658,7 +658,7 @@ class ShopifyClient {
               image: {
                 id: 'gid://shopify/ProductImage/6',
                 url: '/src/assets/earrings-princess.jpg',
-                altText: 'Gold Princess Cut Earrings - 4 ct. tw.'
+                altText: 'Yellow Gold Princess Cut Earrings - 4 ct. tw.'
               }
             }
           },
@@ -752,7 +752,7 @@ class ShopifyClient {
         {
           id: 'gid://shopify/ProductOption/11',
           name: 'Material',
-          values: ['Gold', 'White Gold', 'Rose Gold']
+          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
         },
         {
           id: 'gid://shopify/ProductOption/12',
