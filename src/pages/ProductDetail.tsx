@@ -383,8 +383,8 @@ const ProductDetail = () => {
                   <AccordionContent className="text-muted-foreground">
                     <p>
                       Your Noori jewelry comes with a lifetime warranty against manufacturing defects. 
-                      Clean with warm soapy water and a soft brush. Professional cleaning recommended 
-                      annually to maintain optimal brilliance.
+                      Clean with warm soapy water and a soft brush. We recommend visiting a local jeweler 
+                      annually for professional cleaning and inspection.
                     </p>
                   </AccordionContent>
                 </AccordionItem>
