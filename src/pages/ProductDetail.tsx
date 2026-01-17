@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box, Sparkles } from "lucide-react";
+import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box, Sparkles, Gem } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ThreeDViewer } from "@/components/ThreeDViewer";
@@ -244,6 +244,14 @@ const ProductDetail = () => {
               <div className="text-sm text-muted-foreground">
                 Free shipping across Canada • 30-day returns
               </div>
+            </div>
+
+            {/* Diamond Quality Badge */}
+            <div className="flex items-center gap-1.5 mb-6">
+              <Gem className="h-3 w-3 text-accent" />
+              <span className="text-xs text-muted-foreground tracking-wide">
+                Excellent Cut · D-F Colour · VS1-VVS1 Clarity
+              </span>
             </div>
 
             {/* Variant Selector */}
