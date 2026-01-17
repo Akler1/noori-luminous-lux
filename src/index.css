@@ -7,10 +7,10 @@
 @layer base {
   :root {
     /* Core Brand Colors - Dark Navy Theme */
-    --background: 226 50% 5%; /* Very Dark Navy matching logo */
+    --background: 226 50% 8%; /* Dark Navy - slightly lifted */
     --foreground: 45 70% 70%; /* Gold #D4AF37 */
 
-    --card: 226 45% 7%;
+    --card: 226 45% 10%;
     --card-foreground: 45 70% 70%;
 
     --popover: 226 45% 7%;
@@ -21,11 +21,11 @@
     --primary-foreground: 226 50% 5%;
 
     /* Subtle Secondary */
-    --secondary: 226 40% 10%;
+    --secondary: 226 40% 13%;
     --secondary-foreground: 45 70% 70%;
 
     /* Muted Elements */
-    --muted: 226 35% 12%;
+    --muted: 226 35% 15%;
     --muted-foreground: 45 30% 60%;
 
     /* Gold Accent */
