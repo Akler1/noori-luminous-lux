@@ -156,7 +156,7 @@ const FAQ = () => {
       questions: [
         {
           q: "Can I see pieces in person before purchasing?",
-          a: "While we're primarily online, we host pop-up events in major Canadian cities. Follow us on social media for announcements, or schedule a virtual consultation."
+          a: "We are an online-only brand, so in-person viewing isn't available. However, our detailed product photos, videos, and 3D views give you a comprehensive look at each piece. Plus, our 30-day return policy means you can try your jewelry risk-free."
         },
         {
           q: "Do you offer gift cards?",
