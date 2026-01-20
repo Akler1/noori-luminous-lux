@@ -1,8 +1,8 @@
 import { Header } from "@/components/Header";
 import Product3DCarousel from "@/components/Product3DCarousel";
+import { BrandStory } from "@/components/BrandStory";
 import { TrustIndicators } from "@/components/TrustIndicators";
-import { CollectionShowcase } from "@/components/CollectionShowcase";
-import { EditorialGallery } from "@/components/EditorialGallery";
+import { LabDiamondsSection } from "@/components/LabDiamondsSection";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { EmailCaptureModal } from "@/components/EmailCaptureModal";
@@ -17,8 +17,8 @@ const Index = () => {
       <main>
         <Product3DCarousel />
         <TrustIndicators />
-        <CollectionShowcase />
-        <EditorialGallery />
+        <BrandStory />
+        <LabDiamondsSection />
         <Newsletter />
       </main>
       <Footer />
