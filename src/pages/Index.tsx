@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import Product3DCarousel from "@/components/Product3DCarousel";
 import { BrandStory } from "@/components/BrandStory";
 import { TrustIndicators } from "@/components/TrustIndicators";
+import { SocialProof } from "@/components/SocialProof";
 import { LabDiamondsSection } from "@/components/LabDiamondsSection";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
@@ -17,6 +18,7 @@ const Index = () => {
       <main>
         <Product3DCarousel />
         <TrustIndicators />
+        <SocialProof />
         <BrandStory />
         <LabDiamondsSection />
         <Newsletter />
