@@ -231,38 +231,19 @@ export default function Product3DCarousel() {
       );
     }
 
+    // Default fallback: use Round Brilliant Stud iframe instead of placeholder GLB
     return (
-      <model-viewer
-        ref={isMain ? (el: any) => (modelViewerRefs.current[currentIndex] = el) : undefined}
-        src={getModelSource(slide)}
-        poster={getPosterSource(slide)}
-        {...(isMain ? {
-          "camera-controls": true,
-          "camera-orbit": `${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`,
-          "field-of-view": `${slide.camera.fov}deg`,
-          "disable-zoom": true,
-          "interaction-prompt": "none",
-          "ar-modes": "webxr scene-viewer quick-look",
-        } : {
-          "auto-rotate": true,
-          "auto-rotate-delay": "0",
-          "rotation-per-second": "15deg",
-          "camera-orbit": `${slide.camera.azimuthDeg}deg ${slide.camera.elevationDeg}deg auto`,
-          "field-of-view": `${slide.camera.fov}deg`,
-          "disable-zoom": true,
-          "interaction-prompt": "none",
-        })}
+      <iframe
+        src="https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
+        className="w-full h-full rounded-lg border-0"
         style={{
           width: "100%",
           height: isMain ? "100%" : "300px",
           background: "transparent",
-          "--progress-bar-color": "#C9A227",
-          "--poster-color": "transparent",
-        } as any}
-        className={cn(
-          "rounded-lg transition-opacity duration-300",
-          isMain && "cursor-grab active:cursor-grabbing"
-        )}
+        }}
+        allow="xr-spatial-tracking; fullscreen; autoplay"
+        allowFullScreen
+        title={slide.title}
       />
     );
   };

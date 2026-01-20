@@ -38,7 +38,7 @@ const solitaireProducts = [
     name: "Round Necklace",
     price: "$2,599",
     pdpUrl: "/product/necklace-round-brilliant",
-    glb: "/models/noori_placeholder.glb",
+    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
     rating: 5,
     reviewCount: 47
   },
@@ -47,7 +47,7 @@ const solitaireProducts = [
     name: "Princess Necklace",
     price: "$3,299",
     pdpUrl: "/product/necklace-princess-platinum",
-    glb: "/models/noori_placeholder.glb",
+    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
     rating: 5,
     reviewCount: 42
   },
@@ -56,7 +56,7 @@ const solitaireProducts = [
     name: "Emerald Necklace",
     price: "$3,599",
     pdpUrl: "/product/necklace-emerald-18k",
-    glb: "/models/noori_placeholder.glb",
+    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
     rating: 5,
     reviewCount: 38
   },
@@ -65,7 +65,7 @@ const solitaireProducts = [
     name: "3 Stone Solitaire Bracelet",
     price: "$2,499",
     pdpUrl: "/product/bracelet-three-stone",
-    glb: "/models/noori_placeholder.glb",
+    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
     rating: 5,
     reviewCount: 29
   }
@@ -146,7 +146,6 @@ export default function Solitaires() {
                 price={product.price}
                 pdpUrl={product.pdpUrl}
                 iframeUrl={product.iframeUrl}
-                glb={product.glb}
                 rating={product.rating}
                 reviewCount={product.reviewCount}
               />

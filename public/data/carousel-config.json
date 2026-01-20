@@ -1,12 +1,7 @@
 {
   "carouselTitle": "The Capsule in 3D",
   "mode": "perSlide",
-  "placeholder": {
-    "glb": "/models/noori_placeholder.glb",
-    "poster": "/media/noori_placeholder.avif",
-    "videoFallback": "/media/noori_placeholder_loop.webm",
-    "hdri": "/hdr/studio_black.exr"
-  },
+  "placeholder": null,
   "slides": [
     {
       "slug": "necklace-1ct-silver",
