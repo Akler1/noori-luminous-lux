@@ -31,8 +31,7 @@ export const Newsletter = () => {
               First to the <span className="noor-glow">Light</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Join our inner circle for early access to new collections, 
-              behind-the-scenes stories, and exclusive offers.
+              Early access. Exclusive offers.
             </p>
           </div>
 

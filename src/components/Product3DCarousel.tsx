@@ -282,25 +282,16 @@ export default function Product3DCarousel() {
             Light, made forever.
           </h1>
           <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
-            Certified lab-grown diamonds. Ethical. Enduring.{" "}
             <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
           </p>
-          <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
+          <div className="flex justify-center">
             <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
               <Link to="/collections/solitaires">
-                Shop the Capsule
+                Shop Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button 
-              variant="outline" 
-              className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
-              asChild
-            >
-              <Link to="/policies">About Our Diamonds</Link>
-            </Button>
           </div>
-          <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
         </div>
 
         {/* Carousel Container with 3 slides visible */}
