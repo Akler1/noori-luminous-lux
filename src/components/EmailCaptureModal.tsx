@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -109,15 +109,6 @@ export const EmailCaptureModal = () => {
           transition={{ type: "spring", duration: 0.5 }}
           className="relative overflow-hidden"
         >
-          {/* Close Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-0 top-0 z-10 text-muted-foreground hover:text-foreground"
-            onClick={handleClose}
-          >
-            <X className="h-4 w-4" />
-          </Button>
 
           {/* Background Glow Effect */}
           <div className="absolute inset-0 bg-gradient-noor opacity-20 blur-3xl" />
