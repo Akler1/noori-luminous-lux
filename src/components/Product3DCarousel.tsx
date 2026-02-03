@@ -257,14 +257,9 @@ export default function Product3DCarousel() {
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      {/* Section Header */}
-      <div className="container mx-auto px-4 pt-16 md:pt-24 text-center">
-        <p className="text-accent text-sm font-medium tracking-widest uppercase mb-4 reveal-up">
-          Interactive Experience
-        </p>
-        <h2 className="font-display text-3xl md:text-5xl font-light text-foreground reveal-up" style={{ animationDelay: "0.1s" }}>
-          Explore the Collection
-        </h2>
+      {/* Thin gold separator line */}
+      <div className="w-full flex justify-center pt-8">
+        <div className="w-24 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
       </div>
 
       {/* Radial glow behind active slide */}
