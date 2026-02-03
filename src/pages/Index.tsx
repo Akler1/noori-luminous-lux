@@ -1,10 +1,10 @@
 import { Header } from "@/components/Header";
-import { ImageGridHero } from "@/components/ImageGridHero";
+import { LuxuryHero } from "@/components/LuxuryHero";
 import Product3DCarousel from "@/components/Product3DCarousel";
-import { BrandStory } from "@/components/BrandStory";
-import { TrustIndicators } from "@/components/TrustIndicators";
+import { BrandManifesto } from "@/components/BrandManifesto";
+import { NooriDifference } from "@/components/NooriDifference";
 import { SocialProof } from "@/components/SocialProof";
-import { LabDiamondsSection } from "@/components/LabDiamondsSection";
+import { TrustIndicators } from "@/components/TrustIndicators";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { EmailCaptureModal } from "@/components/EmailCaptureModal";
@@ -17,12 +17,12 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <ImageGridHero />
+        <LuxuryHero />
         <Product3DCarousel />
+        <BrandManifesto />
+        <NooriDifference />
         <SocialProof />
         <TrustIndicators />
-        <BrandStory />
-        <LabDiamondsSection />
         <Newsletter />
       </main>
       <Footer />
