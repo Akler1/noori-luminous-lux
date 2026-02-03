@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-diamonds.jpg";
 import earringsImage from "@/assets/earrings-hero.jpg";
 import necklaceImage from "@/assets/necklace-hero.jpg";
-import braceletImage from "@/assets/bracelet-hero.jpg";
-import productShot from "@/assets/hero-product-shot.png";
 
 // Decorative curved lines SVG component
 const DecorativeLines = () => (
@@ -150,14 +148,6 @@ export const CinematicHero = () => {
               </Button>
             </motion.div>
 
-            {/* Bottom Left Floating Image (Mobile Hidden) */}
-            <FloatingImage
-              src={productShot}
-              alt="Noori diamond ring"
-              className="hidden lg:block -bottom-16 -left-8 w-32 h-40"
-              delay={1.4}
-              rotate={-5}
-            />
           </div>
 
           {/* Right: Image Collage */}
@@ -167,7 +157,7 @@ export const CinematicHero = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="absolute top-8 left-0 lg:left-8 w-[75%] md:w-[70%] h-[80%] z-10"
+              className="absolute top-0 left-0 w-[70%] h-[75%] z-10"
             >
               <div className="relative w-full h-full overflow-hidden shadow-2xl">
                 <img
@@ -179,40 +169,44 @@ export const CinematicHero = () => {
               </div>
             </motion.div>
 
-            {/* Gold Accent Panel */}
+            {/* Gold Accent Panel - Top Right */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute top-12 right-0 w-[35%] h-[45%] bg-accent/10 z-20"
+              className="absolute top-8 right-0 w-[30%] h-[40%] z-20"
             >
-              <div className="w-full h-full overflow-hidden">
+              <div className="w-full h-full overflow-hidden shadow-xl">
                 <img
                   src={earringsImage}
                   alt="Diamond earrings"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute inset-0 border border-accent/30" />
+              <div className="absolute inset-0 border-2 border-accent/30" />
             </motion.div>
 
-            {/* Floating Image 1 - Bottom Right */}
-            <FloatingImage
-              src={necklaceImage}
-              alt="Diamond necklace"
-              className="bottom-0 right-4 lg:right-12 w-[40%] md:w-[35%] h-[35%] z-30"
-              delay={0.9}
-              rotate={2}
-            />
-
-            {/* Floating Image 2 - Bottom Left */}
-            <FloatingImage
-              src={braceletImage}
-              alt="Diamond bracelet"
-              className="bottom-8 left-[15%] w-[30%] h-[25%] z-20"
-              delay={1.1}
-              rotate={-3}
-            />
+            {/* Single Floating Image - Bottom Right */}
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
+              className="absolute bottom-8 right-20 w-44 h-56 z-30"
+              style={{ transform: "rotate(2deg)" }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full h-full overflow-hidden shadow-2xl"
+              >
+                <img
+                  src={necklaceImage}
+                  alt="Diamond necklace"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 border border-accent/20" />
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>
