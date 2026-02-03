@@ -5,82 +5,72 @@ import heroLifestyle from "@/assets/hero-lifestyle.png";
 import heroProductShot from "@/assets/hero-product-shot.png";
 import braceletHero from "@/assets/bracelet-hero.jpg";
 import necklaceHero from "@/assets/necklace-hero.jpg";
+import earringsHero from "@/assets/earrings-hero.jpg";
+import earringsPrincess from "@/assets/earrings-princess.jpg";
 
 const images = [
   { src: heroLifestyle, alt: "Model wearing Noori diamond jewelry" },
   { src: braceletHero, alt: "Noori diamond bracelet" },
   { src: necklaceHero, alt: "Noori diamond necklace" },
   { src: heroProductShot, alt: "Noori jewelry collection" },
+  { src: earringsHero, alt: "Noori diamond earrings" },
+  { src: earringsPrincess, alt: "Noori princess cut earrings" },
 ];
 
 export function ImageGridHero() {
   return (
-    <section className="pt-28 pb-16 md:pt-36 md:pb-24 bg-background relative overflow-hidden">
-      {/* Subtle background glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 800px 600px at 30% 50%, rgba(201, 162, 39, 0.08), transparent 60%)",
-        }}
-      />
-
-      <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] items-center relative z-10">
-        {/* Left: 2x2 Image Grid - Full Bleed */}
-        <div className="grid grid-cols-2 gap-0">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="relative overflow-hidden group"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-            </div>
-          ))}
-        </div>
-
-        {/* Right: Content Area with internal padding */}
-        <div className="space-y-6 md:space-y-8 text-center lg:text-left px-6 lg:px-12 py-8">
-          {/* Gold glow behind headline */}
-          <div className="relative">
-            <div
-              className="absolute -inset-12 pointer-events-none hidden lg:block"
-              style={{
-                background:
-                  "radial-gradient(ellipse 400px 200px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)",
-              }}
+    <section className="pt-20 md:pt-28 bg-background relative overflow-hidden">
+      {/* Full-width 3x2 Image Grid */}
+      <div className="grid grid-cols-3 gap-0">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className="relative aspect-[4/3] overflow-hidden group"
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <h1 className="font-display text-[clamp(40px,6vw,72px)] leading-[0.95] tracking-[-0.02em] text-foreground relative z-10">
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Bar */}
+      <div className="w-full border-t border-border bg-background">
+        <div className="container mx-auto px-6 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+            {/* Tagline */}
+            <h1 className="font-display text-2xl md:text-3xl lg:text-4xl tracking-[-0.02em] text-foreground">
               Light, made forever.
             </h1>
-          </div>
 
-          <p className="max-w-[48ch] mx-auto lg:mx-0 text-muted-foreground text-[clamp(16px,2vw,20px)] font-light leading-relaxed">
-            Certified lab-grown diamonds. Ethical. Enduring.{" "}
-            <span className="text-primary font-medium">Exquisitely priced.</span>
-          </p>
+            {/* Subheadline */}
+            <p className="text-muted-foreground text-sm md:text-base font-light text-center md:text-left">
+              Certified lab-grown diamonds. Ethical. Enduring.{" "}
+              <span className="text-primary font-medium">Exquisitely priced.</span>
+            </p>
 
-          <div className="flex gap-3 flex-col sm:flex-row justify-center lg:justify-start">
-            <Button
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-8 py-3 rounded-full transition-all duration-300"
-              asChild
-            >
-              <Link to="/collections/solitaires">
-                Shop the Capsule
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              className="border-border text-foreground bg-card hover:bg-accent px-8 py-3 rounded-full transition-all duration-300"
-              asChild
-            >
-              <Link to="/why-noori">About Our Diamonds</Link>
-            </Button>
+            {/* Buttons */}
+            <div className="flex gap-3">
+              <Button
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 py-2 rounded-full transition-all duration-300"
+                asChild
+              >
+                <Link to="/collections/solitaires">
+                  Shop the Capsule
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-border text-foreground bg-card hover:bg-accent px-6 py-2 rounded-full transition-all duration-300"
+                asChild
+              >
+                <Link to="/why-noori">About Our Diamonds</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
