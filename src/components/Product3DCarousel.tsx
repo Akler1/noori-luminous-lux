@@ -269,40 +269,6 @@ export default function Product3DCarousel() {
 
       <div className="container mx-auto px-[clamp(24px,6vw,80px)] max-w-[1600px] relative z-10 py-12 flex-1 flex items-center">
         <div className="w-full">
-        {/* Hero Content */}
-        <div className="text-center mb-12 md:mb-16 relative mt-24 md:mt-32">
-          {/* Gold glow behind text - extends upward into the margin space */}
-          <div 
-            className="absolute -top-24 md:-top-32 left-0 right-0 bottom-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse 600px 300px at 50% 40%, rgba(201, 162, 39, 0.15), transparent 70%)',
-            }}
-          />
-          <h1 className="font-display text-[clamp(48px,8vw,96px)] leading-[0.95] tracking-[-0.02em] text-[#F8F7F3] mb-6 relative z-10">
-            Light, made forever.
-          </h1>
-          <p className="max-w-[48ch] mx-auto text-[#E7E5DC] text-[clamp(16px,2vw,20px)] font-light leading-relaxed mb-8">
-            Certified lab-grown diamonds. Ethical. Enduring.{" "}
-            <span className="text-[#C9A227] font-medium">Exquisitely priced.</span>
-          </p>
-          <div className="flex gap-3 flex-col sm:flex-row justify-center mb-8">
-            <Button className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-black font-medium px-8 py-3 rounded-full transition-all duration-300" asChild>
-              <Link to="/collections/solitaires">
-                Shop the Capsule
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-[#E7E5DC]/30 text-[#0B0B0B] bg-[#E7E5DC] hover:bg-[#F8F7F3] px-8 py-3 rounded-full transition-all duration-300" 
-              asChild
-            >
-              <Link to="/policies">About Our Diamonds</Link>
-            </Button>
-          </div>
-          <p className="text-[#E7E5DC]/70 text-xs tracking-[0.2em] uppercase">Drag to rotate 360°</p>
-        </div>
-
         {/* Carousel Container with 3 slides visible */}
         <div className="relative">
           <div
