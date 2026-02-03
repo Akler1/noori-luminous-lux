@@ -1,36 +1,20 @@
 
-
-# Hero Image Bleed Effect
+# Hero Image: Full Display with Seamless White Background
 
 ## Overview
 
-Modify the hero section so the woman image:
-- Keeps the same zoom level (no additional cropping)
-- Bleeds/extends into the text area on the left side
-- Has white space after the image (on the right edge) to maintain the white background
-
-This creates an editorial overlapping effect where the image partially sits behind the text content.
+Adjust the hero image so that:
+1. The full image is displayed (including the hand on the right side)
+2. The white areas of the image blend seamlessly with the white page background
+3. The image stays in the same position with the bleed effect
 
 ---
 
-## New Layout Structure
+## Current Issue
 
-```text
-+------------------------------------------------------------------+
-|                                                                   |
-|   LAB-GROWN DIAMONDS                                              |
-|                            +----------------------------------+   |
-|   LIGHT,                   |                                  |   |
-|   MADE                     |      WOMAN IMAGE                 |   |
-|   FOREVER                  |      (bleeds under text)         |   |
-|                            |                                  |   |
-|   Certified brilliance.    |      Same zoom, no extra crop    |   |
-|   Ethical luxury.          |                                  |   |
-|                            +----------------------------------+   |
-|   [ SHOP COLLECTION ]                                   WHITE     |
-|                                                         SPACE     |
-+------------------------------------------------------------------+
-```
+The current implementation uses:
+- `lg:pr-20` on the container - this creates padding that cuts off the right side of the image
+- `object-cover` - this crops the image to fill the container, potentially cutting off the hand
 
 ---
 
@@ -38,75 +22,33 @@ This creates an editorial overlapping effect where the image partially sits behi
 
 ### File: `src/components/CinematicHero.tsx`
 
-**Layout Approach:**
-- Switch from side-by-side flex to a relative/absolute positioning approach
-- Image positioned with negative left offset to bleed under text
-- Text content has higher z-index to appear above image
-- Right side of image has whitespace padding
+**Image Container (line 83):**
+| Property | Current | New |
+|----------|---------|-----|
+| Right padding | `lg:pr-20` | Remove (no padding) |
 
-**Specific Changes:**
-
-1. **Section Container:**
-   - Add `relative overflow-hidden` to contain the bleeding image
-   - Keep `min-h-screen bg-white`
-
-2. **Text Content (Left Panel):**
-   - Add `relative z-10` to ensure text appears above image
-   - Add white/semi-transparent background to text area for readability
-   - Keep existing padding and typography
-
-3. **Image Container:**
-   - Position absolutely or use negative margin to bleed left
-   - Use `object-contain` or `object-cover object-left` to prevent additional cropping
-   - Add right margin/padding to create whitespace after the image
+**Image Element (line 88):**
+| Property | Current | New |
+|----------|---------|-----|
+| Object fit | `object-cover object-left` | `object-contain object-left` |
 
 ---
 
 ## Implementation Details
 
-### Option 1: Absolute Positioning with Bleed
+### Changes:
 
-```text
-Container: relative, overflow-hidden
-├── Text Panel: relative z-10, left side, bg-white/90 backdrop
-└── Image: absolute, positioned to overlap text, right padding for whitespace
-```
+1. **Remove right padding** - The `lg:pr-20` is cutting off the right side of the image. Removing this allows the full image (including the hand) to display.
 
-### Option 2: Negative Margin Bleed
+2. **Switch to `object-contain`** - Instead of `object-cover` (which crops to fill), use `object-contain` which displays the entire image without cropping. Combined with `object-left`, it will anchor the image to the left side.
 
-```text
-Container: flex, overflow-visible
-├── Text Panel: w-[45%], relative z-10
-└── Image: w-[65%], -ml-[10%] (bleeds left), pr-8 (whitespace right)
-```
-
-### Recommended Implementation (Option 2):
-
-| Element | Current | New |
-|---------|---------|-----|
-| Section | `flex flex-col lg:flex-row` | `flex flex-col lg:flex-row relative` |
-| Text Panel | `lg:w-1/2` | `lg:w-[45%] relative z-10` |
-| Image Container | `lg:w-1/2` | `lg:w-[60%] -ml-[5%] lg:pr-8` |
-| Image | `object-cover` | `object-cover object-left` (anchor to left side) |
-
-### Image Positioning Details:
-- Negative left margin (`-ml-[5%]`) makes image bleed under text
-- Right padding on container (`lg:pr-8`) creates whitespace after image
-- `object-left` keeps the woman positioned from the left side of the image (same zoom)
-- Text panel gets `relative z-10` and semi-transparent bg for readability
-
-### Mobile Behavior:
-- On mobile, remove bleed effect (standard stacked layout)
-- Bleed effect only applies on `lg:` breakpoint and above
+3. **White background alignment** - Since the page background is already `bg-white`, the white areas in the image will naturally blend with the page background when using `object-contain`.
 
 ---
 
-## Visual Effect
+## Result
 
-The result will be:
-1. Text content on the left with white background
-2. Woman image starting earlier (bleeding under text area)
-3. Whitespace on the far right edge
-4. Same image zoom level - no additional cropping
-5. Editorial overlapping aesthetic
-
+- Full image visible including the hand
+- Image bleeds into the text area on the left (maintained)
+- White background in the image seamlessly matches the page white background
+- No cropping on any side of the image
