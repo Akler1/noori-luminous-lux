@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import { ImageGridHero } from "@/components/ImageGridHero";
 import Product3DCarousel from "@/components/Product3DCarousel";
 import { BrandStory } from "@/components/BrandStory";
 import { TrustIndicators } from "@/components/TrustIndicators";
@@ -16,9 +17,10 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
+        <ImageGridHero />
         <Product3DCarousel />
-        <TrustIndicators />
         <SocialProof />
+        <TrustIndicators />
         <BrandStory />
         <LabDiamondsSection />
         <Newsletter />
