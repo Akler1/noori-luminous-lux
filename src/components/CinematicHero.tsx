@@ -85,7 +85,7 @@ export const CinematicHero = () => {
         <img
           src={heroLifestyle}
           alt="Noori lab-grown diamond jewelry"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain object-right"
         />
       </motion.div>
     </section>
