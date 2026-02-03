@@ -1,43 +1,58 @@
 
-# Hero Layout Adjustments
+# Full-Width Hero Grid Layout
 
-## Changes Required
+## Problem
+The current hero section has container padding (`px-4 md:px-8`) that creates gaps on the left and right sides of the image grid. Looking at your Mejuri reference, the images should span edge-to-edge on the left side with no padding.
 
-### 1. Adjust Grid Proportions
-Change the main grid from 50/50 split to 75/25 split so images dominate the layout:
-- **Current**: `lg:grid-cols-2` (50% / 50%)
-- **New**: `lg:grid-cols-[3fr_1fr]` (75% / 25%)
+## Solution
 
-### 2. Remove Image Gaps
-Eliminate all spacing between the 4 images:
-- **Current**: `gap-3 md:gap-4`
-- **New**: `gap-0`
+### Layout Structure Change
+Instead of wrapping everything in a container, the layout needs to:
+1. Have the **image grid start at the left edge of the screen** (no padding)
+2. Have the **content area on the right** with appropriate padding only on the right side
 
-### 3. Remove Square Aspect Ratio
-Allow images to display at their natural height rather than forcing square:
-- **Current**: `aspect-square`
-- **New**: Remove aspect-square, use natural image proportions
-
-### 4. Remove Image Border Radius
-Since images are now edge-to-edge with no gaps, remove the rounded corners:
-- **Current**: `rounded-lg`
-- **New**: Remove rounded-lg
-
-## Visual Result
-
+### Visual Result
 ```text
-+----------------------------------------+----------+
-|  IMAGE 1  |  IMAGE 2  |                           |
-|           |           |   Tagline                 |
-|-----------|-----------|   + Subheadline           |
-|  IMAGE 3  |  IMAGE 4  |   + CTAs                  |
-|           |           |                           |
-+----------------------------------------+----------+
-      ~75% of screen           ~25%
+|<-- Screen Edge                                              Screen Edge -->|
++-----------------------------------------------+-----------------------------+
+| IMAGE 1 (no padding) | IMAGE 2               |                             |
+|                      |                       |     Light, made forever.    |
+|----------------------+-----------------------|                             |
+| IMAGE 3              | IMAGE 4               |     Subheadline + CTAs      |
+|                      |                       |                   (padding) |
++-----------------------------------------------+-----------------------------+
+         ~75% full bleed                               ~25% with padding
+```
+
+### Technical Changes to `src/components/ImageGridHero.tsx`
+
+1. **Remove container wrapper** - Replace `container mx-auto px-4 md:px-8` with a full-width layout
+2. **Use viewport-based grid** - The main grid should span the full viewport width
+3. **Remove section padding** - No horizontal padding on the section itself
+4. **Add padding only to content area** - The right-side text content gets its own internal padding
+
+### Code Structure
+```text
+<section className="pt-28 pb-16 ... overflow-hidden">
+  <!-- Full-width grid, no container -->
+  <div className="grid lg:grid-cols-[3fr_1fr]">
+    
+    <!-- Image grid: full bleed, starts at left edge -->
+    <div className="grid grid-cols-2 gap-0">
+      ...images
+    </div>
+    
+    <!-- Content: has its own padding -->
+    <div className="px-8 lg:px-12 py-8">
+      ...tagline, CTAs
+    </div>
+    
+  </div>
+</section>
 ```
 
 ## File to Modify
 
 | File | Changes |
 |------|---------|
-| `src/components/ImageGridHero.tsx` | Update grid proportions, remove gaps, remove aspect-square and rounded corners |
+| `src/components/ImageGridHero.tsx` | Remove container, make grid full-width, apply padding only to content area |
