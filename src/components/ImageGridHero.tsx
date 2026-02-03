@@ -26,13 +26,13 @@ export function ImageGridHero() {
       />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-8 lg:gap-12 items-center">
           {/* Left: 2x2 Image Grid */}
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 gap-0">
             {images.map((image, index) => (
               <div
                 key={index}
-                className="relative aspect-square overflow-hidden rounded-lg group"
+                className="relative overflow-hidden group"
               >
                 <img
                   src={image.src}
