@@ -80,12 +80,12 @@ export const CinematicHero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="w-full lg:w-[65%] lg:-ml-[10%] h-[50vh] lg:h-screen order-1 lg:order-2 lg:pr-20"
+        className="w-full lg:w-[65%] lg:-ml-[10%] h-[50vh] lg:h-screen order-1 lg:order-2"
       >
         <img
           src={heroLifestyle}
           alt="Noori lab-grown diamond jewelry"
-          className="w-full h-full object-cover object-left"
+          className="w-full h-full object-contain object-left"
         />
       </motion.div>
     </section>
