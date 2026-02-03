@@ -5,24 +5,10 @@ import heroLifestyle from "@/assets/hero-lifestyle.png";
 
 export const CinematicHero = () => {
   return (
-    <section className="min-h-screen bg-white relative overflow-hidden">
-      {/* Image - Full height, bleeds into left side */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute inset-0 flex justify-end"
-      >
-        <img
-          src={heroLifestyle}
-          alt="Noori lab-grown diamond jewelry"
-          className="h-full w-auto max-w-none object-contain object-right"
-        />
-      </motion.div>
-
-      {/* Left: Text Content with white background */}
-      <div className="relative z-10 min-h-screen flex items-center">
-        <div className="bg-white/95 backdrop-blur-sm px-6 md:px-12 lg:px-20 py-16 max-w-xl lg:max-w-2xl">
+    <section className="min-h-screen bg-white flex flex-col lg:flex-row">
+      {/* Left: Text Content */}
+      <div className="w-full lg:w-1/2 flex items-center px-6 md:px-12 lg:px-20 py-16 lg:py-0 order-2 lg:order-1">
+        <div className="max-w-xl">
           {/* Small Label */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -88,6 +74,20 @@ export const CinematicHero = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Right: Full-height Image */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="w-full lg:w-1/2 h-[50vh] lg:h-screen order-1 lg:order-2"
+      >
+        <img
+          src={heroLifestyle}
+          alt="Noori lab-grown diamond jewelry"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
     </section>
   );
 };

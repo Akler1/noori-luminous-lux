@@ -1,27 +1,31 @@
 
 
-# Hero Section: Full Image Display (No Cropping)
+# Hero Section: Clean Split Layout
 
-## The Issue
+## Overview
 
-Currently, the image uses `object-cover` which crops the image to fill the container. You want the **entire image** to be visible without any cropping, with the white background simply continuing on the left side behind the text.
+Redesign the hero as a clean two-panel split:
+- **Left panel**: White background with typography content
+- **Right panel**: Woman image (`hero-lifestyle.png`) filling the entire right side edge-to-edge
+
+The image starts exactly where the text content ends - a seamless vertical divide.
 
 ---
 
-## New Layout Approach
+## New Layout Structure
 
 ```text
 +----------------------------------+----------------------------------+
-|          WHITE BACKGROUND        |                                  |
-|                                  |         FULL IMAGE               |
-|   LAB-GROWN DIAMONDS             |     (no cropping, fully visible) |
+|          WHITE PANEL             |                                  |
 |                                  |                                  |
-|   LIGHT,                         |         Maintains aspect ratio   |
-|   MADE                           |         Not stretched or cut     |
+|   LAB-GROWN DIAMONDS             |                                  |
+|                                  |                                  |
+|   LIGHT,                         |      WOMAN IMAGE                 |
+|   MADE                           |      (hero-lifestyle.png)        |
 |   FOREVER                        |                                  |
-|                                  |                                  |
-|   Certified brilliance.          |                                  |
-|   Ethical luxury.                |                                  |
+|                                  |      Full height                 |
+|   Certified brilliance.          |      Fills right half            |
+|   Ethical luxury.                |      Edge-to-edge                |
 |                                  |                                  |
 |   [ SHOP COLLECTION ]            |                                  |
 |                                  |                                  |
@@ -34,37 +38,76 @@ Currently, the image uses `object-cover` which crops the image to fill the conta
 
 ### File: `src/components/CinematicHero.tsx`
 
-**Change the image styling:**
+**Remove:**
+- `DecorativeLines` SVG component (not suitable for white background)
+- `FloatingImage` component (no longer needed)
+- All collage image imports (`heroImage`, `earringsImage`, `necklaceImage`)
+- All absolute positioning and collage logic
 
-| Current | New |
-|---------|-----|
-| `object-cover` (crops image) | `object-contain` (shows full image) |
-| Image fills container by cropping | Image fits within container fully visible |
+**Add:**
+- Import `hero-lifestyle.png` only
+- White background (`bg-white`)
+- Simple flex or grid layout with no gaps
 
-**Image container changes:**
-- Keep `h-screen` for the container height
-- Change image from `object-cover` to `object-contain`
-- Add `object-right` to align the image to the right edge (so the model is closer to the edge, not centered in empty space)
-
-### Code Change (Line 88):
-
-```tsx
-// Current:
-className="w-full h-full object-cover"
-
-// New:
-className="w-full h-full object-contain object-right"
-```
-
-This ensures:
-- The full image is visible without any cropping
-- The image maintains its natural aspect ratio
-- The image aligns to the right side of its container
-- Any empty space appears on the left (which blends into the white background where the text is)
+**Modify:**
+- Section background: `bg-background` → `bg-white`
+- Text colors for light background readability
+- Right side: Single full-height image with `object-cover`
+- Remove container padding that creates gaps between columns
 
 ---
 
-## Mobile Consideration
+## Implementation Details
 
-On mobile, the image container uses `h-[50vh]` - with `object-contain`, the image will scale down to fit fully visible within that height while maintaining aspect ratio.
+### Layout Structure
+```tsx
+<section className="min-h-screen bg-white flex">
+  {/* Left: Text Content */}
+  <div className="w-1/2 flex items-center px-12 lg:px-20">
+    {/* Typography here */}
+  </div>
+  
+  {/* Right: Full-height Image */}
+  <div className="w-1/2 h-screen">
+    <img 
+      src={heroLifestyle} 
+      className="w-full h-full object-cover"
+    />
+  </div>
+</section>
+```
+
+### Color Changes
+| Element | Current (Dark BG) | New (White BG) |
+|---------|-------------------|----------------|
+| Background | `bg-background` (navy) | `bg-white` |
+| "LIGHT," "MADE" | `text-foreground` (cream) | `text-gray-900` |
+| "FOREVER" | `text-accent` (gold italic) | `text-accent` (keep gold) |
+| Subheadline | `text-foreground/70` | `text-gray-600` |
+| Label | `text-accent` | `text-accent` (keep gold) |
+| CTA Button | Gold | Gold (unchanged) |
+
+### Key Points
+- Use `flex` with no gap so image starts exactly where text panel ends
+- Left panel: `w-1/2` with internal padding for text
+- Right panel: `w-1/2` with image filling 100% width and height
+- Image uses `object-cover` to fill space while maintaining aspect ratio
+- No decorative elements overlapping between panels
+
+### Mobile Behavior
+- Stack vertically: image on top, text below
+- Image: `h-[50vh]` on mobile
+- Text: full width with padding
+
+---
+
+## Cleanup Summary
+
+| Remove | Keep/Add |
+|--------|----------|
+| `DecorativeLines` component | White background |
+| `FloatingImage` component | Clean 50/50 split |
+| 3 collage images | Single `hero-lifestyle.png` |
+| Absolute positioning | Flexbox layout |
+| Dark navy background | Dark text for contrast |
 
