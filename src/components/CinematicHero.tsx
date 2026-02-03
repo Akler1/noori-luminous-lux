@@ -5,9 +5,9 @@ import heroLifestyle from "@/assets/hero-lifestyle.png";
 
 export const CinematicHero = () => {
   return (
-    <section className="min-h-screen bg-white flex flex-col lg:flex-row">
+    <section className="min-h-screen bg-white flex flex-col lg:flex-row relative">
       {/* Left: Text Content */}
-      <div className="w-full lg:w-1/2 flex items-center px-6 md:px-12 lg:px-20 py-16 lg:py-0 order-2 lg:order-1">
+      <div className="w-full lg:w-[45%] flex items-center px-6 md:px-12 lg:px-20 py-16 lg:py-0 order-2 lg:order-1 relative z-10">
         <div className="max-w-xl">
           {/* Small Label */}
           <motion.p
@@ -75,17 +75,17 @@ export const CinematicHero = () => {
         </div>
       </div>
 
-      {/* Right: Full-height Image */}
+      {/* Right: Image with Bleed Effect */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="w-full lg:w-1/2 h-[50vh] lg:h-screen order-1 lg:order-2"
+        className="w-full lg:w-[65%] lg:-ml-[10%] h-[50vh] lg:h-screen order-1 lg:order-2 lg:pr-20"
       >
         <img
           src={heroLifestyle}
           alt="Noori lab-grown diamond jewelry"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-left"
         />
       </motion.div>
     </section>
