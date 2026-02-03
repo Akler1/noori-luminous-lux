@@ -25,64 +25,62 @@ export function ImageGridHero() {
         }}
       />
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-8 lg:gap-12 items-center">
-          {/* Left: 2x2 Image Grid */}
-          <div className="grid grid-cols-2 gap-0">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className="relative overflow-hidden group"
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-              </div>
-            ))}
+      <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] items-center relative z-10">
+        {/* Left: 2x2 Image Grid - Full Bleed */}
+        <div className="grid grid-cols-2 gap-0">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className="relative overflow-hidden group"
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+            </div>
+          ))}
+        </div>
+
+        {/* Right: Content Area with internal padding */}
+        <div className="space-y-6 md:space-y-8 text-center lg:text-left px-6 lg:px-12 py-8">
+          {/* Gold glow behind headline */}
+          <div className="relative">
+            <div
+              className="absolute -inset-12 pointer-events-none hidden lg:block"
+              style={{
+                background:
+                  "radial-gradient(ellipse 400px 200px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)",
+              }}
+            />
+            <h1 className="font-display text-[clamp(40px,6vw,72px)] leading-[0.95] tracking-[-0.02em] text-foreground relative z-10">
+              Light, made forever.
+            </h1>
           </div>
 
-          {/* Right: Content Area */}
-          <div className="space-y-6 md:space-y-8 text-center lg:text-left">
-            {/* Gold glow behind headline */}
-            <div className="relative">
-              <div
-                className="absolute -inset-12 pointer-events-none hidden lg:block"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 400px 200px at 50% 50%, rgba(201, 162, 39, 0.12), transparent 70%)",
-                }}
-              />
-              <h1 className="font-display text-[clamp(40px,6vw,72px)] leading-[0.95] tracking-[-0.02em] text-foreground relative z-10">
-                Light, made forever.
-              </h1>
-            </div>
+          <p className="max-w-[48ch] mx-auto lg:mx-0 text-muted-foreground text-[clamp(16px,2vw,20px)] font-light leading-relaxed">
+            Certified lab-grown diamonds. Ethical. Enduring.{" "}
+            <span className="text-primary font-medium">Exquisitely priced.</span>
+          </p>
 
-            <p className="max-w-[48ch] mx-auto lg:mx-0 text-muted-foreground text-[clamp(16px,2vw,20px)] font-light leading-relaxed">
-              Certified lab-grown diamonds. Ethical. Enduring.{" "}
-              <span className="text-primary font-medium">Exquisitely priced.</span>
-            </p>
-
-            <div className="flex gap-3 flex-col sm:flex-row justify-center lg:justify-start">
-              <Button
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-8 py-3 rounded-full transition-all duration-300"
-                asChild
-              >
-                <Link to="/collections/solitaires">
-                  Shop the Capsule
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                className="border-border text-foreground bg-card hover:bg-accent px-8 py-3 rounded-full transition-all duration-300"
-                asChild
-              >
-                <Link to="/why-noori">About Our Diamonds</Link>
-              </Button>
-            </div>
+          <div className="flex gap-3 flex-col sm:flex-row justify-center lg:justify-start">
+            <Button
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-8 py-3 rounded-full transition-all duration-300"
+              asChild
+            >
+              <Link to="/collections/solitaires">
+                Shop the Capsule
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-border text-foreground bg-card hover:bg-accent px-8 py-3 rounded-full transition-all duration-300"
+              asChild
+            >
+              <Link to="/why-noori">About Our Diamonds</Link>
+            </Button>
           </div>
         </div>
       </div>
