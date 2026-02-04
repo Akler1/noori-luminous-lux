@@ -10,16 +10,19 @@ const storyBeats = [
     header: "The cut. The clarity.",
     body: "Every Noori diamond is precision-cut to maximize brilliance. The same fire that lives in mined stones, born from innovation.",
     image: earringsHero,
+    chips: ["Precision cut", "Optical symmetry", "Quality checked"],
   },
   {
     header: "The details that matter.",
     body: "Handcrafted settings in solid 14k and 18k gold. Each piece inspected to exacting standards before it reaches you.",
     image: necklaceHero,
+    chips: ["Hand-finished", "Solid gold", "Inspected"],
   },
   {
     header: "Made to be kept.",
     body: "Lab-grown diamonds are chemically identical to mined diamonds. The same hardness, the same sparkle—designed to last generations.",
     image: braceletHero,
+    chips: ["Lab-grown", "Certified", "Lifetime warranty"],
   },
 ];
 
@@ -77,6 +80,17 @@ export const StickyStoryRefined = () => {
                   <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
                     {beat.body}
                   </p>
+                  {/* Proof chips */}
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {beat.chips.map((chip, chipIndex) => (
+                      <span
+                        key={chipIndex}
+                        className="px-3 py-1 text-xs text-muted-foreground border border-border/50 rounded-full"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -149,6 +163,17 @@ export const StickyStoryRefined = () => {
               <p className="text-muted-foreground text-base leading-relaxed">
                 {beat.body}
               </p>
+              {/* Proof chips */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {beat.chips.map((chip, chipIndex) => (
+                  <span
+                    key={chipIndex}
+                    className="px-3 py-1 text-xs text-muted-foreground border border-border/50 rounded-full"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           ))}
         </div>
