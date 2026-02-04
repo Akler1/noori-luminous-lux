@@ -3,6 +3,8 @@ import { Star, Truck, RotateCcw, Shield, Gem } from "lucide-react";
 import { cn } from "@/lib/utils";
 import heroSolitairesCollection from "@/assets/hero-solitaires-collection.png";
 import braceletHero from "@/assets/bracelet-hero.jpg";
+import heroLifestyle from "@/assets/hero-lifestyle.png";
+import heroProductShot from "@/assets/hero-product-shot.png";
 
 interface GridProduct {
   id: string;
@@ -42,8 +44,8 @@ const gridProducts: GridProduct[] = [
     name: "Princess Earrings",
     price: "$1,899",
     pdpUrl: "/product/earrings-princess-18k",
-    type: "3d",
-    iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
+    type: "product-image",
+    image: heroProductShot,
     rating: 5,
     reviewCount: 24,
   },
@@ -52,8 +54,8 @@ const gridProducts: GridProduct[] = [
     name: "Round Necklace",
     price: "$2,199",
     pdpUrl: "/product/necklace-round",
-    type: "3d",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    type: "model-image",
+    image: heroLifestyle,
     rating: 5,
     reviewCount: 22,
   },
@@ -102,6 +104,8 @@ const gridProducts: GridProduct[] = [
 const getCardBackground = (index: number, type: string): string => {
   if (type === "3d") return "xr-tile";
   if (index === 0) return "bg-[#f5f5f5] border-border/30";
+  if (index === 2) return "bg-[#f0f0f0] border-border/30";
+  if (index === 3) return "bg-[#ebebeb] border-border/30";
   return "bg-[#eaeaea] border-border/30";
 };
 
@@ -143,7 +147,7 @@ export default function Product3DCarousel() {
         </div>
 
         {/* 4x2 Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {gridProducts.map((product, index) => (
             <Link
               key={product.id}
@@ -158,7 +162,7 @@ export default function Product3DCarousel() {
                 )}
               >
                 {/* Media Container */}
-                <div className="aspect-square relative overflow-hidden">
+                <div className="aspect-[4/5] relative overflow-hidden">
                   {product.type === "3d" ? (
                     <iframe
                       src={product.iframeUrl}
