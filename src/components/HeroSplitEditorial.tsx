@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import heroLifestyle from "@/assets/hero-lifestyle.png";
+import heroLifestyle from "@/assets/hero-lifestyle-new.png";
 
 const containerVariants = {
   hidden: {},
