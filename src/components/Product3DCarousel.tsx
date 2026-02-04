@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, RotateCw, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CarouselConfig {
@@ -75,6 +74,16 @@ export default function Product3DCarousel() {
       if (existing) existing.remove();
     };
   }, []);
+
+  // Auto-dismiss hint after timeout
+  useEffect(() => {
+    if (showRotateHint) {
+      const timer = setTimeout(() => {
+        setShowRotateHint(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showRotateHint]);
 
   // Analytics tracking
   useEffect(() => {
@@ -190,49 +199,20 @@ export default function Product3DCarousel() {
 
   // Render function for 3D viewer or iframe
   const renderViewer = (slide: typeof currentSlide, isMain: boolean = false) => {
-    if (isStudSlide(slide)) {
-      return (
-        <iframe
-          src="https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
-          className="w-full h-full rounded-lg border-0"
-          style={{
-            width: "100%",
-            height: isMain ? "100%" : "300px",
-            background: "transparent",
-          }}
-          allow="xr-spatial-tracking; fullscreen; autoplay"
-          allowFullScreen
-          title={slide.title}
-        />
-      );
-    }
+    const iframeSrc = isStudSlide(slide)
+      ? "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
+      : isEmeraldSlide(slide)
+      ? "https://akler1.github.io/XR-Emerald-gold.1/"
+      : "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html";
 
-    if (isEmeraldSlide(slide)) {
-      return (
-        <iframe
-          src="https://akler1.github.io/XR-Emerald-gold.1/"
-          className="w-full h-full rounded-lg border-0"
-          style={{
-            width: "100%",
-            height: isMain ? "100%" : "300px",
-            background: "transparent",
-          }}
-          allow="xr-spatial-tracking; fullscreen; autoplay"
-          allowFullScreen
-          title={slide.title}
-        />
-      );
-    }
-
-    // Default fallback: use Round Brilliant Stud iframe instead of placeholder GLB
     return (
       <iframe
-        src="https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
-        className="w-full h-full rounded-lg border-0"
+        src={iframeSrc}
+        className="w-full h-full border-0"
         style={{
           width: "100%",
-          height: isMain ? "100%" : "300px",
-          background: "transparent",
+          height: "100%",
+          background: "#000000",
         }}
         allow="xr-spatial-tracking; fullscreen; autoplay"
         allowFullScreen
@@ -249,168 +229,142 @@ export default function Product3DCarousel() {
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      <div className="container-editorial">
-        {/* Gallery Room Container */}
-        <div
-          ref={carouselRef}
-          className="relative rounded-[24px] md:rounded-[36px] overflow-hidden shadow-gallery-room"
-          style={{ backgroundColor: "#0b0b0b" }}
-        >
-          {/* Gold top accent line */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-accent" />
+      <div className="container-editorial" ref={carouselRef}>
+        {/* Section Header on light background */}
+        <div className="text-center mb-12 md:mb-16">
+          <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
+            Explore in 3D
+          </p>
+          <h2 className="section-header text-foreground mb-3">
+            Best sellers
+          </h2>
+          <p className="text-muted-foreground">
+            Spin each piece. See the details.
+          </p>
+        </div>
 
-          {/* Section Header */}
-          <div className="pt-16 md:pt-20 pb-6 md:pb-8 text-center relative z-10">
-            <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
-              Explore in 3D
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl text-white/90 mb-3">
-              Best sellers
-            </h2>
-            <p className="text-white/60 text-base">
-              Spin each piece. See the details.
-            </p>
-          </div>
-
-          {/* Radial glow behind active slide */}
+        {/* Carousel */}
+        <div className="relative">
           <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-            style={{
-              background: `radial-gradient(ellipse 1200px 800px at 50% 50%, rgba(201, 162, 39, 0.06), rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 1) 80%)`,
-            }}
-          />
-
-          <div className="px-4 md:px-[clamp(24px,6vw,80px)] max-w-[1600px] mx-auto relative z-10 py-8 md:py-12">
-            {/* Carousel Container with 3 slides visible */}
-            <div className="relative">
-              <div
-                className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_2fr_minmax(0,1fr)] items-center gap-4 md:gap-8 mb-8"
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-              >
-                {/* Previous Slide */}
-                <div className="hidden md:block">
-                  {isLoaded && (
-                    <div
-                      className="opacity-60 hover:opacity-80 transition-opacity duration-300 cursor-pointer"
-                      onClick={() => goToPrevious()}
-                    >
-                      {renderViewer(config.slides[prevIndex])}
-                    </div>
-                  )}
-                </div>
-
-                {/* Current Slide - Main */}
-                <div className="w-full max-w-3xl mx-auto">
-                  <div
-                    className="relative aspect-square max-h-[70vh]"
-                    onMouseDown={() => setShowRotateHint(false)}
-                    onTouchStart={(e) => {
-                      handleTouchStart(e);
-                      setShowRotateHint(false);
-                    }}
-                  >
-                    {isLoaded ? (
-                      renderViewer(currentSlide, true)
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
-                        <div className="text-white/70">Loading 3D viewer...</div>
-                      </div>
-                    )}
-
-                    {/* Slide Content Overlay */}
-                    <div
-                      className={cn(
-                        "absolute bottom-0 left-0 right-0 md:left-0 md:right-auto md:bottom-0 p-4 md:p-5 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-black/80 md:backdrop-blur-sm rounded-t-lg md:rounded-lg md:max-w-sm transition-opacity duration-300",
-                        currentIndex >= 0 ? "opacity-100" : "opacity-0"
-                      )}
-                    >
-                      <h2 className="text-xl md:text-2xl font-serif text-white mb-1">
-                        {currentSlide.title}
-                      </h2>
-                      <p className="text-white/50 text-xs mb-3">
-                        Solid gold • Lab-grown
-                      </p>
-                      <a
-                        href={currentSlide.pdpUrl}
-                        onClick={() => handleCTAClick(currentSlide.pdpUrl)}
-                        data-analytics="cta_click"
-                        className="inline-block px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium text-sm"
-                      >
-                        View details
-                      </a>
-                    </div>
+            className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 md:gap-8"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Previous Slide - Side tile */}
+            <div className="hidden md:block">
+              {isLoaded && (
+                <div
+                  className="scale-[0.85] opacity-80 hover:opacity-100 hover:scale-[0.88] transition-all duration-300 cursor-pointer origin-center"
+                  onClick={() => goToPrevious()}
+                >
+                  <div className="xr-tile aspect-square">
+                    {renderViewer(config.slides[prevIndex])}
                   </div>
                 </div>
-
-                {/* Next Slide */}
-                <div className="hidden md:block">
-                  {isLoaded && (
-                    <div
-                      className="opacity-60 hover:opacity-80 transition-opacity duration-300 cursor-pointer"
-                      onClick={() => goToNext()}
-                    >
-                      {renderViewer(config.slides[nextIndex])}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Navigation Arrows */}
-              <Button
-                onClick={goToPrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
-                size="icon"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-6 h-6 text-white/90" />
-              </Button>
-
-              <Button
-                onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 z-20"
-                size="icon"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-6 h-6 text-white/90" />
-              </Button>
+              )}
             </div>
 
-            {/* Dot Navigation & Drag Hint */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mt-8">
-              {/* Drag to rotate pill */}
-              <div className="px-4 py-2 rounded-full bg-white/10 border border-white/20 flex items-center gap-2">
-                <RotateCw className="w-4 h-4 text-accent" />
-                <span className="text-white/70 text-sm">Drag to rotate</span>
-              </div>
+            {/* Current Slide - Main tile */}
+            <div className="relative">
+              <div
+                className="xr-tile aspect-square relative"
+                onMouseDown={() => setShowRotateHint(false)}
+                onTouchStart={(e) => {
+                  handleTouchStart(e);
+                  setShowRotateHint(false);
+                }}
+              >
+                {isLoaded ? (
+                  renderViewer(currentSlide, true)
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-black">
+                    <div className="text-white/70">Loading 3D viewer...</div>
+                  </div>
+                )}
 
-              <div className="flex items-center gap-6">
-                <span className="text-white/70 font-mono text-sm">
-                  {String(currentIndex + 1).padStart(2, "0")} /{" "}
-                  {String(config.slides.length).padStart(2, "0")}
-                </span>
-                <div className="flex gap-2">
-                  {config.slides.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={cn(
-                        "w-2 h-2 rounded-full transition-all duration-300",
-                        index === currentIndex
-                          ? "bg-accent w-8"
-                          : "bg-white/30 hover:bg-white/50"
-                      )}
-                      aria-label={`Go to slide ${index + 1}`}
-                      aria-current={index === currentIndex ? "true" : "false"}
-                    />
-                  ))}
+                {/* One-time drag hint overlay */}
+                <div
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-500 z-10",
+                    showRotateHint ? "opacity-100" : "opacity-0 pointer-events-none"
+                  )}
+                >
+                  <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2">
+                    <RotateCw className="w-4 h-4 text-white/70" />
+                    <span className="text-white/80 text-sm">Drag to rotate</span>
+                  </div>
                 </div>
               </div>
+
+              {/* Product info below tile on light bg */}
+              <div className="text-center mt-6">
+                <h3 className="font-serif text-xl md:text-2xl text-foreground mb-1">
+                  {currentSlide.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Solid gold • Lab-grown
+                </p>
+                <a
+                  href={currentSlide.pdpUrl}
+                  onClick={() => handleCTAClick(currentSlide.pdpUrl)}
+                  data-analytics="cta_click"
+                  className="inline-flex items-center gap-2 px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-background transition-colors duration-200 rounded font-medium text-sm group"
+                >
+                  View details
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+            </div>
+
+            {/* Next Slide - Side tile */}
+            <div className="hidden md:block">
+              {isLoaded && (
+                <div
+                  className="scale-[0.85] opacity-80 hover:opacity-100 hover:scale-[0.88] transition-all duration-300 cursor-pointer origin-center"
+                  onClick={() => goToNext()}
+                >
+                  <div className="xr-tile aspect-square">
+                    {renderViewer(config.slides[nextIndex])}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Bottom padding */}
-          <div className="h-12 md:h-20" />
+          {/* Minimal chevron arrows - positioned outside tiles */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-0 md:-left-12 top-1/3 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6 stroke-[1.5]" />
+          </button>
+
+          <button
+            onClick={goToNext}
+            className="absolute right-0 md:-right-12 top-1/3 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6 stroke-[1.5]" />
+          </button>
+        </div>
+
+        {/* Dot Navigation */}
+        <div className="flex justify-center gap-2 mt-8">
+          {config.slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all duration-300",
+                index === currentIndex
+                  ? "bg-accent w-6"
+                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+              )}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === currentIndex ? "true" : "false"}
+            />
+          ))}
         </div>
       </div>
     </section>
