@@ -1,26 +1,58 @@
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FacetPlaceholder } from "@/components/FacetPlaceholder";
 import heroProductShot from "@/assets/hero-product-shot.png";
+import earringsHero from "@/assets/earrings-hero.jpg";
+import necklaceHero from "@/assets/necklace-hero.jpg";
+import braceletHero from "@/assets/bracelet-hero.jpg";
 
 const storyBeats = [
   {
     header: "The cut. The clarity.",
     body: "Every Noori diamond is precision-cut to maximize brilliance. The same fire that lives in mined stones, born from innovation.",
-    variant: "diamond" as const,
+    image: earringsHero,
   },
   {
     header: "The details that matter.",
     body: "Handcrafted settings in solid 14k and 18k gold. Each piece inspected to exacting standards before it reaches you.",
-    variant: "facet" as const,
+    image: necklaceHero,
   },
   {
     header: "Made to be kept.",
     body: "Lab-grown diamonds are chemically identical to mined diamonds. The same hardness, the same sparkle—designed to last generations.",
-    variant: "minimal" as const,
+    image: braceletHero,
   },
 ];
 
 export const StickyStoryRefined = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const beatRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    beatRefs.current.forEach((ref, index) => {
+      if (!ref) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveIndex(index);
+            }
+          });
+        },
+        { threshold: 0.5, rootMargin: "-20% 0px -20% 0px" }
+      );
+
+      observer.observe(ref);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
+
   return (
     <section className="relative bg-background">
       {/* Desktop: Sticky layout */}
@@ -32,6 +64,7 @@ export const StickyStoryRefined = () => {
               {storyBeats.map((beat, index) => (
                 <motion.div
                   key={index}
+                  ref={(el) => (beatRefs.current[index] = el)}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20%" }}
@@ -52,11 +85,19 @@ export const StickyStoryRefined = () => {
             <div className="col-span-7">
               <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center">
                 <div className="relative w-full">
-                  {/* FacetPlaceholder instead of images */}
-                  <FacetPlaceholder 
-                    variant="diamond" 
-                    className="w-full h-[500px] shadow-sticky"
-                  />
+                  {/* Crossfading images */}
+                  <div className="relative w-full h-[500px] rounded-3xl overflow-hidden shadow-sticky">
+                    {storyBeats.map((beat, index) => (
+                      <img
+                        key={index}
+                        src={beat.image}
+                        alt={beat.header}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                          activeIndex === index ? "opacity-100" : "opacity-0"
+                        }`}
+                      />
+                    ))}
+                  </div>
 
                   {/* Single overlapping product card - bottom right */}
                   <motion.div
@@ -90,12 +131,15 @@ export const StickyStoryRefined = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              {/* FacetPlaceholder */}
+              {/* Product image */}
               <div className="mb-8">
-                <FacetPlaceholder 
-                  variant={beat.variant} 
-                  className="w-full h-64"
-                />
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-elegant">
+                  <img
+                    src={beat.image}
+                    alt={beat.header}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
               
               {/* Text */}
