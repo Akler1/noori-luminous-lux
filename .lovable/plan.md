@@ -1,190 +1,338 @@
 
 
-# Hero V2 Implementation Plan
+# Homepage Refresh: Nav V2 + Hero Edge Fix + FacetPlaceholder
 
 ## Overview
 
-Transform the current editorial hero into a premium interactive experience with cursor-follow light effects, staggered entrance animations, edge-bleeding image layout, and scroll cue.
+This update delivers three key improvements:
+1. **Nav redesign**: Floating dark capsule style with proper alignment
+2. **Hero edge fix**: Remove white fog, apply clean tight mask treatment
+3. **FacetPlaceholder**: Designed placeholder component for info sections until real imagery exists
 
 ---
 
 ## Changes Summary
 
-| Aspect | Current | New |
-|--------|---------|-----|
-| Top padding | `pt-28 md:pt-32` | `pt-20 md:pt-24` (reduced) |
-| Image container | Rounded, contained in grid | Bleeds to right edge, no right rounding |
-| Desktop image | Inside 7-col grid cell | Positioned absolute, extends beyond container |
-| Gradient overlay | Small left edge (`w-32`) | Larger veil for text/image cohesion |
-| Text animations | Simple fade-in all at once | Staggered: eyebrow → H1 → paragraph → CTAs |
-| Image animation | Fade + slide | Scale from 1.03 → 1.00 + fade |
-| Cursor effect | None | Radial highlight follows mouse (desktop) |
-| Mobile glow | None | Subtle looping light shift animation |
-| Scroll cue | None | Bottom-left vertical line + "Scroll" text |
-| Primary button | Standard hover | Magnetic effect + shadow lift |
+| Component | Current State | New State |
+|-----------|---------------|-----------|
+| **Header** | Full-width transparent/blur nav | Floating dark capsule, centered links |
+| **Hero image edge** | Wide gradient veil creating "white fog" | Tight 8-12% left-edge mask |
+| **Hero interactions** | Already implemented | Keep existing (cursor-follow, staggered entrance) |
+| **StickyStoryRefined** | Relies on earrings/necklace/bracelet images | Split: text left + FacetPlaceholder right |
 
 ---
 
 ## File Changes
 
-### 1. `src/components/HeroSplitEditorial.tsx` — Complete Rewrite
+| Action | File |
+|--------|------|
+| **Modify** | `src/components/Header.tsx` |
+| **Modify** | `src/components/HeroSplitEditorial.tsx` |
+| **Create** | `src/components/FacetPlaceholder.tsx` |
+| **Modify** | `src/components/StickyStoryRefined.tsx` |
+| **Update** | `src/index.css` |
 
-**New Features:**
+---
 
-- **State for cursor tracking**: `useState` for mouse x/y position
-- **`useIsMobile` hook**: Disable cursor effects on mobile
-- **Staggered Framer Motion variants**: Container with `staggerChildren: 0.15`
-- **Image positioned absolute on desktop**: Bleeds to right edge of viewport
-- **Cursor-follow highlight overlay**: CSS custom properties + radial gradient
-- **Scroll cue**: Animated vertical line with rotated "Scroll" text
+## 1. NAV V2 — Floating Dark Capsule
 
-**Component Structure:**
+### Current vs New
+
+| Aspect | Current | New |
+|--------|---------|-----|
+| Container | Full-width transparent | Floating capsule, centered |
+| Background | `bg-background/95 backdrop-blur-md` on scroll | `rgba(10,10,10,0.78)` + `backdrop-blur-[12px]` always |
+| Border | `border-b border-hairline` on scroll | `border border-white/8` + `rounded-2xl` |
+| Position | Fixed full-width | Fixed, centered with max-width, top margin |
+| Layout | Logo left, links right of center, cart far right | Logo left, links **absolute centered**, cart right |
+| Height | `h-20 md:h-24` | `h-14 md:h-16` (more compact) |
+| Scroll state | Adds border, blur | Slightly more opaque, reduced height |
+
+### Technical Implementation
+
+**Nav Container:**
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│     [NOORI LOGO]      Shop  About  FAQ  Contact           [Cart🛒(2)]  │
+│     (left)                   (absolute centered)              (right)  │
+└─────────────────────────────────────────────────────────────────────────┘
+                  ↑ max-width: 1100px, mx-auto, mt-4, rounded-2xl
 ```
-<section> (relative, overflow-hidden)
-  <div container-editorial>
-    <div grid 12-col>
-      
-      {/* Mobile: Image first (stacked) */}
-      <motion.div> (mobile only)
-        <img with mobile glow overlay />
-      </motion.div>
-      
-      {/* Text Column - 5 cols */}
-      <motion.div variants={container}>
-        <motion.p variants={item}>Eyebrow</motion.p>
-        <motion.h1 variants={item}>Brilliance, refined.</motion.h1>
-        <motion.p variants={item}>Subhead paragraph</motion.p>
-        <motion.div variants={item}>CTAs with magnetic button</motion.div>
-      </motion.div>
-      
-    </div>
-  </div>
-  
-  {/* Desktop Image - Absolute positioned, bleeds right */}
-  <motion.div> (hidden on mobile)
-    <div gradient-veil />
-    <div cursor-highlight-overlay />
-    <img hero-lifestyle />
-  </motion.div>
-  
-  {/* Scroll Cue - Desktop only */}
-  <div> (bottom-left)
-    <span>"Scroll"</span>
-    <div animated-line />
-  </div>
-  
-</section>
+
+**Styling:**
+- Background: `bg-[rgba(10,10,10,0.78)]`
+- Blur: `backdrop-blur-[12px]`
+- Border: `border border-white/[0.08]`
+- Radius: `rounded-[18px]`
+- Padding: `px-6 md:px-7 py-3.5 md:py-4`
+
+**Scroll State Changes:**
+- Background opacity increases: `rgba(10,10,10,0.88)`
+- Height slightly reduced
+- Transition: 300ms
+
+**Link Hover:**
+- Animated underline (already exists, keep it)
+- Color transition to gold
+
+**Cart Icon:**
+- Slightly brighter on hover (`opacity-100` from `opacity-80`)
+- Badge styling kept
+
+**Optional Shop Dropdown (compact):**
+- Column A: Studs, Necklaces, Bracelets
+- Column B: Best Sellers, 3D Gallery
+- Same dark glass styling as nav
+- Opens on click, closes on outside click
+
+---
+
+## 2. HERO — Remove White Fog, Apply Tight Mask
+
+### Current Problem
+
+The hero currently has a wide gradient veil (line 132 in HeroSplitEditorial.tsx):
+```tsx
+<div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+```
+
+This creates an obvious "white fog" effect on the left edge of the image.
+
+### Solution: Tight CSS Mask
+
+Replace the gradient div with a CSS `mask-image` on the image itself that fades only 8-12% of the left edge.
+
+**Implementation:**
+```css
+.hero-image-masked {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.3) 3%,
+    rgba(0,0,0,0.7) 6%,
+    black 10%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.3) 3%,
+    rgba(0,0,0,0.7) 6%,
+    black 10%
+  );
+}
+```
+
+This creates a tight fade that only affects the leftmost ~10% of the image, with no visible "fog" or blur.
+
+### Changes to HeroSplitEditorial.tsx
+
+1. Remove the gradient veil div entirely
+2. Add `.hero-image-masked` class to the image
+3. Keep cursor-follow highlight (already working)
+4. Keep staggered entrance animations (already working)
+
+---
+
+## 3. FACETPLACEHOLDER — Designed Placeholder Component
+
+### Purpose
+
+When real product photography isn't available, this component provides a designed visual counterweight that maintains the premium aesthetic.
+
+### Design Specifications
+
+- **Dimensions**: Fill available space, min-height 400px on desktop
+- **Radius**: 24px
+- **Background**: Subtle gradient from `card` to slightly darker
+- **Border**: 1px gold at 15-20% opacity
+- **Shadow**: `shadow-elegant`
+- **Inner content**: Abstract diamond-facet SVG linework (thin strokes)
+- **Hover effect**: Subtle shimmer animation across the facet lines
+
+### SVG Linework Concept
+
+```text
+┌─────────────────────────────────────────┐
+│                                         │
+│            ╱╲                           │
+│           ╱  ╲                          │
+│          ╱────╲                         │
+│         ╱      ╲                        │
+│        ╱   ◇    ╲   ← thin gold strokes │
+│       ╱          ╲                      │
+│      ╱────────────╲                     │
+│                                         │
+└─────────────────────────────────────────┘
+```
+
+### Component Props
+
+```tsx
+interface FacetPlaceholderProps {
+  className?: string;
+  variant?: 'diamond' | 'facet' | 'minimal';
+}
+```
+
+### CSS for Shimmer Effect
+
+```css
+@keyframes facet-shimmer {
+  0% { stroke-opacity: 0.15; }
+  50% { stroke-opacity: 0.35; }
+  100% { stroke-opacity: 0.15; }
+}
+
+.facet-line {
+  stroke: hsl(var(--accent));
+  stroke-width: 1px;
+  fill: none;
+  animation: facet-shimmer 4s ease-in-out infinite;
+}
+
+.facet-line:nth-child(2) { animation-delay: 0.5s; }
+.facet-line:nth-child(3) { animation-delay: 1s; }
+/* staggered delays for each line */
 ```
 
 ---
 
-### 2. `src/index.css` — Add New Styles
+## 4. STICKYSTORYREFINED — Use FacetPlaceholder Until Real Imagery
 
-**New CSS additions:**
+### Current State
 
-```css
-/* Mobile light shift animation */
-@keyframes light-shift {
-  0%, 100% { background-position: -100% 0; }
-  50% { background-position: 200% 0; }
-}
+The component uses `earringsHero.jpg`, `necklaceHero.jpg`, `braceletHero.jpg` for the sticky media frame.
 
-.hero-mobile-glow {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: light-shift 10s ease-in-out infinite;
-}
+### Changes
 
-/* Cursor-follow highlight (desktop) */
-.cursor-highlight {
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.08),
-    transparent 40%
-  );
-}
+Replace the crossfading images with `FacetPlaceholder` component:
 
-/* Magnetic button hover */
-.btn-magnetic {
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
+**Desktop:**
+- Sticky media frame now shows `FacetPlaceholder` instead of photo
+- The single overlapping product card remains (uses `hero-product-shot.png`)
+- Text beats remain unchanged
 
-.btn-magnetic:hover {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
-}
+**Mobile:**
+- Each beat shows `FacetPlaceholder` instead of the hero images
+- Text remains below each placeholder
 
-/* Scroll cue animation */
-@keyframes scroll-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
+### Updated Layout
 
-.scroll-cue-line {
-  animation: scroll-pulse 2s ease-in-out infinite;
-}
+```text
+Desktop:
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│  "The cut. The clarity."      │  ┌────────────────────────────┐ │
+│  Every Noori diamond...       │  │                            │ │
+│                               │  │    FacetPlaceholder        │ │
+│                               │  │    (abstract diamond       │ │
+│                               │  │     linework + shimmer)    │ │
+│                               │  │                  ┌───────┐ │ │
+│                               │  │                  │product│ │ │
+│                               │  └──────────────────│ card  │ │ │
+│                                                      └───────┘   │
+└──────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Implementation Order
+
+1. **Update `src/index.css`**
+   - Add nav capsule styling tokens
+   - Add `.hero-image-masked` class
+   - Add facet shimmer keyframes
+   - Add `.facet-line` styling
+
+2. **Modify `src/components/Header.tsx`**
+   - Restructure to floating capsule
+   - Logo left, centered links (absolute), cart right
+   - Dark glass styling
+   - Scroll state changes
+   - (Optional) Add compact Shop dropdown
+
+3. **Modify `src/components/HeroSplitEditorial.tsx`**
+   - Remove gradient veil div
+   - Add `.hero-image-masked` class to image
+   - Keep all existing interactions
+
+4. **Create `src/components/FacetPlaceholder.tsx`**
+   - Abstract diamond SVG linework
+   - Shimmer animation on hover
+   - Configurable variants
+
+5. **Modify `src/components/StickyStoryRefined.tsx`**
+   - Replace image crossfade with FacetPlaceholder
+   - Keep overlapping product card
+   - Update mobile layout
 
 ---
 
 ## Technical Details
 
-### Cursor-Follow Effect (Desktop)
+### Nav Capsule Positioning
 
 ```tsx
-const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
-const imageRef = useRef<HTMLDivElement>(null);
-
-const handleMouseMove = (e: React.MouseEvent) => {
-  if (!imageRef.current) return;
-  const rect = imageRef.current.getBoundingClientRect();
-  const x = ((e.clientX - rect.left) / rect.width) * 100;
-  const y = ((e.clientY - rect.top) / rect.height) * 100;
-  setMousePosition({ x, y });
-};
-
-// Applied via inline style:
-style={{
-  '--mouse-x': `${mousePosition.x}%`,
-  '--mouse-y': `${mousePosition.y}%`,
-} as React.CSSProperties}
+<header className={cn(
+  "fixed top-4 left-1/2 -translate-x-1/2 z-50",
+  "max-w-[1100px] w-[calc(100%-2rem)] md:w-[calc(100%-4rem)]",
+  "bg-[rgba(10,10,10,0.78)] backdrop-blur-[12px]",
+  "border border-white/[0.08] rounded-[18px]",
+  "transition-all duration-300",
+  isScrolled && "bg-[rgba(10,10,10,0.88)] top-2"
+)}>
+  <div className="flex items-center justify-between px-6 md:px-7 py-3.5 md:py-4">
+    {/* Logo */}
+    <Link to="/">...</Link>
+    
+    {/* Centered Links (absolute) */}
+    <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+      ...
+    </nav>
+    
+    {/* Cart */}
+    <div className="flex items-center gap-3">
+      <Button>Cart</Button>
+      <Button className="md:hidden">Menu</Button>
+    </div>
+  </div>
+</header>
 ```
 
-### Staggered Entrance Animations
+### Hero Image Mask CSS
+
+```css
+.hero-image-masked {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.4) 4%,
+    rgba(0,0,0,0.8) 8%,
+    black 12%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.4) 4%,
+    rgba(0,0,0,0.8) 8%,
+    black 12%
+  );
+}
+```
+
+### FacetPlaceholder SVG Structure
 
 ```tsx
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
-  }
-};
+<svg viewBox="0 0 200 200" className="w-full h-full">
+  {/* Diamond facet lines */}
+  <path d="M100 20 L180 80 L150 180 L50 180 L20 80 Z" className="facet-line" />
+  <path d="M100 20 L100 180" className="facet-line" />
+  <path d="M20 80 L180 80" className="facet-line" />
+  <path d="M100 20 L50 180" className="facet-line" />
+  <path d="M100 20 L150 180" className="facet-line" />
+  {/* Additional internal facet lines for complexity */}
+</svg>
 ```
-
-### Image Scale Animation
-
-```tsx
-<motion.div
-  initial={{ opacity: 0, scale: 1.03 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
->
-```
-
-### Edge-Bleeding Image Layout
-
-- Desktop: Image container is `position: absolute` with `right: 0`, `top: 0`, `bottom: 0`
-- Width: approximately 58% of viewport to cover 7 cols + bleed
-- Left side has gradient veil blending into background
-- Mobile: Image remains in normal document flow, stacked above text
 
 ---
 
@@ -192,16 +340,21 @@ const itemVariants = {
 
 | Feature | Desktop | Mobile |
 |---------|---------|--------|
-| Layout | Side-by-side (5+7 cols) | Stacked (image first) |
-| Image | Bleeds to right edge | Contained, rounded |
-| Cursor effect | Mouse-follow highlight | Looping light shift |
-| Scroll cue | Visible bottom-left | Hidden |
-| Button effect | Magnetic hover | Standard hover |
+| Nav | Centered floating capsule | Same capsule, hamburger menu |
+| Nav links | Visible, centered | Hidden, in drawer |
+| Hero image | Bleeds right with tight left mask | Stacked, rounded |
+| FacetPlaceholder | In sticky frame | Stacked between beats |
+| Hero interactions | Cursor-follow active | Looping light-shift |
 
 ---
 
-## Files to Modify
+## Files Summary
 
-1. **`src/components/HeroSplitEditorial.tsx`** — Complete rewrite with new layout + interactions
-2. **`src/index.css`** — Add animation keyframes + utility classes
+| File | Changes |
+|------|---------|
+| `src/index.css` | Add nav capsule vars, hero mask class, facet shimmer |
+| `src/components/Header.tsx` | Complete restyle to floating dark capsule |
+| `src/components/HeroSplitEditorial.tsx` | Remove gradient veil, add mask class |
+| `src/components/FacetPlaceholder.tsx` | New component with SVG linework |
+| `src/components/StickyStoryRefined.tsx` | Replace images with FacetPlaceholder |
 
