@@ -85,7 +85,7 @@ export const StickyStoryRefined = () => {
                     {beat.chips.map((chip, chipIndex) => (
                       <span
                         key={chipIndex}
-                        className="px-3 py-1 text-xs text-muted-foreground border border-border/50 rounded-full"
+                        className="px-3 py-1 text-xs text-accent border border-accent/30 rounded-full"
                       >
                         {chip}
                       </span>
@@ -166,10 +166,10 @@ export const StickyStoryRefined = () => {
               {/* Proof chips */}
               <div className="flex flex-wrap gap-2 mt-4">
                 {beat.chips.map((chip, chipIndex) => (
-                  <span
-                    key={chipIndex}
-                    className="px-3 py-1 text-xs text-muted-foreground border border-border/50 rounded-full"
-                  >
+                    <span
+                      key={chipIndex}
+                      className="px-3 py-1 text-xs text-accent border border-accent/30 rounded-full"
+                    >
                     {chip}
                   </span>
                 ))}
