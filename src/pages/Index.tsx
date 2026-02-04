@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 import { HeroSplitEditorial } from "@/components/HeroSplitEditorial";
 import { StickyStoryRefined } from "@/components/StickyStoryRefined";
-import { Product3DStaggeredGrid } from "@/components/Product3DStaggeredGrid";
+import Product3DCarousel from "@/components/Product3DCarousel";
 import { SocialFeed } from "@/components/SocialFeed";
 import { StoryDuoModules } from "@/components/StoryDuoModules";
 import { FinalCTAForm } from "@/components/FinalCTAForm";
@@ -14,7 +14,7 @@ const Index = () => {
       <Header />
       <main>
         <HeroSplitEditorial />
-        <Product3DStaggeredGrid />
+        <Product3DCarousel />
         <StickyStoryRefined />
         <SocialFeed />
         <StoryDuoModules />
