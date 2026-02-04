@@ -14,8 +14,8 @@ const Index = () => {
       <Header />
       <main>
         <HeroSplitEditorial />
-        <StickyStoryRefined />
         <Product3DStaggeredGrid />
+        <StickyStoryRefined />
         <SocialFeed />
         <StoryDuoModules />
         <FinalCTAForm />
