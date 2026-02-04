@@ -1,29 +1,26 @@
 import { Header } from "@/components/Header";
-import { CinematicHero } from "@/components/CinematicHero";
-import { EditorialGallery } from "@/components/EditorialGallery";
+import { HeroSplitEditorial } from "@/components/HeroSplitEditorial";
+import { StickyStoryRefined } from "@/components/StickyStoryRefined";
+import { FadeToNightBridge } from "@/components/FadeToNightBridge";
 import Product3DCarousel from "@/components/Product3DCarousel";
-import { BrandPhilosophy } from "@/components/BrandPhilosophy";
 import { SocialFeed } from "@/components/SocialFeed";
-import { ValueBar } from "@/components/ValueBar";
-import { NewsletterCTA } from "@/components/NewsletterCTA";
+import { StoryDuoModules } from "@/components/StoryDuoModules";
+import { FinalCTAForm } from "@/components/FinalCTAForm";
 import { Footer } from "@/components/Footer";
 import { EmailCaptureModal } from "@/components/EmailCaptureModal";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
-  useScrollAnimation();
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <CinematicHero />
-        <EditorialGallery />
+        <HeroSplitEditorial />
+        <StickyStoryRefined />
+        <FadeToNightBridge />
         <Product3DCarousel />
-        <BrandPhilosophy />
         <SocialFeed />
-        <ValueBar />
-        <NewsletterCTA />
+        <StoryDuoModules />
+        <FinalCTAForm />
       </main>
       <Footer />
       <EmailCaptureModal />

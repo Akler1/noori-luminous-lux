@@ -18,8 +18,8 @@ const socialPosts = [
 
 export const SocialFeed = () => {
   return (
-    <section className="py-20 md:py-28 bg-background overflow-hidden">
-      <div className="container mx-auto px-4 mb-10">
+    <section className="section-spacing bg-background overflow-hidden">
+      <div className="container-editorial mb-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -27,11 +27,8 @@ export const SocialFeed = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">
-            #NooriJewelry
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl font-light text-foreground">
-            Worn by You
+          <h2 className="section-header text-foreground">
+            Worn by you.
           </h2>
         </motion.div>
       </div>

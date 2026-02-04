@@ -252,14 +252,20 @@ export default function Product3DCarousel() {
     <section
       id="product-3d-carousel"
       ref={carouselRef}
-      className="w-full min-h-screen bg-background relative overflow-hidden flex flex-col"
+      className="w-full min-h-screen relative overflow-hidden flex flex-col dark-section"
+      style={{ backgroundColor: "hsl(220 30% 5%)" }}
       role="region"
       aria-label="3D product carousel"
       data-analytics="carousel_view"
     >
-      {/* Thin gold separator line */}
-      <div className="w-full flex justify-center pt-8">
-        <div className="w-24 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+      {/* Section Header */}
+      <div className="container mx-auto px-6 pt-16 pb-8 text-center relative z-10">
+        <h2 className="font-display text-3xl md:text-4xl text-white/90 mb-3">
+          Best sellers
+        </h2>
+        <p className="text-white/60 text-base">
+          Spin each piece. See the details.
+        </p>
       </div>
 
       {/* Radial glow behind active slide */}
@@ -326,16 +332,17 @@ export default function Product3DCarousel() {
                     currentIndex >= 0 ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <h2 className="text-xl md:text-2xl font-serif text-[#F8F7F3] mb-3">
+                  <h2 className="text-xl md:text-2xl font-serif text-white mb-1">
                     {currentSlide.title}
                   </h2>
+                  <p className="text-white/50 text-xs mb-3">Solid gold • Lab-grown</p>
                   <a
                     href={currentSlide.pdpUrl}
                     onClick={() => handleCTAClick(currentSlide.pdpUrl)}
                     data-analytics="cta_click"
                     className="inline-block px-5 py-2 border border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0B0B0B] transition-colors duration-200 rounded font-medium text-sm"
                   >
-                    View Product
+                    View details
                   </a>
                 </div>
               </div>
