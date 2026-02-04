@@ -256,4 +256,44 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Mobile light shift animation */
+  @keyframes light-shift {
+    0%, 100% { background-position: -100% 0; }
+    50% { background-position: 200% 0; }
+  }
+
+  .hero-mobile-glow {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: light-shift 10s ease-in-out infinite;
+  }
+
+  /* Cursor-follow highlight (desktop) */
+  .cursor-highlight {
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, 0.08),
+      transparent 40%
+    );
+  }
+
+  /* Magnetic button hover */
+  .btn-magnetic {
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .btn-magnetic:hover {
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Scroll cue animation */
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  .scroll-cue-line {
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
 }
