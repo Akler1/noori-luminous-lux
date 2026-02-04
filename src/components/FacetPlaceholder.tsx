@@ -12,16 +12,18 @@ export const FacetPlaceholder = ({
   return (
     <div
       className={cn(
-        "relative w-full min-h-[400px] rounded-3xl overflow-hidden",
-        "bg-gradient-to-br from-card to-card/80",
-        "border border-[hsl(45,70%,50%,0.15)]",
-        "shadow-elegant",
+        "relative w-full min-h-[400px] rounded-[32px] overflow-hidden",
+        "bg-[#000000]",
+        "border border-[rgba(201,162,39,0.10)]",
         "group",
         className
       )}
+      style={{
+        boxShadow: '0 20px 60px -15px rgba(0, 0, 0, 0.25), 0 8px 24px -8px rgba(0, 0, 0, 0.15)'
+      }}
     >
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
+      <div className="absolute inset-0 opacity-[0.02]">
         <div 
           className="w-full h-full"
           style={{
@@ -42,46 +44,46 @@ export const FacetPlaceholder = ({
             {/* Outer diamond shape */}
             <path
               d="M100 20 L170 70 L145 170 L55 170 L30 70 Z"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "0s" }}
             />
             {/* Top internal lines */}
             <path
               d="M100 20 L100 90"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "0.3s" }}
             />
             <path
               d="M30 70 L170 70"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "0.6s" }}
             />
             {/* Side facets */}
             <path
               d="M100 20 L55 170"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "0.9s" }}
             />
             <path
               d="M100 20 L145 170"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "1.2s" }}
             />
             {/* Internal cross lines */}
             <path
               d="M30 70 L100 90 L170 70"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "1.5s" }}
             />
             <path
               d="M100 90 L100 170"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "1.8s" }}
             />
             {/* Lower facets */}
             <path
               d="M55 170 L100 90 L145 170"
-              className="facet-line"
+              className="facet-line-dark"
               style={{ animationDelay: "2.1s" }}
             />
           </>
@@ -90,19 +92,19 @@ export const FacetPlaceholder = ({
         {variant === "facet" && (
           <>
             {/* Geometric facet pattern */}
-            <path d="M100 30 L160 80 L140 160 L60 160 L40 80 Z" className="facet-line" style={{ animationDelay: "0s" }} />
-            <path d="M100 30 L100 160" className="facet-line" style={{ animationDelay: "0.4s" }} />
-            <path d="M40 80 L160 80" className="facet-line" style={{ animationDelay: "0.8s" }} />
-            <path d="M60 160 L100 80 L140 160" className="facet-line" style={{ animationDelay: "1.2s" }} />
+            <path d="M100 30 L160 80 L140 160 L60 160 L40 80 Z" className="facet-line-dark" style={{ animationDelay: "0s" }} />
+            <path d="M100 30 L100 160" className="facet-line-dark" style={{ animationDelay: "0.4s" }} />
+            <path d="M40 80 L160 80" className="facet-line-dark" style={{ animationDelay: "0.8s" }} />
+            <path d="M60 160 L100 80 L140 160" className="facet-line-dark" style={{ animationDelay: "1.2s" }} />
           </>
         )}
 
         {variant === "minimal" && (
           <>
             {/* Simple diamond outline */}
-            <path d="M100 40 L150 100 L100 160 L50 100 Z" className="facet-line" style={{ animationDelay: "0s" }} />
-            <path d="M50 100 L150 100" className="facet-line" style={{ animationDelay: "0.5s" }} />
-            <path d="M100 40 L100 160" className="facet-line" style={{ animationDelay: "1s" }} />
+            <path d="M100 40 L150 100 L100 160 L50 100 Z" className="facet-line-dark" style={{ animationDelay: "0s" }} />
+            <path d="M50 100 L150 100" className="facet-line-dark" style={{ animationDelay: "0.5s" }} />
+            <path d="M100 40 L100 160" className="facet-line-dark" style={{ animationDelay: "1s" }} />
           </>
         )}
       </svg>
@@ -112,7 +114,7 @@ export const FacetPlaceholder = ({
         <div 
           className="w-full h-full"
           style={{
-            background: 'linear-gradient(135deg, transparent 0%, hsl(45 70% 50% / 0.05) 50%, transparent 100%)',
+            background: 'linear-gradient(135deg, transparent 0%, hsl(45 70% 50% / 0.03) 50%, transparent 100%)',
           }}
         />
       </div>
