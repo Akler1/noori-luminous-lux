@@ -65,13 +65,13 @@ export function Product3DStaggeredGrid() {
 
   if (loading) {
     return (
-      <section className="dark-section bg-[hsl(220,30%,5%)] section-spacing">
+      <section className="bg-background section-spacing">
         <div className="container-editorial">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
-                className="bracket-border aspect-[4/5] animate-pulse bg-white/5"
+                className="bracket-border aspect-[4/5] animate-pulse bg-muted"
               />
             ))}
           </div>
@@ -81,7 +81,7 @@ export function Product3DStaggeredGrid() {
   }
 
   return (
-    <section className="dark-section bg-[hsl(220,30%,5%)] section-spacing">
+    <section className="bg-background section-spacing">
       <div className="container-editorial">
         {/* Desktop Layout - 3 columns with staggered positioning */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8">
@@ -110,7 +110,7 @@ export function Product3DStaggeredGrid() {
                     />
                   </div>
                   <div className="mt-4 flex items-center gap-3">
-                    <span className="text-white/90 font-serif text-lg group-hover:text-accent transition-colors">
+                    <span className="text-foreground font-serif text-lg group-hover:text-accent transition-colors">
                       {slide.title}
                     </span>
                     <span className="text-accent text-sm font-medium">2025</span>
@@ -148,7 +148,7 @@ export function Product3DStaggeredGrid() {
                     />
                   </div>
                   <div className="mt-3 flex items-center gap-2">
-                    <span className="text-white/90 font-serif text-sm md:text-base group-hover:text-accent transition-colors">
+                    <span className="text-foreground font-serif text-sm md:text-base group-hover:text-accent transition-colors">
                       {slide.title}
                     </span>
                     <span className="text-accent text-xs font-medium">2025</span>
