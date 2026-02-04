@@ -321,19 +321,14 @@
     animation: facet-shimmer 4s ease-in-out infinite;
   }
 
-  /* Product Card Luxury - Light neutral gray card style */
-  .product-card-luxury {
-    position: relative;
-    background: #e5e4e0;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-  }
-
-  /* XR Viewer container inside luxury cards */
-  .xr-viewer-container {
+  /* XR Tile styling - premium black tile for 3D viewers */
+  .xr-tile {
     background: #000000;
-    border-radius: 12px;
+    border-radius: 32px;
+    border: 1px solid rgba(201, 162, 39, 0.10);
+    box-shadow: 
+      0 20px 60px -15px rgba(0, 0, 0, 0.25),
+      0 8px 24px -8px rgba(0, 0, 0, 0.15);
     overflow: hidden;
   }
 
