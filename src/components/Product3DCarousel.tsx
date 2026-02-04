@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, RotateCw, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface CarouselConfig {
   carouselTitle: string;
@@ -15,6 +16,8 @@ interface CarouselConfig {
     slug: string;
     title: string;
     subtitle: string;
+    material?: string;
+    price?: string;
     pdpUrl: string;
     camera: {
       azimuthDeg: number;
@@ -35,7 +38,7 @@ export default function Product3DCarousel() {
   const [showRotateHint, setShowRotateHint] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
-  const modelViewerRefs = useRef<Array<any>>([]);
+  const navigate = useNavigate();
 
   // Load config
   useEffect(() => {
@@ -164,8 +167,9 @@ export default function Product3DCarousel() {
     }
   };
 
-  const handleCTAClick = (pdpUrl: string) => {
-    console.log("Analytics: cta_click", { pdpUrl });
+  const handleCardClick = (pdpUrl: string) => {
+    console.log("Analytics: card_click", { pdpUrl });
+    navigate(pdpUrl);
   };
 
   if (!config) {
@@ -184,9 +188,7 @@ export default function Product3DCarousel() {
     );
   }
 
-  const usingSingle = config.mode === "singleGlb";
   const currentSlide = config.slides[currentIndex];
-
   const prevIndex = (currentIndex - 1 + config.slides.length) % config.slides.length;
   const nextIndex = (currentIndex + 1) % config.slides.length;
 
@@ -198,7 +200,7 @@ export default function Product3DCarousel() {
     slide.slug === "earrings-emerald-gold";
 
   // Render function for 3D viewer or iframe
-  const renderViewer = (slide: typeof currentSlide, isMain: boolean = false) => {
+  const renderViewer = (slide: typeof currentSlide) => {
     const iframeSrc = isStudSlide(slide)
       ? "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html"
       : isEmeraldSlide(slide)
@@ -221,6 +223,71 @@ export default function Product3DCarousel() {
     );
   };
 
+  // Render luxury product card
+  const renderProductCard = (
+    slide: typeof currentSlide,
+    isMain: boolean = false,
+    onClick?: () => void
+  ) => {
+    return (
+      <div
+        className={cn(
+          "product-card-luxury aspect-[3/4] relative cursor-pointer group",
+          !isMain && "hover:shadow-lg transition-shadow duration-300"
+        )}
+        onClick={onClick}
+      >
+        {/* Badge */}
+        <span className="absolute top-4 left-4 text-accent text-xs font-medium tracking-wide z-10">
+          Must-have
+        </span>
+
+        {/* 3D Viewer Container */}
+        <div className="absolute inset-x-4 top-12 bottom-28 md:bottom-32">
+          <div className="xr-viewer-container w-full h-full relative">
+            {isLoaded ? (
+              renderViewer(slide)
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-black">
+                <div className="text-white/70 text-sm">Loading...</div>
+              </div>
+            )}
+
+            {/* One-time drag hint overlay - only on main card */}
+            {isMain && (
+              <div
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-500 z-10",
+                  showRotateHint ? "opacity-100" : "opacity-0 pointer-events-none"
+                )}
+                onMouseDown={() => setShowRotateHint(false)}
+                onTouchStart={() => setShowRotateHint(false)}
+              >
+                <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2">
+                  <RotateCw className="w-4 h-4 text-white/70" />
+                  <span className="text-white/80 text-sm">Drag to rotate</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Product Info - Bottom Left */}
+        <div className="absolute bottom-4 left-4 right-4">
+          <p className="text-xs text-muted-foreground mb-1">
+            {slide.material || "Yellow gold"}
+          </p>
+          <h3 className="font-serif text-base md:text-lg text-foreground mb-1 leading-tight">
+            {slide.title}
+          </h3>
+          <p className="text-sm font-medium text-foreground">
+            {slide.price || "$1,250.00"}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section
       id="product-3d-carousel"
@@ -230,7 +297,7 @@ export default function Product3DCarousel() {
       data-analytics="carousel_view"
     >
       <div className="container-editorial" ref={carouselRef}>
-        {/* Section Header on light background */}
+        {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
             Explore in 3D
@@ -246,95 +313,51 @@ export default function Product3DCarousel() {
         {/* Carousel */}
         <div className="relative">
           <div
-            className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 md:gap-8"
+            className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr] items-center gap-4 md:gap-6"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Previous Slide - Side tile */}
+            {/* Previous Slide - Side card */}
             <div className="hidden md:block">
               {isLoaded && (
                 <div
-                  className="scale-[0.85] opacity-80 hover:opacity-100 hover:scale-[0.88] transition-all duration-300 cursor-pointer origin-center"
+                  className="scale-[0.9] opacity-70 hover:opacity-90 hover:scale-[0.92] transition-all duration-300 origin-center"
                   onClick={() => goToPrevious()}
                 >
-                  <div className="xr-tile aspect-square">
-                    {renderViewer(config.slides[prevIndex])}
-                  </div>
+                  {renderProductCard(config.slides[prevIndex], false)}
                 </div>
               )}
             </div>
 
-            {/* Current Slide - Main tile */}
-            <div className="relative">
-              <div
-                className="xr-tile aspect-square relative"
-                onMouseDown={() => setShowRotateHint(false)}
-                onTouchStart={(e) => {
-                  handleTouchStart(e);
-                  setShowRotateHint(false);
-                }}
-              >
-                {isLoaded ? (
-                  renderViewer(currentSlide, true)
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-black">
-                    <div className="text-white/70">Loading 3D viewer...</div>
-                  </div>
-                )}
-
-                {/* One-time drag hint overlay */}
-                <div
-                  className={cn(
-                    "absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-500 z-10",
-                    showRotateHint ? "opacity-100" : "opacity-0 pointer-events-none"
-                  )}
-                >
-                  <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2">
-                    <RotateCw className="w-4 h-4 text-white/70" />
-                    <span className="text-white/80 text-sm">Drag to rotate</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Product info below tile on light bg */}
-              <div className="text-center mt-6">
-                <h3 className="font-serif text-xl md:text-2xl text-foreground mb-1">
-                  {currentSlide.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Solid gold • Lab-grown
-                </p>
-                <a
-                  href={currentSlide.pdpUrl}
-                  onClick={() => handleCTAClick(currentSlide.pdpUrl)}
-                  data-analytics="cta_click"
-                  className="inline-flex items-center gap-2 px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-background transition-colors duration-200 rounded font-medium text-sm group"
-                >
-                  View details
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
+            {/* Current Slide - Main card */}
+            <div
+              className="relative"
+              onMouseDown={() => setShowRotateHint(false)}
+              onTouchStart={(e) => {
+                handleTouchStart(e);
+                setShowRotateHint(false);
+              }}
+            >
+              {renderProductCard(currentSlide, true, () => handleCardClick(currentSlide.pdpUrl))}
             </div>
 
-            {/* Next Slide - Side tile */}
+            {/* Next Slide - Side card */}
             <div className="hidden md:block">
               {isLoaded && (
                 <div
-                  className="scale-[0.85] opacity-80 hover:opacity-100 hover:scale-[0.88] transition-all duration-300 cursor-pointer origin-center"
+                  className="scale-[0.9] opacity-70 hover:opacity-90 hover:scale-[0.92] transition-all duration-300 origin-center"
                   onClick={() => goToNext()}
                 >
-                  <div className="xr-tile aspect-square">
-                    {renderViewer(config.slides[nextIndex])}
-                  </div>
+                  {renderProductCard(config.slides[nextIndex], false)}
                 </div>
               )}
             </div>
           </div>
 
-          {/* Minimal chevron arrows - positioned outside tiles */}
+          {/* Minimal chevron arrows */}
           <button
             onClick={goToPrevious}
-            className="absolute left-0 md:-left-12 top-1/3 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
+            className="absolute left-0 md:-left-10 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-6 h-6 stroke-[1.5]" />
@@ -342,7 +365,7 @@ export default function Product3DCarousel() {
 
           <button
             onClick={goToNext}
-            className="absolute right-0 md:-right-12 top-1/3 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
+            className="absolute right-0 md:-right-10 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors z-20"
             aria-label="Next slide"
           >
             <ChevronRight className="w-6 h-6 stroke-[1.5]" />
