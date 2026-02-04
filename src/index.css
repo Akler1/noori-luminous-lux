@@ -340,4 +340,72 @@
     stroke-opacity: 0.12;
     animation: facet-shimmer 4s ease-in-out infinite;
   }
+
+  /* Corner bracket borders - only corners visible */
+  .bracket-border {
+    position: relative;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .bracket-border::before,
+  .bracket-border::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid hsl(var(--accent) / 0.3);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .bracket-border::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 16px 0 0 0;
+  }
+
+  .bracket-border::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 16px 0;
+  }
+
+  /* Additional corners via inner pseudo-elements */
+  .bracket-border-inner {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .bracket-border-inner::before,
+  .bracket-border-inner::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid hsl(var(--accent) / 0.3);
+  }
+
+  .bracket-border-inner::before {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 0 16px 0 0;
+  }
+
+  .bracket-border-inner::after {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+    border-radius: 0 0 0 16px;
+  }
 }
