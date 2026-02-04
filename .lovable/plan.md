@@ -1,13 +1,10 @@
 
 
-# Homepage Redesign: Header + Hero Diagonal Cut + Gallery Room
+# XR Section Redesign: Premium Black Tile System
 
 ## Overview
 
-This update transforms the homepage with three key changes:
-1. **Header**: Remove floating capsule nav, create a proper in-flow header bar
-2. **Hero**: Replace the "milky fog" mask with an intentional diagonal clip-path and gold hairline
-3. **3D Gallery**: Replace the blur gradient transition with a contained "Gallery Room" dark container
+Transform the 3D product carousel from a "big black room" to individual premium black tiles floating on a warm off-white background. Also update the FacetPlaceholder to use a matching black tile motif for consistent branding.
 
 ---
 
@@ -15,12 +12,14 @@ This update transforms the homepage with three key changes:
 
 | Component | Current | New |
 |-----------|---------|-----|
-| **Header** | Floating capsule overlay on hero | In-flow header bar, dark (#111), ~64px height |
-| **Header position** | `fixed top-4 left-1/2` with rounded capsule | `sticky top-0` full-width with subtle border |
-| **Hero padding** | `pt-20 md:pt-24` (padding for overlay nav) | `pt-0` (header is in-flow, no extra padding) |
-| **Hero image edge** | CSS mask gradient (creates fog) | Diagonal clip-path + gold hairline |
-| **FadeToNightBridge** | Blur gradient white→gray→black | Removed entirely |
-| **3D Carousel wrapper** | Full-bleed dark section | Inset "Gallery Room" with radius + shadow |
+| **XR Section background** | Dark `#0b0b0b` full container | Warm off-white (`bg-background`) |
+| **XR Section container** | Large rounded black "room" | Removed entirely |
+| **XR Viewer tiles** | Iframes in layout | Individual black tiles with gold border |
+| **Product info** | Overlay on dark background | Below tile on light background |
+| **Side cards** | `opacity-60` with dark surrounding | Scaled down, `opacity-75-85`, no dark overlay |
+| **Arrows** | Large circular buttons | Minimal thin chevrons outside tiles |
+| **Hint** | Static pill | One-time "Drag to rotate" that fades after interaction |
+| **FacetPlaceholder** | Gold linework on light card | Black tile with subtle gold facet lines |
 
 ---
 
@@ -28,380 +27,460 @@ This update transforms the homepage with three key changes:
 
 | Action | File |
 |--------|------|
-| **Modify** | `src/components/Header.tsx` |
-| **Modify** | `src/components/HeroSplitEditorial.tsx` |
-| **Delete/Modify** | `src/components/FadeToNightBridge.tsx` |
 | **Modify** | `src/components/Product3DCarousel.tsx` |
-| **Modify** | `src/pages/Index.tsx` |
+| **Modify** | `src/components/FacetPlaceholder.tsx` |
 | **Update** | `src/index.css` |
 
 ---
 
-## 1. HEADER — In-Flow Dark Bar (No Overlay)
+## 1. XR TILE DESIGN
 
-### Layout Structure
+### Individual Black Tile Styling
 
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│ [NOORI LOGO]        Shop ▾   About   FAQ   Contact                    [🛒]  │
-│   (left)                     (center)                                (right) │
-└──────────────────────────────────────────────────────────────────────────────┘
-                    Height: 64px desktop / 56px mobile
-                    Background: #111 (near-black)
-                    Border-bottom: 1px rgba(255,255,255,0.08)
-```
-
-### Key Changes
-
-- **Position**: Change from `fixed` to `sticky top-0` (in document flow)
-- **Background**: Solid `#111` (not transparent with blur)
-- **Shape**: Full-width, no rounded corners, no floating capsule
-- **Height**: `h-16` desktop (64px), `h-14` mobile (56px)
-- **Border**: Bottom only: `border-b border-white/[0.08]`
-- **Scroll behavior**: Slightly tighter padding + subtle backdrop blur on scroll
-- **Hover states**: Links get animated underline; cart icon brightens
-
-### Technical Implementation
-
-```tsx
-<header className={cn(
-  "sticky top-0 z-50 w-full",
-  "bg-[#111111]",
-  "border-b border-white/[0.08]",
-  "transition-all duration-300",
-  isScrolled && "backdrop-blur-sm"
-)}>
-  <div className={cn(
-    "flex items-center justify-between max-w-[1280px] mx-auto",
-    "px-5 md:px-16",
-    "h-14 md:h-16",
-    isScrolled && "h-12 md:h-14"
-  )}>
-    {/* Logo - Left */}
-    <Link to="/">
-      <img src={nooriLogo} className="h-7 md:h-8" />
-    </Link>
-    
-    {/* Navigation - Center */}
-    <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
-      {/* Shop with dropdown, About, FAQ, Contact */}
-    </nav>
-    
-    {/* Cart - Right */}
-    <Button>Cart</Button>
-  </div>
-</header>
-```
-
----
-
-## 2. HERO — Diagonal Clip-Path + Gold Hairline
-
-### Remove "Fog" Mask
-
-The current hero uses `hero-image-masked` CSS class which creates a gradient fade on the left edge. This creates the "milky fog" effect.
-
-**Solution**: Remove the mask and apply a diagonal `clip-path` instead.
-
-### Diagonal Edge Design
+Each KeyShotXR iframe will be wrapped in a premium black tile:
 
 ```
-         ┌─────────────────────────────────────────┐
-         │                                         │
-         │   TEXT                                  │
-         │   CONTENT        ╱─────────────────────│
-         │                ╱                        │
-         │              ╱      HERO IMAGE          │
-         │            ╱                            │
-         │          ╱                              │
-         │        ╱                                │
-         └──────╱─────────────────────────────────┘
-               ↑
-         Diagonal edge with thin gold hairline (1px)
+┌───────────────────────────────────────────────────────┐
+│                                                       │  ← 1px gold border at 10% opacity
+│                                                       │
+│            ┌─────────────────────────┐               │  ← Pure black bg (#000000)
+│            │                         │               │
+│            │     KeyShotXR Viewer    │               │  ← Zero/minimal padding
+│            │                         │               │
+│            └─────────────────────────┘               │
+│                                                       │
+└───────────────────────────────────────────────────────┘
+              radius: 32px
+              shadow: 0 20px 60px -15px rgba(0,0,0,0.3)
 ```
 
-### Implementation
+### Tile CSS Specification
 
-**Image container clip-path:**
 ```css
-.hero-image-diagonal {
-  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+.xr-tile {
+  background: #000000;
+  border-radius: 32px;
+  border: 1px solid rgba(201, 162, 39, 0.10);
+  box-shadow: 
+    0 20px 60px -15px rgba(0, 0, 0, 0.3),
+    0 8px 24px -8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  padding: 0;
 }
 ```
 
-**Gold hairline overlay:**
+### Product Info Below Tile
+
+Instead of overlaying text on black, place it below the tile on the light background:
+
+```
+┌─────────────────────────────────────┐
+│                                     │
+│         [ Black XR Tile ]           │
+│                                     │
+└─────────────────────────────────────┘
+
+      Round Brilliant Stud
+      Solid gold • Lab-grown
+      
+      [ View details → ]
+```
+
+Text styling:
+- Product name: `font-serif text-2xl text-foreground`
+- Subtitle: `text-muted-foreground text-sm`
+- CTA: Gold border button with arrow hover animation
+
+---
+
+## 2. CAROUSEL LAYOUT CHANGES
+
+### Section Background
+
+Change from dark container to warm off-white:
+
 ```tsx
-{/* Diagonal gold hairline */}
+// Before
+<section className="section-spacing bg-background">
+  <div className="container-editorial">
+    <div className="... rounded-[36px]" style={{ backgroundColor: '#0b0b0b' }}>
+      ...
+    </div>
+  </div>
+</section>
+
+// After
+<section className="section-spacing bg-background">
+  <div className="container-editorial">
+    {/* Section header on light background */}
+    <div className="text-center mb-12 md:mb-16">
+      <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
+        Explore in 3D
+      </p>
+      <h2 className="section-header text-foreground mb-3">
+        Best sellers
+      </h2>
+      <p className="text-muted-foreground">
+        Spin each piece. See the details.
+      </p>
+    </div>
+    
+    {/* Carousel with black tiles on light bg */}
+    ...
+  </div>
+</section>
+```
+
+### Side Cards Polish
+
+| Aspect | Before | After |
+|--------|--------|-------|
+| Scale | 1.0 | 0.85 |
+| Opacity | 0.60 | 0.80 |
+| Overlay | None | None (keep clean) |
+| Transition | `opacity` only | `opacity` + `scale` |
+
+### Navigation Arrows
+
+Replace large circular buttons with minimal chevrons:
+
+```tsx
+// Before
+<Button className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20">
+  <ChevronLeft className="w-6 h-6 text-white/90" />
+</Button>
+
+// After
+<button 
+  className="p-2 text-muted-foreground hover:text-accent transition-colors"
+  aria-label="Previous"
+>
+  <ChevronLeft className="w-6 h-6 stroke-[1.5]" />
+</button>
+```
+
+Position arrows outside the tile area on desktop.
+
+---
+
+## 3. ONE-TIME DRAG HINT
+
+### Initial State
+
+On the center tile, show a subtle overlay:
+
+```
+┌─────────────────────────────────────┐
+│                                     │
+│       ┌─────────────────────┐       │
+│       │  ↻ Drag to rotate   │       │
+│       └─────────────────────┘       │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+### Behavior
+
+- Shows on first page load
+- Fades out (opacity 0, pointer-events-none) after:
+  - First mouse drag
+  - First touch interaction
+  - 5 seconds timeout (auto-dismiss)
+- Uses `transition-opacity duration-500`
+- Stored in `showRotateHint` state (already exists)
+
+### Styling
+
+```tsx
 <div 
-  className="absolute top-0 bottom-0 left-0 w-px z-30 pointer-events-none"
-  style={{
-    background: 'hsl(45 70% 50%)',
-    transform: 'translateX(-1px)',
-    clipPath: 'polygon(8% 0, calc(8% + 1px) 0, 1px 100%, 0 100%)'
-  }}
-/>
+  className={cn(
+    "absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-500 pointer-events-none z-10",
+    showRotateHint ? "opacity-100" : "opacity-0"
+  )}
+>
+  <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2">
+    <RotateCw className="w-4 h-4 text-white/70" />
+    <span className="text-white/80 text-sm">Drag to rotate</span>
+  </div>
+</div>
 ```
-
-Alternatively, use an SVG line positioned along the diagonal:
-```tsx
-<svg className="absolute inset-0 w-full h-full pointer-events-none z-30">
-  <line 
-    x1="8%" y1="0" 
-    x2="0" y2="100%" 
-    stroke="hsl(45, 70%, 50%)" 
-    strokeWidth="1"
-  />
-</svg>
-```
-
-### Hero Padding Adjustment
-
-Since the header is now in document flow, remove the top padding:
-- **Before**: `pt-20 md:pt-24`
-- **After**: `pt-0` (or small padding like `pt-4 md:pt-8` for breathing room)
-
-### Keep Existing Interactions
-
-- Cursor-follow light sweep (already implemented, just remove the mask class)
-- Staggered entrance animations (already implemented)
 
 ---
 
-## 3. FADETIGHTBRIDGE — Remove Entirely
-
-Delete or empty this component. The gradient blur transition is replaced by the Gallery Room design.
-
-**In Index.tsx:**
-- Remove `<FadeToNightBridge />` from the component tree entirely
-
----
-
-## 4. 3D CAROUSEL — Gallery Room Container
+## 4. FACETPLACEHOLDER — Black Tile Motif
 
 ### Current vs New
 
 | Aspect | Current | New |
 |--------|---------|-----|
-| Background | Full-bleed `hsl(220 30% 5%)` | Inset container with radius |
-| Edges | Sharp, full-width | Rounded 32-44px, shadow |
-| Transition | Relies on FadeToNightBridge gradient | Sits on off-white background with clear separation |
-| Side cards | `opacity-40` (too dim) | `opacity-60` (brighter) |
-| Section header | At top inside dark section | Inside container with gold accent |
+| Background | Light card gradient | Pure black (#000000) |
+| Border | Gold at 15% | Gold at 10% |
+| Radius | 24px | 32px (match XR tiles) |
+| SVG lines | Gold on light | Gold on black (more subtle) |
+| Shadow | `shadow-elegant` | Floating black tile shadow |
 
-### Gallery Room Structure
+### Updated Design
 
-```
-Off-white page background
-│
-├─────────────────────────────────────────────────────────────────────────┐
-│                                                                          │
-│    ┌──────────────────────────────────────────────────────────────┐     │
-│    │ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌ thin gold line ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ │     │
-│    │                                                              │     │
-│    │     Explore in 3D.                                          │     │
-│    │     BEST SELLERS                                            │     │
-│    │     Spin each piece. See the details.                       │     │
-│    │                                                              │     │
-│    │     ┌───────┐     ┌─────────────┐     ┌───────┐            │     │
-│    │     │  Prev │     │    MAIN     │     │  Next │            │     │
-│    │     │ (60%) │     │   CAROUSEL  │     │ (60%) │            │     │
-│    │     └───────┘     └─────────────┘     └───────┘            │     │
-│    │                                                              │     │
-│    │     [Drag to rotate pill]        01 / 03  ● ─── ●          │     │
-│    │                                                              │     │
-│    └──────────────────────────────────────────────────────────────┘     │
-│           ↑                                                              │
-│      radius: 36px, shadow, bg: #0b0b0b, padding: 80-110px               │
-│                                                                          │
-└──────────────────────────────────────────────────────────────────────────┘
+```tsx
+<div className={cn(
+  "relative w-full min-h-[400px] rounded-[32px] overflow-hidden",
+  "bg-[#000000]",
+  "border border-[rgba(201,162,39,0.10)]",
+  "shadow-xr-tile",
+  "group",
+  className
+)}>
+  {/* Subtle gold facet SVG linework */}
+  <svg ...>
+    {/* Same diamond paths but with lower opacity gold on black */}
+  </svg>
+  
+  {/* Shimmer on hover */}
+</div>
 ```
 
-### Implementation Details
+### SVG Line Styling on Black
 
-**Container wrapper:**
+```css
+.facet-line-dark {
+  stroke: hsl(45, 70%, 50%);
+  stroke-width: 0.75px;
+  fill: none;
+  stroke-opacity: 0.12;
+  animation: facet-shimmer 4s ease-in-out infinite;
+}
+```
+
+---
+
+## 5. VISUAL LAYOUT — Final Design
+
+### Desktop View
+
+```
+     Off-white background
+     ┌──────────────────────────────────────────────────────────────┐
+     │                                                              │
+     │              Explore in 3D.                                  │
+     │              BEST SELLERS                                    │
+     │              Spin each piece. See the details.               │
+     │                                                              │
+     │   ←    ┌───────┐    ┌─────────────────┐    ┌───────┐    →   │
+     │        │  SIDE │    │                 │    │  SIDE │         │
+     │        │  TILE │    │   MAIN TILE     │    │  TILE │         │
+     │        │ (85%) │    │   (black XR)    │    │ (85%) │         │
+     │        │ scale │    │                 │    │ scale │         │
+     │        └───────┘    │   ↻ Drag to     │    └───────┘         │
+     │                     │     rotate      │                      │
+     │                     └─────────────────┘                      │
+     │                                                              │
+     │                     Round Brilliant Stud                     │
+     │                     Solid gold • Lab-grown                   │
+     │                                                              │
+     │                     [ View details → ]                       │
+     │                                                              │
+     │                     ● ─── ● ─── ●                           │
+     │                                                              │
+     └──────────────────────────────────────────────────────────────┘
+```
+
+### Mobile View
+
+```
+     ┌─────────────────────────────┐
+     │                             │
+     │     Explore in 3D.          │
+     │     BEST SELLERS            │
+     │                             │
+     │  ┌───────────────────────┐  │
+     │  │                       │  │
+     │  │    [ Black XR Tile ]  │  │
+     │  │                       │  │
+     │  │    ↻ Drag to rotate   │  │
+     │  │                       │  │
+     │  └───────────────────────┘  │
+     │                             │
+     │   Round Brilliant Stud      │
+     │   Solid gold • Lab-grown    │
+     │                             │
+     │   [ View details ]          │
+     │                             │
+     │   ● ─── ● ─── ●            │
+     │                             │
+     └─────────────────────────────┘
+```
+
+---
+
+## 6. CSS ADDITIONS
+
+### New Classes in index.css
+
+```css
+/* XR Tile styling */
+.xr-tile {
+  background: #000000;
+  border-radius: 32px;
+  border: 1px solid rgba(201, 162, 39, 0.10);
+  box-shadow: 
+    0 20px 60px -15px rgba(0, 0, 0, 0.25),
+    0 8px 24px -8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Dark facet line for black tile backgrounds */
+.facet-line-dark {
+  stroke: hsl(var(--accent));
+  stroke-width: 0.75px;
+  fill: none;
+  stroke-opacity: 0.12;
+  animation: facet-shimmer 4s ease-in-out infinite;
+}
+```
+
+---
+
+## 7. IMPLEMENTATION ORDER
+
+1. **Update `src/index.css`**
+   - Add `.xr-tile` class with black background, gold border, shadow
+   - Add `.facet-line-dark` for dark tile variant
+   - Keep existing classes
+
+2. **Modify `src/components/Product3DCarousel.tsx`**
+   - Remove the dark "gallery room" container
+   - Set section background to off-white
+   - Move section header outside any dark container
+   - Wrap each XR iframe in `.xr-tile` styled container
+   - Move product info below tiles (on light bg)
+   - Update side cards: `scale-[0.85]` and `opacity-80`
+   - Replace circular arrow buttons with minimal chevrons
+   - Update hint overlay to fade after first interaction
+   - Remove static "Drag to rotate" pill at bottom
+
+3. **Modify `src/components/FacetPlaceholder.tsx`**
+   - Change background to black
+   - Update border to match XR tiles
+   - Change radius to 32px
+   - Use `.facet-line-dark` for SVG lines
+   - Update shadow to floating tile effect
+
+---
+
+## Technical Details
+
+### Product3DCarousel Structure After Changes
+
 ```tsx
 <section className="section-spacing bg-background">
   <div className="container-editorial">
-    <div 
-      className="relative rounded-[36px] overflow-hidden shadow-2xl"
-      style={{ backgroundColor: '#0b0b0b' }}
-    >
-      {/* Gold top accent line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-accent" />
-      
-      {/* Section header */}
-      <div className="pt-20 pb-8 text-center">
-        <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
-          Explore in 3D
-        </p>
-        <h2 className="font-display text-3xl md:text-4xl text-white/90 mb-3">
-          Best sellers
-        </h2>
-        <p className="text-white/60 text-base">
-          Spin each piece. See the details.
-        </p>
-      </div>
-      
-      {/* Carousel content */}
-      {/* ... existing carousel ... */}
-      
-      {/* Drag to rotate pill */}
-      <div className="flex justify-center pb-16">
-        <div className="px-4 py-2 rounded-full bg-white/10 border border-white/20 flex items-center gap-2">
-          <RotateCw className="w-4 h-4 text-accent" />
-          <span className="text-white/70 text-sm">Drag to rotate</span>
+    {/* Header on light background */}
+    <div className="text-center mb-12 md:mb-16">
+      <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
+        Explore in 3D
+      </p>
+      <h2 className="section-header text-foreground mb-3">Best sellers</h2>
+      <p className="text-muted-foreground">Spin each piece. See the details.</p>
+    </div>
+    
+    {/* Carousel */}
+    <div className="relative">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-6 md:gap-8">
+        {/* Side tiles with scale + opacity */}
+        <div className="hidden md:block scale-[0.85] opacity-80 hover:opacity-100 transition-all">
+          <div className="xr-tile aspect-square">
+            <iframe ... />
+          </div>
+        </div>
+        
+        {/* Main tile */}
+        <div className="relative">
+          <div className="xr-tile aspect-square relative">
+            <iframe ... />
+            
+            {/* One-time drag hint overlay */}
+            <div className={cn(
+              "absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-500 z-10",
+              showRotateHint ? "opacity-100" : "opacity-0 pointer-events-none"
+            )}>
+              <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2">
+                <RotateCw className="w-4 h-4 text-white/70" />
+                <span className="text-white/80 text-sm">Drag to rotate</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Product info below tile on light bg */}
+          <div className="text-center mt-6">
+            <h3 className="font-serif text-xl md:text-2xl text-foreground mb-1">
+              {currentSlide.title}
+            </h3>
+            <p className="text-muted-foreground text-sm mb-4">
+              Solid gold • Lab-grown
+            </p>
+            <a
+              href={currentSlide.pdpUrl}
+              className="inline-flex items-center gap-2 px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-background transition-colors duration-200 rounded font-medium text-sm group"
+            >
+              View details
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+        </div>
+        
+        {/* Side tile */}
+        <div className="hidden md:block scale-[0.85] opacity-80 hover:opacity-100 transition-all">
+          <div className="xr-tile aspect-square">
+            <iframe ... />
+          </div>
         </div>
       </div>
       
-      {/* Bottom padding: ~110px */}
+      {/* Minimal chevron arrows */}
+      <button 
+        onClick={goToPrevious}
+        className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors"
+      >
+        <ChevronLeft className="w-6 h-6 stroke-[1.5]" />
+      </button>
+      
+      <button 
+        onClick={goToNext}
+        className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-accent transition-colors"
+      >
+        <ChevronRight className="w-6 h-6 stroke-[1.5]" />
+      </button>
+    </div>
+    
+    {/* Dot navigation */}
+    <div className="flex justify-center gap-2 mt-8">
+      {slides.map((_, i) => (
+        <button
+          key={i}
+          onClick={() => goToSlide(i)}
+          className={cn(
+            "w-2 h-2 rounded-full transition-all",
+            i === currentIndex ? "bg-accent w-6" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+          )}
+        />
+      ))}
     </div>
   </div>
 </section>
 ```
 
-**Side card brightness increase:**
-- Change from `opacity-40` to `opacity-60`
-- Keep hover state at `opacity-80`
-
-**Shadow for the room:**
-```css
-box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.4);
-```
-
----
-
-## 5. INDEX.TSX — Updated Component Order
+### Auto-dismiss Hint After Timeout
 
 ```tsx
-const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main>
-        <HeroSplitEditorial />
-        <StickyStoryRefined />
-        {/* FadeToNightBridge REMOVED */}
-        <Product3DCarousel /> {/* Now has Gallery Room wrapper */}
-        <SocialFeed />
-        <StoryDuoModules />
-        <FinalCTAForm />
-      </main>
-      <Footer />
-      <EmailCaptureModal />
-    </div>
-  );
-};
-```
-
----
-
-## 6. CSS UPDATES
-
-### Remove hero-image-masked
-
-Replace with new diagonal clip utility:
-
-```css
-/* Diagonal hero image clip */
-.hero-image-diagonal {
-  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
-}
-```
-
-### Add Gallery Room shadow
-
-```css
-.shadow-gallery-room {
-  box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.4);
-}
-```
-
----
-
-## Responsive Behavior
-
-| Feature | Desktop | Mobile |
-|---------|---------|--------|
-| Header height | 64px (scrolled: 56px) | 56px (scrolled: 48px) |
-| Header layout | Logo left, nav center, cart right | Logo left, cart + hamburger right |
-| Hero layout | Side-by-side with diagonal cut | Stacked (image above text) |
-| Hero diagonal | Visible clip-path + gold line | Standard rounded corners |
-| Gallery Room | Large radius (36px), generous padding | Slightly smaller radius (24px), reduced padding |
-| Gallery Room position | Inset with margins | Full-width with small horizontal padding |
-
----
-
-## Implementation Order
-
-1. **Update `src/index.css`**
-   - Add `.hero-image-diagonal` class
-   - Add `.shadow-gallery-room` utility
-   - Remove or keep `.hero-image-masked` (unused)
-
-2. **Modify `src/components/Header.tsx`**
-   - Change from fixed capsule to sticky in-flow bar
-   - Update styling to solid dark background
-   - Keep dropdown and mobile menu functionality
-
-3. **Modify `src/components/HeroSplitEditorial.tsx`**
-   - Remove top padding (header is now in-flow)
-   - Replace mask class with diagonal clip-path
-   - Add gold hairline SVG along diagonal edge
-   - Keep cursor-follow and animations
-
-4. **Modify `src/pages/Index.tsx`**
-   - Remove `<FadeToNightBridge />` import and usage
-
-5. **Modify `src/components/Product3DCarousel.tsx`**
-   - Wrap content in Gallery Room container
-   - Add gold accent line at top
-   - Add overline above section title
-   - Increase side card opacity
-   - Add "Drag to rotate" pill below carousel
-
-6. **Optionally delete `src/components/FadeToNightBridge.tsx`**
-   - Or just leave it unused
-
----
-
-## Visual Summary
-
-**Before:**
-```
-┌──────────────────────────────────────────────────────────────────┐
-│  ┌─ floating capsule nav ─┐                                      │
-│  └────────────────────────┘                                      │
-│                                                                  │
-│  HERO (with foggy left edge mask)                               │
-│                                                                  │
-├──────────────────────────────────────────────────────────────────┤
-│  STICKY STORY SECTION                                            │
-├──────────────────────────────────────────────────────────────────┤
-│  ░░░░░░░ GRADIENT BLUR TRANSITION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
-├──────────────────────────────────────────────────────────────────┤
-│  3D CAROUSEL (full-bleed dark)                                   │
-└──────────────────────────────────────────────────────────────────┘
-```
-
-**After:**
-```
-┌──────────────────────────────────────────────────────────────────┐
-│  HEADER BAR (in-flow, sticky, #111)                              │
-├──────────────────────────────────────────────────────────────────┤
-│  HERO (with diagonal cut + gold hairline)                        │
-│                                                                  │
-├──────────────────────────────────────────────────────────────────┤
-│  STICKY STORY SECTION                                            │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │                                                            │  │
-│  │           GALLERY ROOM (inset dark container)             │  │
-│  │           3D CAROUSEL inside                               │  │
-│  │                                                            │  │
-│  └────────────────────────────────────────────────────────────┘  │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+// Add to useEffect
+useEffect(() => {
+  if (showRotateHint) {
+    const timer = setTimeout(() => {
+      setShowRotateHint(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }
+}, [showRotateHint]);
 ```
 
 ---
@@ -410,10 +489,7 @@ Replace with new diagonal clip utility:
 
 | File | Changes |
 |------|---------|
-| `src/index.css` | Add diagonal clip utility, gallery room shadow |
-| `src/components/Header.tsx` | Complete restructure to in-flow sticky bar |
-| `src/components/HeroSplitEditorial.tsx` | Diagonal clip-path, gold hairline, remove padding |
-| `src/pages/Index.tsx` | Remove FadeToNightBridge |
-| `src/components/Product3DCarousel.tsx` | Wrap in Gallery Room container, brighten side cards |
-| `src/components/FadeToNightBridge.tsx` | Optional: delete or leave unused |
+| `src/index.css` | Add `.xr-tile` and `.facet-line-dark` classes |
+| `src/components/Product3DCarousel.tsx` | Remove dark room, add black tiles, minimal arrows, hint overlay |
+| `src/components/FacetPlaceholder.tsx` | Black background, gold border, darker facet lines |
 
