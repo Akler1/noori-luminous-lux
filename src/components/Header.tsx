@@ -63,7 +63,7 @@ export const Header = () => {
               src={nooriLogo}
               alt="Noori"
               className={cn(
-                "w-auto brightness-0 invert transition-all duration-300",
+                "w-auto transition-all duration-300",
                 isScrolled ? "h-6 md:h-7" : "h-7 md:h-8"
               )}
             />
