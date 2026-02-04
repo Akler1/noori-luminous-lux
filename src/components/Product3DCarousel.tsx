@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, RotateCw, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCw, ArrowRight, Truck, RotateCcw, Shield, Gem } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CarouselConfig {
@@ -365,6 +365,40 @@ export default function Product3DCarousel() {
               aria-current={index === currentIndex ? "true" : "false"}
             />
           ))}
+        </div>
+
+        {/* Trust Bar */}
+        <div className="mt-12 pt-8 border-t border-border/50">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+            <div className="flex flex-col items-center gap-2">
+              <Truck className="h-6 w-6 text-accent" />
+              <div>
+                <p className="font-medium text-sm text-foreground">Free Shipping</p>
+                <p className="text-xs text-muted-foreground">On all orders</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <RotateCcw className="h-6 w-6 text-accent" />
+              <div>
+                <p className="font-medium text-sm text-foreground">30-Day Returns</p>
+                <p className="text-xs text-muted-foreground">Easy exchanges</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Shield className="h-6 w-6 text-accent" />
+              <div>
+                <p className="font-medium text-sm text-foreground">Lifetime Warranty</p>
+                <p className="text-xs text-muted-foreground">Crafted to last</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Gem className="h-6 w-6 text-accent" />
+              <div>
+                <p className="font-medium text-sm text-foreground">Ethical Diamonds</p>
+                <p className="text-xs text-muted-foreground">Lab-grown</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
