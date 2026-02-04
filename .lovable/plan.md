@@ -1,277 +1,207 @@
 
 
-# Noori Homepage V1 — Full Redesign Implementation Plan
+# Hero V2 Implementation Plan
 
 ## Overview
 
-This plan transforms the homepage into a premium, editorial luxury experience with 8 distinct sections following the build brief. The redesign introduces controlled scroll animations, a sticky story section, and seamless transitions between light and dark sections.
+Transform the current editorial hero into a premium interactive experience with cursor-follow light effects, staggered entrance animations, edge-bleeding image layout, and scroll cue.
 
 ---
 
-## Current State → New State
+## Changes Summary
 
-| Current Component | Action | New Component |
-|-------------------|--------|---------------|
-| `Header` | **Modify** | `NavMinimal` (transparent → scrolled behavior) |
-| `CinematicHero` | **Replace** | `HeroSplitEditorial` (12-col grid, new headline) |
-| `EditorialGallery` | **Replace** | `StickyStoryRefined` (sticky scroll + 3 beats) |
-| — | **New** | `FadeToNightBridge` (gradient transition) |
-| `Product3DCarousel` | **Keep + Modify** | `BestSellers3DCarousel` (add header, lazy load) |
-| `SocialFeed` | **Modify** | `UGCStrip` (update header to "Worn by you.") |
-| `BrandPhilosophy` | **Replace** | `StoryDuoModules` (Our Story + Quality modules) |
-| `ValueBar` | **Remove** | Integrated into other sections as micro-trust |
-| `NewsletterCTA` | **Replace** | `FinalCTAForm` (new headline + optional dropdown) |
-
----
-
-## Section-by-Section Breakdown
-
-### 0. Global Design System Updates
-
-**File: `src/index.css` + `tailwind.config.ts`**
-
-Add new CSS custom properties and Tailwind utilities:
-- Container max-width: 1280px
-- Desktop outer padding: 64px
-- Mobile padding: 20-24px
-- Section spacing: 96px desktop / 64px mobile
-- Warm off-white light background color token
-- Near-black text color token
-- Hairline border utility class
+| Aspect | Current | New |
+|--------|---------|-----|
+| Top padding | `pt-28 md:pt-32` | `pt-20 md:pt-24` (reduced) |
+| Image container | Rounded, contained in grid | Bleeds to right edge, no right rounding |
+| Desktop image | Inside 7-col grid cell | Positioned absolute, extends beyond container |
+| Gradient overlay | Small left edge (`w-32`) | Larger veil for text/image cohesion |
+| Text animations | Simple fade-in all at once | Staggered: eyebrow → H1 → paragraph → CTAs |
+| Image animation | Fade + slide | Scale from 1.03 → 1.00 + fade |
+| Cursor effect | None | Radial highlight follows mouse (desktop) |
+| Mobile glow | None | Subtle looping light shift animation |
+| Scroll cue | None | Bottom-left vertical line + "Scroll" text |
+| Primary button | Standard hover | Magnetic effect + shadow lift |
 
 ---
 
-### 1. NavMinimal — Top Navigation
+## File Changes
 
-**File: `src/components/Header.tsx` → Modify**
+### 1. `src/components/HeroSplitEditorial.tsx` — Complete Rewrite
 
-**Changes:**
-- Remove the NavigationMenu dropdown complexity
-- Simplify to flat navigation: Shop | About | FAQ | Contact
-- Transparent over hero on initial load
-- On scroll: light background with hairline bottom border
-- Remove enlarged logo sizing, use more refined proportions
+**New Features:**
 
-**Key Updates:**
+- **State for cursor tracking**: `useState` for mouse x/y position
+- **`useIsMobile` hook**: Disable cursor effects on mobile
+- **Staggered Framer Motion variants**: Container with `staggerChildren: 0.15`
+- **Image positioned absolute on desktop**: Bleeds to right edge of viewport
+- **Cursor-follow highlight overlay**: CSS custom properties + radial gradient
+- **Scroll cue**: Animated vertical line with rotated "Scroll" text
+
+**Component Structure:**
 ```
-Initial state: bg-transparent
-Scrolled state: bg-white/95 border-b border-gray-200
-Links: near-black text, gold accent on hover
-Logo: refined height (h-12 md:h-16)
-```
-
----
-
-### 2. HeroSplitEditorial — Hero Section
-
-**File: `src/components/HeroSplitEditorial.tsx` → New**
-
-**Layout (12-column grid):**
-- Left: 5 columns (text content)
-- Right: 7 columns (single hero image)
-
-**Content:**
-- Eyebrow: "LAB-GROWN DIAMONDS" (gold, small caps)
-- H1: **"Brilliance, refined."** (high-contrast serif)
-- Subhead: Keep existing copy
-- Primary CTA: "Shop best sellers" (gold button)
-- Secondary: "Explore in 3D" (text link)
-
-**Image Treatment:**
-- Single model image (`hero-lifestyle.png`) in rounded container (24px radius)
-- Subtle left-edge gradient overlay for cohesion with text
-- No floating cards or collage elements
-
-**Mobile:** Stack image first, then text
-
----
-
-### 3. StickyStoryRefined — Scroll Story Section
-
-**File: `src/components/StickyStoryRefined.tsx` → New**
-
-This is the "wow" moment — a controlled editorial sticky-scroll experience.
-
-**Layout (12-column grid):**
-- Left: 5 columns — scrolling story blocks
-- Right: 7 columns — sticky media frame
-
-**Sticky Media Frame:**
-- `position: sticky` with `top: 96px`
-- Rounded corners (24px), consistent shadow
-- Crossfade between 3 images OR slow Ken Burns zoom on single image
-- **Single overlapping product card** (desktop only):
-  - Anchored bottom-right corner
-  - Overlap: ~24px
-  - 1px gold border at 20-25% opacity
-  - Radius: 16px
-  - NO second card
-
-**Scroll Beats (3 blocks):**
-Each beat has:
-- Big section header (new)
-- Existing smaller body copy
-
-| Beat | Header |
-|------|--------|
-| 1 | "The cut. The clarity." |
-| 2 | "The details that matter." |
-| 3 | "Made to be kept." |
-
-**Mobile:** Remove sticky, convert to: image → beat 1 → image → beat 2 → image → beat 3
-
----
-
-### 4. FadeToNightBridge — Transition Section
-
-**File: `src/components/FadeToNightBridge.tsx` → New**
-
-**Purpose:** Smooth transition from light sections to dark 3D carousel
-
-**Design:**
-- Height: 12-18vh
-- Background: gradient from off-white → charcoal → black
-- Centered text: "Explore in 3D." (elegant serif)
-- Optional: subtle diamond-facet grain texture at 5% opacity
-
----
-
-### 5. BestSellers3DCarousel — 3D Product Gallery
-
-**File: `src/components/Product3DCarousel.tsx` → Modify (rename conceptually)**
-
-**Keep:**
-- Black background
-- Current 3D carousel functionality
-- Rotation hint
-- Card styling
-
-**Add/Modify:**
-- Section header: "Best sellers"
-- Subhead: "Spin each piece. See the details."
-- CTA label on cards: "View details"
-- Micro-trust line under product name: "Solid gold • Lab-grown" (if applicable)
-- Lazy loading: show static poster first, init 3D on view/interaction
-- Mobile: scroll-snap + "Tap & drag" hint (show once)
-
----
-
-### 6. UGCStrip — Social Proof Section
-
-**File: `src/components/SocialFeed.tsx` → Modify**
-
-**Changes:**
-- Can remain dark (matching 3D section) OR transition back to light
-- Update header: "Worn by you."
-- Keep horizontal scroll grid (6-10 tiles)
-- Ensure consistent crop/exposure
-- If insufficient UGC: show fewer tiles (4-6) vs weak content
-
----
-
-### 7. StoryDuoModules — Brand Story + Quality
-
-**File: `src/components/StoryDuoModules.tsx` → New**
-
-**Replaces:** BrandPhilosophy
-
-**Module A — Our Story (image left, text right):**
-- Big header: "Our story."
-- Keep existing paragraph text
-- 3 short proof bullets
-
-**Module B — Quality (image right, text left):**
-- Big header: "Quality, without compromise."
-- Keep existing paragraph text
-- 3 proof bullets (certification/materials/returns)
-
-**Rules:**
-- 2-3 lines visible before "read more" (if needed)
-- Strong whitespace maintained
-- Light background section
-
----
-
-### 8. FinalCTAForm — Newsletter Capture
-
-**File: `src/components/FinalCTAForm.tsx` → New**
-
-**Replaces:** NewsletterCTA
-
-**Design:**
-- Light background
-- Headline: **"Brilliance, refined — in your inbox."** (echoes hero)
-- Email field + submit button
-- Optional dropdown: "What are you shopping for?"
-- Privacy note: keep existing
-
----
-
-## Updated Index.tsx Structure
-
-```
-<div className="min-h-screen">
-  <NavMinimal />
-  <main>
-    <HeroSplitEditorial />
-    <StickyStoryRefined />
-    <FadeToNightBridge />
-    <BestSellers3DCarousel />
-    <UGCStrip />
-    <StoryDuoModules />
-    <FinalCTAForm />
-  </main>
-  <Footer />
-  <EmailCaptureModal />
-</div>
+<section> (relative, overflow-hidden)
+  <div container-editorial>
+    <div grid 12-col>
+      
+      {/* Mobile: Image first (stacked) */}
+      <motion.div> (mobile only)
+        <img with mobile glow overlay />
+      </motion.div>
+      
+      {/* Text Column - 5 cols */}
+      <motion.div variants={container}>
+        <motion.p variants={item}>Eyebrow</motion.p>
+        <motion.h1 variants={item}>Brilliance, refined.</motion.h1>
+        <motion.p variants={item}>Subhead paragraph</motion.p>
+        <motion.div variants={item}>CTAs with magnetic button</motion.div>
+      </motion.div>
+      
+    </div>
+  </div>
+  
+  {/* Desktop Image - Absolute positioned, bleeds right */}
+  <motion.div> (hidden on mobile)
+    <div gradient-veil />
+    <div cursor-highlight-overlay />
+    <img hero-lifestyle />
+  </motion.div>
+  
+  {/* Scroll Cue - Desktop only */}
+  <div> (bottom-left)
+    <span>"Scroll"</span>
+    <div animated-line />
+  </div>
+  
+</section>
 ```
 
 ---
 
-## File Changes Summary
+### 2. `src/index.css` — Add New Styles
 
-| Action | File |
-|--------|------|
-| **Modify** | `src/index.css` (global design tokens) |
-| **Modify** | `tailwind.config.ts` (container, spacing utilities) |
-| **Modify** | `src/components/Header.tsx` (NavMinimal behavior) |
-| **Create** | `src/components/HeroSplitEditorial.tsx` |
-| **Create** | `src/components/StickyStoryRefined.tsx` |
-| **Create** | `src/components/FadeToNightBridge.tsx` |
-| **Modify** | `src/components/Product3DCarousel.tsx` (header, lazy load) |
-| **Modify** | `src/components/SocialFeed.tsx` (header update) |
-| **Create** | `src/components/StoryDuoModules.tsx` |
-| **Create** | `src/components/FinalCTAForm.tsx` |
-| **Modify** | `src/pages/Index.tsx` (new component order) |
-| **Delete** | `src/components/CinematicHero.tsx` |
-| **Delete** | `src/components/EditorialGallery.tsx` |
-| **Delete** | `src/components/BrandPhilosophy.tsx` |
-| **Delete** | `src/components/ValueBar.tsx` |
-| **Delete** | `src/components/NewsletterCTA.tsx` |
+**New CSS additions:**
+
+```css
+/* Mobile light shift animation */
+@keyframes light-shift {
+  0%, 100% { background-position: -100% 0; }
+  50% { background-position: 200% 0; }
+}
+
+.hero-mobile-glow {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: light-shift 10s ease-in-out infinite;
+}
+
+/* Cursor-follow highlight (desktop) */
+.cursor-highlight {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.08),
+    transparent 40%
+  );
+}
+
+/* Magnetic button hover */
+.btn-magnetic {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.btn-magnetic:hover {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+}
+
+/* Scroll cue animation */
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.scroll-cue-line {
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+```
 
 ---
 
-## Implementation Order
+## Technical Details
 
-1. Update global design system (CSS + Tailwind config)
-2. Modify Header for transparent → scrolled behavior
-3. Create HeroSplitEditorial with new headline
-4. Create StickyStoryRefined with sticky scroll
-5. Create FadeToNightBridge transition
-6. Modify Product3DCarousel with header + lazy loading
-7. Update SocialFeed header
-8. Create StoryDuoModules
-9. Create FinalCTAForm
-10. Update Index.tsx with new component flow
-11. Clean up deprecated components
+### Cursor-Follow Effect (Desktop)
+
+```tsx
+const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+const imageRef = useRef<HTMLDivElement>(null);
+
+const handleMouseMove = (e: React.MouseEvent) => {
+  if (!imageRef.current) return;
+  const rect = imageRef.current.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  setMousePosition({ x, y });
+};
+
+// Applied via inline style:
+style={{
+  '--mouse-x': `${mousePosition.x}%`,
+  '--mouse-y': `${mousePosition.y}%`,
+} as React.CSSProperties}
+```
+
+### Staggered Entrance Animations
+
+```tsx
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  }
+};
+```
+
+### Image Scale Animation
+
+```tsx
+<motion.div
+  initial={{ opacity: 0, scale: 1.03 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+```
+
+### Edge-Bleeding Image Layout
+
+- Desktop: Image container is `position: absolute` with `right: 0`, `top: 0`, `bottom: 0`
+- Width: approximately 58% of viewport to cover 7 cols + bleed
+- Left side has gradient veil blending into background
+- Mobile: Image remains in normal document flow, stacked above text
 
 ---
 
-## Key Headlines Placement
+## Responsive Behavior
 
-Per the brief, "Brilliance, refined." appears in exactly two places:
-- **Hero H1** (primary)
-- **Final CTA headline** (echo)
+| Feature | Desktop | Mobile |
+|---------|---------|--------|
+| Layout | Side-by-side (5+7 cols) | Stacked (image first) |
+| Image | Bleeds to right edge | Contained, rounded |
+| Cursor effect | Mouse-follow highlight | Looping light shift |
+| Scroll cue | Visible bottom-left | Hidden |
+| Button effect | Magnetic hover | Standard hover |
 
-All other section headers use unique chapter-style wording.
+---
+
+## Files to Modify
+
+1. **`src/components/HeroSplitEditorial.tsx`** — Complete rewrite with new layout + interactions
+2. **`src/index.css`** — Add animation keyframes + utility classes
 
