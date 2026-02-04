@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import heroProductShot from "@/assets/hero-product-shot.png";
-import earringsHero from "@/assets/earrings-hero.jpg";
+import cutClarityDiamonds from "@/assets/cut-clarity-diamonds.png";
 import necklaceHero from "@/assets/necklace-hero.jpg";
 import braceletHero from "@/assets/bracelet-hero.jpg";
 
@@ -9,7 +9,7 @@ const storyBeats = [
   {
     header: "The cut. The clarity.",
     body: "Every Noori diamond is precision-cut to maximize brilliance. The same fire that lives in mined stones, born from innovation.",
-    image: earringsHero,
+    image: cutClarityDiamonds,
     chips: ["Precision cut", "Optical symmetry", "Quality checked"],
   },
   {
