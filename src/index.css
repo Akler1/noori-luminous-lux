@@ -296,4 +296,36 @@
   .scroll-cue-line {
     animation: scroll-pulse 2s ease-in-out infinite;
   }
+
+  /* Hero image tight mask - replaces white fog */
+  .hero-image-masked {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0,0,0,0.4) 4%,
+      rgba(0,0,0,0.8) 8%,
+      black 12%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0,0,0,0.4) 4%,
+      rgba(0,0,0,0.8) 8%,
+      black 12%
+    );
+  }
+
+  /* Facet placeholder shimmer animation */
+  @keyframes facet-shimmer {
+    0%, 100% { stroke-opacity: 0.15; }
+    50% { stroke-opacity: 0.35; }
+  }
+
+  .facet-line {
+    stroke: hsl(var(--accent));
+    stroke-width: 1px;
+    fill: none;
+    stroke-opacity: 0.2;
+    animation: facet-shimmer 4s ease-in-out infinite;
+  }
 }

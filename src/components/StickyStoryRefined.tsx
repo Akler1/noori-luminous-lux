@@ -1,40 +1,28 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import earringsHero from "@/assets/earrings-hero.jpg";
-import necklaceHero from "@/assets/necklace-hero.jpg";
-import braceletHero from "@/assets/bracelet-hero.jpg";
+import { motion } from "framer-motion";
+import { FacetPlaceholder } from "@/components/FacetPlaceholder";
 import heroProductShot from "@/assets/hero-product-shot.png";
 
 const storyBeats = [
   {
     header: "The cut. The clarity.",
     body: "Every Noori diamond is precision-cut to maximize brilliance. The same fire that lives in mined stones, born from innovation.",
-    image: earringsHero,
+    variant: "diamond" as const,
   },
   {
     header: "The details that matter.",
     body: "Handcrafted settings in solid 14k and 18k gold. Each piece inspected to exacting standards before it reaches you.",
-    image: necklaceHero,
+    variant: "facet" as const,
   },
   {
     header: "Made to be kept.",
     body: "Lab-grown diamonds are chemically identical to mined diamonds. The same hardness, the same sparkle—designed to last generations.",
-    image: braceletHero,
+    variant: "minimal" as const,
   },
 ];
 
 export const StickyStoryRefined = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Transform scroll progress to image index (0, 1, 2)
-  const imageIndex = useTransform(scrollYProgress, [0, 0.33, 0.66, 1], [0, 0, 1, 2]);
-
   return (
-    <section ref={containerRef} className="relative bg-background">
+    <section className="relative bg-background">
       {/* Desktop: Sticky layout */}
       <div className="hidden lg:block">
         <div className="container-editorial">
@@ -63,28 +51,12 @@ export const StickyStoryRefined = () => {
             {/* Right: Sticky media frame - 7 columns */}
             <div className="col-span-7">
               <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center">
-                <div className="relative w-full rounded-3xl overflow-hidden shadow-sticky">
-                  {/* Images with crossfade */}
-                  {storyBeats.map((beat, index) => (
-                    <motion.div
-                      key={index}
-                      className="absolute inset-0"
-                      style={{
-                        opacity: useTransform(
-                          imageIndex,
-                          [index - 0.5, index, index + 0.5],
-                          [0, 1, 0]
-                        ),
-                      }}
-                    >
-                      <img
-                        src={beat.image}
-                        alt={beat.header}
-                        className="w-full h-full object-cover"
-                        style={{ minHeight: "500px" }}
-                      />
-                    </motion.div>
-                  ))}
+                <div className="relative w-full">
+                  {/* FacetPlaceholder instead of images */}
+                  <FacetPlaceholder 
+                    variant="diamond" 
+                    className="w-full h-[500px] shadow-sticky"
+                  />
 
                   {/* Single overlapping product card - bottom right */}
                   <motion.div
@@ -118,12 +90,11 @@ export const StickyStoryRefined = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              {/* Image */}
-              <div className="rounded-2xl overflow-hidden mb-8">
-                <img
-                  src={beat.image}
-                  alt={beat.header}
-                  className="w-full h-64 object-cover"
+              {/* FacetPlaceholder */}
+              <div className="mb-8">
+                <FacetPlaceholder 
+                  variant={beat.variant} 
+                  className="w-full h-64"
                 />
               </div>
               
