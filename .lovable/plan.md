@@ -1,25 +1,31 @@
 
 
-# Add Trust Bar Below 3D Carousel
+# Stagger Scrolling Elements with Reduced Spacing
 
 ## Overview
 
-Add a horizontal trust/benefits bar beneath the 3D product carousel. This bar will display key value propositions: Free Shipping, 30-Day Returns, Lifetime Warranty, and Ethical Sourcing — matching the pattern already established in the FAQ page.
+Update the StickyStoryRefined component to alternate text and image positions on each scroll, and reduce the excessive empty space between content blocks.
 
 ---
 
-## Visual Design
+## Current Issue
+
+The current StickyStoryRefined component:
+- Has text **always on the left** and image **always on the right** for all 3 story beats
+- Uses `min-h-screen` for each beat, creating excessive vertical space
+- Desktop sticky image doesn't alternate positions
+
+---
+
+## Proposed Design
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                                                                             │
-│  [3D Product Carousel]                                                      │
-│                                                                             │
+│  BEAT 1:  [Text & Chips]          │          [Image]                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   🚚 Free Shipping    ↩️ 30-Day Returns    🛡️ Lifetime Warranty    💎 Ethical│
-│      On all orders       Easy exchanges       Crafted to last        Lab-grown│
-│                                                                             │
+│  BEAT 2:  [Image]                 │          [Text & Chips]                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  BEAT 3:  [Text & Chips]          │          [Image]                        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -27,15 +33,11 @@ Add a horizontal trust/benefits bar beneath the 3D product carousel. This bar wi
 
 ## Implementation Approach
 
-### Option A: Add directly to Product3DCarousel.tsx
+Replace the sticky layout with a staggered alternating layout (similar to StoryDuoModules):
 
-Add the trust bar section at the bottom of the carousel component, below the dot navigation. This keeps it visually tied to the carousel.
-
-### Option B: Create a separate TrustBar component
-
-Create a new reusable `TrustBar.tsx` component and place it in `Index.tsx` after the carousel. This allows reuse on other pages like the Product Detail page.
-
-**Recommended: Option A** — keeps the implementation simple and maintains the visual grouping with the carousel.
+1. **Remove sticky behavior** — The current sticky image doesn't work well with alternating sides
+2. **Create alternating rows** — Each story beat becomes a full-width row with text/image sides flipping
+3. **Reduce vertical spacing** — Remove `min-h-screen`, use reasonable padding instead
 
 ---
 
@@ -43,56 +45,84 @@ Create a new reusable `TrustBar.tsx` component and place it in `Index.tsx` after
 
 | File | Action | Description |
 |------|--------|-------------|
-| `src/components/Product3DCarousel.tsx` | **Update** | Add trust bar section after dot navigation |
+| `src/components/StickyStoryRefined.tsx` | **Update** | Rewrite layout to staggered alternating grid |
 
 ---
 
-## Trust Bar Content
+## Technical Details
 
-| Icon | Title | Subtitle |
-|------|-------|----------|
-| Truck | Free Shipping | On all orders |
-| RotateCcw | 30-Day Returns | Easy exchanges |
-| Shield | Lifetime Warranty | Crafted to last |
-| Gem | Ethical Diamonds | Lab-grown |
+### Desktop Layout Changes
 
----
+**Current:**
+- 5-column text (left) + 7-column sticky image (right)
+- `min-h-screen` per beat
+- Same side for all beats
 
-## Styling Details
+**Updated:**
+- 2-column grid with alternating order
+- ~60vh or auto height per beat
+- Odd rows: text left, image right
+- Even rows: image left, text right
+- Reduced gap from `py-24` / `min-h-screen` to `py-16` / `space-y-16`
 
-- **Layout**: Horizontal flex row on desktop, 2x2 grid on mobile
-- **Background**: Matches `bg-background` (warm off-white)
-- **Icons**: Use `text-accent` (gold) for visual consistency
-- **Text**: Title in `text-foreground`, subtitle in `text-muted-foreground`
-- **Spacing**: Comfortable padding with dividers or subtle borders
-- **Animation**: Optional fade-in animation using framer-motion
+### Mobile Layout Changes
+
+**Current:**
+- Image above text for all beats
+- `space-y-16` between beats
+
+**Updated:**
+- Maintain image above text (simpler on mobile)
+- Reduce `space-y-16` to `space-y-12`
 
 ---
 
 ## Code Structure
 
 ```tsx
-{/* Trust Bar */}
-<div className="mt-12 pt-8 border-t border-border/50">
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-    <div className="flex flex-col items-center gap-2">
-      <Truck className="h-6 w-6 text-accent" />
-      <div>
-        <p className="font-medium text-sm">Free Shipping</p>
-        <p className="text-xs text-muted-foreground">On all orders</p>
-      </div>
+{storyBeats.map((beat, index) => {
+  const isReversed = index % 2 === 1; // Alternate layout
+  
+  return (
+    <div 
+      key={index}
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+        isReversed ? 'lg:flex-row-reverse' : ''
+      }`}
+    >
+      {/* Image Column */}
+      <motion.div className={isReversed ? 'lg:order-1' : 'lg:order-2'}>
+        <img src={beat.image} alt={beat.header} />
+      </motion.div>
+      
+      {/* Text Column */}
+      <motion.div className={isReversed ? 'lg:order-2' : 'lg:order-1'}>
+        <h2>{beat.header}</h2>
+        <p>{beat.body}</p>
+        <div>{/* chips */}</div>
+      </motion.div>
     </div>
-    {/* ...repeat for other items */}
-  </div>
-</div>
+  );
+})}
 ```
 
 ---
 
-## Responsive Behavior
+## Spacing Reduction Summary
 
-| Viewport | Layout | Spacing |
-|----------|--------|---------|
-| Desktop (768px+) | 4 items in a row | Generous padding |
-| Mobile (<768px) | 2x2 grid | Compact spacing |
+| Element | Before | After |
+|---------|--------|-------|
+| Section padding | `py-24` | `py-16` |
+| Beat height | `min-h-screen` | Auto (content-based) |
+| Gap between beats | Implicit full viewport | `space-y-16 lg:space-y-24` |
+| Mobile spacing | `space-y-16` | `space-y-12` |
+
+---
+
+## Preserved Features
+
+- Framer Motion entrance animations
+- Proof chips with gold styling
+- All 3 story beats with existing content
+- Responsive mobile layout
 
