@@ -1,7 +1,6 @@
 import { Header } from "@/components/Header";
 import { HeroSplitEditorial } from "@/components/HeroSplitEditorial";
 import { StickyStoryRefined } from "@/components/StickyStoryRefined";
-import { FadeToNightBridge } from "@/components/FadeToNightBridge";
 import Product3DCarousel from "@/components/Product3DCarousel";
 import { SocialFeed } from "@/components/SocialFeed";
 import { StoryDuoModules } from "@/components/StoryDuoModules";
@@ -16,7 +15,6 @@ const Index = () => {
       <main>
         <HeroSplitEditorial />
         <StickyStoryRefined />
-        <FadeToNightBridge />
         <Product3DCarousel />
         <SocialFeed />
         <StoryDuoModules />

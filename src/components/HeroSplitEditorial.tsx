@@ -9,17 +9,17 @@ import heroLifestyle from "@/assets/hero-lifestyle.png";
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.15 }
-  }
+    transition: { staggerChildren: 0.15 },
+  },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as const } 
-  }
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as const },
+  },
 };
 
 export const HeroSplitEditorial = () => {
@@ -36,10 +36,9 @@ export const HeroSplitEditorial = () => {
   };
 
   return (
-    <section className="min-h-screen bg-background pt-20 md:pt-24 relative overflow-hidden">
+    <section className="min-h-[calc(100vh-4rem)] bg-background relative overflow-hidden">
       <div className="container-editorial relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-6rem)]">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-4rem)] py-8 lg:py-12">
           {/* Mobile: Image first */}
           <motion.div
             initial={{ opacity: 0, scale: 1.03 }}
@@ -66,7 +65,7 @@ export const HeroSplitEditorial = () => {
             className="lg:col-span-5 order-2 lg:order-1"
           >
             {/* Eyebrow */}
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-accent text-xs md:text-sm tracking-[0.3em] uppercase mb-6"
             >
@@ -74,7 +73,7 @@ export const HeroSplitEditorial = () => {
             </motion.p>
 
             {/* H1 */}
-            <motion.h1 
+            <motion.h1
               variants={itemVariants}
               className="hero-text text-foreground mb-6 lg:mb-8"
             >
@@ -84,31 +83,31 @@ export const HeroSplitEditorial = () => {
             </motion.h1>
 
             {/* Subhead */}
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-md mb-10"
             >
-              Modern heirlooms crafted from light itself. Lab-grown diamonds that shine forever, without compromise.
+              Modern heirlooms crafted from light itself. Lab-grown diamonds that
+              shine forever, without compromise.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4"
-            >
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
               <Button
                 asChild
                 className="btn-magnetic bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-6 text-base font-medium rounded-lg"
               >
                 <Link to="/collections/solitaires">Shop best sellers</Link>
               </Button>
-              
+
               <Link
                 to="#product-3d-carousel"
                 className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-colors group px-4 py-3"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('product-3d-carousel')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("product-3d-carousel")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 <span className="text-base">Explore in 3D</span>
@@ -119,7 +118,7 @@ export const HeroSplitEditorial = () => {
         </div>
       </div>
 
-      {/* Desktop Image - Absolute positioned, bleeds right */}
+      {/* Desktop Image - Absolute positioned, bleeds right with diagonal cut */}
       <motion.div
         ref={imageRef}
         initial={{ opacity: 0, scale: 1.03 }}
@@ -129,28 +128,45 @@ export const HeroSplitEditorial = () => {
         className="hidden lg:block absolute top-0 right-0 bottom-0 w-[58%]"
       >
         {/* Cursor-follow highlight overlay */}
-        <div 
+        <div
           className="absolute inset-0 cursor-highlight z-20 pointer-events-none"
-          style={{
-            '--mouse-x': `${mousePosition.x}%`,
-            '--mouse-y': `${mousePosition.y}%`,
-          } as React.CSSProperties}
+          style={
+            {
+              "--mouse-x": `${mousePosition.x}%`,
+              "--mouse-y": `${mousePosition.y}%`,
+            } as React.CSSProperties
+          }
         />
-        
+
+        {/* Diagonal gold hairline */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none z-30"
+          preserveAspectRatio="none"
+        >
+          <line
+            x1="8%"
+            y1="0"
+            x2="0"
+            y2="100%"
+            stroke="hsl(45, 70%, 50%)"
+            strokeWidth="1"
+          />
+        </svg>
+
         <img
           src={heroLifestyle}
           alt="Noori diamond jewelry"
-          className="w-full h-full object-cover object-center hero-image-masked"
+          className="w-full h-full object-cover object-center hero-image-diagonal"
         />
       </motion.div>
 
       {/* Scroll Cue - Desktop only */}
       <div className="hidden lg:flex absolute bottom-12 left-16 items-center gap-3 z-20">
-        <span 
+        <span
           className="text-muted-foreground text-xs tracking-[0.2em] uppercase"
-          style={{ 
-            writingMode: 'vertical-rl',
-            transform: 'rotate(180deg)'
+          style={{
+            writingMode: "vertical-rl",
+            transform: "rotate(180deg)",
           }}
         >
           Scroll

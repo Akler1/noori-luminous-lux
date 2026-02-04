@@ -297,22 +297,14 @@
     animation: scroll-pulse 2s ease-in-out infinite;
   }
 
-  /* Hero image tight mask - replaces white fog */
-  .hero-image-masked {
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0,0,0,0.4) 4%,
-      rgba(0,0,0,0.8) 8%,
-      black 12%
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0,0,0,0.4) 4%,
-      rgba(0,0,0,0.8) 8%,
-      black 12%
-    );
+  /* Hero image diagonal clip-path */
+  .hero-image-diagonal {
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Gallery Room shadow */
+  .shadow-gallery-room {
+    box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.4);
   }
 
   /* Facet placeholder shimmer animation */
