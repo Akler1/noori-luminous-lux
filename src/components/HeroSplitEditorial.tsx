@@ -128,9 +128,6 @@ export const HeroSplitEditorial = () => {
         onMouseMove={handleMouseMove}
         className="hidden lg:block absolute top-0 right-0 bottom-0 w-[58%]"
       >
-        {/* Gradient veil for text/image cohesion */}
-        <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
-        
         {/* Cursor-follow highlight overlay */}
         <div 
           className="absolute inset-0 cursor-highlight z-20 pointer-events-none"
@@ -143,7 +140,7 @@ export const HeroSplitEditorial = () => {
         <img
           src={heroLifestyle}
           alt="Noori diamond jewelry"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center hero-image-masked"
         />
       </motion.div>
 
