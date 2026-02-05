@@ -22,7 +22,7 @@ const itemVariants = {
 
 export const HeroSplitEditorial = () => {
   return (
-    <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+    <section className="relative min-h-[100svh] md:min-h-0 md:aspect-[16/9] overflow-hidden">
       {/* Full-bleed background image */}
       <img
         src={heroSolitairesImage}
@@ -31,10 +31,10 @@ export const HeroSplitEditorial = () => {
       />
 
       {/* Gradient overlay for text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/40 to-transparent lg:from-black/60 lg:via-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/40 to-transparent md:from-black/60 md:via-black/30" />
 
       {/* Text content */}
-      <div className="relative z-10 container-editorial h-full min-h-[calc(100vh-4rem)] flex items-end pb-16 lg:pb-24">
+      <div className="relative z-10 container-editorial h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -44,7 +44,7 @@ export const HeroSplitEditorial = () => {
           {/* Eyebrow */}
           <motion.p
             variants={itemVariants}
-            className="text-accent text-xs md:text-sm tracking-[0.3em] uppercase mb-4 lg:mb-6"
+            className="text-accent text-xs md:text-sm tracking-[0.3em] uppercase mb-4 md:mb-6"
           >
             Lab-Grown Diamonds
           </motion.p>
@@ -52,7 +52,7 @@ export const HeroSplitEditorial = () => {
           {/* H1 */}
           <motion.h1
             variants={itemVariants}
-            className="hero-text text-white mb-4 lg:mb-6"
+            className="hero-text text-white mb-4 md:mb-6"
           >
             Brilliance,
             <br />
@@ -62,7 +62,7 @@ export const HeroSplitEditorial = () => {
           {/* Subhead */}
           <motion.p
             variants={itemVariants}
-            className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 lg:mb-10"
+            className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
           >
             Introducing the inaugural Solitaires collection. Modern heirlooms
             crafted from light itself.
@@ -98,7 +98,7 @@ export const HeroSplitEditorial = () => {
       </div>
 
       {/* Scroll Cue - Desktop only */}
-      <div className="hidden lg:flex absolute bottom-12 right-16 items-center gap-3 z-20">
+      <div className="hidden md:flex absolute bottom-12 right-16 items-center gap-3 z-20">
         <span
           className="text-white/60 text-xs tracking-[0.2em] uppercase"
           style={{
