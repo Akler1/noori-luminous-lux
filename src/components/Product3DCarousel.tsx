@@ -106,8 +106,10 @@ export default function Product3DCarousel() {
       aria-label="Best sellers product grid"
     >
       {/* Section Header */}
-      <div className="container-editorial text-center py-12 md:py-16">
-        <h2 className="section-header text-foreground">Best sellers</h2>
+      <div className="container-editorial text-center py-6 md:py-8">
+        <h2 className="text-2xl md:text-3xl font-medium tracking-wide uppercase text-foreground">
+          Best Sellers
+        </h2>
       </div>
 
       {/* Full-Width Product Grid */}
