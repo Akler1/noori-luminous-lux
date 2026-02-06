@@ -5,22 +5,22 @@ import braceletHero from "@/assets/bracelet-hero.jpg";
 
 const storyBeats = [
   {
-    header: "The cut. The clarity.",
-    body: "Every Noori diamond is precision-cut to maximize brilliance. The same fire that lives in mined stones, born from innovation.",
+    header: "Quality, without shortcuts.",
+    body: "Noori diamonds are lab grown and chemically identical to mined diamonds, with the same crystal structure, hardness, and brilliance. From the stones we evaluate, we approve only the top 2% for Noori, prioritizing colorless D to F and VS1 clarity or better. Each piece is set in solid 14k or 18k gold, then finished and inspected for symmetry, setting security, and polish before it ships.",
     image: cutClarityDiamonds,
-    chips: ["Precision cut", "Optical symmetry", "Quality checked"],
+    chips: ["Top 2%", "D-F colour", "VS1+ clarity"],
   },
   {
-    header: "The details that matter.",
-    body: "Handcrafted settings in solid 14k and 18k gold. Each piece inspected to exacting standards before it reaches you.",
+    header: "A higher standard, made wearable.",
+    body: "Noori began with a simple goal: create jewelry with true high jewellery presence, refined lines, substantial weight, and finishing you can feel. We use modern diamond innovation and disciplined production to remove the usual barriers, while keeping the standard uncompromising. The result is pieces that read unmistakably luxurious and wear effortlessly, day after day.",
     image: necklaceHero,
-    chips: ["Hand-finished", "Solid gold", "Inspected"],
+    chips: ["High jewellery presence", "Refined lines", "Effortless wear"],
   },
   {
-    header: "Made to be kept.",
-    body: "Lab-grown diamonds are chemically identical to mined diamonds. The same hardness, the same sparkle—designed to last generations.",
+    header: "Brilliance with impact.",
+    body: "Beauty should do more than shine. That is why a portion of proceeds from every Noori purchase is donated to UNICEF, supporting efforts that help keep children safe and in school, so more kids can move away from dangerous labor and toward classrooms, opportunity, and a future of their own.",
     image: braceletHero,
-    chips: ["Lab-grown", "Certified", "Lifetime warranty"],
+    chips: ["UNICEF partner", "Education focus", "Real impact"],
   },
 ];
 
