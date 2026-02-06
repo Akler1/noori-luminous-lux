@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import heroSolitairesImage from "@/assets/hero-solitaires-collection.png";
+import heroImage from "@/assets/hero-jewelry-marble.png";
 
 const containerVariants = {
   hidden: {},
@@ -25,13 +25,10 @@ export const HeroSplitEditorial = () => {
     <section className="relative min-h-[100svh] md:min-h-0 md:aspect-[16/9] overflow-hidden">
       {/* Full-bleed background image */}
       <img
-        src={heroSolitairesImage}
+        src={heroImage}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
         className="absolute inset-0 w-full h-full object-cover"
       />
-
-      {/* Gradient overlay for text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/40 to-transparent md:from-black/60 md:via-black/30" />
 
       {/* Text content */}
       <div className="relative z-10 container-editorial h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24">
@@ -52,7 +49,7 @@ export const HeroSplitEditorial = () => {
           {/* H1 */}
           <motion.h1
             variants={itemVariants}
-            className="hero-text text-white mb-4 md:mb-6"
+            className="hero-text text-stone-800 mb-4 md:mb-6"
           >
             Brilliance,
             <br />
@@ -62,7 +59,7 @@ export const HeroSplitEditorial = () => {
           {/* Subhead */}
           <motion.p
             variants={itemVariants}
-            className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
+            className="text-stone-600 text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
           >
             Introducing the inaugural Solitaires collection. Modern heirlooms
             crafted from light itself.
@@ -82,7 +79,7 @@ export const HeroSplitEditorial = () => {
 
             <Link
               to="#product-3d-carousel"
-              className="inline-flex items-center gap-2 text-white hover:text-accent transition-colors group px-4 py-3"
+              className="inline-flex items-center gap-2 text-stone-700 hover:text-accent transition-colors group px-4 py-3"
               onClick={(e) => {
                 e.preventDefault();
                 document
@@ -99,8 +96,9 @@ export const HeroSplitEditorial = () => {
 
       {/* Scroll Cue - Desktop only */}
       <div className="hidden md:flex absolute bottom-12 right-16 items-center gap-3 z-20">
+        {/* Scroll Cue - hidden on light background for now */}
         <span
-          className="text-white/60 text-xs tracking-[0.2em] uppercase"
+          className="text-stone-500 text-xs tracking-[0.2em] uppercase"
           style={{
             writingMode: "vertical-rl",
             transform: "rotate(180deg)",
@@ -108,7 +106,7 @@ export const HeroSplitEditorial = () => {
         >
           Scroll
         </span>
-        <div className="w-px h-12 bg-white/30 scroll-cue-line" />
+        <div className="w-px h-12 bg-stone-400 scroll-cue-line" />
       </div>
     </section>
   );
