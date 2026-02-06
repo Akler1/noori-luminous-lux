@@ -107,13 +107,7 @@ export default function Product3DCarousel() {
     >
       {/* Section Header */}
       <div className="container-editorial text-center py-12 md:py-16">
-        <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
-          Explore the Collection
-        </p>
-        <h2 className="section-header text-foreground mb-3">Best sellers</h2>
-        <p className="text-muted-foreground">
-          Discover our most loved pieces
-        </p>
+        <h2 className="section-header text-foreground">Best sellers</h2>
       </div>
 
       {/* Full-Width Product Grid */}
@@ -154,16 +148,18 @@ export default function Product3DCarousel() {
                 </div>
               </div>
 
-              {/* Product Info */}
-              <div className="p-4 md:p-6 bg-background">
-                <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
-                <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
-                  {product.name}
-                </h3>
-                <p className="text-sm md:text-base text-foreground">
-                  {product.price}
-                </p>
-              </div>
+              {/* Product Info - only show for 3D product tiles */}
+              {product.type === "3d" && (
+                <div className="p-4 md:p-6 bg-background">
+                  <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
+                  <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm md:text-base text-foreground">
+                    {product.price}
+                  </p>
+                </div>
+              )}
             </Link>
           ))}
         </div>
