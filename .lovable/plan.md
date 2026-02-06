@@ -1,87 +1,70 @@
 
 
-# Shorten Best Sellers Header & Fix Image Card Labels
+# Fix Best Sellers Title Styling and Reduce Spacing
+
+## Issues Identified
+
+1. **Title doesn't look like a proper title**: Currently using `section-header` class which is styled but may not stand out enough
+2. **Too much padding**: The header has `py-12 md:py-16` (48px/64px padding) which creates excessive space between the hero and the product grid
 
 ## Changes
 
-### 1. Shorten the Section Header
+### File: `src/components/Product3DCarousel.tsx`
 
-| Current | New |
-|---------|-----|
-| Subtitle: "Explore the Collection" | **Remove entirely** |
-| Heading: "Best sellers" | Keep as is |
-| Description: "Discover our most loved pieces" | **Remove entirely** |
+| Element | Current | New |
+|---------|---------|-----|
+| Header padding | `py-12 md:py-16` | `py-6 md:py-8` |
+| Title styling | `section-header text-foreground` | `text-2xl md:text-3xl font-medium tracking-wide uppercase text-foreground` |
 
-Result: Clean, minimal header with just "Best sellers"
+### Styling Details
 
-### 2. Hide Product Info for Model/Lifestyle Images
+The new title will use:
+- **Smaller, tighter text**: `text-2xl md:text-3xl` instead of the large `section-header` class
+- **Uppercase tracking**: `uppercase tracking-wide` for a clean luxury label look
+- **Medium weight**: `font-medium` for more presence
+- **Reduced padding**: `py-6 md:py-8` (24px/32px) to bring the grid closer to the hero
 
-The grid has two image positions that are not actual products:
-- **Index 0** (top-left): Model lifestyle image (`hero-lifestyle.png`)
-- **Index 6** (bottom row, 3rd from left): Product shot image (`hero-product-shot.png`)
+### Visual Result
 
-These should NOT display material, name, or price. The image should flow directly into the product below it visually.
+```text
+BEFORE:
+┌─────────────────────────────────┐
+│           Hero Section          │
+└─────────────────────────────────┘
+           ↕ 64px gap
+     ┌─────────────────┐
+     │  Best sellers   │  (large serif)
+     └─────────────────┘
+           ↕ 64px gap
+┌─────────────────────────────────┐
+│         Product Grid            │
 
----
+AFTER:
+┌─────────────────────────────────┐
+│           Hero Section          │
+└─────────────────────────────────┘
+           ↕ 32px gap
+     ┌─────────────────┐
+     │  BEST SELLERS   │  (clean uppercase)
+     └─────────────────┘
+           ↕ 32px gap
+┌─────────────────────────────────┐
+│         Product Grid            │
+```
 
-## File Changes
-
-**File**: `src/components/Product3DCarousel.tsx`
-
-### Header Simplification (Lines 109-117)
+## Code Change
 
 ```tsx
-// BEFORE
-<div className="container-editorial text-center py-12 md:py-16">
-  <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">
-    Explore the Collection
-  </p>
-  <h2 className="section-header text-foreground mb-3">Best sellers</h2>
-  <p className="text-muted-foreground">
-    Discover our most loved pieces
-  </p>
-</div>
-
-// AFTER
+// Line 109: Before
 <div className="container-editorial text-center py-12 md:py-16">
   <h2 className="section-header text-foreground">Best sellers</h2>
 </div>
-```
 
-### Conditional Product Info (Lines 157-166)
-
-Only render the product info block for items that are NOT lifestyle/model images:
-
-```tsx
-// BEFORE - always shows product info
-<div className="p-4 md:p-6 bg-background">
-  <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
-  <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
-    {product.name}
-  </h3>
-  <p className="text-sm md:text-base text-foreground">
-    {product.price}
-  </p>
+// After
+<div className="container-editorial text-center py-6 md:py-8">
+  <h2 className="text-2xl md:text-3xl font-medium tracking-wide uppercase text-foreground">
+    Best Sellers
+  </h2>
 </div>
-
-// AFTER - hide for model-image and product-image types
-{product.type === "3d" && (
-  <div className="p-4 md:p-6 bg-background">
-    <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
-    <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
-      {product.name}
-    </h3>
-    <p className="text-sm md:text-base text-foreground">
-      {product.price}
-    </p>
-  </div>
-)}
 ```
-
----
-
-## Summary
-
-1. Remove subtitle and description from Best Sellers header - keep only "Best sellers"
-2. Hide product name/price/material for the two image tiles (positions 0 and 6)
 
