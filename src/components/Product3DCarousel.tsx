@@ -123,11 +123,15 @@ export default function Product3DCarousel() {
               <div
                 className={cn(
                   "overflow-hidden transition-all duration-300 group-hover:opacity-90",
-                  getCardBackground(index, product.type)
+                  getCardBackground(index, product.type),
+                  product.type !== "3d" && "h-full"
                 )}
               >
-                {/* Media Container */}
-                <div className="aspect-[3/4] relative overflow-hidden">
+                {/* Media Container - taller aspect for image tiles to fill full height */}
+                <div className={cn(
+                  "relative overflow-hidden",
+                  product.type === "3d" ? "aspect-[3/4]" : "aspect-[3/5]"
+                )}>
                   {product.type === "3d" ? (
                     <iframe
                       src={product.iframeUrl}
