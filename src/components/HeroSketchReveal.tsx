@@ -7,8 +7,9 @@ interface HeroSketchRevealProps {
   className?: string;
 }
 
-// Draw image with object-cover behavior (same as CSS object-cover)
-const drawImageCover = (
+// Draw image with object-cover + object-position:right behavior
+// Crops from left side only (keeping right side with content visible)
+const drawImageCoverRight = (
   ctx: CanvasRenderingContext2D,
   img: HTMLImageElement,
   canvasWidth: number,
@@ -23,13 +24,13 @@ const drawImageCover = (
   let offsetY: number;
 
   if (imgRatio > canvasRatio) {
-    // Image is wider - crop horizontally
+    // Image is wider - crop from LEFT only (align right)
     drawHeight = canvasHeight;
     drawWidth = canvasHeight * imgRatio;
-    offsetX = (canvasWidth - drawWidth) / 2;
+    offsetX = canvasWidth - drawWidth; // Align to right edge
     offsetY = 0;
   } else {
-    // Image is taller - crop vertically
+    // Image is taller - crop top/bottom equally
     drawWidth = canvasWidth;
     drawHeight = canvasWidth / imgRatio;
     offsetX = 0;
@@ -288,10 +289,10 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Draw sketch image with object-cover behavior
+        // Draw sketch image with same positioning as base image
         ctx.globalCompositeOperation = "source-over";
         ctx.globalAlpha = 0.85;
-        drawImageCover(ctx, sketchImg, canvasWidth, canvasHeight);
+        drawImageCoverRight(ctx, sketchImg, canvasWidth, canvasHeight);
         
         // Apply mask (destination-in keeps only where mask has alpha)
         ctx.globalCompositeOperation = "destination-in";
@@ -380,11 +381,11 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       onPointerLeave={handlePointerLeave}
       onClick={handleTap}
     >
-      {/* Base layer: Real photo */}
+      {/* Base layer: Real photo - object-right to crop from left */}
       <img
         src={heroReal}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-right"
       />
       
       {/* Sketch overlay canvas */}
