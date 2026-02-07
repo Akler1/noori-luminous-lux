@@ -1,89 +1,67 @@
 
-# Fix Hero Sketch Reveal Effect - Coordinate Alignment
+# Fix Hero Sketch Reveal Effect - Pointer Event Blocking Issue
 
 ## Root Cause
 
-The coordinate transformation introduced in the last edit is backwards. By subtracting the (negative) image offset from the mask coordinates, we're pushing stamps **further right** instead of aligning them with the sketch.
+The sketch reveal effect doesn't work because the text content overlay in `HeroSplitEditorial.tsx` has `z-10` and covers the entire hero area, blocking all pointer events from reaching the `HeroSketchReveal` component underneath.
 
-### How the Coordinate System Works
-
-```text
-Canvas coordinate space:
-     -400          0                          canvasWidth
-       │           │                              │
-       ▼           ▼                              ▼
-┌──────┬───────────────────────────────────────────┐
-│      │                                           │
-│ (off │  Visible canvas area (0 to canvasWidth)   │
-│  -   │                                           │
-│ scr- │  ← Sketch is drawn starting at x = -400   │
-│ een) │                                           │
-└──────┴───────────────────────────────────────────┘
-       ├───────────────────────────────────────────┤
-              Sketch image fills this span
-              (drawWidth wider than canvas)
+**Current layer structure:**
+```
+Section (parent)
+├── HeroSketchReveal (z-auto/0) ← has pointer event handlers
+│   ├── <img> base photo
+│   └── <canvas> sketch overlay
+├── Text content div (z-10) ← BLOCKS ALL POINTER EVENTS
+│   └── Text, buttons, etc.
+└── Scroll cue (z-20)
 ```
 
-When mouse is at container position (100, 300):
-- Canvas coords: (100 × dpr, 300 × dpr)
-- Sketch has pixels here because it extends from -400 to drawWidth-400
-- Mask should stamp at **(100 × dpr, 300 × dpr)** - NO offset adjustment needed!
-
-### Current (Broken) Code
-```typescript
-const x = (clientX - rect.left) * dpr - offset.x;
-// If offset.x = -400, this becomes: 200 - (-400) = 600
-// Stamps WAY to the right of where the mouse actually is
-```
-
-### Fix
-```typescript
-const x = (clientX - rect.left) * dpr;
-// Simple: 200, which is where the sketch pixels ARE on the canvas
-```
+When you move the mouse over the hero, the text div (which has `md:absolute md:inset-0`) intercepts all pointer events. The `onPointerMove` handler on `HeroSketchReveal` never fires.
 
 ## Solution
 
-Remove the offset adjustment from `stampShapes`. The mask and sketch share the same canvas coordinate space - when the sketch is drawn with a negative offset, its pixels still exist at positive canvas coordinates. The mask just needs to stamp at the raw canvas position of the mouse.
+Add `pointer-events-none` to the text content wrapper, then re-enable pointer events on the interactive elements (buttons, links) inside it.
+
+**Fixed layer structure:**
+```
+Section (parent)
+├── HeroSketchReveal (z-auto) ← receives ALL pointer events now
+│   ├── <img> base photo
+│   └── <canvas> sketch overlay (pointer-events-none)
+├── Text content div (z-10, pointer-events-none) ← passes events through
+│   └── Interactive elements (pointer-events-auto) ← buttons still clickable
+└── Scroll cue (z-20)
+```
 
 ## File Changes
 
 | File | Change |
 |------|--------|
-| `src/components/HeroSketchReveal.tsx` | Remove offset subtraction from mask coordinates in `stampShapes` |
+| `src/components/HeroSplitEditorial.tsx` | Add `pointer-events-none` to text wrapper, `pointer-events-auto` to interactive children |
 
 ## Code Changes
 
-### stampShapes function (lines 199-248)
+### HeroSplitEditorial.tsx
 
-Remove the offset adjustment - just use raw canvas coordinates:
-
-```typescript
-const stampShapes = useCallback((clientX: number, clientY: number) => {
-  const container = containerRef.current;
-  const maskCanvas = maskCanvasRef.current;
-  
-  if (!container || !maskCanvas) return;
-  
-  const rect = container.getBoundingClientRect();
-  const dpr = dprRef.current;
-  
-  // Convert client coordinates to canvas coordinates
-  // No offset adjustment needed - mask and sketch share same coordinate space
-  const x = (clientX - rect.left) * dpr;
-  const y = (clientY - rect.top) * dpr;
-  
-  // ... rest of function unchanged
-}, []);
+**Line 31** - Add `pointer-events-none` to the text content wrapper:
+```tsx
+<div className="relative z-10 h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24 px-5 md:px-8 pointer-events-none">
 ```
 
-Also clean up unused refs:
-- Remove `imageOffsetRef` from the function since it's no longer needed here
-- The offset is still calculated and stored in the animation loop for potential future use, but the mask doesn't need it
+**Line 36** - Add `pointer-events-auto` to the motion.div containing the text content so the buttons remain clickable:
+```tsx
+<motion.div
+  variants={containerVariants}
+  initial="hidden"
+  animate="visible"
+  className="max-w-xl pointer-events-auto"
+>
+```
 
 ## Expected Result
 
 After this fix:
-- Moving the mouse anywhere on the hero will reveal the sketch
-- The reveal effect will work across the entire hero area, including the left side near the text
-- The sketch and mask will align perfectly because they share the same coordinate system
+- Mouse movement anywhere on the hero will trigger the sketch reveal effect
+- The text will still be visible and positioned at the left edge
+- The buttons ("Shop the Collection" and "Explore in 3D") will remain clickable
+- The reveal effect will work across the entire hero, including over the text area
