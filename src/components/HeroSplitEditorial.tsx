@@ -27,7 +27,8 @@ export const HeroSplitEditorial = () => {
       <HeroSketchReveal />
 
       {/* Text content */}
-      <div className="relative z-10 container-editorial h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24">
+      {/* Text content - positioned at left edge with minimal padding */}
+      <div className="relative z-10 h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24 px-5 md:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
