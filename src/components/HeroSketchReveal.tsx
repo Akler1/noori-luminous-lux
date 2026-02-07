@@ -204,13 +204,11 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     
     const rect = container.getBoundingClientRect();
     const dpr = dprRef.current;
-    const offset = imageOffsetRef.current;
     
     // Convert client coordinates to canvas coordinates (scaled by DPR)
-    // Then subtract the image offset so mask aligns with the offset sketch
-    // Subtract image offset so stamps align with where sketch pixels actually are
-    const x = (clientX - rect.left) * dpr - offset.x;
-    const y = (clientY - rect.top) * dpr - offset.y;
+    // No offset adjustment needed - mask and sketch share the same canvas coordinate space
+    const x = (clientX - rect.left) * dpr;
+    const y = (clientY - rect.top) * dpr;
     
     const maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
     if (!maskCtx) return;
