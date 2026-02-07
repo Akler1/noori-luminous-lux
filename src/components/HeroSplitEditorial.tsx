@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-jewelry-marble.png";
+import { HeroSketchReveal } from "@/components/HeroSketchReveal";
 
 const containerVariants = {
   hidden: {},
@@ -23,12 +23,8 @@ const itemVariants = {
 export const HeroSplitEditorial = () => {
   return (
     <section className="relative min-h-[100svh] md:min-h-0 md:aspect-[16/9] overflow-hidden">
-      {/* Full-bleed background image */}
-      <img
-        src={heroImage}
-        alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {/* Interactive sketch reveal background */}
+      <HeroSketchReveal />
 
       {/* Text content */}
       <div className="relative z-10 container-editorial h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24">
