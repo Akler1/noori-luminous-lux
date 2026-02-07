@@ -7,6 +7,38 @@ interface HeroSketchRevealProps {
   className?: string;
 }
 
+// Draw image with object-cover behavior (same as CSS object-cover)
+const drawImageCover = (
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  canvasWidth: number,
+  canvasHeight: number
+) => {
+  const imgRatio = img.naturalWidth / img.naturalHeight;
+  const canvasRatio = canvasWidth / canvasHeight;
+
+  let drawWidth: number;
+  let drawHeight: number;
+  let offsetX: number;
+  let offsetY: number;
+
+  if (imgRatio > canvasRatio) {
+    // Image is wider - crop horizontally
+    drawHeight = canvasHeight;
+    drawWidth = canvasHeight * imgRatio;
+    offsetX = (canvasWidth - drawWidth) / 2;
+    offsetY = 0;
+  } else {
+    // Image is taller - crop vertically
+    drawWidth = canvasWidth;
+    drawHeight = canvasWidth / imgRatio;
+    offsetX = 0;
+    offsetY = (canvasHeight - drawHeight) / 2;
+  }
+
+  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+};
+
 // Shape generation utilities
 const generateBlobPath = (
   ctx: CanvasRenderingContext2D,
@@ -86,6 +118,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   const animationFrameRef = useRef<number>(0);
   const lastMoveTimeRef = useRef<number>(0);
   const isActiveRef = useRef<boolean>(false);
+  const dprRef = useRef<number>(1);
   
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -103,8 +136,9 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       setImagesLoaded(true);
     };
     
-    // Create offscreen mask canvas
-    maskCanvasRef.current = document.createElement("canvas");
+    // Create offscreen mask canvas with willReadFrequently for performance
+    const maskCanvas = document.createElement("canvas");
+    maskCanvasRef.current = maskCanvas;
     
     return () => {
       if (animationFrameRef.current) {
@@ -113,7 +147,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     };
   }, []);
   
-  // Handle canvas sizing
+  // Handle canvas sizing - NO context scaling here
   const updateCanvasSize = useCallback(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
@@ -123,24 +157,20 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     
     const rect = container.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dprRef.current = dpr;
     
+    // Set canvas dimensions (internal resolution)
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
+    // Set display size (CSS)
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
     
+    // Same for mask canvas
     maskCanvas.width = rect.width * dpr;
     maskCanvas.height = rect.height * dpr;
     
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.scale(dpr, dpr);
-    }
-    
-    const maskCtx = maskCanvas.getContext("2d");
-    if (maskCtx) {
-      maskCtx.scale(dpr, dpr);
-    }
+    // DO NOT scale context here - handle DPR in drawing functions
   }, []);
   
   useEffect(() => {
@@ -156,7 +186,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [imagesLoaded, updateCanvasSize]);
   
-  // Stamp shapes onto mask canvas
+  // Stamp shapes onto mask canvas - coordinates in CSS pixels
   const stampShapes = useCallback((clientX: number, clientY: number) => {
     const container = containerRef.current;
     const maskCanvas = maskCanvasRef.current;
@@ -164,28 +194,30 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     if (!container || !maskCanvas) return;
     
     const rect = container.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const dpr = dprRef.current;
     
-    const maskCtx = maskCanvas.getContext("2d");
+    // Convert client coordinates to canvas coordinates (scaled by DPR)
+    const x = (clientX - rect.left) * dpr;
+    const y = (clientY - rect.top) * dpr;
+    
+    const maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
     if (!maskCtx) return;
     
-    // Reset scale for drawing
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Reset transform before drawing
     maskCtx.setTransform(1, 0, 0, 1, 0, 0);
-    maskCtx.scale(dpr, dpr);
     
     // Stamp 3-7 random shapes
     const shapeCount = 3 + Math.floor(Math.random() * 5);
     
     for (let i = 0; i < shapeCount; i++) {
-      const offsetX = (Math.random() - 0.5) * 80;
-      const offsetY = (Math.random() - 0.5) * 80;
-      const size = 60 + Math.random() * 100;
+      // Offsets and sizes scaled by DPR
+      const offsetX = (Math.random() - 0.5) * 80 * dpr;
+      const offsetY = (Math.random() - 0.5) * 80 * dpr;
+      const size = (60 + Math.random() * 100) * dpr;
       const rotation = Math.random() * Math.PI * 2;
       
-      // Soft blur effect via shadow
-      maskCtx.shadowBlur = 10;
+      // Soft blur effect via shadow (scaled by DPR)
+      maskCtx.shadowBlur = 10 * dpr;
       maskCtx.shadowColor = "rgba(255, 255, 255, 0.8)";
       maskCtx.fillStyle = "rgba(255, 255, 255, 0.85)";
       
@@ -214,7 +246,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     if (!canvas || !maskCanvas || !sketchImg) return;
     
     const ctx = canvas.getContext("2d");
-    const maskCtx = maskCanvas.getContext("2d");
+    const maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
     
     if (!ctx || !maskCtx) return;
     
@@ -226,9 +258,9 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       }
       
       const rect = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = rect.width;
-      const height = rect.height;
+      const dpr = dprRef.current;
+      const canvasWidth = rect.width * dpr;
+      const canvasHeight = rect.height * dpr;
       
       // Fade mask canvas
       const now = Date.now();
@@ -255,17 +287,15 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
         // Clear main canvas
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(dpr, dpr);
         
-        // Draw sketch image
+        // Draw sketch image with object-cover behavior
         ctx.globalCompositeOperation = "source-over";
         ctx.globalAlpha = 0.85;
-        ctx.drawImage(sketchImg, 0, 0, width, height);
+        drawImageCover(ctx, sketchImg, canvasWidth, canvasHeight);
         
         // Apply mask (destination-in keeps only where mask has alpha)
         ctx.globalCompositeOperation = "destination-in";
         ctx.globalAlpha = 1;
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.drawImage(maskCanvas, 0, 0);
       } else {
         // Clear when nothing to show
