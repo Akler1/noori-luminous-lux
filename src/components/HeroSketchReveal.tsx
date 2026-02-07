@@ -7,37 +7,44 @@ interface HeroSketchRevealProps {
   className?: string;
 }
 
-// Draw image with object-cover + object-position:right behavior
-// Crops from left side only (keeping right side with content visible)
-const drawImageCoverRight = (
-  ctx: CanvasRenderingContext2D,
+// Calculate image offset for object-cover + object-position:right behavior
+// Returns the offset so mask can use the same coordinate system
+interface ImageOffset {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const calculateImageCoverRightOffset = (
   img: HTMLImageElement,
   canvasWidth: number,
   canvasHeight: number
-) => {
+): ImageOffset => {
   const imgRatio = img.naturalWidth / img.naturalHeight;
   const canvasRatio = canvasWidth / canvasHeight;
 
-  let drawWidth: number;
-  let drawHeight: number;
-  let offsetX: number;
-  let offsetY: number;
-
   if (imgRatio > canvasRatio) {
     // Image is wider - crop from LEFT only (align right)
-    drawHeight = canvasHeight;
-    drawWidth = canvasHeight * imgRatio;
-    offsetX = canvasWidth - drawWidth; // Align to right edge
-    offsetY = 0;
+    const drawHeight = canvasHeight;
+    const drawWidth = canvasHeight * imgRatio;
+    return {
+      x: canvasWidth - drawWidth, // Negative offset (crops from left)
+      y: 0,
+      width: drawWidth,
+      height: drawHeight
+    };
   } else {
     // Image is taller - crop top/bottom equally
-    drawWidth = canvasWidth;
-    drawHeight = canvasWidth / imgRatio;
-    offsetX = 0;
-    offsetY = (canvasHeight - drawHeight) / 2;
+    const drawWidth = canvasWidth;
+    const drawHeight = canvasWidth / imgRatio;
+    return {
+      x: 0,
+      y: (canvasHeight - drawHeight) / 2,
+      width: drawWidth,
+      height: drawHeight
+    };
   }
-
-  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 };
 
 // Shape generation utilities
@@ -120,6 +127,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   const lastMoveTimeRef = useRef<number>(0);
   const isActiveRef = useRef<boolean>(false);
   const dprRef = useRef<number>(1);
+  const imageOffsetRef = useRef<ImageOffset>({ x: 0, y: 0, width: 0, height: 0 });
   
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -196,10 +204,13 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     
     const rect = container.getBoundingClientRect();
     const dpr = dprRef.current;
+    const offset = imageOffsetRef.current;
     
     // Convert client coordinates to canvas coordinates (scaled by DPR)
-    const x = (clientX - rect.left) * dpr;
-    const y = (clientY - rect.top) * dpr;
+    // Then subtract the image offset so mask aligns with the offset sketch
+    // Subtract image offset so stamps align with where sketch pixels actually are
+    const x = (clientX - rect.left) * dpr - offset.x;
+    const y = (clientY - rect.top) * dpr - offset.y;
     
     const maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
     if (!maskCtx) return;
@@ -289,10 +300,14 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
+        // Calculate and store offset for mask alignment
+        const offset = calculateImageCoverRightOffset(sketchImg, canvasWidth, canvasHeight);
+        imageOffsetRef.current = offset;
+        
         // Draw sketch image with same positioning as base image
         ctx.globalCompositeOperation = "source-over";
         ctx.globalAlpha = 0.85;
-        drawImageCoverRight(ctx, sketchImg, canvasWidth, canvasHeight);
+        ctx.drawImage(sketchImg, offset.x, offset.y, offset.width, offset.height);
         
         // Apply mask (destination-in keeps only where mask has alpha)
         ctx.globalCompositeOperation = "destination-in";
