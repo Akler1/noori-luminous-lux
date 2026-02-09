@@ -33,7 +33,7 @@ export const HeroSplitEditorial = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-xl pointer-events-auto"
+          className="max-w-xl"
         >
           {/* Eyebrow */}
           <motion.p
@@ -65,7 +65,7 @@ export const HeroSplitEditorial = () => {
           {/* CTAs */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
           >
             <Button
               asChild
