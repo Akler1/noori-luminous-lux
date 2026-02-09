@@ -41,18 +41,22 @@ export const Header = () => {
 
   return (
     <>
+      {/* Spacer for fixed header */}
+      <div className={cn("transition-all duration-300", isScrolled ? "h-[68px] md:h-[80px]" : "h-[80px] md:h-[88px]")} />
       <header
         className={cn(
-          "sticky top-0 z-50 w-full",
-          "bg-[#111111]",
-          "border-b border-white/[0.08]",
-          "transition-all duration-300"
+          "fixed top-3 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)] z-50",
+          "bg-[#111111]/85 backdrop-blur-xl",
+          "border border-white/[0.1]",
+          "shadow-lg shadow-black/20",
+          "transition-all duration-300",
+          isMobileMenuOpen ? "rounded-2xl" : "rounded-full"
         )}
       >
         <div
           className={cn(
             "flex items-center justify-between max-w-[1280px] mx-auto",
-            "px-5 md:px-16",
+            "px-6 md:px-8",
             "transition-all duration-300",
             isScrolled ? "h-12 md:h-14" : "h-14 md:h-16"
           )}
@@ -64,7 +68,7 @@ export const Header = () => {
               alt="Noori"
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled ? "h-6 md:h-7" : "h-7 md:h-8"
+                isScrolled ? "h-7 md:h-8" : "h-9 md:h-10"
               )}
             />
           </Link>
@@ -188,7 +192,7 @@ export const Header = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden px-5 pb-5 border-t border-white/[0.08] mt-1 pt-4">
+          <div className="md:hidden px-6 pb-5 border-t border-white/[0.08] mt-1 pt-4">
             <nav className="flex flex-col space-y-3">
               <Link
                 to="/collections/solitaires"
