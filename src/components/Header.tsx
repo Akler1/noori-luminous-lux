@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingBag, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
@@ -10,9 +10,7 @@ import { cn } from "@/lib/utils";
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isShopOpen, setIsShopOpen] = useState(false);
   const { cart, isCartOpen, openCart, closeCart } = useCartActions();
-  const shopDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,16 +20,6 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close shop dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (shopDropdownRef.current && !shopDropdownRef.current.contains(event.target as Node)) {
-        setIsShopOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const navItems = [
     { name: "About", href: "/policies" },
@@ -75,82 +63,13 @@ export const Header = () => {
 
           {/* Desktop Navigation - Absolute Center */}
           <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
-            {/* Shop with Dropdown */}
-            <div ref={shopDropdownRef} className="relative">
-              <button
-                onClick={() => setIsShopOpen(!isShopOpen)}
-                className={cn(
-                  "flex items-center gap-1 text-sm font-medium transition-colors",
-                  "text-white/80 hover:text-accent",
-                  isShopOpen && "text-accent"
-                )}
-              >
-                Shop
-                <ChevronDown
-                  className={cn(
-                    "w-3.5 h-3.5 transition-transform duration-200",
-                    isShopOpen && "rotate-180"
-                  )}
-                />
-              </button>
+            <Link
+              to="/collections/solitaires"
+              className="text-sm font-medium text-white/80 hover:text-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
+            >
+              Collections
+            </Link>
 
-              {/* Dropdown Menu */}
-              {isShopOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[320px] bg-[rgba(10,10,10,0.95)] backdrop-blur-[14px] border border-white/[0.08] rounded-2xl p-5 shadow-2xl">
-                  <div className="grid grid-cols-2 gap-6">
-                    {/* Column A */}
-                    <div className="space-y-3">
-                      <p className="text-xs text-white/40 uppercase tracking-wider mb-2">
-                        Categories
-                      </p>
-                      <Link
-                        to="/collections/solitaires"
-                        onClick={() => setIsShopOpen(false)}
-                        className="block text-sm text-white/80 hover:text-accent transition-colors"
-                      >
-                        Studs
-                      </Link>
-                      <Link
-                        to="/collections/solitaires"
-                        onClick={() => setIsShopOpen(false)}
-                        className="block text-sm text-white/80 hover:text-accent transition-colors"
-                      >
-                        Necklaces
-                      </Link>
-                      <Link
-                        to="/collections/solitaires"
-                        onClick={() => setIsShopOpen(false)}
-                        className="block text-sm text-white/80 hover:text-accent transition-colors"
-                      >
-                        Bracelets
-                      </Link>
-                    </div>
-                    {/* Column B */}
-                    <div className="space-y-3">
-                      <p className="text-xs text-white/40 uppercase tracking-wider mb-2">
-                        Featured
-                      </p>
-                      <Link
-                        to="/collections/solitaires"
-                        onClick={() => setIsShopOpen(false)}
-                        className="block text-sm text-white/80 hover:text-accent transition-colors"
-                      >
-                        Best Sellers
-                      </Link>
-                      <Link
-                        to="/#product-3d-carousel"
-                        onClick={() => setIsShopOpen(false)}
-                        className="block text-sm text-white/80 hover:text-accent transition-colors"
-                      >
-                        3D Gallery
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Other Nav Items */}
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -199,7 +118,7 @@ export const Header = () => {
                 className="text-base font-medium py-2 text-white/80 hover:text-accent transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Shop
+                Collections
               </Link>
               {navItems.map((item) => (
                 <Link
