@@ -1,44 +1,30 @@
 
 
-# Floating Nav Over Hero + Collections Dropdown
+# FAQ Content Fixes
 
 ## Overview
 
-Two changes: (1) Remove the spacer div so the nav floats directly over the hero image instead of over a white gap, and (2) convert "Collections" from a plain link into a dropdown with "Solitaires" as an option.
+Three content corrections in `src/pages/FAQ.tsx`:
 
 ## Changes
 
-### 1. Remove the spacer div (Header.tsx, line 33)
+### 1. Gift wrapping answer (line 60-61)
 
-Delete the spacer `<div>` that pushes content down. Since the header is `fixed`, it already overlays content -- the spacer was creating the white bar above the hero. Without it, the hero will sit at the top of the page and the floating nav will overlay it.
+**Current:** "Yes! All Noori pieces come in our signature packaging at no extra cost. For special occasions, we offer premium gift wrapping with a personalized message card."
 
-### 2. Collections dropdown (Header.tsx)
+**New:** "Yes! All Noori pieces come beautifully presented in our signature packaging at no extra cost."
 
-Replace the plain "Collections" `<Link>` with a hover-activated dropdown:
+Remove the mention of premium gift wrapping and personalized message cards.
 
-- Add `ChevronDown` to the lucide imports
-- Add `isCollectionsOpen` state and a `ref` for outside-click handling
-- Desktop: "Collections" button with a chevron icon that toggles a small dropdown panel containing a "Solitaires" link (pointing to `/collections/solitaires`). The dropdown uses the same dark glass aesthetic (`bg-[#111111]/95 backdrop-blur-xl border-white/[0.1] rounded-xl`) and has a high z-index.
-- Mobile: Replace the single "Collections" link with a collapsible section -- tapping "Collections" reveals "Solitaires" indented below it.
+### 2. Repair services question (lines 100-103)
 
-### 3. Dropdown styling
+**Current:** Question "Do you offer repairs for non-warranty issues?" with answer about repair services, re-polishing, and prong re-tipping.
 
-The dropdown will appear below the "Collections" text with:
-- `absolute top-full mt-2`
-- `bg-[#111111]/95 backdrop-blur-xl`
-- `border border-white/[0.1] rounded-xl`
-- `shadow-lg shadow-black/20`
-- `min-w-[180px] py-2 px-1`
-- Each item: `block px-4 py-2 text-sm text-white/80 hover:text-accent hover:bg-white/5 rounded-lg transition-colors`
+**Action:** Remove this entire question/answer entry from the Warranty section since Noori does not offer repair services.
 
-## Technical Details
+### 3. Currency answer (lines 124-126)
 
-| Area | Current | New |
-|------|---------|-----|
-| Spacer div | Present, creates white gap | Removed |
-| Hero position | Below spacer | Starts at page top, under floating nav |
-| Collections nav | Plain link | Dropdown with chevron |
-| Dropdown items | N/A | "Solitaires" (expandable for future collections) |
-| Dropdown trigger | N/A | Click on desktop, tap on mobile |
-| Outside click | N/A | Closes dropdown |
+**Current:** "All prices are listed in Canadian Dollars (CAD). Currency conversion is handled automatically by your payment provider for international orders."
+
+**New:** "Prices are listed in both USD and CAD. You can switch between currencies using the toggle on our site."
 
