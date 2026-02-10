@@ -57,7 +57,7 @@ const FAQ = () => {
         },
         {
           q: "Do you offer gift wrapping?",
-          a: "Yes! All Noori pieces come in our signature packaging at no extra cost. For special occasions, we offer premium gift wrapping with a personalized message card."
+          a: "Yes! All Noori pieces come beautifully presented in our signature packaging at no extra cost."
         }
       ]
     },
@@ -97,10 +97,6 @@ const FAQ = () => {
           q: "How do I make a warranty claim?",
           a: "Contact us at hello@noori.com with photos of the issue and your proof of purchase. We'll assess the damage and provide repair or replacement options."
         },
-        {
-          q: "Do you offer repairs for non-warranty issues?",
-          a: "Yes, we offer repair services for a reasonable fee. This includes re-polishing and prong re-tipping. Contact us for a quote."
-        }
       ]
     },
     {
@@ -122,7 +118,7 @@ const FAQ = () => {
         },
         {
           q: "What currency are prices listed in?",
-          a: "All prices are listed in Canadian Dollars (CAD). Currency conversion is handled automatically by your payment provider for international orders."
+          a: "Prices are listed in both USD and CAD. You can switch between currencies using the toggle on our site."
         }
       ]
     },
