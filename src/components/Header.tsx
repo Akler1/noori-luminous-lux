@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
@@ -10,6 +10,9 @@ import { cn } from "@/lib/utils";
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
+  const [isMobileCollectionsOpen, setIsMobileCollectionsOpen] = useState(false);
+  const collectionsRef = useRef<HTMLDivElement>(null);
   const { cart, isCartOpen, openCart, closeCart } = useCartActions();
 
   useEffect(() => {
@@ -18,6 +21,16 @@ export const Header = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (collectionsRef.current && !collectionsRef.current.contains(e.target as Node)) {
+        setIsCollectionsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
 
@@ -30,7 +43,7 @@ export const Header = () => {
   return (
     <>
       {/* Spacer for fixed header */}
-      <div className={cn("transition-all duration-300", isScrolled ? "h-[68px] md:h-[80px]" : "h-[80px] md:h-[88px]")} />
+      {/* No spacer - nav floats over hero */}
       <header
         className={cn(
           "fixed top-3 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)] z-50",
@@ -63,12 +76,26 @@ export const Header = () => {
 
           {/* Desktop Navigation - Absolute Center */}
           <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
-            <Link
-              to="/collections/solitaires"
-              className="text-sm font-medium text-white/80 hover:text-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
-            >
-              Collections
-            </Link>
+            <div ref={collectionsRef} className="relative">
+              <button
+                onClick={() => setIsCollectionsOpen(!isCollectionsOpen)}
+                className="flex items-center gap-1 text-sm font-medium text-white/80 hover:text-accent transition-colors"
+              >
+                Collections
+                <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", isCollectionsOpen && "rotate-180")} />
+              </button>
+              {isCollectionsOpen && (
+                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#111111]/95 backdrop-blur-xl border border-white/[0.1] rounded-xl shadow-lg shadow-black/20 min-w-[180px] py-2 px-1 z-[60]">
+                  <Link
+                    to="/collections/solitaires"
+                    onClick={() => setIsCollectionsOpen(false)}
+                    className="block px-4 py-2 text-sm text-white/80 hover:text-accent hover:bg-white/5 rounded-lg transition-colors"
+                  >
+                    Solitaires
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {navItems.map((item) => (
               <Link
@@ -113,13 +140,24 @@ export const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden px-6 pb-5 border-t border-white/[0.08] mt-1 pt-4">
             <nav className="flex flex-col space-y-3">
-              <Link
-                to="/collections/solitaires"
-                className="text-base font-medium py-2 text-white/80 hover:text-accent transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Collections
-              </Link>
+              <div>
+                <button
+                  onClick={() => setIsMobileCollectionsOpen(!isMobileCollectionsOpen)}
+                  className="flex items-center justify-between w-full text-base font-medium py-2 text-white/80 hover:text-accent transition-colors"
+                >
+                  Collections
+                  <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isMobileCollectionsOpen && "rotate-180")} />
+                </button>
+                {isMobileCollectionsOpen && (
+                  <Link
+                    to="/collections/solitaires"
+                    className="block pl-4 py-2 text-sm text-white/60 hover:text-accent transition-colors"
+                    onClick={() => { setIsMobileMenuOpen(false); setIsMobileCollectionsOpen(false); }}
+                  >
+                    Solitaires
+                  </Link>
+                )}
+              </div>
               {navItems.map((item) => (
                 <Link
                   key={item.name}
