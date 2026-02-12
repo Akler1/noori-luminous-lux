@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-/* ── Editable callout positions (percentage-based) ── */
-/* Anchors are % within the canvas (left half). Boxes are % within the full container. */
-const CALLOUTS = [
-  { label: "Main Stone", anchorPctX: 50, anchorPctY: 35, boxPctX: 65, boxPctY: 25 },
-  { label: "Pavé Stones", anchorPctX: 45, anchorPctY: 55, boxPctX: 65, boxPctY: 55 },
-  { label: "Earring Post", anchorPctX: 52, anchorPctY: 78, boxPctX: 65, boxPctY: 78 },
-];
+const SEQUENCE_CONTENT = {
+  header: "Crafted detail.",
+  body: "Each Noori earring features a precision-set main stone surrounded by hand-placed pavé diamonds, secured on a solid 14k gold post. Every element is inspected for symmetry, setting security, and polish before it ships.",
+  chips: ["Main Stone", "Pavé Stones", "Earring Post"],
+};
 
 interface Props {
   basePath: string;
@@ -124,27 +122,36 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-background">
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="container-editorial relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center h-full">
+        <div className="container-editorial relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center h-full">
           {/* Canvas on the left */}
-          <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-elegant">
+          <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-elegant">
             <canvas ref={canvasRef} className="w-full h-full" />
           </div>
 
-          {/* Labels on the right */}
-          <div className="flex flex-col justify-center gap-8">
-            {CALLOUTS.map((c, i) => (
-              <div
-                key={c.label}
-                className="text-lg text-muted-foreground transition-all duration-500"
-                style={{
-                  opacity: showCallouts ? 1 : 0,
-                  transform: `translateX(${showCallouts ? 0 : 20}px)`,
-                  transitionDelay: showCallouts ? `${i * 150}ms` : "0ms",
-                }}
-              >
-                {c.label}
-              </div>
-            ))}
+          {/* Text column on the right — matches StickyStoryRefined */}
+          <div
+            className="flex flex-col justify-center transition-all duration-700"
+            style={{
+              opacity: showCallouts ? 1 : 0,
+              transform: `translateY(${showCallouts ? 0 : 20}px)`,
+            }}
+          >
+            <h2 className="section-header text-foreground mb-6">
+              {SEQUENCE_CONTENT.header}
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6 max-w-lg">
+              {SEQUENCE_CONTENT.body}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SEQUENCE_CONTENT.chips.map((chip) => (
+                <span
+                  key={chip}
+                  className="px-3 py-1 text-xs text-accent border border-accent/30 rounded-full"
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
