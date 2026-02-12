@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { HeroSplitEditorial } from "@/components/HeroSplitEditorial";
 import { StickyStoryRefined } from "@/components/StickyStoryRefined";
 import Product3DCarousel from "@/components/Product3DCarousel";
+import ScrollImageSequence from "@/components/ScrollImageSequence";
 import { SocialFeed } from "@/components/SocialFeed";
 import { FinalCTAForm } from "@/components/FinalCTAForm";
 import { Footer } from "@/components/Footer";
@@ -14,6 +15,13 @@ const Index = () => {
       <main>
         <HeroSplitEditorial />
         <Product3DCarousel />
+        <ScrollImageSequence
+          basePath="/earing_frames"
+          frameCount={49}
+          ext="webp"
+          scrollVh={180}
+          maxWidth={1800}
+        />
         <StickyStoryRefined />
         <SocialFeed />
         <FinalCTAForm />
