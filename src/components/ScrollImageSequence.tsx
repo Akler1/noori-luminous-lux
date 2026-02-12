@@ -118,12 +118,12 @@ const ScrollImageSequence = ({
   }, [drawFrame]);
 
   return (
-    <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-black">
+    <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-background">
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <div className="relative w-full max-w-6xl mx-auto flex items-center h-full px-8">
           {/* Canvas on the left */}
           <div className="relative w-1/2 flex items-center justify-center">
-            <div className="relative w-[50vh] h-[50vh] max-w-[500px]">
+            <div className="relative w-full aspect-square max-w-[550px]">
               <canvas ref={canvasRef} className="w-full h-full" />
             </div>
           </div>
