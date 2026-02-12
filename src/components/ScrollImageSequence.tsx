@@ -64,18 +64,22 @@ const ScrollImageSequence = ({
 
     ctx.clearRect(0, 0, w, h);
 
-    // Cover-fit the image
+    // Contain-fit the image (no cropping)
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = w / h;
-    let sw = w, sh = h, sx = 0, sy = 0;
+    let dw: number, dh: number, dx: number, dy: number;
     if (imgRatio > canvasRatio) {
-      sw = h * imgRatio;
-      sx = (w - sw) / 2;
+      dw = w;
+      dh = w / imgRatio;
+      dx = 0;
+      dy = (h - dh) / 2;
     } else {
-      sh = w / imgRatio;
-      sy = (h - sh) / 2;
+      dh = h;
+      dw = h * imgRatio;
+      dx = (w - dw) / 2;
+      dy = 0;
     }
-    ctx.drawImage(img, sx, sy, sw, sh);
+    ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
   /* ── Scroll handler ── */
@@ -120,20 +124,18 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-background">
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="container-editorial relative flex items-center h-full">
+        <div className="container-editorial relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center h-full">
           {/* Canvas on the left */}
-          <div className="relative w-1/2 flex items-center justify-center">
-            <div className="relative w-full aspect-square max-w-[550px]">
-              <canvas ref={canvasRef} className="w-full h-full" />
-            </div>
+          <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-elegant">
+            <canvas ref={canvasRef} className="w-full h-full" />
           </div>
 
           {/* Labels on the right */}
-          <div className="w-1/2 relative flex flex-col justify-center gap-12 pl-12">
+          <div className="flex flex-col justify-center gap-8">
             {CALLOUTS.map((c, i) => (
               <div
                 key={c.label}
-                className="bg-white border border-black/20 shadow-lg rounded-full px-6 py-2 text-sm text-black whitespace-nowrap w-fit transition-all duration-500"
+                className="text-lg text-muted-foreground transition-all duration-500"
                 style={{
                   opacity: showCallouts ? 1 : 0,
                   transform: `translateX(${showCallouts ? 0 : 20}px)`,
