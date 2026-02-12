@@ -1,44 +1,37 @@
 
 
-# Solitaires Page: Clean Header + Wall-to-Wall Grid (No Material)
+# Fix Solitaires Grid: No Gaps + Updated Product Catalog (8 Products)
 
 ## Overview
 
-Simplify the hero to just the title and restyle the product grid to be edge-to-edge with no gaps, matching the Bulgari reference. No material label added.
+Ensure truly zero gaps between cards and update the product list to 3 earrings, 3 pendants, and 2 bracelets -- all using the Round Brilliant placeholder iframe for the 3D animation.
 
-## Changes
+## Product Catalog Update
 
-### 1. Simplify Hero (Solitaires.tsx)
+The 8 products will be:
 
-Remove:
-- All 6 decorative Sparkles icons
-- The "Signature Collection" badge
-- The description paragraph
-- The Brilliance / Elegance / Grace category dividers
-- The `motion` wrapper
-- Imports for `Sparkles`, `Badge`, `motion`
+**Earrings (3):**
+1. Round Brilliant Stud -- $1,599 (existing iframe)
+2. Emerald Earrings -- $2,299 (existing iframe)
+3. Princess Earrings -- $1,899 (existing iframe)
 
-Keep:
-- Section with top padding (`pt-28 md:pt-36`) for the fixed header
-- "The Solitaires Collection" as a clean centered heading
-- Minimal background
+**Pendants (3):**
+4. Round Pendant -- $2,599
+5. Princess Pendant -- $3,299
+6. Emerald Pendant -- $3,599
 
-### 2. Wall-to-Wall Grid (Solitaires.tsx)
+**Bracelets (2):**
+7. Solitaire Bracelet 1ct -- $2,499
+8. Solitaire Bracelet 2ct -- $3,499
 
-Replace the current grid section:
-- Remove `container`, `px-4`, `max-w-7xl mx-auto` constraints
-- Change to `grid-cols-2 lg:grid-cols-4 gap-0`
-- No padding around the grid -- full bleed edge to edge
+All pendants and bracelets will use the Round Brilliant placeholder iframe URL since they don't have their own 3D models yet.
 
-### 3. Restyle Solitaire3DCard
+## Gap Fix
 
-- Remove `rounded-lg`, `border`, `hover:border`, `hover:shadow` from card wrapper
-- Change 3D viewer background from gradient to flat `bg-[#e8e8e8]`
-- Remove the "Click & Drag to Rotate" hover hint
-- Keep stars, product name, and price as-is
-- No material label
+The grid already has `gap-0`, but there may be residual spacing from card padding/margins or the `Link` wrapper. Will ensure the card component has no outer margin or padding leaking outside the card boundary.
 
 ## Files Modified
 
-- `src/pages/Solitaires.tsx` -- simplified hero, wall-to-wall grid
-- `src/components/Solitaire3DCard.tsx` -- restyled card to match reference
+- `src/pages/Solitaires.tsx` -- Replace the 7-product array with the new 8-product array (3 earrings, 3 pendants, 2 bracelets). Rename "necklace" references to "pendant."
+- `src/components/Solitaire3DCard.tsx` -- Minor check to ensure no outer spacing causes gaps between cards.
+
