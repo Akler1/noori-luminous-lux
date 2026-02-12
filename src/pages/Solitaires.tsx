@@ -2,13 +2,16 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Solitaire3DCard } from "@/components/Solitaire3DCard";
 
+const PLACEHOLDER_IFRAME = "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html";
+
 const solitaireProducts = [
+  // Earrings (3)
   {
     id: "stud-round-14k",
     name: "Round Brilliant Stud",
     price: "$1,599",
     pdpUrl: "/product/stud-round-14k",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 31
   },
@@ -30,41 +33,52 @@ const solitaireProducts = [
     rating: 5,
     reviewCount: 24
   },
+  // Pendants (3)
   {
-    id: "necklace-round-brilliant",
-    name: "Round Necklace",
+    id: "pendant-round",
+    name: "Round Pendant",
     price: "$2,599",
-    pdpUrl: "/product/necklace-round-brilliant",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    pdpUrl: "/product/pendant-round",
+    iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 47
   },
   {
-    id: "necklace-princess",
-    name: "Princess Necklace",
+    id: "pendant-princess",
+    name: "Princess Pendant",
     price: "$3,299",
-    pdpUrl: "/product/necklace-princess-platinum",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    pdpUrl: "/product/pendant-princess",
+    iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 42
   },
   {
-    id: "necklace-emerald",
-    name: "Emerald Necklace",
+    id: "pendant-emerald",
+    name: "Emerald Pendant",
     price: "$3,599",
-    pdpUrl: "/product/necklace-emerald-18k",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    pdpUrl: "/product/pendant-emerald",
+    iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 38
   },
+  // Bracelets (2)
   {
-    id: "bracelet-three-stone",
-    name: "3 Stone Solitaire Bracelet",
+    id: "bracelet-solitaire-1ct",
+    name: "Solitaire Bracelet 1ct",
     price: "$2,499",
-    pdpUrl: "/product/bracelet-three-stone",
-    iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    pdpUrl: "/product/bracelet-solitaire-1ct",
+    iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 29
+  },
+  {
+    id: "bracelet-solitaire-2ct",
+    name: "Solitaire Bracelet 2ct",
+    price: "$3,499",
+    pdpUrl: "/product/bracelet-solitaire-2ct",
+    iframeUrl: PLACEHOLDER_IFRAME,
+    rating: 5,
+    reviewCount: 22
   }
 ];
 
