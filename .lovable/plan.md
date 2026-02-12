@@ -1,57 +1,112 @@
 
 
-# Reorganize Content: Landing Page, About Page, and Contact Page
+# Scroll-Driven Image Sequence (Apple-Style)
 
 ## Overview
 
-Three pages need changes: remove sections from the landing page, move sections to the About page, and strip the Contact page (currently /why-noori) down to just a contact form + info + footer.
+Add a premium scroll-linked earring animation between the Best Sellers grid and the story section. As the user scrolls, 49 pre-uploaded frames play in sequence on a canvas. On the final frame, annotated callouts animate in to highlight product details.
 
-## Changes
+## Placement
 
-### 1. Landing Page (src/pages/Index.tsx)
+The current Index page order is:
 
-Remove the `StoryDuoModules` component (the "Our story" and "Quality without compromise" sections).
+```text
+HeroSplitEditorial
+Product3DCarousel  (Best Sellers)
+  -- NEW: ScrollImageSequence --
+StickyStoryRefined
+SocialFeed
+FinalCTAForm
+Footer
+```
 
-- Remove the import for `StoryDuoModules`
-- Remove `<StoryDuoModules />` from the JSX
+Only `Index.tsx` layout changes; no existing sections are moved or restyled.
 
-### 2. About Page (src/pages/About.tsx)
+## New Component: `src/components/ScrollImageSequence.tsx`
 
-Add two sections from WhyNoori.tsx, inserted before the footer:
+### Props
 
-**A. Lab-Grown Diamonds section** (lines 195-295 of WhyNoori.tsx)
-- The 4Cs comparison grid with visual grade scales
-- The IGI/GCal certification sample card
-- Includes all related data: `fourCs` array
-- Required imports: `Microscope`, `Scale`, `Palette`, `FileCheck`, `Download`, `Gem`, `Sparkles` icons, `Button`
+| Prop | Default | Purpose |
+|------|---------|---------|
+| `basePath` | required | Folder path, e.g. `/earing_frames` |
+| `frameCount` | required | Total frames (49) |
+| `ext` | `"webp"` | File extension |
+| `pad` | `4` | Zero-padding width for filenames |
+| `scrollVh` | `180` | Total scroll height of the wrapper in vh units |
+| `maxWidth` | `1800` | Max canvas width in px |
 
-**B. Sourcing and Craftsmanship section** (lines 297-365 of WhyNoori.tsx)
-- Supply chain diagram (Lab Creation -> Quality Control -> Studio Design -> Packaging -> Delivery)
-- Quality Control Checklist
-- Includes all related data: `supplyChainSteps`, `qualityChecks` arrays
-- Required imports: `Factory`, `ClipboardCheck`, `Package`, `Truck`, `ArrowRight`, `CheckCircle2` icons
+### Frame Preloading
 
-These will be placed after the existing "Why Lab-Grown?" section and before the footer.
+- On mount, create 49 `Image()` objects and set their `src` to each frame URL.
+- Store them in a `useRef` array. No loading UI -- the canvas simply starts rendering once any frame is loaded.
 
-### 3. Contact Page (src/pages/WhyNoori.tsx)
+### Canvas Rendering
 
-Strip everything and replace with:
-- Header
-- A clean contact section with:
-  - Page title ("Contact Us" or similar)
-  - Contact form (Name, Email, Message fields + Submit button)
-  - Contact information (email address, response time, etc.)
-- Footer
+- A `<canvas>` element inside a sticky container (`position: sticky; top: 0; height: 100vh`).
+- The outer wrapper div has `height: ${scrollVh}vh` to create the scroll range.
+- On every scroll tick (via `requestAnimationFrame`):
+  1. Compute `t` = scroll progress within the wrapper section (0 to 1).
+  2. `frameIndex = Math.round(t * (frameCount - 1))`
+  3. Draw that frame to canvas using `drawImage`.
+- Canvas resolution uses `devicePixelRatio` (capped at 2) for sharpness.
+- A `resize` listener redraws at the correct size.
 
-Remove all current content: hero, three pillars, lab-grown diamonds, sourcing, pricing, sustainability, and FAQ sections. Remove all unused imports and data arrays.
+### Last-Frame Callouts
 
-### 4. Nav Label Update (src/components/Header.tsx)
+When `frameIndex === frameCount - 1`, an HTML overlay fades in with 3 callouts:
 
-The nav item already says "Contact" and points to `/why-noori`, so no change needed here.
+1. **Main Stone** -- label pointing to the center diamond
+2. **Pave Stones** -- label pointing to the surrounding stones
+3. **Earring Post** -- label pointing to the post/back
 
-## Files Modified
+Each callout consists of:
+- A small dot at the anchor point (percentage-positioned)
+- A thin leader line (animates `scaleX` from 0 to 1)
+- A rounded info box with backdrop blur and soft shadow
 
-- `src/pages/Index.tsx` -- remove StoryDuoModules
-- `src/pages/About.tsx` -- add Lab-Grown Diamonds and Sourcing sections with all related data/imports
-- `src/pages/WhyNoori.tsx` -- replace with contact form + contact info only
+Positions are defined as editable constants at the top of the file:
 
+```ts
+const CALLOUTS = [
+  { label: "Main Stone", anchorX: 50, anchorY: 35, boxX: 72, boxY: 30 },
+  { label: "Pave Stones", anchorX: 45, anchorY: 55, boxX: 20, boxY: 58 },
+  { label: "Earring Post", anchorX: 52, anchorY: 78, boxX: 75, boxY: 80 },
+];
+```
+
+Animation behavior:
+- **In**: fade + slight translateY, line draws via `scaleX(0 -> 1)`, staggered 120ms apart, ~500ms total
+- **Out**: reverse when scrolling back off the last frame
+
+### Styling
+
+- Tailwind utilities throughout
+- Callout boxes: `bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-full px-4 py-1.5 text-sm text-white/90`
+- Leader lines: `h-px bg-white/40`
+- Dots: `w-2 h-2 rounded-full bg-white/60`
+- No loud colors, no sparkles
+
+## File Changes
+
+### 1. Create `src/components/ScrollImageSequence.tsx`
+
+New component with all logic described above (~180 lines).
+
+### 2. Edit `src/pages/Index.tsx`
+
+- Add import for `ScrollImageSequence`
+- Insert between `Product3DCarousel` and `StickyStoryRefined`:
+
+```tsx
+<Product3DCarousel />
+<ScrollImageSequence
+  basePath="/earing_frames"
+  frameCount={49}
+  ext="webp"
+  scrollVh={180}
+  maxWidth={1800}
+/>
+<StickyStoryRefined />
+```
+
+No other files are modified.
