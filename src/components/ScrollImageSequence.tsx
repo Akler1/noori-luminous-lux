@@ -120,7 +120,7 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-black">
       {/* Sticky canvas container */}
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full h-full" style={{ maxWidth }}>
+        <div className="relative w-[60vh] h-[60vh] max-w-[600px]" style={{ maxWidth }}>
           <canvas
             ref={canvasRef}
             className="w-full h-full"
@@ -138,7 +138,7 @@ const ScrollImageSequence = ({
                 <div key={c.label}>
                   {/* Dot */}
                   <div
-                    className="absolute w-2 h-2 rounded-full bg-white/60 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500"
+                    className="absolute w-2 h-2 rounded-full bg-black -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500"
                     style={{
                       left: `${c.anchorX}%`,
                       top: `${c.anchorY}%`,
@@ -149,7 +149,7 @@ const ScrollImageSequence = ({
 
                   {/* Leader line */}
                   <div
-                    className="absolute h-px bg-white/40 origin-left transition-transform duration-500"
+                    className="absolute h-px bg-black/60 origin-left transition-transform duration-500"
                     style={{
                       left: `${c.anchorX}%`,
                       top: `${c.anchorY}%`,
@@ -161,7 +161,7 @@ const ScrollImageSequence = ({
 
                   {/* Label box */}
                   <div
-                    className="absolute -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-full px-4 py-1.5 text-sm text-white/90 whitespace-nowrap transition-all duration-500"
+                    className="absolute -translate-x-1/2 -translate-y-1/2 bg-white border border-black/20 shadow-lg rounded-full px-4 py-1.5 text-sm text-black whitespace-nowrap transition-all duration-500"
                     style={{
                       left: `${c.boxX}%`,
                       top: `${c.boxY}%`,
