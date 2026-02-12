@@ -120,7 +120,7 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-background">
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full max-w-6xl mx-auto flex items-center h-full px-8">
+        <div className="container-editorial relative flex items-center h-full">
           {/* Canvas on the left */}
           <div className="relative w-1/2 flex items-center justify-center">
             <div className="relative w-full aspect-square max-w-[550px]">
