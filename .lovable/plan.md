@@ -1,37 +1,57 @@
 
 
-# Fix Solitaires Grid: No Gaps + Updated Product Catalog (8 Products)
+# Reorganize Content: Landing Page, About Page, and Contact Page
 
 ## Overview
 
-Ensure truly zero gaps between cards and update the product list to 3 earrings, 3 pendants, and 2 bracelets -- all using the Round Brilliant placeholder iframe for the 3D animation.
+Three pages need changes: remove sections from the landing page, move sections to the About page, and strip the Contact page (currently /why-noori) down to just a contact form + info + footer.
 
-## Product Catalog Update
+## Changes
 
-The 8 products will be:
+### 1. Landing Page (src/pages/Index.tsx)
 
-**Earrings (3):**
-1. Round Brilliant Stud -- $1,599 (existing iframe)
-2. Emerald Earrings -- $2,299 (existing iframe)
-3. Princess Earrings -- $1,899 (existing iframe)
+Remove the `StoryDuoModules` component (the "Our story" and "Quality without compromise" sections).
 
-**Pendants (3):**
-4. Round Pendant -- $2,599
-5. Princess Pendant -- $3,299
-6. Emerald Pendant -- $3,599
+- Remove the import for `StoryDuoModules`
+- Remove `<StoryDuoModules />` from the JSX
 
-**Bracelets (2):**
-7. Solitaire Bracelet 1ct -- $2,499
-8. Solitaire Bracelet 2ct -- $3,499
+### 2. About Page (src/pages/About.tsx)
 
-All pendants and bracelets will use the Round Brilliant placeholder iframe URL since they don't have their own 3D models yet.
+Add two sections from WhyNoori.tsx, inserted before the footer:
 
-## Gap Fix
+**A. Lab-Grown Diamonds section** (lines 195-295 of WhyNoori.tsx)
+- The 4Cs comparison grid with visual grade scales
+- The IGI/GCal certification sample card
+- Includes all related data: `fourCs` array
+- Required imports: `Microscope`, `Scale`, `Palette`, `FileCheck`, `Download`, `Gem`, `Sparkles` icons, `Button`
 
-The grid already has `gap-0`, but there may be residual spacing from card padding/margins or the `Link` wrapper. Will ensure the card component has no outer margin or padding leaking outside the card boundary.
+**B. Sourcing and Craftsmanship section** (lines 297-365 of WhyNoori.tsx)
+- Supply chain diagram (Lab Creation -> Quality Control -> Studio Design -> Packaging -> Delivery)
+- Quality Control Checklist
+- Includes all related data: `supplyChainSteps`, `qualityChecks` arrays
+- Required imports: `Factory`, `ClipboardCheck`, `Package`, `Truck`, `ArrowRight`, `CheckCircle2` icons
+
+These will be placed after the existing "Why Lab-Grown?" section and before the footer.
+
+### 3. Contact Page (src/pages/WhyNoori.tsx)
+
+Strip everything and replace with:
+- Header
+- A clean contact section with:
+  - Page title ("Contact Us" or similar)
+  - Contact form (Name, Email, Message fields + Submit button)
+  - Contact information (email address, response time, etc.)
+- Footer
+
+Remove all current content: hero, three pillars, lab-grown diamonds, sourcing, pricing, sustainability, and FAQ sections. Remove all unused imports and data arrays.
+
+### 4. Nav Label Update (src/components/Header.tsx)
+
+The nav item already says "Contact" and points to `/why-noori`, so no change needed here.
 
 ## Files Modified
 
-- `src/pages/Solitaires.tsx` -- Replace the 7-product array with the new 8-product array (3 earrings, 3 pendants, 2 bracelets). Rename "necklace" references to "pendant."
-- `src/components/Solitaire3DCard.tsx` -- Minor check to ensure no outer spacing causes gaps between cards.
+- `src/pages/Index.tsx` -- remove StoryDuoModules
+- `src/pages/About.tsx` -- add Lab-Grown Diamonds and Sourcing sections with all related data/imports
+- `src/pages/WhyNoori.tsx` -- replace with contact form + contact info only
 
