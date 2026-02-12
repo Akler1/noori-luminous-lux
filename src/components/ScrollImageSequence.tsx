@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /* ── Editable callout positions (percentage-based) ── */
+/* Anchors are % within the canvas (left half). Boxes are % within the full container. */
 const CALLOUTS = [
-  { label: "Main Stone", anchorX: 50, anchorY: 35, boxX: 72, boxY: 30 },
-  { label: "Pavé Stones", anchorX: 45, anchorY: 55, boxX: 20, boxY: 58 },
-  { label: "Earring Post", anchorX: 52, anchorY: 78, boxX: 75, boxY: 80 },
+  { label: "Main Stone", anchorPctX: 50, anchorPctY: 35, boxPctX: 65, boxPctY: 25 },
+  { label: "Pavé Stones", anchorPctX: 45, anchorPctY: 55, boxPctX: 65, boxPctY: 55 },
+  { label: "Earring Post", anchorPctX: 52, anchorPctY: 78, boxPctX: 65, boxPctY: 78 },
 ];
 
 interface Props {
@@ -118,63 +119,30 @@ const ScrollImageSequence = ({
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-black">
-      {/* Sticky canvas container */}
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-[60vh] h-[60vh] max-w-[600px]" style={{ maxWidth }}>
-          <canvas
-            ref={canvasRef}
-            className="w-full h-full"
-          />
+        <div className="relative w-full max-w-6xl mx-auto flex items-center h-full px-8">
+          {/* Canvas on the left */}
+          <div className="relative w-1/2 flex items-center justify-center">
+            <div className="relative w-[50vh] h-[50vh] max-w-[500px]">
+              <canvas ref={canvasRef} className="w-full h-full" />
+            </div>
+          </div>
 
-          {/* Callout overlay */}
-          <div className="absolute inset-0 pointer-events-none">
-            {CALLOUTS.map((c, i) => {
-              const dx = c.boxX - c.anchorX;
-              const dy = c.boxY - c.anchorY;
-              const lineLen = Math.sqrt(dx * dx + dy * dy);
-              const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
-              return (
-                <div key={c.label}>
-                  {/* Dot */}
-                  <div
-                    className="absolute w-2 h-2 rounded-full bg-black -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500"
-                    style={{
-                      left: `${c.anchorX}%`,
-                      top: `${c.anchorY}%`,
-                      opacity: showCallouts ? 1 : 0,
-                      transitionDelay: showCallouts ? `${i * 120}ms` : "0ms",
-                    }}
-                  />
-
-                  {/* Leader line */}
-                  <div
-                    className="absolute h-px bg-black/60 origin-left transition-transform duration-500"
-                    style={{
-                      left: `${c.anchorX}%`,
-                      top: `${c.anchorY}%`,
-                      width: `${lineLen}%`,
-                      transform: `rotate(${angle}deg) scaleX(${showCallouts ? 1 : 0})`,
-                      transitionDelay: showCallouts ? `${i * 120}ms` : "0ms",
-                    }}
-                  />
-
-                  {/* Label box */}
-                  <div
-                    className="absolute -translate-x-1/2 -translate-y-1/2 bg-white border border-black/20 shadow-lg rounded-full px-4 py-1.5 text-sm text-black whitespace-nowrap transition-all duration-500"
-                    style={{
-                      left: `${c.boxX}%`,
-                      top: `${c.boxY}%`,
-                      opacity: showCallouts ? 1 : 0,
-                      transform: `translate(-50%, -50%) translateY(${showCallouts ? 0 : 8}px)`,
-                      transitionDelay: showCallouts ? `${i * 120 + 100}ms` : "0ms",
-                    }}
-                  >
-                    {c.label}
-                  </div>
-                </div>
-              );
-            })}
+          {/* Labels on the right */}
+          <div className="w-1/2 relative flex flex-col justify-center gap-12 pl-12">
+            {CALLOUTS.map((c, i) => (
+              <div
+                key={c.label}
+                className="bg-white border border-black/20 shadow-lg rounded-full px-6 py-2 text-sm text-black whitespace-nowrap w-fit transition-all duration-500"
+                style={{
+                  opacity: showCallouts ? 1 : 0,
+                  transform: `translateX(${showCallouts ? 0 : 20}px)`,
+                  transitionDelay: showCallouts ? `${i * 150}ms` : "0ms",
+                }}
+              >
+                {c.label}
+              </div>
+            ))}
           </div>
         </div>
       </div>
