@@ -39,9 +39,9 @@ export const Solitaire3DCard = ({
 
   return (
     <Link to={pdpUrl} className="group block">
-      <div className="bg-card rounded-lg overflow-hidden border border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
+        <div className="overflow-hidden">
         {/* 3D Viewer Container */}
-        <div className="aspect-square relative bg-gradient-to-br from-background to-muted">
+        <div className="aspect-square relative bg-[#e8e8e8]">
           {iframeUrl ? (
             <iframe
               src={iframeUrl}
@@ -73,10 +73,6 @@ export const Solitaire3DCard = ({
             </div>
           )}
           
-          {/* Interaction hint */}
-          <div className="absolute bottom-3 right-3 text-xs text-foreground/50 bg-background/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-            Click & Drag to Rotate
-          </div>
         </div>
 
         {/* Product Info */}
