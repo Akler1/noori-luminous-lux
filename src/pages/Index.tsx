@@ -16,11 +16,10 @@ const Index = () => {
         <HeroSplitEditorial />
         <Product3DCarousel />
         <ScrollImageSequence
-          basePath="/earing_frames"
-          frameCount={49}
+          basePath="/earing_frames_final"
+          frameCount={46}
           ext="webp"
           scrollVh={180}
-          maxWidth={1800}
         />
         <StickyStoryRefined />
         <SocialFeed />
