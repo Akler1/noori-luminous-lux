@@ -12,7 +12,6 @@ interface Props {
   ext?: string;
   pad?: number;
   scrollVh?: number;
-  maxWidth?: number;
 }
 
 const ScrollImageSequence = ({
@@ -21,7 +20,6 @@ const ScrollImageSequence = ({
   ext = "webp",
   pad = 4,
   scrollVh = 180,
-  maxWidth = 1800,
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -62,20 +60,20 @@ const ScrollImageSequence = ({
 
     ctx.clearRect(0, 0, w, h);
 
-    // Contain-fit the image (no cropping)
+    // Cover-fit the image (fill entire canvas, crop overflow)
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = w / h;
     let dw: number, dh: number, dx: number, dy: number;
     if (imgRatio > canvasRatio) {
-      dw = w;
-      dh = w / imgRatio;
-      dx = 0;
-      dy = (h - dh) / 2;
-    } else {
       dh = h;
       dw = h * imgRatio;
       dx = (w - dw) / 2;
       dy = 0;
+    } else {
+      dw = w;
+      dh = w / imgRatio;
+      dx = 0;
+      dy = (h - dh) / 2;
     }
     ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
@@ -120,33 +118,30 @@ const ScrollImageSequence = ({
   }, [drawFrame]);
 
   return (
-    <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative bg-background">
-      <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="container-editorial relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center h-full">
-          {/* Canvas on the left */}
-          <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-elegant">
-            <canvas ref={canvasRef} className="w-full h-full" />
-          </div>
+    <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
+      <div className="sticky top-0 h-screen w-full relative overflow-hidden">
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-          {/* Text column on the right — matches StickyStoryRefined */}
-          <div
-            className="flex flex-col justify-center transition-all duration-700"
-            style={{
-              opacity: showCallouts ? 1 : 0,
-              transform: `translateY(${showCallouts ? 0 : 20}px)`,
-            }}
-          >
-            <h2 className="section-header text-foreground mb-6">
+        {/* Text overlay at bottom */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+          style={{
+            opacity: showCallouts ? 1 : 0,
+            transform: `translateY(${showCallouts ? 0 : 20}px)`,
+          }}
+        >
+          <div className="max-w-2xl">
+            <h2 className="section-header text-white mb-4">
               {SEQUENCE_CONTENT.header}
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6 max-w-lg">
+            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
               {SEQUENCE_CONTENT.body}
             </p>
             <div className="flex flex-wrap gap-2">
               {SEQUENCE_CONTENT.chips.map((chip) => (
                 <span
                   key={chip}
-                  className="px-3 py-1 text-xs text-accent border border-accent/30 rounded-full"
+                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
                 >
                   {chip}
                 </span>
