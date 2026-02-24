@@ -1,8 +1,26 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const SEQUENCE_CONTENT = {
+const LABELS = [
+  {
+    title: "Main Stone",
+    body: "Top 2% of stones. Colorless D-F, VS1+ clarity.",
+    top: "12%", left: "22%",
+  },
+  {
+    title: "Pavé Stones",
+    body: "Hand-placed. Each inspected for symmetry and setting security.",
+    top: "55%", left: "68%",
+  },
+  {
+    title: "14k Gold Setting",
+    body: "Solid 14k gold. Finished and polished to a high-jewellery standard.",
+    top: "78%", left: "60%",
+  },
+];
+
+const MOBILE_CONTENT = {
   header: "Crafted detail.",
-  body: "Each Noori earring features a precision-set main stone surrounded by hand-placed pavé diamonds, secured on a solid 14k gold post. Every element is inspected for symmetry, setting security, and polish before it ships.",
+  body: "Each Noori earring features a precision-set main stone surrounded by hand-placed pavé diamonds, secured on a solid 14k gold post.",
   chips: ["Main Stone", "Pavé Stones", "Earring Post"],
 };
 
@@ -122,9 +140,34 @@ const ScrollImageSequence = ({
       <div className="sticky top-0 h-screen w-full relative overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-        {/* Text overlay at bottom */}
+        {/* Desktop: positioned labels */}
+        {LABELS.map((label, index) => (
+          <div
+            key={label.title}
+            className="absolute hidden lg:flex items-start gap-2 pointer-events-none transition-all duration-700"
+            style={{
+              top: label.top,
+              left: label.left,
+              opacity: showCallouts ? 1 : 0,
+              transform: `translateY(${showCallouts ? 0 : 12}px)`,
+              transitionDelay: `${index * 200}ms`,
+            }}
+          >
+            <div className="w-2 h-2 rounded-full bg-white border border-white/50 shadow-lg mt-1.5 flex-shrink-0" />
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/90">
+                {label.title}
+              </h4>
+              <p className="text-xs text-muted-foreground leading-snug max-w-[180px]">
+                {label.body}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        {/* Mobile: bottom overlay fallback */}
         <div
-          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700 lg:hidden"
           style={{
             opacity: showCallouts ? 1 : 0,
             transform: `translateY(${showCallouts ? 0 : 20}px)`,
@@ -132,13 +175,13 @@ const ScrollImageSequence = ({
         >
           <div className="max-w-2xl">
             <h2 className="section-header text-white mb-4">
-              {SEQUENCE_CONTENT.header}
+              {MOBILE_CONTENT.header}
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-              {SEQUENCE_CONTENT.body}
+              {MOBILE_CONTENT.body}
             </p>
             <div className="flex flex-wrap gap-2">
-              {SEQUENCE_CONTENT.chips.map((chip) => (
+              {MOBILE_CONTENT.chips.map((chip) => (
                 <span
                   key={chip}
                   className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
