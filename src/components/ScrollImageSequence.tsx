@@ -13,7 +13,7 @@ const LABELS = [
     title: "Pavé Stones",
     body: "Hand-placed. Each inspected for symmetry and setting security.",
     icon: Sparkles,
-    dot: { top: 42, left: 50 },
+    dot: { top: 30, left: 38 },
     card: { top: 35, left: 72 },
   },
   {
