@@ -275,8 +275,8 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       // Fade mask canvas
       const now = Date.now();
       const timeSinceMove = now - lastMoveTimeRef.current;
-      const isIdle = timeSinceMove > 150;
-      const fadeFactor = isIdle ? 0.92 : 0.98;
+      const isIdle = timeSinceMove > 300;
+      const fadeFactor = isIdle ? 0.96 : 0.99;
       
       // Apply fade by reducing alpha
       const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
