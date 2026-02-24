@@ -1,33 +1,18 @@
 
 
-# Update Scroll Image Sequence: New Frames + Full-Screen Layout
+# Slow Down Sketch Reveal Fade
 
-## Changes
+## What changes
+A single file change in `src/components/HeroSketchReveal.tsx` (lines 278-279):
 
-### 1. Update frame source (Index.tsx)
-- Change `basePath` from `/earing_frames` to `/earing_frames_final`
-- Change `frameCount` from `49` to `46` (the new folder has 46 frames)
+- **Idle threshold**: Increase from `150ms` to `300ms` -- the sketch stays fully visible for twice as long before starting to fade
+- **Fade factors**: Slow the per-frame alpha decay:
+  - Idle fade: `0.92` to `0.96` (fades roughly half as fast)
+  - Active fade: `0.98` to `0.99` (stays nearly opaque while moving)
 
-### 2. Make the image full-screen (ScrollImageSequence.tsx)
-Remove the two-column grid layout so the canvas fills the entire viewport. The text content will overlay on top of the image (bottom area) instead of sitting in a side column.
+These three small number changes together make the revealed sketch persist about twice as long before disappearing.
 
-**Layout change:**
-- Remove `container-editorial` and the grid structure
-- Canvas becomes full-screen: `w-full h-full` filling the entire sticky viewport
-- Draw the image using **cover-fit** (not contain) so it fills edge to edge with no gaps
-- Text content overlays at the bottom of the screen with a subtle gradient backdrop for readability
+## Technical detail
 
-### Technical Details
-
-**Index.tsx (line 18-24):**
-- `basePath="/earing_frames_final"` and `frameCount={46}`
-
-**ScrollImageSequence.tsx layout (lines 122-158):**
-- Sticky container: `h-screen w-full relative`
-- Canvas: absolute, fills entire screen
-- Text overlay: absolute bottom, with gradient backdrop (`bg-gradient-to-t from-black/60 to-transparent`), text in white
-- Heading, body, chips retain their structure but switch to light text colors for contrast against the image
-
-**ScrollImageSequence.tsx drawing (lines 65-80):**
-- Switch from contain-fit back to cover-fit so the earring fills the entire screen without any empty space around it
+The animation loop runs at ~60fps and multiplies each mask pixel's alpha by the fade factor every frame. A factor of `0.92` means alpha drops to ~1% in about 55 frames (~0.9s). Changing to `0.96` extends that to ~110 frames (~1.8s), effectively doubling the visible duration.
 
