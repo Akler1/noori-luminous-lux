@@ -125,25 +125,26 @@ const ScrollImageSequence = ({
 
         {/* ── Desktop: Right-side overlay cards ── */}
         <div
-          className="absolute right-[4%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-20"
-          style={{ maxWidth: "200px" }}
+          className="absolute right-[5%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-5 z-20"
+          style={{ maxWidth: "280px" }}
         >
           {LABELS.map((label, idx) => (
             <div
               key={label.title}
-              className="card-luxury p-3 text-center"
+              className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
               style={{
                 opacity: showCallouts ? 1 : 0,
-                transform: `translateY(${showCallouts ? 0 : 12}px)`,
-                transition: `all 0.7s cubic-bezier(0.25,0.46,0.45,0.94) ${idx * 150}ms`,
-                boxShadow: "var(--shadow-elegant)",
+                transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
+                transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
               }}
             >
-              <label.icon className="w-5 h-5 text-accent mx-auto mb-2" />
-              <h4 className="text-xs font-serif font-semibold uppercase tracking-wider text-card-foreground/90">
+              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                <label.icon className="w-6 h-6 text-accent" />
+              </div>
+              <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
                 {label.title}
               </h4>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+              <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
                 {label.body}
               </p>
             </div>
