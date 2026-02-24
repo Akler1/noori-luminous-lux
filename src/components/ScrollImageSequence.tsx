@@ -1,23 +1,27 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Gem, Sparkles, Crown } from "lucide-react";
 
 const LABELS = [
   {
     title: "Main Stone",
     body: "Top 2% of stones. Colorless D-F, VS1+ clarity.",
-    dot: { top: 30, left: 42 },
+    icon: Gem,
+    dot: { top: 20, left: 32 },
     card: { top: 8, left: 8 },
   },
   {
     title: "Pavé Stones",
     body: "Hand-placed. Each inspected for symmetry and setting security.",
-    dot: { top: 52, left: 55 },
-    card: { top: 48, left: 72 },
+    icon: Sparkles,
+    dot: { top: 38, left: 58 },
+    card: { top: 35, left: 72 },
   },
   {
     title: "14k Gold Setting",
     body: "Solid 14k gold. Finished and polished to a high-jewellery standard.",
-    dot: { top: 72, left: 48 },
-    card: { top: 75, left: 72 },
+    icon: Crown,
+    dot: { top: 72, left: 68 },
+    card: { top: 68, left: 78 },
   },
 ];
 
@@ -219,11 +223,12 @@ const ScrollImageSequence = ({
               transition: `all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 200 + 200}ms`,
             }}
           >
-            <div className="bg-card border border-border/50 rounded-xl px-4 py-3" style={{ boxShadow: "var(--shadow-elegant)" }}>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-card-foreground/90">
+            <div className="card-luxury p-4 text-center" style={{ boxShadow: "var(--shadow-elegant)" }}>
+              <label.icon className="w-5 h-5 text-accent mx-auto mb-2" />
+              <h4 className="text-xs font-serif font-semibold uppercase tracking-wider text-card-foreground/90">
                 {label.title}
               </h4>
-              <p className="text-xs text-muted-foreground leading-snug max-w-[200px] mt-0.5">
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-[180px] mt-1">
                 {label.body}
               </p>
             </div>
