@@ -1,21 +1,7 @@
 import { motion } from "framer-motion";
-import cutClarityDiamonds from "@/assets/cut-clarity-diamonds.png";
-import necklaceHero from "@/assets/necklace-hero.jpg";
 import braceletHero from "@/assets/bracelet-hero.jpg";
 
 const storyBeats = [
-  {
-    header: "Quality, without shortcuts.",
-    body: "Noori diamonds are lab grown and chemically identical to mined diamonds, with the same crystal structure, hardness, and brilliance. From the stones we evaluate, we approve only the top 2% for Noori, prioritizing colorless D to F and VS1 clarity or better. Each piece is set in solid 14k or 18k gold, then finished and inspected for symmetry, setting security, and polish before it ships.",
-    image: cutClarityDiamonds,
-    chips: ["Top 2%", "D-F colour", "VS1+ clarity"],
-  },
-  {
-    header: "A higher standard, made wearable.",
-    body: "Noori began with a simple goal: create jewelry with true high jewellery presence, refined lines, substantial weight, and finishing you can feel. We use modern diamond innovation and disciplined production to remove the usual barriers, while keeping the standard uncompromising. The result is pieces that read unmistakably luxurious and wear effortlessly, day after day.",
-    image: necklaceHero,
-    chips: ["High jewellery presence", "Refined lines", "Effortless wear"],
-  },
   {
     header: "Brilliance with impact.",
     body: "Beauty should do more than shine. That is why a portion of proceeds from every Noori purchase is donated to UNICEF, supporting efforts that help keep children safe and in school, so more kids can move away from dangerous labor and toward classrooms, opportunity, and a future of their own.",
