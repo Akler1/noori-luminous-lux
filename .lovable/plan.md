@@ -1,74 +1,65 @@
 
-# Add Positioned Labels to Earring Animation Last Frame
+
+# Add Connecting Lines from Dots to Label Cards
 
 ## Overview
-Add three floating labels that appear on the last frame of the scroll animation, each positioned to point at a specific part of the earring with relevant brand copy.
+Replace the current simple label layout with a two-part system: a **dot marker** positioned on the earring part, an **SVG line/arrow** connecting the dot to the card, and a **styled card** matching the site's `card-luxury` aesthetic.
 
-## Label Positions and Content
+## Changes (single file: `src/components/ScrollImageSequence.tsx`)
 
-Based on the last frame layout, the three labels will be positioned as follows:
+### 1. Update LABELS data structure
+Each label gets two positions: a `dot` position (where the marker sits on the earring) and a `card` position (where the info card renders). Also add an `anchor` direction hint so lines route cleanly.
 
-1. **Main Stone** (top-left area, near the large diamond)
-   - Title: "Main Stone"
-   - Copy: "Top 2% of stones. Colorless D-F, VS1+ clarity."
-   - Position: ~25% from left, ~12% from top
-
-2. **Pave Stones** (right side, near the scattered small diamonds)
-   - Title: "Pave Stones"  
-   - Copy: "Hand-placed. Each inspected for symmetry and setting security."
-   - Position: ~70% from left, ~55% from top
-
-3. **Setting and Post** (center-right, near the gold post)
-   - Title: "14k Gold Setting"
-   - Copy: "Solid 14k gold. Finished and polished to a high-jewellery standard."
-   - Position: ~65% from left, ~80% from top
-
-## Design
-Each label will be a small, elegant callout with:
-- A thin connecting line or dot marker pointing to the part
-- Semi-transparent dark backdrop pill for readability
-- Title in small caps or bold, body in lighter weight
-- Staggered fade-in animation (each label appears with a slight delay after the last frame is reached)
-
-## Technical Details (single file: `src/components/ScrollImageSequence.tsx`)
-
-### Data structure
-Replace `SEQUENCE_CONTENT` with a `LABELS` array:
 ```
 const LABELS = [
   {
     title: "Main Stone",
     body: "Top 2% of stones. Colorless D-F, VS1+ clarity.",
-    top: "12%", left: "22%",
+    dot: { top: "30%", left: "42%" },
+    card: { top: "8%", left: "8%" },
   },
   {
     title: "Pave Stones",
     body: "Hand-placed. Each inspected for symmetry and setting security.",
-    top: "55%", left: "68%",
+    dot: { top: "52%", left: "55%" },
+    card: { top: "48%", left: "72%" },
   },
   {
     title: "14k Gold Setting",
     body: "Solid 14k gold. Finished and polished to a high-jewellery standard.",
-    top: "78%", left: "60%",
+    dot: { top: "72%", left: "48%" },
+    card: { top: "75%", left: "72%" },
   },
 ];
 ```
 
-### Layout changes
-- Remove the bottom gradient overlay with header/body/chips
-- Add absolutely positioned label elements over the canvas, each with:
-  - A small circular dot (4-5px, white with subtle border)
-  - A text block next to the dot with title and short description
-  - `pointer-events-none` so they don't interfere with scrolling
-  - Individual `transition-all duration-700` with staggered `transition-delay` (0ms, 200ms, 400ms) for sequential reveal
-  - Controlled by the existing `showCallouts` state (appears when `idx === frameCount - 1`)
+### 2. Render structure per label
+For each label, render three elements:
+- **Dot**: A small pulsing circle positioned directly on the earring part (`w-3 h-3 rounded-full bg-white border-2 border-white/80 shadow-lg`)
+- **SVG connector line**: An absolutely positioned SVG that draws a line from the dot to the card, ending with a small arrowhead. Uses `stroke: white`, thin line (1.5px), with a subtle drop shadow
+- **Card**: Styled to match the site's card aesthetic -- `bg-card border border-border/50 rounded-xl shadow-elegant` (matching `card-luxury` class), with the title in uppercase tracking and the body in muted foreground text
 
-### Styling per label
-- Dot: `w-2 h-2 rounded-full bg-white border border-white/50 shadow-lg`
-- Container: `absolute flex items-start gap-2`
-- Title: `text-xs font-semibold uppercase tracking-wider text-foreground/90`
-- Body: `text-xs text-muted-foreground leading-snug max-w-[180px]`
-- Background pill: `bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md`
+### 3. SVG line implementation
+Use a full-screen SVG overlay (`absolute inset-0 w-full h-full pointer-events-none`) with percentage-based coordinates. Each line is drawn from the dot center to the nearest edge of the card. A small triangular arrowhead marker is defined in SVG `<defs>` and applied to the line end.
 
-### Mobile handling
-On mobile (`sm:` and below), the labels may overlap. We will hide labels on mobile and fall back to the existing bottom overlay with the "Crafted detail" header and chips. Use a `hidden lg:flex` on the labels and `lg:hidden` on the bottom text overlay so both experiences are covered.
+### 4. Card styling
+Cards will use the existing `card-luxury` pattern from the site:
+- `bg-card border border-border/50 rounded-xl shadow-elegant`
+- Padding: `px-4 py-3`
+- Title: `text-xs font-semibold uppercase tracking-wider`
+- Body: `text-xs text-muted-foreground leading-snug max-w-[200px]`
+
+### 5. Animation
+All three elements (dot, line, card) share the same staggered fade-in:
+- `transition-all duration-700`
+- `transitionDelay: index * 200ms`
+- Dot gets a subtle pulse animation when visible
+- Line draws in using SVG `stroke-dasharray` / `stroke-dashoffset` transition
+
+### 6. Mobile
+No changes to mobile -- the bottom overlay fallback remains as-is with `lg:hidden`. The dots, lines, and cards use `hidden lg:block`.
+
+## Technical notes
+- The SVG overlay sits between the canvas and the cards in z-order
+- Dot and card positions will likely need fine-tuning once visible on the actual last frame -- initial values are estimates
+- The connecting lines use percentage-based SVG viewBox (`viewBox="0 0 100 100"` with `preserveAspectRatio="none"`) so they scale with the viewport
