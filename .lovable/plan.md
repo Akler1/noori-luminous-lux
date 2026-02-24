@@ -1,48 +1,67 @@
 
 
-# Fix Dot Positions and Add Scroll Hold Zone
+# Overlay Cards on Right Side (Keep Hold Zone)
 
-## Problems identified from screenshots
-1. **Dots not on correct parts**: In the final exploded frame, the main diamond is in the upper-left, but the dot is too far right. The pave stones dot is on the gold setting area, not on the scattered small diamonds. The gold setting dot is near the post tip but should be on the gold prong basket.
-2. **No hold zone**: Once the animation hits the last frame, the callouts appear but the user immediately scrolls past the section. The cards need to stay visible for a reading period.
+## What Changes
 
-## Changes (single file: `src/components/ScrollImageSequence.tsx`)
+### 1. Remove dots, lines, SVG connectors
+All dot markers, pulse rings, SVG lines, and arrowheads will be removed entirely. The cards will speak for themselves.
 
-### 1. Correct dot positions (based on screenshot of last frame)
-From the exploded view screenshot:
-- **Main Stone** (large diamond, upper-left): dot moves to `top: 15, left: 28`
-- **Pave Stones** (scattered small diamonds, center area): dot moves to `top: 42, left: 50`
-- **14k Gold Setting** (gold prong basket, center): dot moves to `top: 30, left: 45`
+### 2. Cards overlaid on the right side of the image
+Three compact cards will be absolutely positioned as a vertical stack on the right side of the full-screen canvas -- still overlaid on top of the earring image, same background, no separate section. Positioned at roughly `right: 4%`, vertically centered.
 
-Card positions stay roughly similar but adjust to avoid overlapping the earring parts.
+### 3. Compact card sizing (~25% of viewport width)
+- Max-width of ~200px
+- Small padding (`p-3`)
+- Smaller text (title: `text-xs`, body: `text-xs`)
+- Keeps `card-luxury` styling, icon, title, body
 
-### 2. Add scroll hold zone
-Increase `scrollVh` from 180 to 300 and modify the scroll-to-frame mapping so that:
-- The first 60% of scroll distance maps to all 46 frames (the animation plays)
-- The last 40% holds on the final frame with callouts visible
+### 4. Staggered fade-in animation
+When `showCallouts` triggers, cards animate in with staggered delays (0ms, 150ms, 300ms) using opacity + translateY transition.
 
-This gives the user a generous scroll window where the cards, dots, and lines stay on screen for reading.
+### 5. Hold zone stays exactly as-is
+- `scrollVh` remains 300
+- `animationEnd` remains 0.6
+- No changes to scroll logic whatsoever
 
-The logic change in the scroll handler:
+### 6. Mobile fallback unchanged
+Bottom overlay text block stays the same.
+
+## Technical Details
+
+**File: `src/components/ScrollImageSequence.tsx`**
+
+- Remove `dot` and `card` fields from LABELS array (keep title, body, icon only)
+- Delete SVG section (lines 144-184)
+- Delete dot markers section (lines 186-212)
+- Replace individually-positioned cards (lines 214-238) with a single absolutely-positioned right-side container:
+
+```tsx
+<div
+  className="absolute right-[4%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-20"
+  style={{ maxWidth: "200px" }}
+>
+  {LABELS.map((label, idx) => (
+    <div
+      key={label.title}
+      className="card-luxury p-3 text-center"
+      style={{
+        opacity: showCallouts ? 1 : 0,
+        transform: `translateY(${showCallouts ? 0 : 12}px)`,
+        transition: `all 0.7s cubic-bezier(0.25,0.46,0.45,0.94) ${idx * 150}ms`,
+        boxShadow: "var(--shadow-elegant)",
+      }}
+    >
+      <label.icon className="w-5 h-5 text-accent mx-auto mb-2" />
+      <h4 className="text-xs font-serif font-semibold uppercase tracking-wider">
+        {label.title}
+      </h4>
+      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+        {label.body}
+      </p>
+    </div>
+  ))}
+</div>
 ```
-// Map only first 60% of scroll to frames
-const animationEnd = 0.6;
-const rawT = Math.min(1, Math.max(0, -rect.top / scrollRange));
-const t = Math.min(1, rawT / animationEnd);
-const idx = Math.round(t * (frameCount - 1));
 
-// Show callouts for the last 40% hold zone
-setShowCallouts(rawT >= animationEnd);
-```
-
-### 3. Updated coordinates summary
-| Label | Dot (on earring part) | Card |
-|-------|----------------------|------|
-| Main Stone | top:15, left:28 | top:8, left:8 |
-| Pave Stones | top:42, left:50 | top:35, left:72 |
-| 14k Gold Setting | top:30, left:45 | top:68, left:78 |
-
-### 4. No other changes
-- Card styling stays as-is (card-luxury with icons)
-- SVG lines auto-adjust to new coordinates
-- Mobile fallback unchanged
+- All scroll logic (animationEnd, scrollVh, hold zone) remains untouched
