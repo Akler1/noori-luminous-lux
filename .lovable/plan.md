@@ -1,65 +1,43 @@
 
 
-# Add Connecting Lines from Dots to Label Cards
+# Match Card Style and Fix Dot Positions
 
-## Overview
-Replace the current simple label layout with a two-part system: a **dot marker** positioned on the earring part, an **SVG line/arrow** connecting the dot to the card, and a **styled card** matching the site's `card-luxury` aesthetic.
+## What's wrong now
+Based on the screenshot of the last frame:
+- The **Main Stone** dot is on the gold prongs/setting area instead of on the large diamond (top-left)
+- The **Pave Stones** dot is on the gold post instead of near the small scattered diamonds
+- The **14k Gold Setting** dot should be on the gold post
+- The cards don't match the About page's `card-luxury` style (no icons, no centered layout, missing accent colors)
 
-## Changes (single file: `src/components/ScrollImageSequence.tsx`)
+## Corrected dot positions (from screenshot analysis)
+| Label | Current dot | Corrected dot | Card position |
+|-------|------------|---------------|---------------|
+| Main Stone | top:30 left:42 | top:20 left:32 | top:8 left:8 (keep) |
+| Pave Stones | top:52 left:55 | top:38 left:58 | top:35 left:72 (adjusted) |
+| 14k Gold Setting | top:72 left:48 | top:72 left:68 | top:68 left:78 (adjusted) |
 
-### 1. Update LABELS data structure
-Each label gets two positions: a `dot` position (where the marker sits on the earring) and a `card` position (where the info card renders). Also add an `anchor` direction hint so lines route cleanly.
+## Card style updates (matching About page `card-luxury`)
+The About page cards use:
+- `card-luxury p-8 text-center` class
+- Icon in `text-accent` color (the golden/amber brand color)
+- Title in `font-serif`
+- Description in `text-muted-foreground`
 
-```
-const LABELS = [
-  {
-    title: "Main Stone",
-    body: "Top 2% of stones. Colorless D-F, VS1+ clarity.",
-    dot: { top: "30%", left: "42%" },
-    card: { top: "8%", left: "8%" },
-  },
-  {
-    title: "Pave Stones",
-    body: "Hand-placed. Each inspected for symmetry and setting security.",
-    dot: { top: "52%", left: "55%" },
-    card: { top: "48%", left: "72%" },
-  },
-  {
-    title: "14k Gold Setting",
-    body: "Solid 14k gold. Finished and polished to a high-jewellery standard.",
-    dot: { top: "72%", left: "48%" },
-    card: { top: "75%", left: "72%" },
-  },
-];
-```
+Each card will get:
+- **Main Stone**: `Gem` icon from lucide-react
+- **Pave Stones**: `Sparkles` icon
+- **14k Gold Setting**: `Crown` or similar icon
 
-### 2. Render structure per label
-For each label, render three elements:
-- **Dot**: A small pulsing circle positioned directly on the earring part (`w-3 h-3 rounded-full bg-white border-2 border-white/80 shadow-lg`)
-- **SVG connector line**: An absolutely positioned SVG that draws a line from the dot to the card, ending with a small arrowhead. Uses `stroke: white`, thin line (1.5px), with a subtle drop shadow
-- **Card**: Styled to match the site's card aesthetic -- `bg-card border border-border/50 rounded-xl shadow-elegant` (matching `card-luxury` class), with the title in uppercase tracking and the body in muted foreground text
+## Technical changes (single file: `src/components/ScrollImageSequence.tsx`)
 
-### 3. SVG line implementation
-Use a full-screen SVG overlay (`absolute inset-0 w-full h-full pointer-events-none`) with percentage-based coordinates. Each line is drawn from the dot center to the nearest edge of the card. A small triangular arrowhead marker is defined in SVG `<defs>` and applied to the line end.
+1. **Add lucide-react import** for `Gem`, `Sparkles`, and `Crown` icons
+2. **Update LABELS data** with corrected dot/card coordinates and an icon field
+3. **Restyle cards** to match the About page pattern:
+   - Use `card-luxury` class (which includes `bg-card border border-border/50 rounded-xl shadow-elegant`)
+   - Add icon with `text-accent` color above the title
+   - Center-align text
+   - Use `font-serif` for the title
+   - Keep `text-muted-foreground` for description
+4. **Update SVG line endpoints** to match the new coordinates
 
-### 4. Card styling
-Cards will use the existing `card-luxury` pattern from the site:
-- `bg-card border border-border/50 rounded-xl shadow-elegant`
-- Padding: `px-4 py-3`
-- Title: `text-xs font-semibold uppercase tracking-wider`
-- Body: `text-xs text-muted-foreground leading-snug max-w-[200px]`
-
-### 5. Animation
-All three elements (dot, line, card) share the same staggered fade-in:
-- `transition-all duration-700`
-- `transitionDelay: index * 200ms`
-- Dot gets a subtle pulse animation when visible
-- Line draws in using SVG `stroke-dasharray` / `stroke-dashoffset` transition
-
-### 6. Mobile
-No changes to mobile -- the bottom overlay fallback remains as-is with `lg:hidden`. The dots, lines, and cards use `hidden lg:block`.
-
-## Technical notes
-- The SVG overlay sits between the canvas and the cards in z-order
-- Dot and card positions will likely need fine-tuning once visible on the actual last frame -- initial values are estimates
-- The connecting lines use percentage-based SVG viewBox (`viewBox="0 0 100 100"` with `preserveAspectRatio="none"`) so they scale with the viewport
+The mobile fallback remains unchanged.
