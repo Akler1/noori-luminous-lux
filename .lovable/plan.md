@@ -1,43 +1,48 @@
 
 
-# Match Card Style and Fix Dot Positions
+# Fix Dot Positions and Add Scroll Hold Zone
 
-## What's wrong now
-Based on the screenshot of the last frame:
-- The **Main Stone** dot is on the gold prongs/setting area instead of on the large diamond (top-left)
-- The **Pave Stones** dot is on the gold post instead of near the small scattered diamonds
-- The **14k Gold Setting** dot should be on the gold post
-- The cards don't match the About page's `card-luxury` style (no icons, no centered layout, missing accent colors)
+## Problems identified from screenshots
+1. **Dots not on correct parts**: In the final exploded frame, the main diamond is in the upper-left, but the dot is too far right. The pave stones dot is on the gold setting area, not on the scattered small diamonds. The gold setting dot is near the post tip but should be on the gold prong basket.
+2. **No hold zone**: Once the animation hits the last frame, the callouts appear but the user immediately scrolls past the section. The cards need to stay visible for a reading period.
 
-## Corrected dot positions (from screenshot analysis)
-| Label | Current dot | Corrected dot | Card position |
-|-------|------------|---------------|---------------|
-| Main Stone | top:30 left:42 | top:20 left:32 | top:8 left:8 (keep) |
-| Pave Stones | top:52 left:55 | top:38 left:58 | top:35 left:72 (adjusted) |
-| 14k Gold Setting | top:72 left:48 | top:72 left:68 | top:68 left:78 (adjusted) |
+## Changes (single file: `src/components/ScrollImageSequence.tsx`)
 
-## Card style updates (matching About page `card-luxury`)
-The About page cards use:
-- `card-luxury p-8 text-center` class
-- Icon in `text-accent` color (the golden/amber brand color)
-- Title in `font-serif`
-- Description in `text-muted-foreground`
+### 1. Correct dot positions (based on screenshot of last frame)
+From the exploded view screenshot:
+- **Main Stone** (large diamond, upper-left): dot moves to `top: 15, left: 28`
+- **Pave Stones** (scattered small diamonds, center area): dot moves to `top: 42, left: 50`
+- **14k Gold Setting** (gold prong basket, center): dot moves to `top: 30, left: 45`
 
-Each card will get:
-- **Main Stone**: `Gem` icon from lucide-react
-- **Pave Stones**: `Sparkles` icon
-- **14k Gold Setting**: `Crown` or similar icon
+Card positions stay roughly similar but adjust to avoid overlapping the earring parts.
 
-## Technical changes (single file: `src/components/ScrollImageSequence.tsx`)
+### 2. Add scroll hold zone
+Increase `scrollVh` from 180 to 300 and modify the scroll-to-frame mapping so that:
+- The first 60% of scroll distance maps to all 46 frames (the animation plays)
+- The last 40% holds on the final frame with callouts visible
 
-1. **Add lucide-react import** for `Gem`, `Sparkles`, and `Crown` icons
-2. **Update LABELS data** with corrected dot/card coordinates and an icon field
-3. **Restyle cards** to match the About page pattern:
-   - Use `card-luxury` class (which includes `bg-card border border-border/50 rounded-xl shadow-elegant`)
-   - Add icon with `text-accent` color above the title
-   - Center-align text
-   - Use `font-serif` for the title
-   - Keep `text-muted-foreground` for description
-4. **Update SVG line endpoints** to match the new coordinates
+This gives the user a generous scroll window where the cards, dots, and lines stay on screen for reading.
 
-The mobile fallback remains unchanged.
+The logic change in the scroll handler:
+```
+// Map only first 60% of scroll to frames
+const animationEnd = 0.6;
+const rawT = Math.min(1, Math.max(0, -rect.top / scrollRange));
+const t = Math.min(1, rawT / animationEnd);
+const idx = Math.round(t * (frameCount - 1));
+
+// Show callouts for the last 40% hold zone
+setShowCallouts(rawT >= animationEnd);
+```
+
+### 3. Updated coordinates summary
+| Label | Dot (on earring part) | Card |
+|-------|----------------------|------|
+| Main Stone | top:15, left:28 | top:8, left:8 |
+| Pave Stones | top:42, left:50 | top:35, left:72 |
+| 14k Gold Setting | top:30, left:45 | top:68, left:78 |
+
+### 4. No other changes
+- Card styling stays as-is (card-luxury with icons)
+- SVG lines auto-adjust to new coordinates
+- Mobile fallback unchanged
