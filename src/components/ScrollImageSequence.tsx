@@ -6,21 +6,21 @@ const LABELS = [
     title: "Main Stone",
     body: "Top 2% of stones. Colorless D-F, VS1+ clarity.",
     icon: Gem,
-    dot: { top: 20, left: 32 },
+    dot: { top: 15, left: 28 },
     card: { top: 8, left: 8 },
   },
   {
     title: "Pavé Stones",
     body: "Hand-placed. Each inspected for symmetry and setting security.",
     icon: Sparkles,
-    dot: { top: 38, left: 58 },
+    dot: { top: 42, left: 50 },
     card: { top: 35, left: 72 },
   },
   {
     title: "14k Gold Setting",
     body: "Solid 14k gold. Finished and polished to a high-jewellery standard.",
     icon: Crown,
-    dot: { top: 72, left: 68 },
+    dot: { top: 30, left: 45 },
     card: { top: 68, left: 78 },
   },
 ];
@@ -44,7 +44,7 @@ const ScrollImageSequence = ({
   frameCount,
   ext = "webp",
   pad = 4,
-  scrollVh = 180,
+  scrollVh = 300,
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -107,14 +107,16 @@ const ScrollImageSequence = ({
         const scrollRange = wrapper.offsetHeight - window.innerHeight;
         if (scrollRange <= 0) return;
 
-        const t = Math.min(1, Math.max(0, -rect.top / scrollRange));
+        const animationEnd = 0.6;
+        const rawT = Math.min(1, Math.max(0, -rect.top / scrollRange));
+        const t = Math.min(1, rawT / animationEnd);
         const idx = Math.round(t * (frameCount - 1));
 
         if (idx !== currentFrame.current) {
           currentFrame.current = idx;
           drawFrame(idx);
-          setShowCallouts(idx === frameCount - 1);
         }
+        setShowCallouts(rawT >= animationEnd);
       });
     };
 
