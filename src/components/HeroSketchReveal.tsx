@@ -34,7 +34,7 @@ const calculateImageCoverRightOffset = (
       // Mobile: position at 65% from left (matching object-[65%_center])
       const maxShift = drawWidth - canvasWidth;
       return {
-        x: -(maxShift * 0.65),
+        x: -(maxShift * 0.55),
         y: 0,
         width: drawWidth,
         height: drawHeight
@@ -345,8 +345,6 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   
   // Pointer move handler
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (isMobile) return;
-    
     lastMoveTimeRef.current = Date.now();
     isActiveRef.current = true;
     
@@ -356,7 +354,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     }
     
     stampShapes(e.clientX, e.clientY);
-  }, [isMobile, hasInteracted, stampShapes]);
+  }, [hasInteracted, stampShapes]);
   
   // Pointer enter handler
   const handlePointerEnter = useCallback(() => {
@@ -412,7 +410,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       <img
         src={heroReal}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-[65%_center] md:object-right"
+        className="absolute inset-0 w-full h-full object-cover object-[55%_center] md:object-right"
       />
       
       {/* Sketch overlay canvas */}
