@@ -19,17 +19,31 @@ interface ImageOffset {
 const calculateImageCoverRightOffset = (
   img: HTMLImageElement,
   canvasWidth: number,
-  canvasHeight: number
+  canvasHeight: number,
+  isMobile = false
 ): ImageOffset => {
   const imgRatio = img.naturalWidth / img.naturalHeight;
   const canvasRatio = canvasWidth / canvasHeight;
 
   if (imgRatio > canvasRatio) {
-    // Image is wider - crop from LEFT only (align right)
+    // Image is wider than container — need to crop horizontally
     const drawHeight = canvasHeight;
     const drawWidth = canvasHeight * imgRatio;
+
+    if (isMobile) {
+      // Mobile: position at 65% from left (matching object-[65%_center])
+      const maxShift = drawWidth - canvasWidth;
+      return {
+        x: -(maxShift * 0.65),
+        y: 0,
+        width: drawWidth,
+        height: drawHeight
+      };
+    }
+
+    // Desktop: align right (matching object-right)
     return {
-      x: canvasWidth - drawWidth, // Negative offset (crops from left)
+      x: canvasWidth - drawWidth,
       y: 0,
       width: drawWidth,
       height: drawHeight
@@ -299,7 +313,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Calculate and store offset for mask alignment
-        const offset = calculateImageCoverRightOffset(sketchImg, canvasWidth, canvasHeight);
+        const offset = calculateImageCoverRightOffset(sketchImg, canvasWidth, canvasHeight, isMobile);
         imageOffsetRef.current = offset;
         
         // Draw sketch image with same positioning as base image
@@ -398,7 +412,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       <img
         src={heroReal}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-right"
+        className="absolute inset-0 w-full h-full object-cover object-[65%_center] md:object-right"
       />
       
       {/* Sketch overlay canvas */}
