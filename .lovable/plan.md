@@ -1,29 +1,43 @@
 
 
-# Mobile Hero Image Fix - Focus on Pendant
+# Mobile Hero - Refine Pendant Focus and Fix Sketch Effect
 
 ## Problem
-On mobile, the hero background image uses `object-right` positioning, which crops the pendant (center-right of the image) almost entirely out of view. The user sees mostly the marble background with chain edges. The pendant should be the focal point on mobile.
+1. The pendant focal point at 65% is slightly off -- the two main pendants sit closer to 55% from the left based on the reference image
+2. The sketch reveal effect on mobile doesn't work well because `handlePointerMove` returns early for mobile (`if (isMobile) return`), and the tap handler only fires on explicit taps, making the effect feel unresponsive
 
 ## What stays the same
-- Desktop layout is completely untouched -- the `md:` breakpoint classes and the 16:9 aspect ratio strategy remain exactly as they are
-- Text positioning, CTA buttons, scroll cue -- all unchanged on desktop
+- All desktop behavior is completely untouched (md: breakpoints, 16:9 aspect ratio, pointer-move reveal)
+- Text content, CTAs, scroll cue -- unchanged
 
 ## Changes
 
-### 1. `src/components/HeroSketchReveal.tsx` (line 401)
-- Change the image class from `object-right` to `object-[65%_center] md:object-right`
-- On mobile: `object-[65%_center]` positions the crop at 65% from the left (where the pendant sits), centering it on screen
-- On desktop (md+): `object-right` keeps the current right-aligned crop behavior exactly as-is
+### 1. Adjust focal point from 65% to 55% (`HeroSketchReveal.tsx`, line 415)
+- Change `object-[65%_center]` to `object-[55%_center]`
+- This shifts the crop point left, centering the two main pendants as shown in the reference image
+- Desktop stays at `md:object-right`
 
-### 2. `src/components/HeroSketchReveal.tsx` (canvas offset function, lines 19-48)
-- Add a mobile-aware branch to `calculateImageCoverRightOffset` so the sketch overlay canvas aligns with the shifted image position on mobile
-- On mobile, the offset calculation will use center-right (65%) positioning instead of full-right alignment
-- On desktop, the existing right-alignment logic stays identical
-- The function will accept an optional `isMobile` parameter (defaulting to false) to determine which calculation path to use
+### 2. Match canvas offset to new focal point (`HeroSketchReveal.tsx`, line 37)
+- Change the mobile offset multiplier from `0.65` to `0.55` so the sketch overlay canvas aligns with the updated image position
 
-### 3. `src/components/HeroSketchReveal.tsx` (line 302)
-- Pass the `isMobile` state (already available via the `useIsMobile` hook on line 136) into the offset calculation call so the canvas aligns correctly on mobile
+### 3. Improve mobile sketch effect (`HeroSketchReveal.tsx`, lines 347-358, 379-400)
+- Allow `touchmove` / `pointermove` events to work on mobile instead of blocking them entirely. Currently line 348 has `if (isMobile) return` which kills the drag-to-reveal experience
+- Remove the early return so mobile users can drag their finger to reveal the sketch, same as desktop mouse movement
+- Keep the tap handler as a fallback for quick taps, but also allow continuous touch-drag interaction
+- This makes the effect feel natural and responsive on mobile
 
-### Technical Detail
-The `object-[65%_center]` value tells the browser: when cropping the image to fit the container, use a focal point at 65% from the left edge and vertically centered. This places the pendant necklace front-and-center on mobile screens. The `md:object-right` override restores the original desktop behavior at the 768px breakpoint and above, so desktop rendering is completely unchanged.
+### Technical Details
+
+**Image position (`line 415`)**:
+```
+object-[55%_center] md:object-right
+```
+
+**Canvas offset (`line 37`)**:
+```
+x: -(maxShift * 0.55)
+```
+
+**Mobile pointer move (`line 348`)**:
+Remove the `if (isMobile) return;` guard so touch-drag reveals the sketch on mobile. The `pointerMove` event already fires for touch input, making the experience consistent across devices.
+
