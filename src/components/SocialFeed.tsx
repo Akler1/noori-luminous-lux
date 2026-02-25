@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
 import { Instagram } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 import earringsHero from "@/assets/earrings-hero.jpg";
 import earringsPrincess from "@/assets/earrings-princess.jpg";
 import braceletHero from "@/assets/bracelet-hero.jpg";
@@ -33,45 +40,38 @@ export const SocialFeed = () => {
         </motion.div>
       </div>
 
-      {/* Horizontal Scroll Container */}
-      <div className="relative">
-        <div
-          className="flex gap-4 overflow-x-auto pb-4 px-4 md:px-8 scrollbar-hide cursor-grab active:cursor-grabbing"
-          style={{
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
-          }}
-        >
-          {socialPosts.map((post, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex-shrink-0 w-72 md:w-80 aspect-square relative group rounded-lg overflow-hidden"
-              style={{ scrollSnapAlign: "start" }}
-            >
-              <img
-                src={post.src}
-                alt={`Instagram post by ${post.handle}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-background/0 group-hover:bg-background/60 transition-colors duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100">
-                <Instagram className="w-8 h-8 text-foreground mb-3" />
-                <span className="text-foreground text-sm tracking-wide">
-                  {post.handle}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-4 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-4 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+      <div className="px-4 md:px-8">
+        <Carousel opts={{ align: "start", loop: true }} className="w-full relative">
+          <CarouselContent className="-ml-4">
+            {socialPosts.map((post, index) => (
+              <CarouselItem key={index} className="pl-4 basis-auto">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="w-72 md:w-80 aspect-square relative group rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={post.src}
+                    alt={`Instagram post by ${post.handle}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-background/0 group-hover:bg-background/60 transition-colors duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100">
+                    <Instagram className="w-8 h-8 text-foreground mb-3" />
+                    <span className="text-foreground text-sm tracking-wide">
+                      {post.handle}
+                    </span>
+                  </div>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-2" />
+          <CarouselNext className="right-2" />
+        </Carousel>
       </div>
     </section>
   );
