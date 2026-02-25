@@ -5,17 +5,17 @@ import unicefBackpacks from "@/assets/unicef-backpacks.jpg";
 
 export const StickyStoryRefined = () => {
   return (
-    <section className="bg-secondary py-20 lg:py-28">
+    <section className="bg-secondary py-10 lg:py-14">
       <div className="container-editorial max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
           <h2 className="section-header text-4xl md:text-5xl text-foreground">
-            Beauty that gives back.
+            How Your Purchase Creates Change.
           </h2>
         </motion.div>
 
