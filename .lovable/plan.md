@@ -1,27 +1,18 @@
 
 
-# Fullscreen 3D Viewer as Separate Page
-
-## Problem
-The CSS-based fullscreen overlay still crops the product. The iframe doesn't resize properly within the overlay approach.
-
-## Solution
-Create a dedicated `/viewer` route that displays the 3D iframe at full viewport size. The fullscreen button navigates to this page, and a back button returns to the product page.
+# Make 3D Viewer Larger, Remove Fullscreen and Reset Buttons
 
 ## Changes
 
-### 1. New file: `src/pages/Viewer.tsx`
-- Reads `iframeUrl` and `title` from URL query params (e.g. `/viewer?url=...&title=...`)
-- Renders the iframe at `width: 100vw; height: 100vh`
-- Shows a back button (top-left) that navigates back via `useNavigate(-1)`
-- Minimal page -- no header/footer, just the viewer and the back button
+### 1. `src/components/ThreeDViewer.tsx`
+- Remove the fullscreen button, `handleFullscreen` function, `useNavigate` import, and `Maximize2` import
+- Remove the reset button entirely (for all viewer types), `handleResetView` function, and `RotateCcw` import
+- The controls overlay div can be removed completely since both buttons are gone
 
-### 2. Edit: `src/App.tsx`
-- Add route: `<Route path="/viewer" element={<Viewer />} />`
+### 2. `src/pages/ProductDetail.tsx`
+- Add `-mx-2 lg:-mx-3` negative margins to the viewer wrapper div to expand it into ~50% of the container's side padding, making the 3D view larger while keeping the rest of the layout untouched
 
-### 3. Edit: `src/components/ThreeDViewer.tsx`
-- Replace `handleFullscreen` to use `useNavigate` from react-router-dom
-- On click, navigate to `/viewer?url=${encodeURIComponent(iframeUrl)}&title=${encodeURIComponent(variant.title)}`
-- Remove all CSS fullscreen logic (`isFullscreen` state, Escape key listener, fixed positioning classes)
-- Keep the `Maximize2` icon button but remove `Minimize2` import (that goes in the Viewer page)
+### 3. Cleanup
+- Remove `/viewer` route from `src/App.tsx` and the `Viewer` import
+- Delete `src/pages/Viewer.tsx`
 
