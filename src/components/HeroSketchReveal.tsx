@@ -31,10 +31,10 @@ const calculateImageCoverRightOffset = (
     const drawWidth = canvasHeight * imgRatio;
 
     if (isMobile) {
-      // Mobile: position at 65% from left (matching object-[65%_center])
+      // Mobile: position at 50% from left (matching object-[50%_center])
       const maxShift = drawWidth - canvasWidth;
       return {
-        x: -(maxShift * 0.55),
+        x: -(maxShift * 0.50),
         y: 0,
         width: drawWidth,
         height: drawHeight
@@ -410,7 +410,7 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       <img
         src={heroReal}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-[55%_center] md:object-right"
+        className="absolute inset-0 w-full h-full object-cover object-[50%_center] md:object-right"
       />
       
       {/* Sketch overlay canvas */}
