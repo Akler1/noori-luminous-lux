@@ -163,139 +163,134 @@ const About = () => {
           </div>
 
           <div className="relative max-w-6xl mx-auto">
-            {/* Mission Statement */}
-            <div className="text-center mb-20">
-              <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                <h2 className="text-4xl md:text-5xl font-serif mb-5">
-                  Our <span className="noor-glow">Mission</span>
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities.
-                </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column: Text + Journey Cards */}
+              <div>
+                {/* Mission Statement */}
+                <div className="mb-12">
+                  <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <h2 className="text-4xl md:text-5xl font-serif mb-5">
+                      Our <span className="noor-glow">Mission</span>
+                    </h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Journey Process */}
+                <div className="mb-10">
+                  <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <h3 className="text-3xl md:text-4xl font-serif mb-5">
+                      How Your Purchase <span className="noor-glow">Creates Change</span>
+                    </h3>
+                    <p className="text-lg text-muted-foreground">
+                      A step-by-step path from unsafe work to school.
+                    </p>
+                    <p className="text-xs text-muted-foreground/60 italic mt-2">
+                      UNICEF does not endorse any company, brand, product, or service.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Journey Nodes - Desktop (vertical stack) */}
+                <div className="hidden md:flex flex-col gap-6">
+                  <JourneyNode
+                    icon={<Mountain className="w-8 h-8 text-stone-400" />}
+                    title="The Mines"
+                    description="Children face dangerous, unsafe work in mining communities."
+                    accentColor="stone"
+                    delay={400}
+                    isVisible={isVisible}
+                    effect={<MineEffect />}
+                    fullWidth
+                  />
+                  <JourneyNode
+                    icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
+                    title="UNICEF Steps In"
+                    description="Cash support, birth registration, and safe spaces help families break the cycle."
+                    accentColor="amber"
+                    delay={700}
+                    isVisible={isVisible}
+                    effect={<InterventionEffect />}
+                    fullWidth
+                  />
+                  <JourneyNode
+                    icon={<GraduationCap className="w-8 h-8 text-green-500" />}
+                    title="Education"
+                    description="Children receive school supplies, uniforms, and catch-up classes."
+                    accentColor="green"
+                    delay={1000}
+                    isVisible={isVisible}
+                    effect={<SchoolEffect />}
+                    fullWidth
+                  />
+                  <JourneyNode
+                    icon={<Sparkles className="w-8 h-8 text-primary" />}
+                    title="Thriving"
+                    description="A safer childhood—and a future built in school."
+                    accentColor="primary"
+                    delay={1300}
+                    isVisible={isVisible}
+                    effect={<FutureEffect active={futurePayoff} />}
+                    highlight={futurePayoff}
+                    fullWidth
+                  />
+                </div>
+
+                {/* Journey Nodes - Mobile */}
+                <div className="md:hidden">
+                  <div className="flex flex-col items-center gap-5">
+                    <JourneyNode
+                      icon={<Mountain className="w-8 h-8 text-stone-400" />}
+                      title="The Mines"
+                      description="Children face dangerous, unsafe work in mining communities."
+                      accentColor="stone"
+                      delay={400}
+                      isVisible={isVisible}
+                      effect={<MineEffect />}
+                      fullWidth
+                    />
+                    <MobileConnector delay={500} isVisible={isVisible} />
+                    <JourneyNode
+                      icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
+                      title="UNICEF Steps In"
+                      description="Cash support, birth registration, and safe spaces help families break the cycle."
+                      accentColor="amber"
+                      delay={700}
+                      isVisible={isVisible}
+                      effect={<InterventionEffect />}
+                      fullWidth
+                    />
+                    <MobileConnector delay={800} isVisible={isVisible} />
+                    <JourneyNode
+                      icon={<GraduationCap className="w-8 h-8 text-green-500" />}
+                      title="Education"
+                      description="Children receive school supplies, uniforms, and catch-up classes."
+                      accentColor="green"
+                      delay={1000}
+                      isVisible={isVisible}
+                      effect={<SchoolEffect />}
+                      fullWidth
+                    />
+                    <MobileConnector delay={1100} isVisible={isVisible} />
+                    <JourneyNode
+                      icon={<Sparkles className="w-8 h-8 text-primary" />}
+                      title="Thriving"
+                      description="A safer childhood—and a future built in school."
+                      accentColor="primary"
+                      delay={1300}
+                      isVisible={isVisible}
+                      effect={<FutureEffect active={futurePayoff} />}
+                      highlight={futurePayoff}
+                      fullWidth
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Journey Process */}
-            <div className="text-center mb-16">
-              <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                <h3 className="text-3xl md:text-4xl font-serif mb-5">
-                  How Your Purchase <span className="noor-glow">Creates Change</span>
-                </h3>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  A step-by-step path from unsafe work to school.
-                </p>
-                <p className="text-xs text-muted-foreground/60 italic mt-2">
-                  UNICEF does not endorse any company, brand, product, or service.
-                </p>
-              </div>
-            </div>
-
-            {/* Process Diagram - Desktop */}
-            <div className="hidden md:block">
-              <div className="relative flex items-center justify-between gap-6" style={{ minHeight: '225px' }}>
-                <JourneyNode
-                  icon={<Mountain className="w-8 h-8 text-stone-400" />}
-                  title="The Mines"
-                  description="Children face dangerous, unsafe work in mining communities."
-                  accentColor="stone"
-                  delay={400}
-                  isVisible={isVisible}
-                  effect={<MineEffect />}
-                />
-
-                <JourneyNode
-                  icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
-                  title="UNICEF Steps In"
-                  description="Cash support, birth registration, and safe spaces help families break the cycle."
-                  accentColor="amber"
-                  delay={700}
-                  isVisible={isVisible}
-                  effect={<InterventionEffect />}
-                />
-
-                <JourneyNode
-                  icon={<GraduationCap className="w-8 h-8 text-green-500" />}
-                  title="Education"
-                  description="Children receive school supplies, uniforms, and catch-up classes."
-                  accentColor="green"
-                  delay={1000}
-                  isVisible={isVisible}
-                  effect={<SchoolEffect />}
-                />
-
-                <JourneyNode
-                  icon={<Sparkles className="w-8 h-8 text-primary" />}
-                  title="Thriving"
-                  description="A safer childhood—and a future built in school."
-                  accentColor="primary"
-                  delay={1300}
-                  isVisible={isVisible}
-                  effect={<FutureEffect active={futurePayoff} />}
-                  highlight={futurePayoff}
-                />
-              </div>
-            </div>
-
-            {/* Process Diagram - Mobile */}
-            <div className="md:hidden">
-              <div className="flex flex-col items-center gap-5">
-                <JourneyNode
-                  icon={<Mountain className="w-8 h-8 text-stone-400" />}
-                  title="The Mines"
-                  description="Children face dangerous, unsafe work in mining communities."
-                  accentColor="stone"
-                  delay={400}
-                  isVisible={isVisible}
-                  effect={<MineEffect />}
-                  fullWidth
-                />
-
-                <MobileConnector delay={500} isVisible={isVisible} />
-
-                <JourneyNode
-                  icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
-                  title="UNICEF Steps In"
-                  description="Cash support, birth registration, and safe spaces help families break the cycle."
-                  accentColor="amber"
-                  delay={700}
-                  isVisible={isVisible}
-                  effect={<InterventionEffect />}
-                  fullWidth
-                />
-
-                <MobileConnector delay={800} isVisible={isVisible} />
-
-                <JourneyNode
-                  icon={<GraduationCap className="w-8 h-8 text-green-500" />}
-                  title="Education"
-                  description="Children receive school supplies, uniforms, and catch-up classes."
-                  accentColor="green"
-                  delay={1000}
-                  isVisible={isVisible}
-                  effect={<SchoolEffect />}
-                  fullWidth
-                />
-
-                <MobileConnector delay={1100} isVisible={isVisible} />
-
-                <JourneyNode
-                  icon={<Sparkles className="w-8 h-8 text-primary" />}
-                  title="Thriving"
-                  description="A safer childhood—and a future built in school."
-                  accentColor="primary"
-                  delay={1300}
-                  isVisible={isVisible}
-                  effect={<FutureEffect active={futurePayoff} />}
-                  highlight={futurePayoff}
-                  fullWidth
-                />
-              </div>
-            </div>
-
-            {/* UNICEF Video */}
-            <div className={`mt-16 mb-12 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <div className="max-w-3xl mx-auto">
-                <h4 className="text-xl font-serif text-center mb-6">See the Impact in Action</h4>
+              {/* Right Column: UNICEF Image */}
+              <div className={`transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <div className="relative w-full rounded-xl overflow-hidden border border-primary/20 shadow-lg shadow-primary/10">
                   <img
                     src={unicefBackpacks}
@@ -303,20 +298,6 @@ const About = () => {
                     className="w-full h-auto object-cover"
                   />
                 </div>
-                <p className="text-sm text-muted-foreground text-center mt-4">
-                  School supplies ready for distribution in mining-affected communities
-                </p>
-              </div>
-            </div>
-
-            {/* Impact Stats */}
-            <div className={`mt-16 transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-                <StatItem number="500+" label="Children Supported" delay={1500} isVisible={isVisible} />
-                <div className="hidden md:block w-px h-12 bg-primary/20" />
-                <StatItem number="Kipushi & Lualaba" label="DRC Regions" delay={1600} isVisible={isVisible} isText />
-                <div className="hidden md:block w-px h-12 bg-primary/20" />
-                <StatItem number="5,000+" label="Families Reached" delay={1700} isVisible={isVisible} />
               </div>
             </div>
           </div>
