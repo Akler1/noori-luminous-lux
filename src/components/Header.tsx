@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MiniCart } from "@/components/MiniCart";
 import { useCartActions } from "@/hooks/useCart";
 import { Link } from "react-router-dom";
-import nooriLogo from "@/assets/noori-logo.png";
+import nooriLogo from "@/assets/noori-logo-new.png";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {
@@ -46,7 +46,7 @@ export const Header = () => {
       {/* No spacer - nav floats over hero */}
       <header
         className={cn(
-          "fixed top-3 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)] z-50",
+          "fixed top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)] z-50",
           "bg-[#111111]/85 backdrop-blur-xl",
           "border border-white/[0.1]",
           "shadow-lg shadow-black/20",
@@ -59,7 +59,7 @@ export const Header = () => {
             "flex items-center justify-between max-w-[1280px] mx-auto",
             "px-6 md:px-8",
             "transition-all duration-300",
-            isScrolled ? "h-12 md:h-14" : "h-14 md:h-16"
+            isScrolled ? "h-[60px] md:h-[70px]" : "h-[70px] md:h-20"
           )}
         >
           {/* Logo - Left */}
@@ -69,7 +69,7 @@ export const Header = () => {
               alt="Noori"
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled ? "h-7 md:h-8" : "h-9 md:h-10"
+                isScrolled ? "h-9 md:h-10" : "h-11 md:h-12"
               )}
             />
           </Link>
