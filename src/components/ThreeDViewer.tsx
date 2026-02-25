@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Maximize2, Minimize2, Eye } from "lucide-react";
+import { RotateCcw, Maximize2, Eye } from "lucide-react";
 import { ShopifyVariant } from "@/types/shopify";
 import { motion } from "framer-motion";
 
@@ -24,11 +25,11 @@ export const ThreeDViewer = ({
   className = "",
   autoRotate = false 
 }: ThreeDViewerProps) => {
+  const navigate = useNavigate();
   const modelViewerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Load model-viewer script
   useEffect(() => {
@@ -54,17 +55,10 @@ export const ThreeDViewer = ({
   };
 
   const handleFullscreen = () => {
-    setIsFullscreen(prev => !prev);
+    if (iframeUrl) {
+      navigate(`/viewer?url=${encodeURIComponent(iframeUrl)}&title=${encodeURIComponent(variant?.title || '3D Viewer')}`);
+    }
   };
-
-  // Close fullscreen on Escape key
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false);
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [isFullscreen]);
 
   // Check for iframe URL first, then fall back to 3D model
   const iframeUrl = variant?.iframeUrl;
@@ -112,7 +106,7 @@ export const ThreeDViewer = ({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className={`rounded-xl overflow-hidden shadow-elegant ${isFullscreen ? 'fixed inset-0 z-[100] bg-background' : 'relative'} ${className}`}
+      className={`relative rounded-xl overflow-hidden shadow-elegant ${className}`}
     >
       {/* 3D Viewer - Iframe or Model Viewer */}
       {iframeUrl ? (
@@ -123,7 +117,7 @@ export const ThreeDViewer = ({
           className="w-full border-0"
           style={{
             width: '100%',
-            height: isFullscreen ? '100vh' : '700px',
+            height: '700px',
             border: 'none',
             backgroundColor: 'transparent'
           }}
@@ -146,7 +140,7 @@ export const ThreeDViewer = ({
           max-camera-orbit="auto auto 200%"
           style={{
             width: '100%',
-            height: isFullscreen ? '100vh' : '700px',
+            height: '700px',
             backgroundColor: 'transparent'
           }}
           className="w-full h-full"
@@ -174,9 +168,9 @@ export const ThreeDViewer = ({
           size="icon"
           className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
           onClick={handleFullscreen}
-          title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          title="Fullscreen"
         >
-          {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+          <Maximize2 className="h-4 w-4" />
         </Button>
       </div>
 
