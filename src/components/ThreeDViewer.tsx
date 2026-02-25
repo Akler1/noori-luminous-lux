@@ -25,6 +25,7 @@ export const ThreeDViewer = ({
   autoRotate = false 
 }: ThreeDViewerProps) => {
   const modelViewerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -53,16 +54,23 @@ export const ThreeDViewer = ({
   };
 
   const handleFullscreen = () => {
-    if (modelViewerRef.current) {
+    if (containerRef.current) {
       if (document.fullscreenElement) {
         document.exitFullscreen();
-        setIsFullscreen(false);
       } else {
-        modelViewerRef.current.requestFullscreen();
-        setIsFullscreen(true);
+        containerRef.current.requestFullscreen();
       }
     }
   };
+
+  // Sync fullscreen state with browser events (handles Escape key, etc.)
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
 
   // Check for iframe URL first, then fall back to 3D model
   const iframeUrl = variant?.iframeUrl;
@@ -106,10 +114,11 @@ export const ThreeDViewer = ({
 
   return (
     <motion.div 
+      ref={containerRef}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className={`relative rounded-xl overflow-hidden shadow-elegant ${className}`}
+      className={`relative rounded-xl overflow-hidden shadow-elegant ${isFullscreen ? 'bg-background' : ''} ${className}`}
     >
       {/* 3D Viewer - Iframe or Model Viewer */}
       {iframeUrl ? (
@@ -117,10 +126,10 @@ export const ThreeDViewer = ({
           ref={modelViewerRef}
           src={iframeUrl}
           title={`3D viewer of ${variant?.title}`}
-          className="w-full h-[600px] md:h-[700px] border-0"
+          className="w-full border-0"
           style={{
             width: '100%',
-            height: '700px',
+            height: isFullscreen ? '100vh' : '700px',
             border: 'none',
             backgroundColor: 'transparent'
           }}
@@ -143,7 +152,7 @@ export const ThreeDViewer = ({
           max-camera-orbit="auto auto 200%"
           style={{
             width: '100%',
-            height: '700px',
+            height: isFullscreen ? '100vh' : '700px',
             backgroundColor: 'transparent'
           }}
           className="w-full h-full"
