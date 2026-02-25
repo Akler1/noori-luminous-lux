@@ -41,7 +41,7 @@ export const StickyStoryRefined = () => {
           className="text-center max-w-2xl mx-auto"
         >
           <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-            A portion of every Noori purchase supports UNICEF programs for child safety and education.
+            A portion of every Noori purchase supports UNICEF programs for children to get out of dangerous mines and into the classroom.
           </p>
           <Link
             to="/policies#mission"
