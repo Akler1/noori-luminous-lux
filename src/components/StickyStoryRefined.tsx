@@ -1,73 +1,56 @@
 import { motion } from "framer-motion";
-import braceletHero from "@/assets/bracelet-hero.jpg";
-
-const storyBeats = [
-  {
-    header: "Brilliance with impact.",
-    body: "Beauty should do more than shine. That is why a portion of proceeds from every Noori purchase is donated to UNICEF, supporting efforts that help keep children safe and in school, so more kids can move away from dangerous labor and toward classrooms, opportunity, and a future of their own.",
-    image: braceletHero,
-    chips: ["UNICEF partner", "Education focus", "Real impact"],
-  },
-];
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import unicefBackpacks from "@/assets/unicef-backpacks.jpg";
 
 export const StickyStoryRefined = () => {
   return (
-    <section className="bg-background py-16 lg:py-20">
-      <div className="container-editorial space-y-12 lg:space-y-24">
-        {storyBeats.map((beat, index) => {
-          const isReversed = index % 2 === 1;
+    <section className="bg-secondary py-20 lg:py-28">
+      <div className="container-editorial max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-12"
+        >
+          <h2 className="section-header text-4xl md:text-5xl text-foreground">
+            Beauty that gives back.
+          </h2>
+        </motion.div>
 
-          return (
-            <div
-              key={index}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
-            >
-              {/* Image Column */}
-              <motion.div
-                initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className={isReversed ? "lg:order-2" : "lg:order-1"}
-              >
-                <div className="rounded-2xl overflow-hidden shadow-elegant">
-                  <img
-                    src={beat.image}
-                    alt={beat.header}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="rounded-2xl overflow-hidden shadow-elegant mb-12"
+        >
+          <img
+            src={unicefBackpacks}
+            alt="Children with UNICEF backpacks heading to school"
+            className="w-full h-auto object-cover"
+          />
+        </motion.div>
 
-              {/* Text Column */}
-              <motion.div
-                initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className={isReversed ? "lg:order-1" : "lg:order-2"}
-              >
-                <h2 className="section-header text-foreground mb-6">
-                  {beat.header}
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-6 max-w-lg">
-                  {beat.body}
-                </p>
-                {/* Proof chips */}
-                <div className="flex flex-wrap gap-2">
-                  {beat.chips.map((chip, chipIndex) => (
-                    <span
-                      key={chipIndex}
-                      className="px-3 py-1 text-xs text-accent border border-accent/30 rounded-full"
-                    >
-                      {chip}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          );
-        })}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="text-center max-w-2xl mx-auto"
+        >
+          <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            A portion of every Noori purchase supports UNICEF programs for child safety and education.
+          </p>
+          <Link
+            to="/policies#mission"
+            className="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-medium"
+          >
+            Learn Our Story
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
