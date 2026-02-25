@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Maximize2, Eye } from "lucide-react";
+import { RotateCcw, Maximize2, Minimize2, Eye } from "lucide-react";
 import { ShopifyVariant } from "@/types/shopify";
 import { motion } from "framer-motion";
 
@@ -54,23 +54,17 @@ export const ThreeDViewer = ({
   };
 
   const handleFullscreen = () => {
-    if (containerRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        containerRef.current.requestFullscreen();
-      }
-    }
+    setIsFullscreen(prev => !prev);
   };
 
-  // Sync fullscreen state with browser events (handles Escape key, etc.)
+  // Close fullscreen on Escape key
   useEffect(() => {
-    const onFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false);
     };
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
-  }, []);
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isFullscreen]);
 
   // Check for iframe URL first, then fall back to 3D model
   const iframeUrl = variant?.iframeUrl;
@@ -118,7 +112,7 @@ export const ThreeDViewer = ({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className={`relative rounded-xl overflow-hidden shadow-elegant ${isFullscreen ? 'bg-background' : ''} ${className}`}
+      className={`rounded-xl overflow-hidden shadow-elegant ${isFullscreen ? 'fixed inset-0 z-[100] bg-background' : 'relative'} ${className}`}
     >
       {/* 3D Viewer - Iframe or Model Viewer */}
       {iframeUrl ? (
@@ -163,24 +157,26 @@ export const ThreeDViewer = ({
 
       {/* Controls Overlay */}
       <div className="absolute top-4 right-4 flex gap-2">
-        <Button
-          variant="secondary"
-          size="icon"
-          className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
-          onClick={handleResetView}
-          title="Reset View"
-        >
-          <RotateCcw className="h-4 w-4" />
-        </Button>
+        {!iframeUrl && (
+          <Button
+            variant="secondary"
+            size="icon"
+            className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
+            onClick={handleResetView}
+            title="Reset View"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </Button>
+        )}
         
         <Button
           variant="secondary"
           size="icon"
           className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
           onClick={handleFullscreen}
-          title="Fullscreen"
+          title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
         >
-          <Maximize2 className="h-4 w-4" />
+          {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
         </Button>
       </div>
 
@@ -189,7 +185,9 @@ export const ThreeDViewer = ({
         <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3">
           <div className="text-sm font-medium">{variant?.title}</div>
           <div className="text-xs text-muted-foreground mt-1">
-            Click and drag to rotate • Scroll to zoom • Double-click to reset
+            {iframeUrl
+              ? "Click and drag to rotate"
+              : "Click and drag to rotate • Scroll to zoom • Double-click to reset"}
           </div>
         </div>
       </div>
