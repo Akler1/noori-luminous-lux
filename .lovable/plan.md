@@ -1,24 +1,27 @@
 
 
-# Fix 3D Viewer Controls for Iframe-Based Products
+# Fullscreen 3D Viewer as Separate Page
 
 ## Problem
-The product pages use iframe-based 3D viewers (not the model-viewer library), but the controls are built for model-viewer. This means:
-- **Reset button** calls `resetTurntableRotation()` which only works on model-viewer, not iframes -- so it does nothing
-- **Fullscreen button** uses `requestFullscreen()` which is blocked inside the sandboxed preview environment
-- **Info text** says "Scroll to zoom / Double-click to reset" but those are model-viewer features, not necessarily available in the iframe viewer
+The CSS-based fullscreen overlay still crops the product. The iframe doesn't resize properly within the overlay approach.
 
 ## Solution
+Create a dedicated `/viewer` route that displays the 3D iframe at full viewport size. The fullscreen button navigates to this page, and a back button returns to the product page.
 
-**File: `src/components/ThreeDViewer.tsx`**
+## Changes
 
-1. **Fix fullscreen**: Replace `requestFullscreen()` with a CSS-based fullscreen approach using fixed positioning (`position: fixed; inset: 0; z-index: 50`). This works reliably regardless of iframe sandboxing. Add a close button when in this mode.
+### 1. New file: `src/pages/Viewer.tsx`
+- Reads `iframeUrl` and `title` from URL query params (e.g. `/viewer?url=...&title=...`)
+- Renders the iframe at `width: 100vw; height: 100vh`
+- Shows a back button (top-left) that navigates back via `useNavigate(-1)`
+- Minimal page -- no header/footer, just the viewer and the back button
 
-2. **Hide reset button for iframe viewers**: Since we can't control the iframe content, hide the reset button when rendering an iframe (only show it for model-viewer).
+### 2. Edit: `src/App.tsx`
+- Add route: `<Route path="/viewer" element={<Viewer />} />`
 
-3. **Update info text for iframe viewers**: Change the hint text to just "Click and drag to rotate" when showing an iframe, since zoom/reset behavior depends on the external viewer.
-
-4. **Add Minimize icon**: Import `Minimize2` from lucide-react to show when already in fullscreen, giving a clear way to exit.
-
-No other files need changes.
+### 3. Edit: `src/components/ThreeDViewer.tsx`
+- Replace `handleFullscreen` to use `useNavigate` from react-router-dom
+- On click, navigate to `/viewer?url=${encodeURIComponent(iframeUrl)}&title=${encodeURIComponent(variant.title)}`
+- Remove all CSS fullscreen logic (`isFullscreen` state, Escape key listener, fixed positioning classes)
+- Keep the `Maximize2` icon button but remove `Minimize2` import (that goes in the Viewer page)
 
