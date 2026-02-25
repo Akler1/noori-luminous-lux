@@ -10,6 +10,7 @@ import Solitaires from "./pages/Solitaires";
 import FAQ from "./pages/FAQ";
 import WhyNoori from "./pages/WhyNoori";
 import NotFound from "./pages/NotFound";
+import Viewer from "./pages/Viewer";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/collections/solitaires" element={<Solitaires />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/why-noori" element={<WhyNoori />} />
+          <Route path="/viewer" element={<Viewer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
