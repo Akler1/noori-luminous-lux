@@ -163,38 +163,35 @@ const About = () => {
           </div>
 
           <div className="relative max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left Column: Text + Journey Cards */}
-              <div>
-                {/* Mission Statement */}
-                <div className="mb-12">
-                  <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <h2 className="text-4xl md:text-5xl font-serif mb-5">
-                      Our <span className="noor-glow">Mission</span>
-                    </h2>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities.
-                    </p>
-                  </div>
-                </div>
+            {/* Centered Titles */}
+            <div className="text-center mb-16">
+              <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <h2 className="text-4xl md:text-5xl font-serif mb-5">
+                  Our <span className="noor-glow">Mission</span>
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities.
+                </p>
+              </div>
+              <div className={`transition-all duration-700 delay-300 mt-8 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <h3 className="text-3xl md:text-4xl font-serif mb-5">
+                  How Your Purchase <span className="noor-glow">Creates Change</span>
+                </h3>
+                <p className="text-lg text-muted-foreground">
+                  A step-by-step path from unsafe work to school.
+                </p>
+                <p className="text-xs text-muted-foreground/60 italic mt-2">
+                  UNICEF does not endorse any company, brand, product, or service.
+                </p>
+              </div>
+            </div>
 
-                {/* Journey Process */}
-                <div className="mb-10">
-                  <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <h3 className="text-3xl md:text-4xl font-serif mb-5">
-                      How Your Purchase <span className="noor-glow">Creates Change</span>
-                    </h3>
-                    <p className="text-lg text-muted-foreground">
-                      A step-by-step path from unsafe work to school.
-                    </p>
-                    <p className="text-xs text-muted-foreground/60 italic mt-2">
-                      UNICEF does not endorse any company, brand, product, or service.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Journey Nodes - Desktop (vertical stack) */}
-                <div className="hidden md:flex flex-col gap-6">
+            {/* Two-column grid: cards (40%) + image (60%) */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+              {/* Left Column: 2x2 Journey Cards */}
+              <div className="lg:col-span-2">
+                {/* Desktop 2x2 grid */}
+                <div className="hidden md:grid grid-cols-2 gap-4">
                   <JourneyNode
                     icon={<Mountain className="w-8 h-8 text-stone-400" />}
                     title="The Mines"
@@ -238,7 +235,7 @@ const About = () => {
                   />
                 </div>
 
-                {/* Journey Nodes - Mobile */}
+                {/* Mobile: vertical stack with connectors */}
                 <div className="md:hidden">
                   <div className="flex flex-col items-center gap-5">
                     <JourneyNode
@@ -289,8 +286,8 @@ const About = () => {
                 </div>
               </div>
 
-              {/* Right Column: UNICEF Image */}
-              <div className={`transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              {/* Right Column: Larger UNICEF Image */}
+              <div className={`lg:col-span-3 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <div className="relative w-full rounded-xl overflow-hidden border border-primary/20 shadow-lg shadow-primary/10">
                   <img
                     src={unicefBackpacks}
