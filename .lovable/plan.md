@@ -1,33 +1,62 @@
 
 
-# Simplify Best Sellers to a Single Row of Products
+# Redesign "Our Story" Section with Purse Image
 
-## Overview
+## What Changes
 
-Remove the lifestyle/model images from the Best Sellers grid and display only product tiles in a single horizontal row. Keep only the 3 products mentioned: Round Brilliant Stud, Princess Pendant (necklace), and a larger bracelet, displayed as a clean 3-column (or 4-column if a 4th is desired) row.
+The "Our Story" section on the About page (`/policies`) will be transformed from a centered text-only block into a premium 2-column layout with the uploaded purse/jewelry image as the visual anchor.
 
-## Changes
+## Layout
 
-**File: `src/components/Product3DCarousel.tsx`**
+```text
+Desktop (md+):
++------ 5/12 ------+---- gap ----+-------- 7/12 --------+
+|                   |            |                        |
+|  Our Story        |            |   [Purse Image]       |
+|                   |            |   rounded-[24px]       |
+|  Paragraph 1      |            |   subtle border        |
+|  Paragraph 2      |            |   object-cover          |
+|  Paragraph 3      |            |                        |
+|  Paragraph 4      |            |                        |
+|  (bold)           |            |                        |
++-------------------+            +------------------------+
 
-1. **Remove lifestyle image tiles**: Delete the two `model-image` and `product-image` entries from `gridProducts` (index 0: hero-lifestyle image, index 6: hero-product-shot image)
-2. **Keep only 3 products**:
-   - `stud-round-14k` (Round Brilliant Stud) - 3D iframe
-   - `necklace-princess` (Princess Necklace/Pendant) - 3D iframe
-   - `bracelet-five-9k` (Five-Solitaire Bracelet, the larger one) - 3D iframe
-3. **Remove all other products** (Emerald Earrings, Princess Earrings, Round Necklace, Emerald Necklace, 3 Stone Bracelet)
-4. **Update grid**: Change from `grid-cols-2 md:grid-cols-4` to `grid-cols-1 md:grid-cols-3` for a single row of 3
-5. **Remove image-related code**: Remove the `heroLifestyle` and `heroProductShot` imports, the image branch in the render, and the `getCardBackground` helper since all tiles will be 3D (black background)
-6. **Uniform aspect ratio**: All tiles use `aspect-[3/4]` since there are no image tiles needing the taller `aspect-[3/5]`
-7. **Show product info for all tiles**: Remove the `product.type === "3d"` condition on the info block so all products show name/price
+Mobile:
++----------------------------+
+|   [Purse Image]            |
++----------------------------+
+|   Our Story                |
+|   Paragraph 1-4            |
++----------------------------+
+```
 
 ## Technical Details
 
-The `gridProducts` array will be reduced to 3 entries, all of type `"3d"`. The Round Brilliant Stud currently uses `model-image` type with a lifestyle photo -- it will be changed to `"3d"` type using an iframe URL (the same 3D viewer pattern as the other products). If no iframe URL exists for it yet, we can use a placeholder or the existing round gold iframe URL.
+**Step 1: Copy the uploaded image to the project**
+- Copy `user-uploads://hf_20260202_235910_...png` to `src/assets/our-story-purse.png`
 
-The grid simplifies to:
-```
-Desktop: [Round Stud] [Princess Pendant] [Larger Bracelet]
-Mobile:  stacked vertically
-```
+**Step 2: Update `src/pages/About.tsx` (lines 76-114)**
+
+Replace the current "Our Story" section with:
+- A responsive 12-column grid (`grid-cols-12`) with 5/7 column split on desktop
+- Mobile: image first (order-1), copy second (order-2)
+- Desktop: copy left (col-span-5), image right (col-span-7)
+
+**Image styling:**
+- `rounded-3xl` (24px corners)
+- `border border-border/30` (subtle 1px neutral border)
+- `object-cover object-center`
+- Full height within the grid cell
+
+**Copy styling:**
+- Left-aligned text, `max-w-[560px]`
+- Title: "Our Story" with gold accent on "Story" (same `noor-glow` class)
+- 4 paragraphs with the specified copy, ~16px gap between title and first paragraph, ~16px between paragraphs
+- Paragraph 4 slightly bolder (`text-foreground font-medium` vs `text-muted-foreground`)
+
+**Spacing:**
+- Section padding: `py-16 md:py-[72px]`
+- Column gap: `gap-12 md:gap-16` (48-64px)
+
+**No additions:** No buttons, links, icons, or extra elements inside this section.
 
