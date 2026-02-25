@@ -125,31 +125,29 @@ const ScrollImageSequence = ({
 
         {/* ── Desktop: Right-side overlay cards ── */}
         <div
-          className="absolute right-[4%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center z-20"
+          className="absolute right-[4%] top-1/2 hidden lg:flex flex-col items-center z-20"
           style={{
             maxWidth: "360px",
             opacity: showCallouts ? 1 : 0,
-            transform: `translateX(${showCallouts ? 0 : 40}px)`,
+            transform: `translate(${showCallouts ? 0 : 40}px, -50%)`,
             transition: "all 1s cubic-bezier(0.34,1.56,0.64,1)",
           }}
         >
           {/* Group ambient glow */}
           <div
-            className="absolute -inset-8 rounded-[2rem] pointer-events-none"
+            className="absolute -inset-10 rounded-[2.5rem] pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse at 50% 50%, rgba(196,162,101,0.25) 0%, rgba(196,162,101,0.08) 40%, transparent 70%)",
-              filter: "blur(30px)",
+              background: "radial-gradient(ellipse at 50% 50%, rgba(196,162,101,0.30) 0%, rgba(196,162,101,0.12) 40%, transparent 70%)",
+              filter: "blur(40px)",
             }}
           />
-          {/* Group glass backplate */}
+          {/* Group dark glass backplate */}
           <div
-            className="absolute -inset-4 rounded-[1.5rem] pointer-events-none"
+            className="absolute -inset-5 rounded-[1.5rem] pointer-events-none"
             style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 100%)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.2)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.3)",
+              background: "rgba(10,10,15,0.5)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
             }}
           />
 
@@ -167,36 +165,35 @@ const ScrollImageSequence = ({
                 <div
                   className="relative overflow-hidden rounded-2xl p-7 text-center"
                   style={{
-                    background: "linear-gradient(145deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.3) 100%)",
-                    backdropFilter: "blur(24px) saturate(1.8)",
-                    WebkitBackdropFilter: "blur(24px) saturate(1.8)",
-                    border: "1px solid rgba(255,255,255,0.5)",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.05)",
+                    background: "rgba(15, 15, 20, 0.75)",
+                    borderTop: "1px solid rgba(255,255,255,0.2)",
+                    borderLeft: "1px solid rgba(255,255,255,0.1)",
+                    borderRight: "1px solid rgba(255,255,255,0.1)",
+                    borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.2), 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1)",
                   }}
                 >
                   {/* Moving sheen */}
                   <div
                     className="absolute inset-0 pointer-events-none liquid-sheen"
                     style={{
-                      background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.4) 55%, transparent 70%)",
-                      width: "100%",
-                      height: "100%",
+                      background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 70%)",
                     }}
                   />
                   <div className="relative z-10">
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
                       style={{
-                        background: "linear-gradient(135deg, rgba(196,162,101,0.2) 0%, rgba(196,162,101,0.08) 100%)",
-                        boxShadow: "0 0 0 1px rgba(196,162,101,0.25), 0 2px 8px rgba(196,162,101,0.15)",
+                        background: "rgba(196,162,101,0.2)",
+                        boxShadow: "0 0 0 1px rgba(196,162,101,0.3), 0 2px 8px rgba(196,162,101,0.15)",
                       }}
                     >
-                      <label.icon className="w-6 h-6 text-accent" />
+                      <label.icon className="w-6 h-6" style={{ color: "#C4A265" }} />
                     </div>
                     <div className="w-10 h-px mx-auto my-3" style={{ background: "linear-gradient(90deg, transparent, rgba(196,162,101,0.5), transparent)" }} />
-                    <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground">
+                    <h4 className="text-sm font-serif font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.9)" }}>
                       {label.title}
                     </h4>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
+                    <p className="text-[13px] leading-relaxed mt-2" style={{ color: "rgba(255,255,255,0.55)" }}>
                       {label.body}
                     </p>
                   </div>
