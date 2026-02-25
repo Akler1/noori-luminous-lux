@@ -154,7 +154,7 @@ const About = () => {
         <section 
           ref={sectionRef} 
           id="mission"
-          className="relative py-24 px-4 bg-secondary overflow-hidden"
+          className="relative py-24 px-2 md:px-4 bg-secondary overflow-hidden"
         >
           {/* Ambient background effects */}
           <div className="absolute inset-0 pointer-events-none">
@@ -179,9 +179,6 @@ const About = () => {
                 </h3>
                 <p className="text-lg text-muted-foreground">
                   A step-by-step path from unsafe work to school.
-                </p>
-                <p className="text-xs text-muted-foreground/60 italic mt-2">
-                  UNICEF does not endorse any company, brand, product, or service.
                 </p>
               </div>
             </div>
