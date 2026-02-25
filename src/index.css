@@ -408,20 +408,4 @@
     border-top: none;
     border-radius: 0 0 0 16px;
   }
-
-  /* Liquid glass sheen animation */
-  @keyframes liquid-sheen {
-    0% { transform: translateX(-100%) skewX(-15deg); }
-    100% { transform: translateX(200%) skewX(-15deg); }
-  }
-
-  .liquid-sheen {
-    animation: liquid-sheen 6s ease-in-out infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .liquid-sheen {
-      animation: none;
-    }
-  }
 }

@@ -125,82 +125,30 @@ const ScrollImageSequence = ({
 
         {/* ── Desktop: Right-side overlay cards ── */}
         <div
-          className="absolute right-[4%] top-1/2 hidden lg:flex flex-col items-center z-20"
-          style={{
-            maxWidth: "360px",
-            opacity: showCallouts ? 1 : 0,
-            transform: `translate(${showCallouts ? 0 : 40}px, -50%)`,
-            transition: "all 1s cubic-bezier(0.34,1.56,0.64,1)",
-          }}
+          className="absolute right-[5%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-5 z-20"
+          style={{ maxWidth: "280px" }}
         >
-          {/* Group ambient glow */}
-          <div
-            className="absolute -inset-10 rounded-[2.5rem] pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at 50% 50%, rgba(196,162,101,0.30) 0%, rgba(196,162,101,0.12) 40%, transparent 70%)",
-              filter: "blur(40px)",
-            }}
-          />
-          {/* Group dark glass backplate */}
-          <div
-            className="absolute -inset-5 rounded-[1.5rem] pointer-events-none"
-            style={{
-              background: "rgba(10,10,15,0.5)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
-            }}
-          />
-
-          <div className="relative flex flex-col gap-5 w-full">
-            {LABELS.map((label, idx) => (
-              <div
-                key={label.title}
-                className="relative"
-                style={{
-                  opacity: showCallouts ? 1 : 0,
-                  transform: `translateY(${showCallouts ? 0 : 20}px) scale(${showCallouts ? 1 : 0.92})`,
-                  transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${300 + idx * 200}ms`,
-                }}
-              >
-                <div
-                  className="relative overflow-hidden rounded-2xl p-7 text-center"
-                  style={{
-                    background: "rgba(15, 15, 20, 0.75)",
-                    borderTop: "1px solid rgba(255,255,255,0.2)",
-                    borderLeft: "1px solid rgba(255,255,255,0.1)",
-                    borderRight: "1px solid rgba(255,255,255,0.1)",
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.2), 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1)",
-                  }}
-                >
-                  {/* Moving sheen */}
-                  <div
-                    className="absolute inset-0 pointer-events-none liquid-sheen"
-                    style={{
-                      background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 70%)",
-                    }}
-                  />
-                  <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-                      style={{
-                        background: "rgba(196,162,101,0.2)",
-                        boxShadow: "0 0 0 1px rgba(196,162,101,0.3), 0 2px 8px rgba(196,162,101,0.15)",
-                      }}
-                    >
-                      <label.icon className="w-6 h-6" style={{ color: "#C4A265" }} />
-                    </div>
-                    <div className="w-10 h-px mx-auto my-3" style={{ background: "linear-gradient(90deg, transparent, rgba(196,162,101,0.5), transparent)" }} />
-                    <h4 className="text-sm font-serif font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.9)" }}>
-                      {label.title}
-                    </h4>
-                    <p className="text-[13px] leading-relaxed mt-2" style={{ color: "rgba(255,255,255,0.55)" }}>
-                      {label.body}
-                    </p>
-                  </div>
-                </div>
+          {LABELS.map((label, idx) => (
+            <div
+              key={label.title}
+              className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
+              style={{
+                opacity: showCallouts ? 1 : 0,
+                transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
+                transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
+              }}
+            >
+              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                <label.icon className="w-6 h-6 text-accent" />
               </div>
-            ))}
-          </div>
+              <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
+                {label.title}
+              </h4>
+              <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
+                {label.body}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* ── Mobile: bottom overlay fallback ── */}
