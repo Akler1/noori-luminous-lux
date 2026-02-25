@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import ourStoryPurse from "@/assets/our-story-purse.png";
 
 import { Footer } from "@/components/Footer";
 import { Mountain, HeartHandshake, GraduationCap, Sparkles, Heart, Gem, Leaf, Users, Microscope, Scale, Palette, FileCheck, Download, Factory, ClipboardCheck, Package, Truck, ArrowRight, CheckCircle2 } from "lucide-react";
@@ -74,41 +75,47 @@ const About = () => {
         </section>
 
         {/* Our Story Section */}
-        <section className="py-16 px-4 bg-secondary/50">
-          <div className="max-w-4xl mx-auto">
+        <section className="py-14 md:py-[72px] px-4 bg-secondary/50">
+          <div className="max-w-6xl mx-auto grid grid-cols-12 gap-12 md:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="col-span-12 md:col-span-5 order-2 md:order-1"
             >
-              <h2 className="text-3xl md:text-4xl font-serif mb-6">
-                Our <span className="noor-glow">Story</span>
-              </h2>
+              <div className="max-w-[560px]">
+                <h2 className="text-3xl md:text-4xl font-serif mb-5">
+                  Our <span className="noor-glow">Story</span>
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                  Noori was born from a simple question: why does beauty have to come at someone else's expense? We saw an industry shaped by conflict and environmental harm, and we knew there had to be a better way.
+                </p>
+                <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                  So we built Noori around two non-negotiables: ethics and excellence. We use lab-grown diamonds and design every piece to feel truly premium—clean proportions, secure settings, and a finish made for everyday wear.
+                </p>
+                <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                  The result is luxury that's attainable, without compromising on craftsmanship or durability. And we don't stop at what we make—every purchase supports UNICEF programs that help children access safety and education in mining-affected communities.
+                </p>
+                <p className="text-base text-foreground font-medium leading-relaxed">
+                  Every Noori piece represents a choice—a choice for innovation over extraction, for impact over indifference, for beauty you can feel good about wearing.
+                </p>
+              </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="prose prose-invert max-w-none text-center"
+              className="col-span-12 md:col-span-7 order-1 md:order-2"
             >
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Noori was born from a simple question: why does beauty have to come at someone else's expense? 
-                We saw an industry built on conflict and environmental destruction, and we knew there had to be a better way.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Our name, "Noori," means "light" in several languages—and that's exactly what we aim to bring. 
-                Light to the jewelry industry through ethical lab-grown diamonds. Light to the lives of children 
-                trapped in mining through our UNICEF partnership. Light to your everyday moments with pieces 
-                designed to be worn and cherished.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Every Noori piece represents a choice—a choice for innovation over extraction, 
-                for impact over indifference, for beauty that makes the world a little brighter.
-              </p>
+              <img
+                src={ourStoryPurse}
+                alt="Noori luxury jewelry collection"
+                className="w-full rounded-3xl border border-border/30 object-cover object-center aspect-[4/5] md:aspect-auto md:h-full"
+                loading="lazy"
+              />
             </motion.div>
           </div>
         </section>
