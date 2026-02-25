@@ -185,7 +185,7 @@ const About = () => {
 
             {/* Journey Cards - vertical stack */}
             <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <JourneyNode
                   icon={<Mountain className="w-8 h-8 text-stone-400" />}
                   title="The Mines"
@@ -194,7 +194,6 @@ const About = () => {
                   delay={400}
                   isVisible={isVisible}
                   effect={<MineEffect />}
-                  fullWidth
                 />
                 <JourneyNode
                   icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
@@ -204,7 +203,6 @@ const About = () => {
                   delay={700}
                   isVisible={isVisible}
                   effect={<InterventionEffect />}
-                  fullWidth
                 />
                 <JourneyNode
                   icon={<GraduationCap className="w-8 h-8 text-green-500" />}
@@ -214,7 +212,6 @@ const About = () => {
                   delay={1000}
                   isVisible={isVisible}
                   effect={<SchoolEffect />}
-                  fullWidth
                 />
                 <JourneyNode
                   icon={<Sparkles className="w-8 h-8 text-primary" />}
@@ -225,7 +222,6 @@ const About = () => {
                   isVisible={isVisible}
                   effect={<FutureEffect active={futurePayoff} />}
                   highlight={futurePayoff}
-                  fullWidth
                 />
               </div>
 
