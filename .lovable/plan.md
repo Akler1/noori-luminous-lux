@@ -1,79 +1,80 @@
 
-## Diagnosis (why it still looks “the same”)
 
-From the current code and your screenshot, the latest styles are technically present, but the visual delta is too subtle on this cream background:
-- Cards are still light-on-light (`white/80 → white/40`) so they read like the old white boxes.
-- The halo behind each card is very soft and diffused, so it’s barely perceptible at normal viewing distance.
-- There is no strong shared backdrop behind the stack, so each card still feels isolated and “flat.”
+# Fix: Make Liquid Glass Cards Actually Visible
 
-So this is not a React re-render/query issue. It’s a visual-contrast/design-strength issue.
+## Root Cause
 
-## Implementation approach (make it obviously different)
+The entire "liquid glass" approach using `backdrop-blur` is fundamentally broken here because the cards sit on a **solid cream background**. Backdrop-blur only creates a frosted-glass effect when there's varied content (images, patterns) behind the element. On a plain solid color, it does absolutely nothing visible.
 
-I’ll keep the cards to the right (not on top of the earring), but introduce a **clear liquid-glass panel system** with stronger depth cues:
+Every previous attempt failed for the same reason -- they all relied on `backdrop-blur` which is invisible against a flat background.
 
-1. Add a **group-level glass backplate** behind all 3 cards  
-   - Large rounded translucent slab behind the entire card column.
-   - Adds immediate “something behind” structure and makes the section feel intentional/premium.
+## Solution: Use Real Backgrounds + Strong Visual Effects
 
-2. Add a **group ambient glow blob** behind the backplate  
-   - Warm gold radial glow with larger spread and slightly higher opacity so it is actually visible.
+Instead of relying on backdrop-blur, use **actual visible styling** that works regardless of what's behind:
 
-3. Upgrade each card to a stronger “liquid tile” style  
-   - Slightly darker-tinted glass layer (still light, but more contrast than plain white).
-   - Crisp top-edge highlight + subtle inner shadow for refractive glass feel.
-   - Larger corner radius and spacing so the cards feel more editorial.
+### 1. Dark semi-transparent card backgrounds
+- Switch to `rgba(15, 15, 20, 0.75)` (dark charcoal) so the cards pop against the cream background
+- This creates immediate, dramatic contrast -- no blur needed
+- White text on dark cards for readability
 
-4. Add a subtle **moving sheen/reflection** on cards  
-   - Very slow diagonal shimmer stripe across each card.
-   - Low-opacity and premium (not flashy), just enough to signal “liquid.”
+### 2. Visible gold glow behind the card stack
+- Use a stronger gold radial glow at ~30% opacity (up from 15%)
+- Larger spread with `blur(40px)` so it's actually visible
+- Acts as an ambient halo behind the dark cards
 
-5. Increase perceived size and hierarchy  
-   - Wider stack (`max-width` ~340–360px), larger title/body sizing, more vertical breathing room.
-   - Icons get stronger gold treatment with a cleaner circular plate.
+### 3. Proper vertical centering
+- Keep `top-1/2 -translate-y-1/2` but ensure the inline `transform` in the animation doesn't override the CSS `translate`
+- The current code sets `transform: translateX(...)` via inline style, which **overrides** the Tailwind `-translate-y-1/2` class. This is likely why the cards are mispositioned
+- Fix: combine both transforms in the inline style
 
-## File-level changes
+### 4. Glass-like accents on the dark cards
+- Subtle top-edge highlight: `border-top: 1px solid rgba(255,255,255,0.15)`
+- Moving sheen animation stays (now visible as a light stripe on dark background)
+- Gold icon circles with `rgba(196,162,101,0.2)` background
 
-### `src/components/ScrollImageSequence.tsx`
+### 5. Card inner styling
+- Icon: gold color `#C4A265` on `rgba(255,255,255,0.08)` circle
+- Title: `text-white/90`, uppercase, serif
+- Body: `text-white/55`, small, relaxed leading
+- Gold divider line between icon and text
 
-I’ll refactor only the desktop callout block:
+## Technical Changes
 
-- Keep container position (`right side`) but wrap it in a new `relative` group layer.
-- Insert:
-  - **Backplate layer** (absolute, full stack bounds, blurred/translucent).
-  - **Ambient glow layer** (absolute, radial gold glow).
-- Update each mapped card:
-  - Stronger glass tile class stack.
-  - Add internal sheen element (`absolute` overlay).
-  - Keep existing stagger animation, but slightly more pronounced transform.
-- Ensure `pointer-events-none` on decorative layers and `pointer-events-auto` for card content.
+### File: `src/components/ScrollImageSequence.tsx`
 
-### `src/index.css`
+**Container (line 127-134):** Fix the transform override issue. The inline `style={{ transform: translateX(...) }}` overrides Tailwind's `-translate-y-1/2`. Solution: include both transforms in the inline style:
+```
+transform: `translate(${showCallouts ? 0 : 40}px, -50%)`
+```
+Remove `-translate-y-1/2` from className since it will be handled inline.
 
-Add small reusable animation utilities for sheen:
-- `@keyframes liquid-sheen` (slow horizontal/diagonal pass).
-- Optional utility class for reduced-motion fallback.
+**Ambient glow (lines 137-143):** Increase opacity to 0.30 and spread, change to a warmer, more visible glow.
 
-This keeps JSX cleaner and ensures consistent animation behavior.
+**Glass backplate (lines 145-154):** Switch to dark semi-transparent: `rgba(10,10,15,0.5)` with `border: 1px solid rgba(255,255,255,0.08)`.
 
-## Visual target after change
+**Individual cards (lines 167-203):** Replace the white gradient glass with:
+- Background: `rgba(15,15,20,0.75)` 
+- Border: `1px solid rgba(255,255,255,0.1)` with brighter top border `rgba(255,255,255,0.2)`
+- Box shadow: multi-layer for depth
+- Sheen animation: keep, now visible on dark background
+- Text colors: white/90 for title, white/55 for body
+- Icon color: `#C4A265` (brand gold)
 
-- You should immediately notice:
-  - A clear glass “panel” behind the whole stack.
-  - Brighter gold atmospheric glow around the panel.
-  - Cards that look refractive/glossy (not flat white).
-  - Subtle motion in highlights that makes the UI feel alive and premium.
+### File: `src/index.css`
 
-## Risk & compatibility notes
+No changes needed -- the `liquid-sheen` keyframes already exist and will now be visible on the dark card background.
 
-- `backdrop-blur` support is good in modern browsers; the design will still look fine without full blur support.
-- Sheen animation will be disabled/reduced if `prefers-reduced-motion` is on.
-- No data logic, no routing, no external dependencies changed.
+## Why This Will Work
 
-## Validation steps after implementation
+- Dark cards on light background = guaranteed high contrast, no dependency on backdrop-blur
+- The gold glow behind dark cards creates a premium, luminous floating effect
+- The sheen animation (light stripe on dark surface) becomes actually visible
+- Transform fix ensures cards are properly vertically centered
 
-1. Open homepage and scroll to the earring sequence final state.
-2. Confirm the card stack now has a visible shared backplate + glow.
-3. Confirm cards look materially different from the previous white-box appearance.
-4. Check at 1440px and 1920px widths to verify the panel scale and spacing.
-5. Quick mobile sanity check to ensure desktop-only layers stay hidden on small screens.
+## What It Will Look Like
+
+- Three dark, semi-transparent cards floating on the right
+- Warm gold atmospheric glow surrounding the card stack
+- Subtle light shimmer sweeping across each card
+- Gold icons and white text for premium contrast
+- Cards vertically centered alongside the earring
