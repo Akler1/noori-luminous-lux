@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { RotateCcw, Maximize2, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { ShopifyVariant } from "@/types/shopify";
 import { motion } from "framer-motion";
 
@@ -25,7 +23,6 @@ export const ThreeDViewer = ({
   className = "",
   autoRotate = false 
 }: ThreeDViewerProps) => {
-  const navigate = useNavigate();
   const modelViewerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,18 +44,7 @@ export const ThreeDViewer = ({
     };
   }, []);
 
-  const handleResetView = () => {
-    if (modelViewerRef.current) {
-      modelViewerRef.current.resetTurntableRotation();
-      modelViewerRef.current.jumpCameraToGoal();
-    }
-  };
 
-  const handleFullscreen = () => {
-    if (iframeUrl) {
-      navigate(`/viewer?url=${encodeURIComponent(iframeUrl)}&title=${encodeURIComponent(variant?.title || '3D Viewer')}`);
-    }
-  };
 
   // Check for iframe URL first, then fall back to 3D model
   const iframeUrl = variant?.iframeUrl;
@@ -149,30 +135,7 @@ export const ThreeDViewer = ({
         />
       )}
 
-      {/* Controls Overlay */}
-      <div className="absolute top-4 right-4 flex gap-2">
-        {!iframeUrl && (
-          <Button
-            variant="secondary"
-            size="icon"
-            className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
-            onClick={handleResetView}
-            title="Reset View"
-          >
-            <RotateCcw className="h-4 w-4" />
-          </Button>
-        )}
-        
-        <Button
-          variant="secondary"
-          size="icon"
-          className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
-          onClick={handleFullscreen}
-          title="Fullscreen"
-        >
-          <Maximize2 className="h-4 w-4" />
-        </Button>
-      </div>
+
 
       {/* Info Overlay */}
       <div className="absolute bottom-4 left-4 right-4">

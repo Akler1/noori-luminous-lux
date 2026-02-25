@@ -157,7 +157,7 @@ const ProductDetail = () => {
               className="space-y-4"
             >
               {/* 3D Viewer or Image Gallery */}
-              <div className="relative">
+              <div className="relative -mx-2 lg:-mx-3">
                 {/* Golden glow effect */}
                 <div 
                   className="absolute -inset-3 rounded-2xl opacity-40 blur-xl pointer-events-none"
