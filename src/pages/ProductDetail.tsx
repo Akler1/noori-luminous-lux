@@ -15,6 +15,7 @@ import { ShopifyProduct, ShopifyVariant } from "@/types/shopify";
 import { useCartActions } from "@/hooks/useCart";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { SocialFeed } from "@/components/SocialFeed";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -441,6 +442,8 @@ const ProductDetail = () => {
             </div>
           </motion.section>
         )}
+
+        <SocialFeed />
 
         {/* Reviews */}
         <motion.div
