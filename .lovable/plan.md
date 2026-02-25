@@ -1,33 +1,46 @@
 
 
-# Center Titles, 2x2 Card Grid, Larger Image
+# Simplified Charitable Impact Section
 
 ## What Changes
 
-1. **Center the titles**: Move "Our Mission" and "How Your Purchase Creates Change" headings above the two-column grid so they span full width and are centered.
-2. **2x2 card grid**: Change the 4 journey cards from a vertical stack to a 2x2 grid layout on desktop.
-3. **Larger image**: Change the grid split from 50/50 to roughly 40/60 (left cards / right image) so the UNICEF image takes more space.
+Replace the current `StickyStoryRefined` component with a clean, image-forward section: centered headline, the UNICEF backpacks image displayed large, a short paragraph, and a "Learn Our Story" link that navigates to the About page's mission section (`/policies#mission`). No icons, no stat pillars, no extra copy.
 
-## Layout (Desktop)
+## Layout
 
 ```text
 +----------------------------------------------------------+
-|          Our Mission (centered, full width)               |
-|     How Your Purchase Creates Change (centered)           |
+|                                                          |
+|              Beauty that gives back.                     |
+|                                                          |
 +----------------------------------------------------------+
-|  [Card 1]   [Card 2]  |                                  |
-|                        |        UNICEF Image              |
-|  [Card 3]   [Card 4]  |        (larger)                  |
+|                                                          |
+|         [  UNICEF backpacks image, large  ]              |
+|                                                          |
++----------------------------------------------------------+
+|                                                          |
+|     A portion of every Noori purchase supports           |
+|     UNICEF programs for child safety and education.      |
+|                                                          |
+|              Learn Our Story ->                          |
+|                                                          |
 +----------------------------------------------------------+
 ```
 
 ## Technical Details
 
-**File: `src/pages/About.tsx`**
+**File: `src/components/StickyStoryRefined.tsx`** -- Full rewrite
 
-1. **Lines 168-194**: Move the mission statement and "How Your Purchase Creates Change" headings OUT of the left column div and place them ABOVE the grid, centered with `text-center`
-2. **Line 166**: Change grid proportions from `lg:grid-cols-2` to `lg:grid-cols-5` with left column as `lg:col-span-2` and right column as `lg:col-span-3`
-3. **Lines 197**: Change the desktop journey cards container from `flex flex-col gap-6` to `grid grid-cols-2 gap-4` for a 2x2 layout
-4. **Lines 293-301**: The image column gets `lg:col-span-3` making it take 60% of the width
-5. Mobile layout remains unchanged (single column, cards stacked vertically)
+1. Replace `braceletHero` import with `unicefBackpacks` from `@/assets/unicef-backpacks.jpg`
+2. Import `Link` from `react-router-dom` and `ArrowRight` from `lucide-react`
+3. Remove the `storyBeats` array, chips, and grid layout
+4. New structure (all centered, stacked vertically):
+   - Centered serif headline: "Beauty that gives back."
+   - Full-width UNICEF image with `rounded-2xl shadow-elegant`
+   - Short one-sentence paragraph below the image
+   - `Link` to `/policies#mission` styled as a subtle text CTA with arrow icon
+5. Keep `bg-secondary` background and framer-motion fade-in animations
+6. No icons, no 3-column grid, no extra copy blocks
+
+**No changes to `Index.tsx`** -- component stays in the same position.
 
