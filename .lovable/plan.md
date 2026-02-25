@@ -1,34 +1,79 @@
 
+## Diagnosis (why it still looks “the same”)
 
-# Upgrade Earring Callout Cards -- Liquid Glass Effect
+From the current code and your screenshot, the latest styles are technically present, but the visual delta is too subtle on this cream background:
+- Cards are still light-on-light (`white/80 → white/40`) so they read like the old white boxes.
+- The halo behind each card is very soft and diffused, so it’s barely perceptible at normal viewing distance.
+- There is no strong shared backdrop behind the stack, so each card still feels isolated and “flat.”
 
-## What Changes
+So this is not a React re-render/query issue. It’s a visual-contrast/design-strength issue.
 
-The three callout cards on the right side of the earring scroll sequence will get a dramatic visual upgrade with a layered "liquid glass" aesthetic. The cards stay in their current position (right side, not overlapping the earring) but become much more visually striking.
+## Implementation approach (make it obviously different)
 
-## Visual Design
+I’ll keep the cards to the right (not on top of the earring), but introduce a **clear liquid-glass panel system** with stronger depth cues:
 
-Each card will feature:
+1. Add a **group-level glass backplate** behind all 3 cards  
+   - Large rounded translucent slab behind the entire card column.
+   - Adds immediate “something behind” structure and makes the section feel intentional/premium.
 
-- **Multi-layer glass effect**: An outer glow/blur layer behind each card creates a soft luminous halo, making the cards feel like they float on liquid glass
-- **Gradient glass background**: Instead of flat `bg-white/70`, use a subtle gradient (`bg-gradient-to-br from-white/80 via-white/60 to-white/40`) with stronger `backdrop-blur-xl` for a richer frosted glass look
-- **Inset highlight**: A pseudo-element-style inner border glow using `ring-1 ring-white/50 ring-inset` to simulate light catching the edge of glass
-- **Outer glow halo**: Each card gets an absolutely-positioned blurred element behind it (a soft radial gradient circle) in brand gold at low opacity, creating a warm ambient glow
-- **Refined shadow**: Replace `shadow-xl` with a custom multi-layer shadow for more depth: a tight shadow for definition + a wide diffused shadow for atmosphere
-- **Larger icon treatment**: Icon circle gets a subtle gradient background and a soft ring
-- **Gold accent line**: A thin decorative gold line/divider between the icon area and the text
+2. Add a **group ambient glow blob** behind the backplate  
+   - Warm gold radial glow with larger spread and slightly higher opacity so it is actually visible.
 
-## Technical Details
+3. Upgrade each card to a stronger “liquid tile” style  
+   - Slightly darker-tinted glass layer (still light, but more contrast than plain white).
+   - Crisp top-edge highlight + subtle inner shadow for refractive glass feel.
+   - Larger corner radius and spacing so the cards feel more editorial.
 
-**File: `src/components/ScrollImageSequence.tsx`**
+4. Add a subtle **moving sheen/reflection** on cards  
+   - Very slow diagonal shimmer stripe across each card.
+   - Low-opacity and premium (not flashy), just enough to signal “liquid.”
 
-- Wrap each card in a container div that holds both the glow element and the card itself
-- The glow element: `absolute -inset-3 bg-gradient-radial from-[#C4A265]/15 to-transparent rounded-2xl blur-xl` positioned behind each card
-- Card styling: `backdrop-blur-xl bg-gradient-to-br from-white/80 via-white/60 to-white/40 border border-white/50 rounded-2xl p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06),0_16px_48px_rgba(0,0,0,0.08)] ring-1 ring-inset ring-white/40`
-- Icon circle: `w-11 h-11 rounded-full bg-gradient-to-br from-accent/15 to-accent/5 ring-1 ring-accent/20`
-- Add a thin gold divider: `w-8 h-px bg-accent/30 mx-auto my-3` between icon and title
-- Increase container max-width to `300px`, padding to `p-6`
-- Keep the same animation (slide from right + scale) and stagger timing
+5. Increase perceived size and hierarchy  
+   - Wider stack (`max-width` ~340–360px), larger title/body sizing, more vertical breathing room.
+   - Icons get stronger gold treatment with a cleaner circular plate.
 
-No other files need changes -- all styling is inline/Tailwind.
+## File-level changes
 
+### `src/components/ScrollImageSequence.tsx`
+
+I’ll refactor only the desktop callout block:
+
+- Keep container position (`right side`) but wrap it in a new `relative` group layer.
+- Insert:
+  - **Backplate layer** (absolute, full stack bounds, blurred/translucent).
+  - **Ambient glow layer** (absolute, radial gold glow).
+- Update each mapped card:
+  - Stronger glass tile class stack.
+  - Add internal sheen element (`absolute` overlay).
+  - Keep existing stagger animation, but slightly more pronounced transform.
+- Ensure `pointer-events-none` on decorative layers and `pointer-events-auto` for card content.
+
+### `src/index.css`
+
+Add small reusable animation utilities for sheen:
+- `@keyframes liquid-sheen` (slow horizontal/diagonal pass).
+- Optional utility class for reduced-motion fallback.
+
+This keeps JSX cleaner and ensures consistent animation behavior.
+
+## Visual target after change
+
+- You should immediately notice:
+  - A clear glass “panel” behind the whole stack.
+  - Brighter gold atmospheric glow around the panel.
+  - Cards that look refractive/glossy (not flat white).
+  - Subtle motion in highlights that makes the UI feel alive and premium.
+
+## Risk & compatibility notes
+
+- `backdrop-blur` support is good in modern browsers; the design will still look fine without full blur support.
+- Sheen animation will be disabled/reduced if `prefers-reduced-motion` is on.
+- No data logic, no routing, no external dependencies changed.
+
+## Validation steps after implementation
+
+1. Open homepage and scroll to the earring sequence final state.
+2. Confirm the card stack now has a visible shared backplate + glow.
+3. Confirm cards look materially different from the previous white-box appearance.
+4. Check at 1440px and 1920px widths to verify the panel scale and spacing.
+5. Quick mobile sanity check to ensure desktop-only layers stay hidden on small screens.
