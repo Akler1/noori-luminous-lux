@@ -1,31 +1,33 @@
 
 
-# Restructure Our Mission Section Layout
+# Center Titles, 2x2 Card Grid, Larger Image
 
 ## What Changes
 
-Reorganize the mission section from the current vertically-stacked, centered layout into a two-column layout: journey cards/icons with text on the left, UNICEF backpacks image on the right. Also remove the impact stats row (500+ Children Supported, Kipushi & Lualaba, 5,000+ Families Reached).
+1. **Center the titles**: Move "Our Mission" and "How Your Purchase Creates Change" headings above the two-column grid so they span full width and are centered.
+2. **2x2 card grid**: Change the 4 journey cards from a vertical stack to a 2x2 grid layout on desktop.
+3. **Larger image**: Change the grid split from 50/50 to roughly 40/60 (left cards / right image) so the UNICEF image takes more space.
 
-## Layout Changes
+## Layout (Desktop)
 
-**New two-column grid (desktop)**
-- Left column: Mission statement, "How Your Purchase Creates Change" heading + footnote, and the 4 journey cards stacked vertically
-- Right column: The UNICEF backpacks image (currently below everything), displayed large and vertically centered
-
-**Mobile**: Stack normally -- text/cards first, image below
-
-**Remove**: The entire "Impact Stats" block (lines 312-321) containing "500+", "Kipushi & Lualaba", and "5,000+ Families Reached"
-
-**Remove**: The "See the Impact in Action" heading and caption around the image -- just show the image cleanly
+```text
++----------------------------------------------------------+
+|          Our Mission (centered, full width)               |
+|     How Your Purchase Creates Change (centered)           |
++----------------------------------------------------------+
+|  [Card 1]   [Card 2]  |                                  |
+|                        |        UNICEF Image              |
+|  [Card 3]   [Card 4]  |        (larger)                  |
++----------------------------------------------------------+
+```
 
 ## Technical Details
 
 **File: `src/pages/About.tsx`**
 
-1. Wrap the mission content (lines 165-310) in a `grid grid-cols-1 lg:grid-cols-2 gap-12 items-center` layout
-2. Left column: Move the mission statement (h2 + body), "How Your Purchase Creates Change" (h3 + subhead + footnote), and the desktop journey nodes into a left-aligned vertical stack (remove `text-center` classes)
-3. Right column: Move the UNICEF backpacks image, remove the "See the Impact in Action" heading and caption text, just keep the styled image
-4. Delete lines 312-321: The impact stats section with `StatItem` components (500+, Kipushi & Lualaba, 5,000+)
-5. On mobile, the grid collapses to single column -- cards then image below
-6. Keep all existing animations, journey node components, and mobile connectors
+1. **Lines 168-194**: Move the mission statement and "How Your Purchase Creates Change" headings OUT of the left column div and place them ABOVE the grid, centered with `text-center`
+2. **Line 166**: Change grid proportions from `lg:grid-cols-2` to `lg:grid-cols-5` with left column as `lg:col-span-2` and right column as `lg:col-span-3`
+3. **Lines 197**: Change the desktop journey cards container from `flex flex-col gap-6` to `grid grid-cols-2 gap-4` for a 2x2 layout
+4. **Lines 293-301**: The image column gets `lg:col-span-3` making it take 60% of the width
+5. Mobile layout remains unchanged (single column, cards stacked vertically)
 
