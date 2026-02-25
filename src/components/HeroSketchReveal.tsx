@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import heroReal from "@/assets/hero-real.png";
 import heroSketch from "@/assets/hero-sketch.png";
+import heroRealMobile from "@/assets/hero-real-mobile.png";
+import heroSketchMobile from "@/assets/hero-sketch-mobile.png";
 
 interface HeroSketchRevealProps {
   className?: string;
@@ -31,10 +33,10 @@ const calculateImageCoverRightOffset = (
     const drawWidth = canvasHeight * imgRatio;
 
     if (isMobile) {
-      // Mobile: position at 50% from left (matching object-[50%_center])
+      // Mobile: pre-cropped images use object-center, so center alignment
       const maxShift = drawWidth - canvasWidth;
       return {
-        x: -(maxShift * 0.50),
+        x: -(maxShift * 0.5),
         y: 0,
         width: drawWidth,
         height: drawHeight
@@ -151,8 +153,9 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   
   // Initialize canvases and load images
   useEffect(() => {
+    const sketchSrc = isMobile ? heroSketchMobile : heroSketch;
     const sketchImg = new Image();
-    sketchImg.src = heroSketch;
+    sketchImg.src = sketchSrc;
     
     sketchImg.onload = () => {
       sketchImgRef.current = sketchImg;
@@ -160,15 +163,17 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
     };
     
     // Create offscreen mask canvas with willReadFrequently for performance
-    const maskCanvas = document.createElement("canvas");
-    maskCanvasRef.current = maskCanvas;
+    if (!maskCanvasRef.current) {
+      const maskCanvas = document.createElement("canvas");
+      maskCanvasRef.current = maskCanvas;
+    }
     
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
   
   // Handle canvas sizing - NO context scaling here
   const updateCanvasSize = useCallback(() => {
@@ -406,11 +411,16 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       onPointerLeave={handlePointerLeave}
       onClick={handleTap}
     >
-      {/* Base layer: Real photo - object-right to crop from left */}
+      {/* Base layer: Real photo */}
+      <img
+        src={heroRealMobile}
+        alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
+        className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
+      />
       <img
         src={heroReal}
         alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-[50%_center] md:object-right"
+        className="absolute inset-0 w-full h-full object-cover object-right hidden md:block"
       />
       
       {/* Sketch overlay canvas */}
