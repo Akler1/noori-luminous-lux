@@ -1,42 +1,34 @@
 
 
-# Upgrade Earring Callout Cards -- Bigger, Premium Feel
+# Upgrade Earring Callout Cards -- Liquid Glass Effect
 
-## Current Issue
-The cards are too small (max-width 200px, text-xs everywhere, p-3 padding). They feel like afterthoughts rather than premium content.
+## What Changes
 
-## Proposed Redesign
+The three callout cards on the right side of the earring scroll sequence will get a dramatic visual upgrade with a layered "liquid glass" aesthetic. The cards stay in their current position (right side, not overlapping the earring) but become much more visually striking.
 
-### Larger, Frosted Glass Cards
-Replace the compact cards with bigger, glassmorphism-style cards that feel premium and integrated with the image:
+## Visual Design
 
-- **Size**: Increase max-width from 200px to ~280px, padding from `p-3` to `p-5`
-- **Glass effect**: `backdrop-blur-md bg-white/70 border border-white/40` -- semi-transparent frosted glass that lets the image bleed through subtly
-- **Text sizing**: Title bumped to `text-sm`, body to `text-[13px]` (up from all `text-xs`)
-- **Icon**: Larger icons (`w-6 h-6`) with a subtle accent-colored circular background behind them
-- **Spacing**: Gap between cards increased from `gap-4` to `gap-5`
+Each card will feature:
 
-### Staggered Animation Upgrade
-- Slide in from the right (`translateX`) instead of from below (`translateY`) for a more dynamic entrance
-- Slightly longer stagger (200ms between cards instead of 150ms)
-- Add a subtle scale effect (0.95 to 1) for extra polish
-
-### Layout
-- Position stays overlaid on the right side of the image
-- Move slightly more inward: `right-[5%]` (from 4%)
-- Cards remain vertically centered
+- **Multi-layer glass effect**: An outer glow/blur layer behind each card creates a soft luminous halo, making the cards feel like they float on liquid glass
+- **Gradient glass background**: Instead of flat `bg-white/70`, use a subtle gradient (`bg-gradient-to-br from-white/80 via-white/60 to-white/40`) with stronger `backdrop-blur-xl` for a richer frosted glass look
+- **Inset highlight**: A pseudo-element-style inner border glow using `ring-1 ring-white/50 ring-inset` to simulate light catching the edge of glass
+- **Outer glow halo**: Each card gets an absolutely-positioned blurred element behind it (a soft radial gradient circle) in brand gold at low opacity, creating a warm ambient glow
+- **Refined shadow**: Replace `shadow-xl` with a custom multi-layer shadow for more depth: a tight shadow for definition + a wide diffused shadow for atmosphere
+- **Larger icon treatment**: Icon circle gets a subtle gradient background and a soft ring
+- **Gold accent line**: A thin decorative gold line/divider between the icon area and the text
 
 ## Technical Details
 
 **File: `src/components/ScrollImageSequence.tsx`**
 
-- Update the card container: increase `maxWidth` to `280px`, change `gap-4` to `gap-5`
-- Replace `card-luxury` class with inline glassmorphism styles: `backdrop-blur-md bg-white/70 border border-white/40 rounded-xl`
-- Add icon background circle: a small `w-10 h-10 rounded-full bg-accent/10` wrapper around each icon
-- Increase text sizes: title to `text-sm`, body to `text-[13px]`
-- Change animation from `translateY(12px)` to `translateX(30px)` + `scale(0.95)` for a slide-from-right entrance
-- Increase stagger delay to 200ms per card
-- Mobile fallback stays unchanged
+- Wrap each card in a container div that holds both the glow element and the card itself
+- The glow element: `absolute -inset-3 bg-gradient-radial from-[#C4A265]/15 to-transparent rounded-2xl blur-xl` positioned behind each card
+- Card styling: `backdrop-blur-xl bg-gradient-to-br from-white/80 via-white/60 to-white/40 border border-white/50 rounded-2xl p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06),0_16px_48px_rgba(0,0,0,0.08)] ring-1 ring-inset ring-white/40`
+- Icon circle: `w-11 h-11 rounded-full bg-gradient-to-br from-accent/15 to-accent/5 ring-1 ring-accent/20`
+- Add a thin gold divider: `w-8 h-px bg-accent/30 mx-auto my-3` between icon and title
+- Increase container max-width to `300px`, padding to `p-6`
+- Keep the same animation (slide from right + scale) and stagger timing
 
-**File: `src/index.css`** -- No changes needed (we bypass `card-luxury` with inline glass styles)
+No other files need changes -- all styling is inline/Tailwind.
 
