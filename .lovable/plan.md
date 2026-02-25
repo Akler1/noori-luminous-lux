@@ -1,43 +1,31 @@
 
 
-# Update Our Mission Section -- New Copy and Image
+# Restructure Our Mission Section Layout
 
 ## What Changes
 
-Update the mission section on the About page (`src/pages/About.tsx`) with revised copy and replace the YouTube video embed with the uploaded UNICEF backpacks image.
+Reorganize the mission section from the current vertically-stacked, centered layout into a two-column layout: journey cards/icons with text on the left, UNICEF backpacks image on the right. Also remove the impact stats row (500+ Children Supported, Kipushi & Lualaba, 5,000+ Families Reached).
 
-## Content Updates
+## Layout Changes
 
-**Our Mission header area (lines 168-173)**
-- Keep the H2: "Our Mission"
-- Replace body text with: "Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities."
+**New two-column grid (desktop)**
+- Left column: Mission statement, "How Your Purchase Creates Change" heading + footnote, and the 4 journey cards stacked vertically
+- Right column: The UNICEF backpacks image (currently below everything), displayed large and vertically centered
 
-**How Your Purchase Creates Change (lines 180-185)**
-- Keep the H2 title
-- Change subhead to: "A step-by-step path from unsafe work to school."
-- Add a micro-footnote below: "UNICEF does not endorse any company, brand, product, or service."
+**Mobile**: Stack normally -- text/cards first, image below
 
-**Journey card descriptions (4 cards, both desktop and mobile)**
-1. The Mines: "Children face dangerous, unsafe work in mining communities."
-2. UNICEF Steps In: "Cash support, birth registration, and safe spaces help families break the cycle."
-3. Education: "Children receive school supplies, uniforms, and catch-up classes." (unchanged)
-4. Thriving: "A safer childhood -- and a future built in school."
+**Remove**: The entire "Impact Stats" block (lines 312-321) containing "500+", "Kipushi & Lualaba", and "5,000+ Families Reached"
 
-**Replace YouTube video with image (lines 291-308)**
-- Copy the uploaded image to `src/assets/unicef-backpacks.jpg`
-- Replace the iframe embed with a styled `<img>` element showing the backpacks photo
-- Keep the "See the Impact in Action" heading
-- Update caption to something fitting like "School supplies ready for distribution in mining-affected communities"
+**Remove**: The "See the Impact in Action" heading and caption around the image -- just show the image cleanly
 
 ## Technical Details
 
 **File: `src/pages/About.tsx`**
 
-1. Add import for the new image asset at top of file
-2. Line 172: Update mission body text
-3. Lines 183-185: Update subhead text, add footnote `<p>` with `text-xs text-muted-foreground/60` styling
-4. Lines 195, 205, 225, 241, 254, 280 (desktop + mobile): Update card description strings
-5. Lines 291-308: Replace the video `<div>` containing the `<iframe>` with the new image, keeping the same container styling (rounded-xl, overflow-hidden, border, shadow)
-
-**New asset**: Copy `user-uploads://hf_20260225_002404_cfd1d2f0-97cc-4e1c-8e23-ea97f3a9762e.png` to `src/assets/unicef-backpacks.jpg`
+1. Wrap the mission content (lines 165-310) in a `grid grid-cols-1 lg:grid-cols-2 gap-12 items-center` layout
+2. Left column: Move the mission statement (h2 + body), "How Your Purchase Creates Change" (h3 + subhead + footnote), and the desktop journey nodes into a left-aligned vertical stack (remove `text-center` classes)
+3. Right column: Move the UNICEF backpacks image, remove the "See the Impact in Action" heading and caption text, just keep the styled image
+4. Delete lines 312-321: The impact stats section with `StatItem` components (500+, Kipushi & Lualaba, 5,000+)
+5. On mobile, the grid collapses to single column -- cards then image below
+6. Keep all existing animations, journey node components, and mobile connectors
 
