@@ -126,27 +126,32 @@ const ScrollImageSequence = ({
         {/* ── Desktop: Right-side overlay cards ── */}
         <div
           className="absolute right-[5%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-5 z-20"
-          style={{ maxWidth: "280px" }}
+          style={{ maxWidth: "300px" }}
         >
           {LABELS.map((label, idx) => (
-            <div
-              key={label.title}
-              className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
+            <div key={label.title} className="relative"
               style={{
                 opacity: showCallouts ? 1 : 0,
                 transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
                 transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
               }}
             >
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
-                <label.icon className="w-6 h-6 text-accent" />
+              {/* Outer glow halo */}
+              <div className="absolute -inset-3 rounded-2xl blur-xl bg-[radial-gradient(ellipse_at_center,_rgba(196,162,101,0.15)_0%,_transparent_70%)]" />
+              <div
+                className="relative backdrop-blur-xl bg-gradient-to-br from-white/80 via-white/60 to-white/40 border border-white/50 rounded-2xl p-6 text-center shadow-[0_4px_16px_rgba(0,0,0,0.06),0_16px_48px_rgba(0,0,0,0.08)] ring-1 ring-inset ring-white/40"
+              >
+                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-accent/15 to-accent/5 ring-1 ring-accent/20 flex items-center justify-center mx-auto mb-3">
+                  <label.icon className="w-6 h-6 text-accent" />
+                </div>
+                <div className="w-8 h-px bg-accent/30 mx-auto my-3" />
+                <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
+                  {label.title}
+                </h4>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
+                  {label.body}
+                </p>
               </div>
-              <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
-                {label.title}
-              </h4>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
-                {label.body}
-              </p>
             </div>
           ))}
         </div>
