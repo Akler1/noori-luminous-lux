@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import unicefBackpacks from "@/assets/unicef-backpacks.jpg";
 import { Footer } from "@/components/Footer";
 import { Mountain, HeartHandshake, GraduationCap, Sparkles, Heart, Gem, Leaf, Users, Microscope, Scale, Palette, FileCheck, Download, Factory, ClipboardCheck, Package, Truck, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -169,7 +170,7 @@ const About = () => {
                   Our <span className="noor-glow">Mission</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  Every Noori purchase directly supports UNICEF's mission to help children escape dangerous mining conditions and access education in the Democratic Republic of Congo.
+                  Every Noori purchase supports UNICEF programs that help children stay safe and access education in mining-affected communities.
                 </p>
               </div>
             </div>
@@ -181,7 +182,10 @@ const About = () => {
                   How Your Purchase <span className="noor-glow">Creates Change</span>
                 </h3>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  A step-by-step journey from mining to thriving.
+                  A step-by-step path from unsafe work to school.
+                </p>
+                <p className="text-xs text-muted-foreground/60 italic mt-2">
+                  UNICEF does not endorse any company, brand, product, or service.
                 </p>
               </div>
             </div>
@@ -192,7 +196,7 @@ const About = () => {
                 <JourneyNode
                   icon={<Mountain className="w-8 h-8 text-stone-400" />}
                   title="The Mines"
-                  description="Over 360,000 children work in dangerous cobalt mines in the DRC."
+                  description="Children face dangerous, unsafe work in mining communities."
                   accentColor="stone"
                   delay={400}
                   isVisible={isVisible}
@@ -202,7 +206,7 @@ const About = () => {
                 <JourneyNode
                   icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                   title="UNICEF Steps In"
-                  description="Cash support, birth certificates, and safe spaces help families break the cycle."
+                  description="Cash support, birth registration, and safe spaces help families break the cycle."
                   accentColor="amber"
                   delay={700}
                   isVisible={isVisible}
@@ -222,7 +226,7 @@ const About = () => {
                 <JourneyNode
                   icon={<Sparkles className="w-8 h-8 text-primary" />}
                   title="Thriving"
-                  description="A brighter future with endless possibilities ahead."
+                  description="A safer childhood—and a future built in school."
                   accentColor="primary"
                   delay={1300}
                   isVisible={isVisible}
@@ -238,7 +242,7 @@ const About = () => {
                 <JourneyNode
                   icon={<Mountain className="w-8 h-8 text-stone-400" />}
                   title="The Mines"
-                  description="Over 360,000 children work in dangerous cobalt mines in the DRC."
+                  description="Children face dangerous, unsafe work in mining communities."
                   accentColor="stone"
                   delay={400}
                   isVisible={isVisible}
@@ -251,7 +255,7 @@ const About = () => {
                 <JourneyNode
                   icon={<HeartHandshake className="w-8 h-8 text-amber-500" />}
                   title="UNICEF Steps In"
-                  description="Cash support, birth certificates, and safe spaces help families break the cycle."
+                  description="Cash support, birth registration, and safe spaces help families break the cycle."
                   accentColor="amber"
                   delay={700}
                   isVisible={isVisible}
@@ -277,7 +281,7 @@ const About = () => {
                 <JourneyNode
                   icon={<Sparkles className="w-8 h-8 text-primary" />}
                   title="Thriving"
-                  description="A brighter future with endless possibilities ahead."
+                  description="A safer childhood—and a future built in school."
                   accentColor="primary"
                   delay={1300}
                   isVisible={isVisible}
@@ -292,17 +296,15 @@ const About = () => {
             <div className={`mt-16 mb-12 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="max-w-3xl mx-auto">
                 <h4 className="text-xl font-serif text-center mb-6">See the Impact in Action</h4>
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-primary/20 shadow-lg shadow-primary/10">
-                  <iframe
-                    src="https://www.youtube.com/embed/vSDqUcH5ne0"
-                    title="UNICEF: Breaking the cycle of child labor in DRC mines"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
+                <div className="relative w-full rounded-xl overflow-hidden border border-primary/20 shadow-lg shadow-primary/10">
+                  <img
+                    src={unicefBackpacks}
+                    alt="School supplies ready for distribution in mining-affected communities"
+                    className="w-full h-auto object-cover"
                   />
                 </div>
                 <p className="text-sm text-muted-foreground text-center mt-4">
-                  UNICEF's work helping children transition from mines to schools
+                  School supplies ready for distribution in mining-affected communities
                 </p>
               </div>
             </div>
