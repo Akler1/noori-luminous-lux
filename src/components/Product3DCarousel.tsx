@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Truck, RotateCcw, Shield, Gem } from "lucide-react";
+import { Truck, RotateCcw, Shield, Gem, Award } from "lucide-react";
 
 interface GridProduct {
   id: string;
@@ -17,6 +17,14 @@ const gridProducts: GridProduct[] = [
     price: "$1,599",
     pdpUrl: "/product/stud-round-14k",
     iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+    material: "Yellow gold",
+  },
+  {
+    id: "earrings-emerald-gold",
+    name: "Emerald Earrings",
+    price: "$2,299",
+    pdpUrl: "/product/earrings-emerald-gold",
+    iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
     material: "Yellow gold",
   },
   {
@@ -52,7 +60,7 @@ export default function Product3DCarousel() {
       </div>
 
       <div className="w-full">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
           {gridProducts.map((product) => (
             <Link
               key={product.id}
@@ -88,7 +96,7 @@ export default function Product3DCarousel() {
 
       {/* Trust Bar */}
       <div className="container-editorial mt-12 pt-8 border-t border-border/50">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center pb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 text-center pb-12">
           <div className="flex flex-col items-center gap-2">
             <Truck className="h-6 w-6 text-accent" />
             <div>
@@ -115,6 +123,13 @@ export default function Product3DCarousel() {
             <div>
               <p className="font-medium text-sm text-foreground">Ethical Diamonds</p>
               <p className="text-xs text-muted-foreground">Lab-grown</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <Award className="h-6 w-6 text-accent" />
+            <div>
+              <p className="font-medium text-sm text-foreground">IGI Certified</p>
+              <p className="text-xs text-muted-foreground">Every diamond</p>
             </div>
           </div>
         </div>
