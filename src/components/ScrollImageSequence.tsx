@@ -73,14 +73,20 @@ const ScrollImageSequence = ({
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
-      // Contain: fit entire image without cropping
+      // Crop to center 40% of source width, then cover-fill canvas
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, w, h);
-      if (imgRatio > canvasRatio) {
-        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      const sx = img.naturalWidth * 0.3;
+      const sw = img.naturalWidth * 0.4;
+      const sy = 0;
+      const sh = img.naturalHeight;
+      const croppedRatio = sw / sh;
+      if (croppedRatio > canvasRatio) {
+        dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
       } else {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       }
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
       // Cover: fill canvas, may crop
       if (imgRatio > canvasRatio) {
@@ -88,8 +94,8 @@ const ScrollImageSequence = ({
       } else {
         dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
       }
+      ctx.drawImage(img, dx, dy, dw, dh);
     }
-    ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
   /* ── Scroll handler ── */
