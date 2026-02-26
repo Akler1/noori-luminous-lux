@@ -1,50 +1,34 @@
 
-Goal: fix the mobile earring animation framing so the full earring is always visible (no clipping / over-zoom), while still trimming side background.
 
-What I found:
-- The current mobile branch in `src/components/ScrollImageSequence.tsx` crops source width (`sx=0.15`, `sw=0.7`) and then applies a **cover** fit to the cropped area.
-- That creates a double-zoom effect on narrow/tall mobile viewports:  
-  1) crop narrows the source, then  
-  2) cover scales it again to fill canvas.
-- Result: still too zoomed for mobile, which matches what you’re seeing.
+# Fix Mobile Cropping on About Page
 
-Implementation plan:
-1. Update only the mobile drawing path in `drawFrame` (`if (isMobile)`), keep desktop logic untouched.
-2. Change mobile fit from **crop + cover** to **crop + contain**:
-   - Keep a horizontal crop to remove side background.
-   - Render that cropped source with contain math so the full cropped content always remains visible.
-3. Widen the crop window so we don’t cut into the earring:
-   - Move from aggressive crop to a gentler crop (center-focused, wider source window).
-   - Example target: trim ~10–12% per side (keep ~76–80% width), then tune if needed.
-4. Keep black background fill before draw (already present) so any letterboxing looks intentional.
-5. Add clearly named mobile crop constants near the draw math (instead of magic numbers) to allow fast future tuning without touching logic.
+## Problem
+The About page has a horizontal scrollbar on mobile, causing text across the entire page to appear cropped on the right edge. This affects:
+- The "Our Story" text paragraphs
+- The IGI/GCal Certification card (text, bullet points, and button)
+- Potentially other sections
 
-Technical details (exact code behavior to implement):
-- In mobile branch:
-  - Define:
-    - `const mobileCropLeft = 0.10` (or 0.12)
-    - `const mobileCropWidth = 0.80` (or 0.76)
-  - Compute source rect:
-    - `sx = img.naturalWidth * mobileCropLeft`
-    - `sw = img.naturalWidth * mobileCropWidth`
-    - `sy = 0`
-    - `sh = img.naturalHeight`
-  - Compute `croppedRatio = sw / sh`
-  - Use **contain** destination sizing:
-    - If `croppedRatio > canvasRatio`: fit width (`dw = w`, `dh = w / croppedRatio`)
-    - Else: fit height (`dh = h`, `dw = h * croppedRatio`)
-    - Center with `dx`, `dy`
-  - Draw with 9-arg `drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)`
+## Root Cause
+The **IGI/GCal Certification card** uses a horizontal flex layout (`flex items-start gap-6`) with a fixed-width icon (96px) and text side-by-side. On a 390px screen with padding, there isn't enough horizontal space, causing the card to overflow its container. Since no parent has `overflow-x-hidden`, this pushes the entire page wider than the viewport, creating a horizontal scrollbar that makes everything look cropped.
 
-Why this solves your request:
-- “Full earring visible”: contain prevents further forced zoom/cropping.
-- “Crop left/right background”: source crop still removes side whitespace.
-- Mobile-only: guarded by `window.innerWidth < 768`; desktop remains unchanged.
+## Fixes (mobile only, desktop unchanged)
 
-Validation steps after implementation:
-1. Check on mobile viewport (390x844) through the scroll sequence.
-2. Confirm top/bottom/edges of the earring never clip at any frame.
-3. Confirm side background is reduced vs original uncropped contain.
-4. Confirm desktop behavior remains exactly as before.
+**File:** `src/pages/About.tsx`
 
-If the framing still feels slightly off after this, only two constants (`mobileCropLeft`, `mobileCropWidth`) need minor adjustment.
+### 1. Add `overflow-x-hidden` to the page wrapper (line 57)
+Change `<div className="min-h-screen bg-background">` to include `overflow-x-hidden`. This prevents any element from creating a horizontal scrollbar on the page.
+
+### 2. Fix the IGI/GCal Certification card layout (line 515)
+Change the inner container from `flex items-start gap-6` to `flex flex-col md:flex-row items-center md:items-start gap-6`. This stacks the icon on top and text below on mobile, while keeping the side-by-side layout on desktop.
+
+Also:
+- Add `mx-auto md:mx-0` to the icon container so it centers on mobile
+- Add `text-center md:text-left` to the text container for proper mobile alignment
+
+These two changes fix the root cause (the overflowing card) and add a safety net (overflow-x-hidden) so no future element can break the page layout.
+
+## What won't change
+- Desktop layout remains exactly the same
+- All other sections on the page are unaffected
+- Only the certification card stacking behavior changes on mobile
+
