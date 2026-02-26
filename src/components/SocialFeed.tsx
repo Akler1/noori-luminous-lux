@@ -44,13 +44,13 @@ export const SocialFeed = () => {
         <Carousel opts={{ align: "start", loop: true }} className="w-full relative">
           <CarouselContent className="-ml-4">
             {socialPosts.map((post, index) => (
-              <CarouselItem key={index} className="pl-4 basis-auto">
+              <CarouselItem key={index} className="pl-4 basis-1/2 md:basis-auto">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="w-72 md:w-80 aspect-square relative group rounded-lg overflow-hidden"
+                  className="w-full md:w-80 aspect-square relative group rounded-lg overflow-hidden"
                 >
                   <img
                     src={post.src}

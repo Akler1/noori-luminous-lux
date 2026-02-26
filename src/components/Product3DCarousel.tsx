@@ -95,41 +95,41 @@ export default function Product3DCarousel() {
       </div>
 
       {/* Trust Bar */}
-      <div className="container-editorial mt-12 pt-8 border-t border-border/50">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 text-center pb-12">
-          <div className="flex flex-col items-center gap-2">
-            <Truck className="h-6 w-6 text-accent" />
+      <div className="container-editorial mt-12 pt-8 border-t border-border/50 px-2 md:px-0">
+        <div className="grid grid-cols-5 gap-2 md:gap-8 text-center pb-12">
+          <div className="flex flex-col items-center gap-1 md:gap-2">
+            <Truck className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
-              <p className="font-medium text-sm text-foreground">Free Shipping</p>
-              <p className="text-xs text-muted-foreground">On all orders</p>
+              <p className="font-medium text-[10px] md:text-sm text-foreground">Free Shipping</p>
+              <p className="hidden md:block text-xs text-muted-foreground">On all orders</p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <RotateCcw className="h-6 w-6 text-accent" />
+          <div className="flex flex-col items-center gap-1 md:gap-2">
+            <RotateCcw className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
-              <p className="font-medium text-sm text-foreground">30-Day Returns</p>
-              <p className="text-xs text-muted-foreground">Easy exchanges</p>
+              <p className="font-medium text-[10px] md:text-sm text-foreground">30-Day Returns</p>
+              <p className="hidden md:block text-xs text-muted-foreground">Easy exchanges</p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <Shield className="h-6 w-6 text-accent" />
+          <div className="flex flex-col items-center gap-1 md:gap-2">
+            <Shield className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
-              <p className="font-medium text-sm text-foreground">Lifetime Warranty</p>
-              <p className="text-xs text-muted-foreground">Crafted to last</p>
+              <p className="font-medium text-[10px] md:text-sm text-foreground">Lifetime Warranty</p>
+              <p className="hidden md:block text-xs text-muted-foreground">Crafted to last</p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <Gem className="h-6 w-6 text-accent" />
+          <div className="flex flex-col items-center gap-1 md:gap-2">
+            <Gem className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
-              <p className="font-medium text-sm text-foreground">Ethical Diamonds</p>
-              <p className="text-xs text-muted-foreground">Lab-grown</p>
+              <p className="font-medium text-[10px] md:text-sm text-foreground">Ethical Diamonds</p>
+              <p className="hidden md:block text-xs text-muted-foreground">Lab-grown</p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <Award className="h-6 w-6 text-accent" />
+          <div className="flex flex-col items-center gap-1 md:gap-2">
+            <Award className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
-              <p className="font-medium text-sm text-foreground">IGI Certified</p>
-              <p className="text-xs text-muted-foreground">Every diamond</p>
+              <p className="font-medium text-[10px] md:text-sm text-foreground">IGI Certified</p>
+              <p className="hidden md:block text-xs text-muted-foreground">Every diamond</p>
             </div>
           </div>
         </div>
