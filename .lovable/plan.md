@@ -1,38 +1,67 @@
 
 
-# Use Dedicated Mobile Hero Images
+# Mobile Fixes: Trust Bar, Earring Scroll, and Worn By You Carousel
 
-## Approach
-Instead of trying to CSS-crop the wide desktop image, use the user's pre-cropped mobile images directly. This guarantees perfect framing and fixes the sketch overlay alignment since both images will have matching aspect ratios and content positioning.
+Three mobile-only fixes. Desktop remains completely untouched.
 
-## Changes
+---
 
-### 1. Copy uploaded images to project (`src/assets/`)
-- Copy `user-uploads://hero-real.PNG` to `src/assets/hero-real-mobile.png`
-- Copy `user-uploads://hero-sketch.PNG` to `src/assets/hero-sketch-mobile.png`
+## 1. Trust Bar - Compact 5-across on Mobile
 
-### 2. Update `src/components/HeroSketchReveal.tsx`
+**File:** `src/components/Product3DCarousel.tsx` (lines 98-135)
 
-**Imports (top of file):**
-- Add imports for the two new mobile images alongside the existing desktop ones
+Change the grid from `grid-cols-2` to `grid-cols-5` on all screen sizes. On mobile, make items smaller:
 
-**Background image (line 410-413):**
-- Use the mobile image on small screens and the desktop image on md+
-- Render two `<img>` tags: one with the mobile image (hidden on md+) and one with the desktop image (hidden below md)
-- Mobile image uses simple `object-cover object-center` since it's already perfectly cropped
-- Desktop image keeps `object-cover object-right` exactly as-is
+- Grid: `grid-cols-5` instead of `grid-cols-2 md:grid-cols-5`
+- Reduce gap: `gap-2 md:gap-8`
+- Reduce padding: `px-2 md:px-0`
+- Icons: `h-4 w-4 md:h-6 md:w-6`
+- Title text: `text-[10px] md:text-sm`
+- Hide subtitle paragraphs on mobile: add `hidden md:block` to each subtitle `<p>`
+- Reduce inner gap: `gap-1 md:gap-2`
 
-**Sketch image loading (lines 152-160):**
-- Load the appropriate sketch image based on `isMobile` state
-- When `isMobile` is true, load `hero-sketch-mobile.png`; otherwise load the existing `hero-sketch.png`
-- Re-trigger the load when `isMobile` changes
+This keeps all 5 icons visible in one row on mobile without scrolling.
 
-**Canvas offset calculation (lines 19-42):**
-- Simplify the mobile branch: since the mobile images are pre-cropped, the canvas offset on mobile can use simple centered `object-cover` math (center alignment) instead of the 50% focal-point hack
-- Desktop branch stays completely untouched
+---
 
-### What stays the same
-- All desktop rendering: image positioning, sketch overlay, pointer interactions -- zero changes
-- Text content, CTAs, scroll cue, animation timing
-- The overall component structure and animation loop
+## 2. Earring Scroll Animation - Contain on Mobile
+
+**File:** `src/components/ScrollImageSequence.tsx` (lines 68-78)
+
+Update the `drawFrame` function to use "contain" mode on mobile so the full earring is visible:
+
+- After `ctx.clearRect`, check `window.innerWidth < 768`
+- If mobile: fill canvas with black, then use contain logic (scale image to fit within canvas without cropping, centered)
+- If desktop: keep existing cover logic unchanged
+
+```
+// Mobile: contain (no crop)
+if (imgRatio > canvasRatio) {
+  dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+} else {
+  dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+}
+```
+
+This is the inverse of the current cover logic.
+
+---
+
+## 3. Worn By You Carousel - Show 2 Images on Mobile
+
+**File:** `src/components/SocialFeed.tsx` (lines 47, 53)
+
+- Change `CarouselItem` class from `basis-auto` to `basis-1/2 md:basis-auto`
+- Change inner div width from `w-72 md:w-80` to `w-full md:w-80`
+- This makes each item take exactly half the viewport on mobile, showing 2 at a time
+
+---
+
+## Summary
+
+| File | Change | Desktop impact |
+|------|--------|----------------|
+| `Product3DCarousel.tsx` | 5-col compact trust bar on mobile | None |
+| `ScrollImageSequence.tsx` | Contain mode for earring on mobile | None |
+| `SocialFeed.tsx` | basis-1/2 carousel items on mobile | None |
 
