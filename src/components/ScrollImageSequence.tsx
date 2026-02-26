@@ -76,8 +76,8 @@ const ScrollImageSequence = ({
       // Crop to center 40% of source width, then cover-fill canvas
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, w, h);
-      const sx = img.naturalWidth * 0.3;
-      const sw = img.naturalWidth * 0.4;
+      const sx = img.naturalWidth * 0.15;
+      const sw = img.naturalWidth * 0.7;
       const sy = 0;
       const sh = img.naturalHeight;
       const croppedRatio = sw / sh;
