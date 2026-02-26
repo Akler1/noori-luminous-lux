@@ -54,7 +54,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
       
       <main className="pt-28 md:pt-36">
@@ -512,13 +512,13 @@ const LabGrownDiamondsSection = () => {
           viewport={{ once: true }}
           className="card-luxury p-8 max-w-2xl mx-auto"
         >
-          <div className="flex items-start gap-6">
-            <div className="shrink-0">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div className="shrink-0 mx-auto md:mx-0">
               <div className="w-24 h-32 bg-muted/50 rounded-lg border border-border flex items-center justify-center">
                 <FileCheck className="w-10 h-10 text-accent" />
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 text-center md:text-left">
               <h4 className="text-xl font-serif mb-2">IGI/GCal Certification</h4>
               <p className="text-sm text-muted-foreground mb-4">
                 Every Noori diamond comes with independent certification verifying cut, color, clarity, and carat weight. 
