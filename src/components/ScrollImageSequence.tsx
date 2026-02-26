@@ -73,18 +73,21 @@ const ScrollImageSequence = ({
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
-      // Crop to center 40% of source width, then cover-fill canvas
+      // Crop side background, then contain-fit so full earring is always visible
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, w, h);
-      const sx = img.naturalWidth * 0.15;
-      const sw = img.naturalWidth * 0.7;
+      const mobileCropLeft = 0.10;
+      const mobileCropWidth = 0.80;
+      const sx = img.naturalWidth * mobileCropLeft;
+      const sw = img.naturalWidth * mobileCropWidth;
       const sy = 0;
       const sh = img.naturalHeight;
       const croppedRatio = sw / sh;
+      // Contain: fit entire cropped area inside canvas
       if (croppedRatio > canvasRatio) {
-        dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
-      } else {
         dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
+      } else {
+        dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
