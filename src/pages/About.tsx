@@ -113,7 +113,7 @@ const About = () => {
               <img
                 src={ourStoryPurse}
                 alt="Noori luxury jewelry collection"
-                className="w-full rounded-3xl border border-border/30 object-cover object-center aspect-[4/5] md:aspect-auto md:h-full"
+                className="w-full rounded-3xl border border-border/30 object-contain bg-muted/30 md:object-cover md:bg-transparent object-center aspect-auto md:aspect-auto md:h-full"
                 loading="lazy"
               />
             </motion.div>
@@ -530,8 +530,8 @@ const LabGrownDiamondsSection = () => {
                 <p>• 4Cs grading with visual diagrams</p>
                 <p>• Laser inscription ID</p>
               </div>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="w-4 h-4" />
+              <Button variant="outline" size="sm" className="gap-2 whitespace-normal h-auto py-2 w-full md:w-auto md:whitespace-nowrap md:h-9 md:py-0">
+                <Download className="w-4 h-4 shrink-0" />
                 Download Sample Certificate
               </Button>
             </div>
