@@ -76,7 +76,7 @@ const About = () => {
 
         {/* Our Story Section */}
         <section className="py-14 md:py-[72px] px-4 bg-secondary/50">
-          <div className="max-w-6xl mx-auto grid grid-cols-12 gap-12 md:gap-16 items-center">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
