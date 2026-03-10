@@ -157,7 +157,7 @@ const ScrollImageSequence = ({
         {/* ── Desktop: two-column layout ── */}
         <div className="hidden lg:grid lg:grid-cols-2 h-full">
           {/* Left: canvas contained in this column */}
-          <div className="relative h-full">
+          <div className="relative h-full p-8">
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
           </div>
 
