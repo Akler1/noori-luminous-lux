@@ -30,6 +30,7 @@ const ScrollImageSequence = ({
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(0);
   const rafId = useRef(0);
@@ -70,12 +71,14 @@ const ScrollImageSequence = ({
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = w / h;
     let dw: number, dh: number, dx: number, dy: number;
-    const isMobile = window.innerWidth < 768;
+    const isSmallMobile = window.innerWidth < 768;
 
-    if (isMobile) {
-      // Crop side background, then contain-fit so full earring is always visible
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, w, h);
+    // Fill background
+    ctx.fillStyle = "#0a0a0a";
+    ctx.fillRect(0, 0, w, h);
+
+    if (isSmallMobile) {
+      // Mobile: Crop side background, then contain-fit
       const mobileCropLeft = 0.10;
       const mobileCropWidth = 0.80;
       const sx = img.naturalWidth * mobileCropLeft;
@@ -83,7 +86,6 @@ const ScrollImageSequence = ({
       const sy = 0;
       const sh = img.naturalHeight;
       const croppedRatio = sw / sh;
-      // Contain: fit entire cropped area inside canvas
       if (croppedRatio > canvasRatio) {
         dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       } else {
@@ -91,13 +93,43 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Cover: fill canvas, may crop
+      // Desktop/tablet: contain-fit so full earring is visible
       if (imgRatio > canvasRatio) {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
-      } else {
         dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      } else {
+        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
+    }
+  }, []);
+
+  /* ── Position canvas into card on desktop ── */
+  const positionCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const card = cardRef.current;
+    if (!canvas) return;
+
+    const isDesktop = window.innerWidth >= 1024;
+
+    if (isDesktop && card) {
+      const rect = card.getBoundingClientRect();
+      const sticky = canvas.parentElement;
+      const stickyRect = sticky?.getBoundingClientRect();
+      if (!stickyRect) return;
+
+      canvas.style.position = "absolute";
+      canvas.style.left = `${rect.left - stickyRect.left}px`;
+      canvas.style.top = `${rect.top - stickyRect.top}px`;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      canvas.style.borderRadius = "1rem";
+    } else {
+      canvas.style.position = "absolute";
+      canvas.style.left = "0";
+      canvas.style.top = "0";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.borderRadius = "0";
     }
   }, []);
 
@@ -126,55 +158,68 @@ const ScrollImageSequence = ({
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(() => { drawFrame(0); }, 100);
+    setTimeout(() => {
+      positionCanvas();
+      drawFrame(0);
+    }, 100);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [frameCount, drawFrame]);
+  }, [frameCount, drawFrame, positionCanvas]);
 
   /* ── Resize handler ── */
   useEffect(() => {
-    const onResize = () => drawFrame(currentFrame.current);
+    const onResize = () => {
+      positionCanvas();
+      drawFrame(currentFrame.current);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [drawFrame]);
+  }, [drawFrame, positionCanvas]);
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen w-full relative overflow-hidden">
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
+        {/* Single canvas — positioned dynamically */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
 
-        {/* ── Desktop: Right-side overlay cards ── */}
-        <div
-          className="absolute right-[5%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-5 z-20"
-          style={{ maxWidth: "280px" }}
-        >
-          {LABELS.map((label, idx) => (
-            <div
-              key={label.title}
-              className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
-              style={{
-                opacity: showCallouts ? 1 : 0,
-                transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
-                transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
-              }}
-            >
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
-                <label.icon className="w-6 h-6 text-accent" />
+        {/* ── Desktop: Split grid layout ── */}
+        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
+          {/* Left: Card placeholder that canvas aligns to */}
+          <div
+            ref={cardRef}
+            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
+          />
+
+          {/* Right: Explanatory cards */}
+          <div className="flex flex-col gap-5 max-w-sm mx-auto">
+            {LABELS.map((label, idx) => (
+              <div
+                key={label.title}
+                className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
+                style={{
+                  opacity: showCallouts ? 1 : 0,
+                  transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
+                  transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
+                }}
+              >
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                  <label.icon className="w-6 h-6 text-accent" />
+                </div>
+                <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
+                  {label.title}
+                </h4>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
+                  {label.body}
+                </p>
               </div>
-              <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
-                {label.title}
-              </h4>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
-                {label.body}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* ── Mobile: bottom overlay fallback ── */}
+        {/* ── Mobile: bottom overlay ── */}
         <div
           className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700 lg:hidden"
           style={{
