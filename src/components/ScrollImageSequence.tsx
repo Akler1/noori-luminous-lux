@@ -105,35 +105,17 @@ const ScrollImageSequence = ({
     }
   }, []);
 
-  /* ── Position canvas into card on desktop ── */
+  /* ── Position canvas (always full sticky container) ── */
   const positionCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-    const card = cardRef.current;
     if (!canvas) return;
-
-    const isDesktop = window.innerWidth >= 1024;
-
-    if (isDesktop && card) {
-      const rect = card.getBoundingClientRect();
-      const sticky = canvas.parentElement;
-      const stickyRect = sticky?.getBoundingClientRect();
-      if (!stickyRect) return;
-
-      canvas.style.position = "absolute";
-      canvas.style.left = `${rect.left - stickyRect.left}px`;
-      canvas.style.top = `${rect.top - stickyRect.top}px`;
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
-      canvas.style.borderRadius = "1rem";
-      canvas.style.boxShadow = "0 10px 30px -10px rgba(0,0,0,0.15)";
-    } else {
-      canvas.style.position = "absolute";
-      canvas.style.left = "0";
-      canvas.style.top = "0";
-      canvas.style.width = "100%";
-      canvas.style.height = "100%";
-      canvas.style.borderRadius = "0";
-    }
+    canvas.style.position = "absolute";
+    canvas.style.left = "0";
+    canvas.style.top = "0";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.borderRadius = "0";
+    canvas.style.boxShadow = "none";
   }, []);
 
   /* ── Scroll handler ── */
