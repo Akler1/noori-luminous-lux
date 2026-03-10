@@ -95,11 +95,11 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop/tablet: contain-fit so full earring is visible
+      // Desktop/tablet: cover-fit so earring fills entire card
       if (imgRatio > canvasRatio) {
-        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
-      } else {
         dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+      } else {
+        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
     }
