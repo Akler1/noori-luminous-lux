@@ -30,6 +30,7 @@ const ScrollImageSequence = ({
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mobileCanvasRef = useRef<HTMLCanvasElement>(null);
   
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(0);
@@ -49,7 +50,7 @@ const ScrollImageSequence = ({
 
   /* ── Draw a frame to canvas ── */
   const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef.current?.clientWidth ? canvasRef.current : mobileCanvasRef.current;
     const img = imagesRef.current[index];
     if (!canvas || !img || !img.complete || !img.naturalWidth) return;
 
@@ -146,13 +147,12 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
-        {/* Single canvas behind everything */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-
-        {/* ── Desktop: two-column grid overlay ── */}
-        <div className="hidden lg:grid lg:grid-cols-2 h-full relative z-10">
-          {/* Left: empty spacer — canvas shows through */}
-          <div />
+        {/* ── Desktop: two-column layout ── */}
+        <div className="hidden lg:grid lg:grid-cols-2 h-full">
+          {/* Left: canvas contained in this column */}
+          <div className="relative h-full">
+            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+          </div>
 
           {/* Right: info cards */}
           <div className="flex flex-col gap-5 justify-center px-10 max-w-md mx-auto">
@@ -180,7 +180,8 @@ const ScrollImageSequence = ({
           </div>
         </div>
 
-        {/* ── Mobile: bottom overlay on top of canvas ── */}
+        {/* ── Mobile: full-screen canvas + overlay ── */}
+        <canvas ref={mobileCanvasRef} className="lg:hidden absolute inset-0 w-full h-full" />
         <div
           className="lg:hidden absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
           style={{
