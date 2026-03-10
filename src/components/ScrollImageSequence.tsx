@@ -73,9 +73,11 @@ const ScrollImageSequence = ({
     let dw: number, dh: number, dx: number, dy: number;
     const isSmallMobile = window.innerWidth < 768;
 
-    // Fill background
-    ctx.fillStyle = "#0a0a0a";
-    ctx.fillRect(0, 0, w, h);
+    // Fill background — dark on mobile, light on desktop
+    if (isSmallMobile) {
+      ctx.fillStyle = "#0a0a0a";
+      ctx.fillRect(0, 0, w, h);
+    }
 
     if (isSmallMobile) {
       // Mobile: Crop side background, then contain-fit
@@ -181,7 +183,7 @@ const ScrollImageSequence = ({
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
+      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
         {/* Single canvas — positioned dynamically */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
 
@@ -190,7 +192,7 @@ const ScrollImageSequence = ({
           {/* Left: Card placeholder that canvas aligns to */}
           <div
             ref={cardRef}
-            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
+            className="rounded-2xl overflow-hidden bg-[#faf9f7] shadow-lg relative w-full h-[80vh]"
           />
 
           {/* Right: Explanatory cards */}
