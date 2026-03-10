@@ -100,18 +100,6 @@ const ScrollImageSequence = ({
     }
   }, []);
 
-  /* ── Position canvas (always full sticky container) ── */
-  const positionCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    canvas.style.position = "absolute";
-    canvas.style.left = "0";
-    canvas.style.top = "0";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.borderRadius = "0";
-    canvas.style.boxShadow = "none";
-  }, []);
 
   /* ── Scroll handler ── */
   useEffect(() => {
