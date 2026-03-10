@@ -103,7 +103,7 @@ export const ThreeDViewer = ({
           className="w-full border-0"
           style={{
             width: '100%',
-            height: '700px',
+            aspectRatio: '1 / 1',
             border: 'none',
             backgroundColor: 'transparent'
           }}
