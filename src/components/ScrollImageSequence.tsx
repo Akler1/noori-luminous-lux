@@ -30,6 +30,7 @@ const ScrollImageSequence = ({
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(0);
   const rafId = useRef(0);
@@ -70,13 +71,13 @@ const ScrollImageSequence = ({
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = w / h;
     let dw: number, dh: number, dx: number, dy: number;
-    const isMobile = window.innerWidth < 1024;
+    const isSmallMobile = window.innerWidth < 768;
 
-    // Fill background for contain-fit
+    // Fill background
     ctx.fillStyle = "#0a0a0a";
     ctx.fillRect(0, 0, w, h);
 
-    if (isMobile && window.innerWidth < 768) {
+    if (isSmallMobile) {
       // Mobile: Crop side background, then contain-fit
       const mobileCropLeft = 0.10;
       const mobileCropWidth = 0.80;
@@ -92,13 +93,43 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop & tablet: contain-fit (full earring visible inside card)
+      // Desktop/tablet: contain-fit so full earring is visible
       if (imgRatio > canvasRatio) {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
-      } else {
         dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      } else {
+        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
+    }
+  }, []);
+
+  /* ── Position canvas into card on desktop ── */
+  const positionCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const card = cardRef.current;
+    if (!canvas) return;
+
+    const isDesktop = window.innerWidth >= 1024;
+
+    if (isDesktop && card) {
+      const rect = card.getBoundingClientRect();
+      const sticky = canvas.parentElement;
+      const stickyRect = sticky?.getBoundingClientRect();
+      if (!stickyRect) return;
+
+      canvas.style.position = "absolute";
+      canvas.style.left = `${rect.left - stickyRect.left}px`;
+      canvas.style.top = `${rect.top - stickyRect.top}px`;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      canvas.style.borderRadius = "1rem";
+    } else {
+      canvas.style.position = "absolute";
+      canvas.style.left = "0";
+      canvas.style.top = "0";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.borderRadius = "0";
     }
   }, []);
 
@@ -127,37 +158,40 @@ const ScrollImageSequence = ({
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(() => { drawFrame(0); }, 100);
+    setTimeout(() => {
+      positionCanvas();
+      drawFrame(0);
+    }, 100);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [frameCount, drawFrame]);
+  }, [frameCount, drawFrame, positionCanvas]);
 
   /* ── Resize handler ── */
   useEffect(() => {
-    const onResize = () => drawFrame(currentFrame.current);
+    const onResize = () => {
+      positionCanvas();
+      drawFrame(currentFrame.current);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [drawFrame]);
+  }, [drawFrame, positionCanvas]);
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
-        {/* Single canvas — full-bleed on mobile, contained in card on desktop */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full lg:rounded-2xl lg:shadow-2xl lg:relative lg:w-full lg:h-[80vh]"
-          style={{ display: "block" }}
-        />
+        {/* Single canvas — positioned dynamically */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
 
-        {/* ── Desktop: Grid overlay to position canvas + cards side by side ── */}
-        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0">
-          {/* Left: Card container for canvas */}
-          <div className="rounded-2xl overflow-hidden bg-[#0a0a0a] shadow-2xl relative w-full h-[80vh]">
-            <canvas ref={canvasRef} className="w-full h-full block" />
-          </div>
+        {/* ── Desktop: Split grid layout ── */}
+        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
+          {/* Left: Card placeholder that canvas aligns to */}
+          <div
+            ref={cardRef}
+            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
+          />
 
           {/* Right: Explanatory cards */}
           <div className="flex flex-col gap-5 max-w-sm mx-auto">
