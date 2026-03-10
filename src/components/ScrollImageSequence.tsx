@@ -197,7 +197,7 @@ const ScrollImageSequence = ({
           />
 
           {/* Right: Explanatory cards */}
-          <div className="flex flex-col gap-5 max-w-sm mx-auto">
+          <div className="flex flex-col gap-5 max-w-sm mx-auto pointer-events-auto">
             {LABELS.map((label, idx) => (
               <div
                 key={label.title}
