@@ -144,61 +144,67 @@ const ScrollImageSequence = ({
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen w-full relative overflow-hidden">
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
+        {/* ── Desktop: Split layout ── */}
+        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center h-full">
+          {/* Left: Earring animation card */}
+          <div className="rounded-2xl overflow-hidden bg-[#0a0a0a] shadow-2xl relative w-full h-[80vh]">
+            <canvas ref={canvasRef} className="w-full h-full" />
+          </div>
 
-        {/* ── Desktop: Right-side overlay cards ── */}
-        <div
-          className="absolute right-[5%] top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-5 z-20"
-          style={{ maxWidth: "280px" }}
-        >
-          {LABELS.map((label, idx) => (
-            <div
-              key={label.title}
-              className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
-              style={{
-                opacity: showCallouts ? 1 : 0,
-                transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
-                transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
-              }}
-            >
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
-                <label.icon className="w-6 h-6 text-accent" />
+          {/* Right: Explanatory cards */}
+          <div className="flex flex-col gap-5 max-w-sm mx-auto">
+            {LABELS.map((label, idx) => (
+              <div
+                key={label.title}
+                className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
+                style={{
+                  opacity: showCallouts ? 1 : 0,
+                  transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
+                  transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
+                }}
+              >
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                  <label.icon className="w-6 h-6 text-accent" />
+                </div>
+                <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
+                  {label.title}
+                </h4>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
+                  {label.body}
+                </p>
               </div>
-              <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
-                {label.title}
-              </h4>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
-                {label.body}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* ── Mobile: bottom overlay fallback ── */}
-        <div
-          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700 lg:hidden"
-          style={{
-            opacity: showCallouts ? 1 : 0,
-            transform: `translateY(${showCallouts ? 0 : 20}px)`,
-          }}
-        >
-          <div className="max-w-2xl">
-            <h2 className="section-header text-white mb-4">
-              {MOBILE_CONTENT.header}
-            </h2>
-            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-              {MOBILE_CONTENT.body}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {MOBILE_CONTENT.chips.map((chip) => (
-                <span
-                  key={chip}
-                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
-                >
-                  {chip}
-                </span>
-              ))}
+        {/* ── Mobile: Full-bleed canvas + bottom overlay ── */}
+        <div className="lg:hidden h-full w-full relative">
+          <canvas className="absolute inset-0 w-full h-full" ref={canvasRef} />
+          <div
+            className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+            style={{
+              opacity: showCallouts ? 1 : 0,
+              transform: `translateY(${showCallouts ? 0 : 20}px)`,
+            }}
+          >
+            <div className="max-w-2xl">
+              <h2 className="section-header text-white mb-4">
+                {MOBILE_CONTENT.header}
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
+                {MOBILE_CONTENT.body}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {MOBILE_CONTENT.chips.map((chip) => (
+                  <span
+                    key={chip}
+                    className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
