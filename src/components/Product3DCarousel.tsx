@@ -53,49 +53,14 @@ export default function Product3DCarousel() {
       role="region"
       aria-label="Best sellers product grid"
     >
-      <div className="container-editorial text-center py-6 md:py-8">
+      <div className="container-editorial text-center pt-4 pb-2 md:pt-6 md:pb-3">
         <h2 className="text-2xl md:text-3xl font-medium tracking-wide uppercase text-foreground">
           Best Sellers
         </h2>
       </div>
 
-      <div className="w-full">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
-          {gridProducts.map((product) => (
-            <Link
-              key={product.id}
-              to={product.pdpUrl}
-              className="group block"
-            >
-              <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-black">
-                <div className="relative overflow-hidden aspect-[3/4]">
-                  <iframe
-                    src={product.iframeUrl}
-                    className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
-                    style={{ background: "#000000" }}
-                    allow="xr-spatial-tracking; fullscreen; autoplay"
-                    title={product.name}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              <div className="p-4 md:p-6 bg-background">
-                <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
-                <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
-                  {product.name}
-                </h3>
-                <p className="text-sm md:text-base text-foreground">
-                  {product.price}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
       {/* Trust Bar */}
-      <div className="w-full border-t border-border/50 px-4 py-3">
+      <div className="w-full px-4 py-2">
         <div className="grid grid-cols-5 gap-2 md:gap-8 text-center max-w-[1280px] mx-auto">
           <div className="flex flex-col items-center gap-1 md:gap-2">
             <Truck className="h-4 w-4 md:h-6 md:w-6 text-accent" />
@@ -132,6 +97,41 @@ export default function Product3DCarousel() {
               <p className="hidden md:block text-xs text-muted-foreground">Every diamond</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+          {gridProducts.map((product) => (
+            <Link
+              key={product.id}
+              to={product.pdpUrl}
+              className="group block"
+            >
+              <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-black">
+                <div className="relative overflow-hidden aspect-[3/4]">
+                  <iframe
+                    src={product.iframeUrl}
+                    className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
+                    style={{ background: "#000000" }}
+                    allow="xr-spatial-tracking; fullscreen; autoplay"
+                    title={product.name}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 md:p-6 bg-background">
+                <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
+                <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
+                  {product.name}
+                </h3>
+                <p className="text-sm md:text-base text-foreground">
+                  {product.price}
+                </p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
