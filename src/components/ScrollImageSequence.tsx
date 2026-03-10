@@ -180,7 +180,8 @@ const ScrollImageSequence = ({
           </div>
         </div>
 
-        {/* ── Mobile: bottom overlay on top of canvas ── */}
+        {/* ── Mobile: full-screen canvas + overlay ── */}
+        <canvas ref={mobileCanvasRef} className="lg:hidden absolute inset-0 w-full h-full" />
         <div
           className="lg:hidden absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
           style={{
