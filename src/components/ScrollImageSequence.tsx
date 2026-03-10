@@ -70,12 +70,14 @@ const ScrollImageSequence = ({
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = w / h;
     let dw: number, dh: number, dx: number, dy: number;
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 1024;
 
-    if (isMobile) {
-      // Crop side background, then contain-fit so full earring is always visible
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, w, h);
+    // Fill background for contain-fit
+    ctx.fillStyle = "#0a0a0a";
+    ctx.fillRect(0, 0, w, h);
+
+    if (isMobile && window.innerWidth < 768) {
+      // Mobile: Crop side background, then contain-fit
       const mobileCropLeft = 0.10;
       const mobileCropWidth = 0.80;
       const sx = img.naturalWidth * mobileCropLeft;
@@ -83,7 +85,6 @@ const ScrollImageSequence = ({
       const sy = 0;
       const sh = img.naturalHeight;
       const croppedRatio = sw / sh;
-      // Contain: fit entire cropped area inside canvas
       if (croppedRatio > canvasRatio) {
         dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       } else {
@@ -91,7 +92,7 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Cover: fill canvas, may crop
+      // Desktop & tablet: contain-fit (full earring visible inside card)
       if (imgRatio > canvasRatio) {
         dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
       } else {
