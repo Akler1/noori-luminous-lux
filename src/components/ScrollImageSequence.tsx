@@ -125,7 +125,7 @@ const ScrollImageSequence = ({
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
       canvas.style.borderRadius = "1rem";
-      canvas.style.boxShadow = "0 4px 24px rgba(0,0,0,0.10)";
+      canvas.style.boxShadow = "none";
     } else {
       canvas.style.position = "absolute";
       canvas.style.left = "0";
