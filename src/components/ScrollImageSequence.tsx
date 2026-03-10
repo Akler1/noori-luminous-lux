@@ -155,7 +155,7 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* ── Desktop: two-column layout ── */}
-        <div className="hidden lg:flex items-center justify-center h-full gap-10 px-16">
+        <div className="hidden lg:flex items-center justify-center h-full gap-6 px-4">
           {/* Left: canvas — fixed aspect ratio container */}
           <div className="relative h-[calc(100%-4rem)]" style={{ aspectRatio: '1 / 1' }}>
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
