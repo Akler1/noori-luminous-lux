@@ -73,14 +73,9 @@ const ScrollImageSequence = ({
     let dw: number, dh: number, dx: number, dy: number;
     const isSmallMobile = window.innerWidth < 768;
 
-    // Fill background — dark on mobile, light on desktop
     if (isSmallMobile) {
       ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, w, h);
-    }
-
-    if (isSmallMobile) {
-      // Mobile: Crop side background, then contain-fit
       const mobileCropLeft = 0.10;
       const mobileCropWidth = 0.80;
       const sx = img.naturalWidth * mobileCropLeft;
@@ -95,11 +90,11 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop/tablet: cover-fit, centered
+      // Contain-fit centered within column
       if (imgRatio > canvasRatio) {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
-      } else {
         dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      } else {
+        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
     }
