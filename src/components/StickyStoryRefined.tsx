@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import unicefBackpacks from "@/assets/unicef-backpacks.jpg";
+import unicefBackpacks from "@/assets/unicef-backpacks.webp";
 
 export const StickyStoryRefined = () => {
   return (
