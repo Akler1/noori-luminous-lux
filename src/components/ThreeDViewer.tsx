@@ -126,7 +126,7 @@ export const ThreeDViewer = ({
           max-camera-orbit="auto auto 200%"
           style={{
             width: '100%',
-            aspectRatio: '1 / 1',
+            aspectRatio: '1 / 1.12',
             backgroundColor: 'transparent'
           }}
           className="w-full h-full"
