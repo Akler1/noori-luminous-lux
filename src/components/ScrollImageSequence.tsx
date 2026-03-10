@@ -146,13 +146,13 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+        {/* Single canvas behind everything */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-        {/* ── Desktop: two-column side by side ── */}
-        <div className="hidden lg:grid lg:grid-cols-2 h-full">
-          {/* Left: canvas */}
-          <div className="relative h-full">
-            <canvas ref={canvasRef} className="w-full h-full" />
-          </div>
+        {/* ── Desktop: two-column grid overlay ── */}
+        <div className="hidden lg:grid lg:grid-cols-2 h-full relative z-10">
+          {/* Left: empty spacer — canvas shows through */}
+          <div />
 
           {/* Right: info cards */}
           <div className="flex flex-col gap-5 justify-center px-10 max-w-md mx-auto">
@@ -180,37 +180,33 @@ const ScrollImageSequence = ({
           </div>
         </div>
 
-        {/* ── Mobile: full-screen canvas + bottom overlay ── */}
-        <div className="lg:hidden h-full relative">
-          <canvas ref={canvasRef} className="w-full h-full" />
-          <div
-            className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
-            style={{
-              opacity: showCallouts ? 1 : 0,
-              transform: `translateY(${showCallouts ? 0 : 20}px)`,
-            }}
-          >
-            <div className="max-w-2xl">
-              <h2 className="section-header text-white mb-4">
-                {MOBILE_CONTENT.header}
-              </h2>
-              <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-                {MOBILE_CONTENT.body}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {MOBILE_CONTENT.chips.map((chip) => (
-                  <span
-                    key={chip}
-                    className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
-                  >
-                    {chip}
-                  </span>
-                ))}
-              </div>
+        {/* ── Mobile: bottom overlay on top of canvas ── */}
+        <div
+          className="lg:hidden absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+          style={{
+            opacity: showCallouts ? 1 : 0,
+            transform: `translateY(${showCallouts ? 0 : 20}px)`,
+          }}
+        >
+          <div className="max-w-2xl">
+            <h2 className="section-header text-white mb-4">
+              {MOBILE_CONTENT.header}
+            </h2>
+            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
+              {MOBILE_CONTENT.body}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {MOBILE_CONTENT.chips.map((chip) => (
+                <span
+                  key={chip}
+                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
+                >
+                  {chip}
+                </span>
+              ))}
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
