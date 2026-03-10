@@ -145,11 +145,18 @@ const ScrollImageSequence = ({
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
-        {/* ── Desktop: Split layout ── */}
-        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center h-full">
-          {/* Left: Earring animation card */}
+        {/* Single canvas — full-bleed on mobile, contained in card on desktop */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full lg:rounded-2xl lg:shadow-2xl lg:relative lg:w-full lg:h-[80vh]"
+          style={{ display: "block" }}
+        />
+
+        {/* ── Desktop: Grid overlay to position canvas + cards side by side ── */}
+        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0">
+          {/* Left: Card container for canvas */}
           <div className="rounded-2xl overflow-hidden bg-[#0a0a0a] shadow-2xl relative w-full h-[80vh]">
-            <canvas ref={canvasRef} className="w-full h-full" />
+            <canvas ref={canvasRef} className="w-full h-full block" />
           </div>
 
           {/* Right: Explanatory cards */}
@@ -178,33 +185,30 @@ const ScrollImageSequence = ({
           </div>
         </div>
 
-        {/* ── Mobile: Full-bleed canvas + bottom overlay ── */}
-        <div className="lg:hidden h-full w-full relative">
-          <canvas className="absolute inset-0 w-full h-full" ref={canvasRef} />
-          <div
-            className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
-            style={{
-              opacity: showCallouts ? 1 : 0,
-              transform: `translateY(${showCallouts ? 0 : 20}px)`,
-            }}
-          >
-            <div className="max-w-2xl">
-              <h2 className="section-header text-white mb-4">
-                {MOBILE_CONTENT.header}
-              </h2>
-              <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-                {MOBILE_CONTENT.body}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {MOBILE_CONTENT.chips.map((chip) => (
-                  <span
-                    key={chip}
-                    className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
-                  >
-                    {chip}
-                  </span>
-                ))}
-              </div>
+        {/* ── Mobile: bottom overlay ── */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700 lg:hidden"
+          style={{
+            opacity: showCallouts ? 1 : 0,
+            transform: `translateY(${showCallouts ? 0 : 20}px)`,
+          }}
+        >
+          <div className="max-w-2xl">
+            <h2 className="section-header text-white mb-4">
+              {MOBILE_CONTENT.header}
+            </h2>
+            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
+              {MOBILE_CONTENT.body}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {MOBILE_CONTENT.chips.map((chip) => (
+                <span
+                  key={chip}
+                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
+                >
+                  {chip}
+                </span>
+              ))}
             </div>
           </div>
         </div>
