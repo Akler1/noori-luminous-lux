@@ -95,8 +95,8 @@ export default function Product3DCarousel() {
       </div>
 
       {/* Trust Bar */}
-      <div className="container-editorial mt-4 pt-4 border-t border-border/50 px-2 md:px-0">
-        <div className="grid grid-cols-5 gap-2 md:gap-8 text-center pb-4">
+      <div className="w-full border-t border-border/50 px-4 py-3">
+        <div className="grid grid-cols-5 gap-2 md:gap-8 text-center max-w-[1280px] mx-auto">
           <div className="flex flex-col items-center gap-1 md:gap-2">
             <Truck className="h-4 w-4 md:h-6 md:w-6 text-accent" />
             <div>
