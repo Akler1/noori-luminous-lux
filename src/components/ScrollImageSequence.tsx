@@ -73,9 +73,11 @@ const ScrollImageSequence = ({
     let dw: number, dh: number, dx: number, dy: number;
     const isSmallMobile = window.innerWidth < 768;
 
-    // Fill background
-    ctx.fillStyle = "#0a0a0a";
-    ctx.fillRect(0, 0, w, h);
+    // Fill background — dark on mobile, light on desktop
+    if (isSmallMobile) {
+      ctx.fillStyle = "#0a0a0a";
+      ctx.fillRect(0, 0, w, h);
+    }
 
     if (isSmallMobile) {
       // Mobile: Crop side background, then contain-fit
