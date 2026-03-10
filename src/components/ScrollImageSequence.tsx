@@ -192,7 +192,7 @@ const ScrollImageSequence = ({
           {/* Left: Card placeholder that canvas aligns to */}
           <div
             ref={cardRef}
-            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
+            className="rounded-2xl overflow-hidden bg-[#faf9f7] shadow-lg relative w-full h-[80vh]"
           />
 
           {/* Right: Explanatory cards */}
