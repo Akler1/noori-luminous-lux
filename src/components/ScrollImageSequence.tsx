@@ -50,7 +50,7 @@ const ScrollImageSequence = ({
 
   /* ── Draw a frame to canvas ── */
   const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef.current?.clientWidth ? canvasRef.current : mobileCanvasRef.current;
     const img = imagesRef.current[index];
     if (!canvas || !img || !img.complete || !img.naturalWidth) return;
 
