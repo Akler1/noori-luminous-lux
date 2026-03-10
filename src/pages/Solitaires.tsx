@@ -97,7 +97,7 @@ export default function Solitaires() {
 
         {/* Product Grid with 3D Viewers */}
         <section>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3 p-2 lg:p-3">
             {solitaireProducts.map((product) => (
               <Solitaire3DCard
                 key={product.id}
