@@ -191,7 +191,7 @@ const ScrollImageSequence = ({
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[15] pointer-events-none" />
 
         {/* ── Desktop: Split grid layout ── */}
-        <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
+        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
           {/* Left: Card placeholder that canvas aligns to */}
           <div
             ref={cardRef}
