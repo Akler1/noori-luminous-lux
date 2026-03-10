@@ -73,14 +73,9 @@ const ScrollImageSequence = ({
     let dw: number, dh: number, dx: number, dy: number;
     const isSmallMobile = window.innerWidth < 768;
 
-    // Fill background — dark on mobile, light on desktop
     if (isSmallMobile) {
       ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, w, h);
-    }
-
-    if (isSmallMobile) {
-      // Mobile: Crop side background, then contain-fit
       const mobileCropLeft = 0.10;
       const mobileCropWidth = 0.80;
       const sx = img.naturalWidth * mobileCropLeft;
@@ -95,28 +90,16 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop/tablet: cover-fit, centered
+      // Contain-fit centered within column
       if (imgRatio > canvasRatio) {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
-      } else {
         dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      } else {
+        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
     }
   }, []);
 
-  /* ── Position canvas (always full sticky container) ── */
-  const positionCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    canvas.style.position = "absolute";
-    canvas.style.left = "0";
-    canvas.style.top = "0";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.borderRadius = "0";
-    canvas.style.boxShadow = "none";
-  }, []);
 
   /* ── Scroll handler ── */
   useEffect(() => {
@@ -144,7 +127,6 @@ const ScrollImageSequence = ({
 
     window.addEventListener("scroll", onScroll, { passive: true });
     setTimeout(() => {
-      positionCanvas();
       drawFrame(0);
     }, 100);
 
@@ -152,31 +134,28 @@ const ScrollImageSequence = ({
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [frameCount, drawFrame, positionCanvas]);
+  }, [frameCount, drawFrame]);
 
   /* ── Resize handler ── */
   useEffect(() => {
-    const onResize = () => {
-      positionCanvas();
-      drawFrame(currentFrame.current);
-    };
+    const onResize = () => drawFrame(currentFrame.current);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [drawFrame, positionCanvas]);
+  }, [drawFrame]);
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
-        {/* Single canvas — positioned dynamically */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[5]" />
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
 
-        {/* ── Desktop: Split grid layout ── */}
-        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
-          {/* Left: empty spacer — canvas shows through */}
-          <div />
+        {/* ── Desktop: two-column side by side ── */}
+        <div className="hidden lg:grid lg:grid-cols-2 h-full">
+          {/* Left: canvas */}
+          <div className="relative h-full">
+            <canvas ref={canvasRef} className="w-full h-full" />
+          </div>
 
-          {/* Right: Explanatory cards */}
-          <div className="flex flex-col gap-5 max-w-sm mx-auto pointer-events-auto">
+          {/* Right: info cards */}
+          <div className="flex flex-col gap-5 justify-center px-10 max-w-md mx-auto">
             {LABELS.map((label, idx) => (
               <div
                 key={label.title}
@@ -201,33 +180,37 @@ const ScrollImageSequence = ({
           </div>
         </div>
 
-        {/* ── Mobile: bottom overlay ── */}
-        <div
-          className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700 lg:hidden"
-          style={{
-            opacity: showCallouts ? 1 : 0,
-            transform: `translateY(${showCallouts ? 0 : 20}px)`,
-          }}
-        >
-          <div className="max-w-2xl">
-            <h2 className="section-header text-white mb-4">
-              {MOBILE_CONTENT.header}
-            </h2>
-            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-              {MOBILE_CONTENT.body}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {MOBILE_CONTENT.chips.map((chip) => (
-                <span
-                  key={chip}
-                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
-                >
-                  {chip}
-                </span>
-              ))}
+        {/* ── Mobile: full-screen canvas + bottom overlay ── */}
+        <div className="lg:hidden h-full relative">
+          <canvas ref={canvasRef} className="w-full h-full" />
+          <div
+            className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+            style={{
+              opacity: showCallouts ? 1 : 0,
+              transform: `translateY(${showCallouts ? 0 : 20}px)`,
+            }}
+          >
+            <div className="max-w-2xl">
+              <h2 className="section-header text-white mb-4">
+                {MOBILE_CONTENT.header}
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
+                {MOBILE_CONTENT.body}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {MOBILE_CONTENT.chips.map((chip) => (
+                  <span
+                    key={chip}
+                    className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
