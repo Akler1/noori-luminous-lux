@@ -108,12 +108,12 @@ export default function Product3DCarousel() {
               to={product.pdpUrl}
               className="group block"
             >
-              <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-black">
-                <div className="relative overflow-hidden aspect-[3/4]">
+              <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-[#e8e8e8]">
+                <div className="relative overflow-hidden aspect-square">
                   <iframe
                     src={product.iframeUrl}
                     className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
-                    style={{ background: "#000000" }}
+                    style={{ background: "#e8e8e8" }}
                     allow="xr-spatial-tracking; fullscreen; autoplay"
                     title={product.name}
                     loading="lazy"
