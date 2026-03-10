@@ -95,11 +95,11 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop/tablet: contain-fit so full earring is visible
+      // Desktop/tablet: cover-fit so earring fills entire card
       if (imgRatio > canvasRatio) {
-        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
-      } else {
         dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+      } else {
+        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
     }
@@ -125,7 +125,7 @@ const ScrollImageSequence = ({
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
       canvas.style.borderRadius = "1rem";
-      canvas.style.boxShadow = "0 4px 24px rgba(0,0,0,0.10)";
+      canvas.style.boxShadow = "none";
     } else {
       canvas.style.position = "absolute";
       canvas.style.left = "0";
@@ -193,7 +193,7 @@ const ScrollImageSequence = ({
           {/* Left: Card placeholder that canvas aligns to */}
           <div
             ref={cardRef}
-            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
+            className="rounded-2xl overflow-hidden bg-[hsl(var(--background))] shadow-lg relative w-full h-[80vh]"
           />
 
           {/* Right: Explanatory cards */}
