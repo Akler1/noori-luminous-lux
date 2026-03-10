@@ -125,7 +125,7 @@ const ScrollImageSequence = ({
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
       canvas.style.borderRadius = "1rem";
-      canvas.style.boxShadow = "none";
+      canvas.style.boxShadow = "0 10px 30px -10px rgba(0,0,0,0.15)";
     } else {
       canvas.style.position = "absolute";
       canvas.style.left = "0";
@@ -186,18 +186,18 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
         {/* Single canvas — positioned dynamically */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[5]" />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[15] pointer-events-none" />
 
         {/* ── Desktop: Split grid layout ── */}
         <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
           {/* Left: Card placeholder that canvas aligns to */}
           <div
             ref={cardRef}
-            className="rounded-2xl overflow-hidden bg-[hsl(var(--background))] shadow-lg relative w-full h-[80vh]"
+            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[80vh]"
           />
 
           {/* Right: Explanatory cards */}
-          <div className="flex flex-col gap-5 max-w-sm mx-auto">
+          <div className="flex flex-col gap-5 max-w-sm mx-auto pointer-events-auto">
             {LABELS.map((label, idx) => (
               <div
                 key={label.title}

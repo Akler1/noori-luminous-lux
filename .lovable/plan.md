@@ -1,18 +1,41 @@
 
+Goal
+- Eliminate all mobile cropping in the “Our Story” section (both image and paragraph text) while keeping desktop layout exactly unchanged.
 
-## Fix: Opaque card hiding the canvas
+What I verified visually and in code
+- On mobile, the “Our Story” text is still visibly cut off on the right edge.
+- Current section layout in `src/pages/About.tsx` uses:
+  - `grid grid-cols-12 gap-12 md:gap-16 items-center` even on mobile.
+  - children use `col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`.
+- This is the core issue: on a 12-column grid, a `col-span-12` item spans all tracks plus internal column gaps; with large `gap-12`, the effective spanned width overflows on small screens. Because the page wrapper has `overflow-x-hidden`, that overflow becomes visually cropped content.
+- The purse image itself was already switched to mobile `object-contain`; however, the parent layout overflow still causes apparent cropping.
 
-**Root cause**: The desktop grid container is `z-10`. Inside it, `cardRef` has `bg-[hsl(var(--background))]` (opaque white). The canvas is `z-[5]` — below the grid. The card covers the canvas completely.
+Implementation plan (mobile-only behavior; desktop preserved)
+1) Fix the actual overflow source in Our Story grid
+- File: `src/pages/About.tsx` (Our Story section container around lines ~79-80)
+- Change grid declaration from always-12-columns to responsive columns:
+  - From: `grid grid-cols-12 gap-12 md:gap-16 items-center`
+  - To: `grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center`
+- Keep child span classes as-is (`col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`) so desktop remains identical.
 
-### Changes — `src/components/ScrollImageSequence.tsx`
+2) Keep mobile image fully visible (already done) and ensure it remains stable
+- Keep current mobile image fit strategy (`object-contain`, neutral background) in place.
+- No desktop image behavior changes (`md:object-cover`, `md:h-full` remain).
 
-1. **`cardRef` (line 196)**: Remove opaque background and shadow. This div is only a positioning reference — it must be fully transparent: `bg-transparent` only, no shadow.
+3) Keep text readable and uncut
+- Once grid overflow is fixed, paragraph clipping should resolve naturally.
+- No copy or typography changes required unless a final QA pass shows edge clipping on ultra-small widths.
 
-2. **Canvas z-index (line 189)**: Raise to `z-[15]` so it renders above the `z-10` grid layout. Add `pointer-events-none` so it doesn't block clicking the info cards.
+4) QA pass (mobile-first + desktop parity)
+- Mobile checks at 390x844 and 375x812:
+  - No right-edge text clipping in “Our Story”
+  - Purse image fully visible without side cut-off
+  - No horizontal scroll in the section/page
+- Desktop check (1366+):
+  - 5/12 + 7/12 editorial layout unchanged
+  - Same spacing/visual hierarchy as before
 
-3. **`positionCanvas` (line 127-128)**: Add `boxShadow` back to canvas for the card aesthetic (subtle, not black-bar-causing). Keep `borderRadius`.
-
-4. **Info cards container (line 200)**: Add `pointer-events-auto` so clicks still work despite canvas overlay.
-
-Four small line edits, same file.
-
+Technical notes
+- Single-file targeted change: `src/pages/About.tsx`.
+- This approach fixes root cause (layout overflow) instead of relying on global masking (`overflow-x-hidden`) to hide symptoms.
+- Risk is low because desktop behavior is fully gated behind `md:` and preserved.
