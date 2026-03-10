@@ -5,7 +5,7 @@ import unicefBackpacks from "@/assets/unicef-backpacks.webp";
 
 export const StickyStoryRefined = () => {
   return (
-    <section className="bg-secondary py-10 lg:py-14">
+    <section className="bg-secondary py-4 lg:py-6">
       <div className="container-editorial max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
