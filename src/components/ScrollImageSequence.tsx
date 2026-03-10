@@ -186,7 +186,7 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
         {/* Single canvas — positioned dynamically */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[5]" />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[15] pointer-events-none" />
 
         {/* ── Desktop: Split grid layout ── */}
         <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
