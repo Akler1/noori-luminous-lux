@@ -1,41 +1,40 @@
 
-Goal
-- Eliminate all mobile cropping in the “Our Story” section (both image and paragraph text) while keeping desktop layout exactly unchanged.
 
-What I verified visually and in code
-- On mobile, the “Our Story” text is still visibly cut off on the right edge.
-- Current section layout in `src/pages/About.tsx` uses:
-  - `grid grid-cols-12 gap-12 md:gap-16 items-center` even on mobile.
-  - children use `col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`.
-- This is the core issue: on a 12-column grid, a `col-span-12` item spans all tracks plus internal column gaps; with large `gap-12`, the effective spanned width overflows on small screens. Because the page wrapper has `overflow-x-hidden`, that overflow becomes visually cropped content.
-- The purse image itself was already switched to mobile `object-contain`; however, the parent layout overflow still causes apparent cropping.
+## Plan: Earring scroll animation in left card, explanatory cards on right
 
-Implementation plan (mobile-only behavior; desktop preserved)
-1) Fix the actual overflow source in Our Story grid
-- File: `src/pages/About.tsx` (Our Story section container around lines ~79-80)
-- Change grid declaration from always-12-columns to responsive columns:
-  - From: `grid grid-cols-12 gap-12 md:gap-16 items-center`
-  - To: `grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center`
-- Keep child span classes as-is (`col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`) so desktop remains identical.
+Currently the canvas fills the entire viewport and the three info cards float over it on the right. The user wants a split layout: the earring animation contained in a card on the left, info cards on the right.
 
-2) Keep mobile image fully visible (already done) and ensure it remains stable
-- Keep current mobile image fit strategy (`object-contain`, neutral background) in place.
-- No desktop image behavior changes (`md:object-cover`, `md:h-full` remain).
+### Changes — `src/components/ScrollImageSequence.tsx`
 
-3) Keep text readable and uncut
-- Once grid overflow is fixed, paragraph clipping should resolve naturally.
-- No copy or typography changes required unless a final QA pass shows edge clipping on ultra-small widths.
+**Desktop layout (lg+):**
+- Replace the full-screen canvas + floating cards with a two-column grid (`grid-cols-2`) inside the sticky viewport.
+- **Left column**: A rounded card (frosted glass style, ~55% width) containing the canvas. The canvas draws inside this bounded card instead of filling the screen. Background set to a subtle neutral/dark tone.
+- **Right column**: The three info cards stacked vertically, centered in the right half. Same animation behavior (appear when `showCallouts` is true).
+- Add some padding around the grid so it doesn't touch edges.
 
-4) QA pass (mobile-first + desktop parity)
-- Mobile checks at 390x844 and 375x812:
-  - No right-edge text clipping in “Our Story”
-  - Purse image fully visible without side cut-off
-  - No horizontal scroll in the section/page
-- Desktop check (1366+):
-  - 5/12 + 7/12 editorial layout unchanged
-  - Same spacing/visual hierarchy as before
+**Mobile layout:** Unchanged — keeps current full-bleed canvas + bottom overlay fallback.
 
-Technical notes
-- Single-file targeted change: `src/pages/About.tsx`.
-- This approach fixes root cause (layout overflow) instead of relying on global masking (`overflow-x-hidden`) to hide symptoms.
-- Risk is low because desktop behavior is fully gated behind `md:` and preserved.
+**Canvas drawing:** On desktop, switch from "cover" to "contain" fit so the full earring is visible inside the card without cropping. Add a dark background fill behind it.
+
+### Rough layout
+```text
+┌─────────────────────────────────────────────┐
+│  ┌──────────────────┐   ┌────────────────┐  │
+│  │                  │   │  Main Stone     │  │
+│  │   Earring        │   ├────────────────┤  │
+│  │   Animation      │   │  Pavé Stones   │  │
+│  │   (card)         │   ├────────────────┤  │
+│  │                  │   │  14k Gold      │  │
+│  └──────────────────┘   └────────────────┘  │
+└─────────────────────────────────────────────┘
+```
+
+### Implementation details
+1. Wrap the sticky `div` content in a `lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:p-10 lg:items-center lg:h-full` container.
+2. Left cell: card wrapper with `rounded-2xl overflow-hidden bg-black/90 shadow-2xl` containing the canvas (now `relative w-full aspect-[3/4]` instead of `absolute inset-0`).
+3. Right cell: the existing LABELS cards, remove absolute positioning on desktop.
+4. Canvas `drawFrame`: on desktop, use contain-fit (already done for mobile) so the earring fits inside the card.
+5. Mobile: preserve current absolute/full-screen behavior with a conditional class approach.
+
+Single file edit: `src/components/ScrollImageSequence.tsx`.
+
