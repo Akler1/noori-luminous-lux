@@ -95,12 +95,12 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop/tablet: fit to width, top-aligned, no whitespace gaps
-      ctx.clearRect(0, 0, w, h);
-      dw = w;
-      dh = w / imgRatio;
-      dx = 0;
-      dy = 0;
+      // Desktop/tablet: cover-fit, centered
+      if (imgRatio > canvasRatio) {
+        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+      } else {
+        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      }
       ctx.drawImage(img, dx, dy, dw, dh);
     }
   }, []);
