@@ -91,13 +91,20 @@ const ScrollImageSequence = ({
       }
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Contain-fit centered within column
-      if (imgRatio > canvasRatio) {
-        dw = w; dh = w / imgRatio; dx = 0; dy = (h - dh) / 2;
+      // Desktop: crop 10% from left and right for centered framing
+      const cropLeft = 0.10;
+      const cropWidth = 0.80;
+      const sx = img.naturalWidth * cropLeft;
+      const sw = img.naturalWidth * cropWidth;
+      const sy = 0;
+      const sh = img.naturalHeight;
+      const croppedRatio = sw / sh;
+      if (croppedRatio > canvasRatio) {
+        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       } else {
-        dh = h; dw = h * imgRatio; dx = (w - dw) / 2; dy = 0;
+        dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
       }
-      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
   }, []);
 
@@ -150,7 +157,7 @@ const ScrollImageSequence = ({
         {/* ── Desktop: two-column layout ── */}
         <div className="hidden lg:grid lg:grid-cols-2 h-full">
           {/* Left: canvas contained in this column */}
-          <div className="relative h-full">
+          <div className="relative h-full p-8">
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
           </div>
 
