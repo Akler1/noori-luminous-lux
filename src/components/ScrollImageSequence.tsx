@@ -183,7 +183,7 @@ const ScrollImageSequence = ({
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-background">
+      <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
         {/* Single canvas — positioned dynamically */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
 
