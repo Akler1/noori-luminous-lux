@@ -30,6 +30,7 @@ const ScrollImageSequence = ({
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mobileCanvasRef = useRef<HTMLCanvasElement>(null);
   
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(0);
