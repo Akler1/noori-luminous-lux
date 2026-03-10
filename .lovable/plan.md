@@ -1,41 +1,28 @@
 
-Goal
-- Eliminate all mobile cropping in the “Our Story” section (both image and paragraph text) while keeping desktop layout exactly unchanged.
 
-What I verified visually and in code
-- On mobile, the “Our Story” text is still visibly cut off on the right edge.
-- Current section layout in `src/pages/About.tsx` uses:
-  - `grid grid-cols-12 gap-12 md:gap-16 items-center` even on mobile.
-  - children use `col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`.
-- This is the core issue: on a 12-column grid, a `col-span-12` item spans all tracks plus internal column gaps; with large `gap-12`, the effective spanned width overflows on small screens. Because the page wrapper has `overflow-x-hidden`, that overflow becomes visually cropped content.
-- The purse image itself was already switched to mobile `object-contain`; however, the parent layout overflow still causes apparent cropping.
+## Fix: Raw image on left, cards on right — no box/padding
 
-Implementation plan (mobile-only behavior; desktop preserved)
-1) Fix the actual overflow source in Our Story grid
-- File: `src/pages/About.tsx` (Our Story section container around lines ~79-80)
-- Change grid declaration from always-12-columns to responsive columns:
-  - From: `grid grid-cols-12 gap-12 md:gap-16 items-center`
-  - To: `grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center`
-- Keep child span classes as-is (`col-span-12 md:col-span-5` and `col-span-12 md:col-span-7`) so desktop remains identical.
+**Problem**: The `cardRef` placeholder creates a styled box (border-radius, shadow, fixed height) that the canvas is forced into, causing padding and visual artifacts.
 
-2) Keep mobile image fully visible (already done) and ensure it remains stable
-- Keep current mobile image fit strategy (`object-contain`, neutral background) in place.
-- No desktop image behavior changes (`md:object-cover`, `md:h-full` remain).
+**Solution**: Remove the card placeholder. The canvas fills the entire sticky viewport as background. The cards stay on the right side via the grid overlay — but the left column is simply empty (canvas shows through). No box, no shadow, no border-radius on the canvas.
 
-3) Keep text readable and uncut
-- Once grid overflow is fixed, paragraph clipping should resolve naturally.
-- No copy or typography changes required unless a final QA pass shows edge clipping on ultra-small widths.
+### Changes in `src/components/ScrollImageSequence.tsx`
 
-4) QA pass (mobile-first + desktop parity)
-- Mobile checks at 390x844 and 375x812:
-  - No right-edge text clipping in “Our Story”
-  - Purse image fully visible without side cut-off
-  - No horizontal scroll in the section/page
-- Desktop check (1366+):
-  - 5/12 + 7/12 editorial layout unchanged
-  - Same spacing/visual hierarchy as before
+1. **Remove `cardRef`** (line 33) — delete the ref entirely.
 
-Technical notes
-- Single-file targeted change: `src/pages/About.tsx`.
-- This approach fixes root cause (layout overflow) instead of relying on global masking (`overflow-x-hidden`) to hide symptoms.
-- Risk is low because desktop behavior is fully gated behind `md:` and preserved.
+2. **Simplify `positionCanvas`** (lines 109-137) — remove all desktop card-positioning logic. Canvas always fills the sticky container (full width/height, no border-radius, no box-shadow). Only the mobile branch remains (which is already `100%/100%`). Essentially this function becomes a no-op or is removed.
+
+3. **Remove the placeholder div** (lines 194-197) — delete the `cardRef` div from the grid. The left column becomes empty, letting the canvas (which is behind the grid at `z-[15]`) show through.
+
+4. **Desktop grid** (line 192) — keep two columns but the left column is just an empty spacer `<div />`. Cards remain on the right. Canvas renders full-screen behind everything as background.
+
+5. **Canvas** (line 189) — remove `z-[15]`, set to `z-[5]`. It's a background layer. Remove `pointer-events-none` since it's behind the grid.
+
+6. **`drawFrame` desktop** (lines 97-105) — use cover-fit (original behavior) so the image fills the viewport nicely as a background. No background fill color needed.
+
+### Result
+- Full-bleed earring animation as background
+- Info cards float on the right with frosted glass styling
+- No box, no padding, no shadow on the image
+- Cards are interactive, image is purely visual
+
