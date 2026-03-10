@@ -168,15 +168,12 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full relative overflow-hidden bg-[#faf9f7]">
         {/* Single canvas — positioned dynamically */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[15] pointer-events-none" />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[5]" />
 
         {/* ── Desktop: Split grid layout ── */}
         <div className="hidden lg:grid lg:grid-cols-2 lg:gap-8 lg:p-10 lg:items-center absolute inset-0 z-10">
-          {/* Left: Card placeholder that canvas aligns to */}
-          <div
-            ref={cardRef}
-            className="rounded-2xl overflow-hidden bg-transparent relative w-full h-[70vh]"
-          />
+          {/* Left: empty spacer — canvas shows through */}
+          <div />
 
           {/* Right: Explanatory cards */}
           <div className="flex flex-col gap-5 max-w-sm mx-auto pointer-events-auto">
