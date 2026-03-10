@@ -155,14 +155,14 @@ const ScrollImageSequence = ({
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* ── Desktop: two-column layout ── */}
-        <div className="hidden lg:grid lg:grid-cols-2 h-full max-w-6xl mx-auto gap-4">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto] h-full">
           {/* Left: canvas */}
-          <div className="relative h-full py-8 pl-8 pr-4">
-            <canvas ref={canvasRef} className="absolute top-8 bottom-8 left-8 right-4 w-[calc(100%-3rem)] h-[calc(100%-4rem)]" />
+          <div className="relative h-full">
+            <canvas ref={canvasRef} className="absolute top-8 bottom-8 left-16 right-16 w-[calc(100%-8rem)] h-[calc(100%-4rem)]" />
           </div>
 
           {/* Right: info cards */}
-          <div className="flex flex-col gap-5 justify-center pl-4 pr-8 max-w-sm mx-auto">
+          <div className="flex flex-col gap-5 justify-center w-72 pr-16">
             {LABELS.map((label, idx) => (
               <div
                 key={label.title}
