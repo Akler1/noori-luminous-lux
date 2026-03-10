@@ -138,13 +138,10 @@ const ScrollImageSequence = ({
 
   /* ── Resize handler ── */
   useEffect(() => {
-    const onResize = () => {
-      positionCanvas();
-      drawFrame(currentFrame.current);
-    };
+    const onResize = () => drawFrame(currentFrame.current);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [drawFrame, positionCanvas]);
+  }, [drawFrame]);
 
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
