@@ -30,7 +30,7 @@ export const ProductCarousel = ({
   const [dragOffset, setDragOffset] = useState(0);
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout>();
+  const autoPlayRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Auto-play functionality
   useEffect(() => {
