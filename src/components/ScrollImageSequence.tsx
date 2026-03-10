@@ -127,7 +127,6 @@ const ScrollImageSequence = ({
 
     window.addEventListener("scroll", onScroll, { passive: true });
     setTimeout(() => {
-      positionCanvas();
       drawFrame(0);
     }, 100);
 
@@ -135,7 +134,7 @@ const ScrollImageSequence = ({
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [frameCount, drawFrame, positionCanvas]);
+  }, [frameCount, drawFrame]);
 
   /* ── Resize handler ── */
   useEffect(() => {
