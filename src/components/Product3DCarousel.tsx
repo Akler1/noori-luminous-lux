@@ -121,7 +121,7 @@ export default function Product3DCarousel() {
                 </div>
               </div>
 
-              <div className="p-4 md:p-6 bg-background">
+              <div className="px-4 pt-4 pb-1 md:px-6 md:pt-6 md:pb-2 bg-background">
                 <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
                 <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
                   {product.name}
