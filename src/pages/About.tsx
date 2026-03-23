@@ -76,9 +76,9 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="md:col-span-5 overflow-hidden rounded-xl"
+                className="md:col-span-5 flex items-start justify-center"
               >
-                <img src={ourStoryPurse} alt="Noori luxury jewelry" className="w-full object-cover aspect-[3/4]" />
+                <img src={ourStoryPurse} alt="Noori luxury jewelry" className="w-full scale-[1.4] origin-center object-contain drop-shadow-xl" />
               </motion.div>
             </div>
           </div>
