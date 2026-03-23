@@ -19,7 +19,7 @@ const Index = () => {
           basePath="/earing_frames_final"
           frameCount={46}
           ext="webp"
-          scrollVh={300}
+          scrollVh={250}
         />
         <StickyStoryRefined />
         <SocialFeed />

@@ -1,17 +1,29 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Gem, Sparkles, Crown } from "lucide-react";
+import { Gem, Sparkles, Crown, ChevronDown } from "lucide-react";
 
-const LABELS = [
-  { title: "Main Stone", body: "Top 2% of stones. Colorless D-F, VS1+ clarity.", icon: Gem },
-  { title: "Pavé Stones", body: "Hand-placed. Each inspected for symmetry and setting security.", icon: Sparkles },
-  { title: "14k Gold Setting", body: "Solid 14k gold. Finished and polished to a high-jewellery standard.", icon: Crown },
+const SPECS = [
+  {
+    num: "01",
+    icon: Gem,
+    title: "Main Stone",
+    body: "Top 2% globally. Colorless D–F, VS1+ clarity, ideal cut.",
+    threshold: 0.25,
+  },
+  {
+    num: "02",
+    icon: Sparkles,
+    title: "Pavé Diamonds",
+    body: "Hand-placed. Each inspected for symmetry and setting security.",
+    threshold: 0.50,
+  },
+  {
+    num: "03",
+    icon: Crown,
+    title: "14k Gold Setting",
+    body: "Solid 14k gold. Cast, finished, and polished to high-jewellery standard.",
+    threshold: 0.75,
+  },
 ];
-
-const MOBILE_CONTENT = {
-  header: "Crafted detail.",
-  body: "Each Noori earring features a precision-set main stone surrounded by hand-placed pavé diamonds, secured on a solid 14k gold post.",
-  chips: ["Main Stone", "Pavé Stones", "Earring Post"],
-};
 
 interface Props {
   basePath: string;
@@ -29,13 +41,19 @@ const ScrollImageSequence = ({
   scrollVh = 300,
 }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Desktop canvas (inside the split-left column)
+  const desktopCanvasRef = useRef<HTMLCanvasElement>(null);
+  // Mobile canvas (full-screen, hidden on lg+)
   const mobileCanvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(0);
   const rafId = useRef(0);
-  const [showCallouts, setShowCallouts] = useState(false);
+
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [showSpec1, setShowSpec1] = useState(false);
+  const [showSpec2, setShowSpec2] = useState(false);
+  const [showSpec3, setShowSpec3] = useState(false);
 
   /* ── Preload all frames eagerly ── */
   useEffect(() => {
@@ -48,9 +66,12 @@ const ScrollImageSequence = ({
     imagesRef.current = imgs;
   }, [basePath, frameCount, ext, pad]);
 
-  /* ── Draw a frame to canvas ── */
+  /* ── Draw a frame to the correct canvas ── */
   const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current?.clientWidth ? canvasRef.current : mobileCanvasRef.current;
+    // Pick the active canvas — desktop if it has layout width, else mobile
+    const canvas = (desktopCanvasRef.current?.clientWidth ?? 0) > 0
+      ? desktopCanvasRef.current
+      : mobileCanvasRef.current;
     const img = imagesRef.current[index];
     if (!canvas || !img || !img.complete || !img.naturalWidth) return;
 
@@ -68,46 +89,36 @@ const ScrollImageSequence = ({
     }
 
     ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "#f5f0e8";
+    ctx.fillRect(0, 0, w, h);
 
-    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const isMobile = window.innerWidth < 1024;
+
+    // Crop 10% from left and right for centered framing
+    const sx = img.naturalWidth * 0.10;
+    const sw = img.naturalWidth * 0.80;
+    const croppedRatio = sw / img.naturalHeight;
     const canvasRatio = w / h;
+
     let dw: number, dh: number, dx: number, dy: number;
-    const isSmallMobile = window.innerWidth < 768;
 
-    if (isSmallMobile) {
-      ctx.fillStyle = "#0a0a0a";
-      ctx.fillRect(0, 0, w, h);
-      const mobileCropLeft = 0.10;
-      const mobileCropWidth = 0.80;
-      const sx = img.naturalWidth * mobileCropLeft;
-      const sw = img.naturalWidth * mobileCropWidth;
-      const sy = 0;
-      const sh = img.naturalHeight;
-      const croppedRatio = sw / sh;
+    if (isMobile) {
+      // Mobile: cover — fill width
       if (croppedRatio > canvasRatio) {
-        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
-      } else {
         dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
+      } else {
+        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       }
-      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // Desktop: crop 10% from left and right for centered framing
-      const cropLeft = 0.10;
-      const cropWidth = 0.80;
-      const sx = img.naturalWidth * cropLeft;
-      const sw = img.naturalWidth * cropWidth;
-      const sy = 0;
-      const sh = img.naturalHeight;
-      const croppedRatio = sw / sh;
+      // Desktop: contain — fit inside the canvas column
       if (croppedRatio > canvasRatio) {
         dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       } else {
         dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
       }
-      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
+    ctx.drawImage(img, sx, 0, sw, img.naturalHeight, dx, dy, dw, dh);
   }, []);
-
 
   /* ── Scroll handler ── */
   useEffect(() => {
@@ -120,23 +131,27 @@ const ScrollImageSequence = ({
         const scrollRange = wrapper.offsetHeight - window.innerHeight;
         if (scrollRange <= 0) return;
 
-        const animationEnd = 0.6;
+        // Animation completes at 85% of scroll, leaving 15% for user to linger on final frame
+        const animationEnd = 0.85;
         const rawT = Math.min(1, Math.max(0, -rect.top / scrollRange));
         const t = Math.min(1, rawT / animationEnd);
         const idx = Math.round(t * (frameCount - 1));
+
+        if (rawT > 0.02) setHasScrolled(true);
 
         if (idx !== currentFrame.current) {
           currentFrame.current = idx;
           drawFrame(idx);
         }
-        setShowCallouts(rawT >= animationEnd);
+
+        setShowSpec1(rawT >= SPECS[0].threshold);
+        setShowSpec2(rawT >= SPECS[1].threshold);
+        setShowSpec3(rawT >= SPECS[2].threshold);
       });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(() => {
-      drawFrame(0);
-    }, 100);
+    setTimeout(() => { drawFrame(0); }, 100);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -151,69 +166,88 @@ const ScrollImageSequence = ({
     return () => window.removeEventListener("resize", onResize);
   }, [drawFrame]);
 
+  const specVisible = [showSpec1, showSpec2, showSpec3];
+
   return (
     <div ref={wrapperRef} style={{ height: `${scrollVh}vh` }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
-        {/* ── Desktop: two-column layout ── */}
-        <div className="hidden lg:flex items-center justify-center h-full gap-6 px-0">
-          {/* Left: canvas — fixed aspect ratio container */}
-          <div className="relative h-[calc(100%-4rem)]" style={{ aspectRatio: '1 / 1' }}>
-            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+
+        {/* ─────────────────────────────────────────────────
+            Desktop: split layout — canvas left, specs right
+        ───────────────────────────────────────────────── */}
+        <div className="hidden lg:flex items-center h-full">
+
+          {/* Left: earring canvas — takes all space left of the specs panel */}
+          <div className="relative flex-1 h-[calc(100%-4rem)] min-w-0">
+            <canvas ref={desktopCanvasRef} className="absolute inset-0 w-full h-full" />
           </div>
 
-          {/* Right: info cards */}
-          <div className="flex flex-col gap-5 justify-center w-72">
-            {LABELS.map((label, idx) => (
-              <div
-                key={label.title}
-                className="backdrop-blur-md bg-white/70 border border-white/40 rounded-xl p-5 text-center shadow-xl"
-                style={{
-                  opacity: showCallouts ? 1 : 0,
-                  transform: `translateX(${showCallouts ? 0 : 30}px) scale(${showCallouts ? 1 : 0.95})`,
-                  transition: `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${idx * 200}ms`,
-                }}
-              >
-                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
-                  <label.icon className="w-6 h-6 text-accent" />
+          {/* Right: sequential spec items */}
+          <div className="w-[320px] xl:w-[380px] shrink-0 flex flex-col justify-center gap-10 px-10 xl:px-14 h-full">
+
+            {/* Section eyebrow */}
+            <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/55 -mb-4">
+              What goes into every Noori
+            </p>
+
+            {SPECS.map((spec, i) => {
+              const visible = specVisible[i];
+              return (
+                <div
+                  key={spec.title}
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transform: `translateX(${visible ? 0 : 18}px)`,
+                    transition:
+                      "opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)",
+                  }}
+                >
+                  {/* Accent rule */}
+                  <div className="w-8 h-px bg-accent/40 mb-4" />
+                  {/* Number + icon */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] text-accent/55 font-sans tracking-[0.2em] uppercase">
+                      {spec.num}
+                    </span>
+                    <spec.icon className="w-4 h-4 text-accent/75" />
+                  </div>
+                  {/* Title */}
+                  <h3 className="font-display text-xl text-foreground leading-snug mb-1.5">
+                    {spec.title}
+                  </h3>
+                  {/* Body */}
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {spec.body}
+                  </p>
                 </div>
-                <h4 className="text-sm font-serif font-bold uppercase tracking-wider text-card-foreground/90">
-                  {label.title}
-                </h4>
-                <p className="text-[13px] text-muted-foreground leading-relaxed mt-2">
-                  {label.body}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* ── Mobile: full-screen canvas + overlay ── */}
-        <canvas ref={mobileCanvasRef} className="lg:hidden absolute inset-0 w-full h-full" />
+        {/* ─────────────────────────────────────────────────
+            Mobile: full-screen canvas, no overlay text
+        ───────────────────────────────────────────────── */}
+        <canvas
+          ref={mobileCanvasRef}
+          className="lg:hidden absolute inset-0 w-full h-full"
+        />
+
+        {/* ─────────────────────────────────────────────────
+            Scroll hint — fades when user starts scrolling
+        ───────────────────────────────────────────────── */}
         <div
-          className="lg:hidden absolute bottom-0 left-0 right-0 z-10 px-8 pb-12 pt-24 bg-gradient-to-t from-black/60 to-transparent transition-all duration-700"
+          className="absolute bottom-8 left-1/2 z-20 flex flex-col items-center gap-2 transition-all duration-700"
           style={{
-            opacity: showCallouts ? 1 : 0,
-            transform: `translateY(${showCallouts ? 0 : 20}px)`,
+            opacity: hasScrolled ? 0 : 1,
+            transform: `translateX(-50%) translateY(${hasScrolled ? 10 : 0}px)`,
+            pointerEvents: hasScrolled ? "none" : "auto",
           }}
         >
-          <div className="max-w-2xl">
-            <h2 className="section-header text-white mb-4">
-              {MOBILE_CONTENT.header}
-            </h2>
-            <p className="text-white/80 text-lg leading-relaxed mb-6 max-w-lg">
-              {MOBILE_CONTENT.body}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {MOBILE_CONTENT.chips.map((chip) => (
-                <span
-                  key={chip}
-                  className="px-3 py-1 text-xs text-white/90 border border-white/30 rounded-full"
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
-          </div>
+          <span className="font-sans text-[11px] uppercase tracking-[0.2em] text-foreground/50">
+            Scroll to explore
+          </span>
+          <ChevronDown className="w-4 h-4 text-foreground/40 animate-bounce" />
         </div>
       </div>
     </div>

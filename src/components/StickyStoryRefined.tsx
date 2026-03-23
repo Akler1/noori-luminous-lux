@@ -5,14 +5,14 @@ import unicefBackpacks from "@/assets/unicef-backpacks.webp";
 
 export const StickyStoryRefined = () => {
   return (
-    <section className="bg-secondary py-4 lg:py-6">
+    <section className="bg-secondary py-20 lg:py-28">
       <div className="container-editorial max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8"
+          className="text-center mb-12"
         >
           <h2 className="section-header text-4xl md:text-5xl text-foreground">
             How Your Purchase Creates Change.
@@ -29,7 +29,7 @@ export const StickyStoryRefined = () => {
           <img
             src={unicefBackpacks}
             alt="Children with UNICEF backpacks heading to school"
-            className="w-full h-auto object-cover"
+            className="w-full max-h-[600px] object-cover"
           />
         </motion.div>
 
@@ -40,15 +40,15 @@ export const StickyStoryRefined = () => {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="text-center max-w-2xl mx-auto"
         >
-          <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
             A portion of every Noori purchase supports UNICEF programs for children to get out of dangerous mines and into the classroom.
           </p>
           <Link
             to="/policies#mission"
-            className="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-medium"
+            className="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors text-base font-medium"
           >
             Learn Our Story
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </div>

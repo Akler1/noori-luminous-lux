@@ -35,7 +35,7 @@ export const FinalCTAForm = () => {
   };
 
   return (
-    <section className="bg-background section-spacing">
+    <section className="bg-background section-spacing border-t border-border/50">
       <div className="container-editorial">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -72,7 +72,7 @@ export const FinalCTAForm = () => {
                 disabled={isSubmitting}
                 className="bg-accent text-accent-foreground hover:bg-accent/90 h-12 px-8 font-medium"
               >
-                {isSubmitting ? "Joining..." : "Join"}
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
               </Button>
             </div>
 

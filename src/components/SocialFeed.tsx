@@ -35,7 +35,7 @@ export const SocialFeed = () => {
           className="text-center"
         >
           <h2 className="section-header text-foreground">
-            Worn by you.
+            As seen on.
           </h2>
         </motion.div>
       </div>
@@ -49,7 +49,7 @@ export const SocialFeed = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
                   className="w-full md:w-80 aspect-square relative group rounded-lg overflow-hidden"
                 >
                   <img
@@ -69,8 +69,8 @@ export const SocialFeed = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-2" />
-          <CarouselNext className="right-2" />
+          <CarouselPrevious className="hidden" />
+          <CarouselNext className="hidden" />
         </Carousel>
       </div>
     </section>

@@ -85,7 +85,7 @@ export const Footer = () => {
         <div className="border-t border-foreground/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-foreground/60 text-sm">
-              © 2024 Noori. All rights reserved. 
+              © 2025 Noori. All rights reserved.
               <span className="ml-2">Made with light in Canada.</span>
             </div>
             

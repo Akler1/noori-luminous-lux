@@ -53,55 +53,35 @@ export default function Product3DCarousel() {
       role="region"
       aria-label="Best sellers product grid"
     >
-      <div className="container-editorial text-center pt-4 pb-2 md:pt-6 md:pb-3">
-        <h2 className="text-2xl md:text-3xl font-medium tracking-wide uppercase text-foreground">
+      <div className="container-editorial text-center pt-16 pb-6 md:pt-20 md:pb-8">
+        <h2 className="font-display text-3xl md:text-4xl font-normal text-foreground">
           Best Sellers
         </h2>
       </div>
 
       {/* Trust Bar */}
-      <div className="w-full px-4 py-2">
+      <div className="w-full px-4 py-5 md:py-6 border-b border-border/40">
         <div className="grid grid-cols-5 gap-2 md:gap-8 text-center max-w-[1280px] mx-auto">
-          <div className="flex flex-col items-center gap-1 md:gap-2">
-            <Truck className="h-4 w-4 md:h-6 md:w-6 text-accent" />
-            <div>
-              <p className="font-medium text-[10px] md:text-sm text-foreground">Free Shipping</p>
-              <p className="hidden md:block text-xs text-muted-foreground">On all orders</p>
+          {[
+            { Icon: Truck, label: "Free Shipping", sub: "On all orders" },
+            { Icon: RotateCcw, label: "30-Day Returns", sub: "Easy exchanges" },
+            { Icon: Shield, label: "Lifetime Warranty", sub: "Crafted to last" },
+            { Icon: Gem, label: "Ethical Diamonds", sub: "Lab-grown" },
+            { Icon: Award, label: "IGI Certified", sub: "Every diamond" },
+          ].map(({ Icon, label, sub }) => (
+            <div key={label} className="flex flex-col items-center gap-1 md:gap-2">
+              <Icon className="h-5 w-5 md:h-7 md:w-7 text-accent" />
+              <div>
+                <p className="font-medium text-[10px] md:text-sm text-foreground">{label}</p>
+                <p className="text-[9px] md:text-xs text-muted-foreground">{sub}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col items-center gap-1 md:gap-2">
-            <RotateCcw className="h-4 w-4 md:h-6 md:w-6 text-accent" />
-            <div>
-              <p className="font-medium text-[10px] md:text-sm text-foreground">30-Day Returns</p>
-              <p className="hidden md:block text-xs text-muted-foreground">Easy exchanges</p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-1 md:gap-2">
-            <Shield className="h-4 w-4 md:h-6 md:w-6 text-accent" />
-            <div>
-              <p className="font-medium text-[10px] md:text-sm text-foreground">Lifetime Warranty</p>
-              <p className="hidden md:block text-xs text-muted-foreground">Crafted to last</p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-1 md:gap-2">
-            <Gem className="h-4 w-4 md:h-6 md:w-6 text-accent" />
-            <div>
-              <p className="font-medium text-[10px] md:text-sm text-foreground">Ethical Diamonds</p>
-              <p className="hidden md:block text-xs text-muted-foreground">Lab-grown</p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-1 md:gap-2">
-            <Award className="h-4 w-4 md:h-6 md:w-6 text-accent" />
-            <div>
-              <p className="font-medium text-[10px] md:text-sm text-foreground">IGI Certified</p>
-              <p className="hidden md:block text-xs text-muted-foreground">Every diamond</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       <div className="w-full">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border/20">
           {gridProducts.map((product) => (
             <Link
               key={product.id}
@@ -121,12 +101,14 @@ export default function Product3DCarousel() {
                 </div>
               </div>
 
-              <div className="px-4 pt-4 pb-1 md:px-6 md:pt-6 md:pb-2 bg-background">
-                <p className="text-xs text-muted-foreground mb-1">{product.material}</p>
+              <div className="px-4 pt-4 pb-5 md:px-6 md:pt-6 md:pb-6 bg-background">
+                <p className="text-xs text-muted-foreground/80 uppercase tracking-wider mb-1">
+                  {product.material}
+                </p>
                 <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-sm md:text-base text-foreground">
+                <p className="text-sm md:text-base text-foreground group-hover:text-accent transition-colors">
                   {product.price}
                 </p>
               </div>
