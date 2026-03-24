@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Eye } from "lucide-react";
+import { Eye, ZoomIn, ZoomOut } from "lucide-react";
 import { ShopifyVariant } from "@/types/shopify";
 import { motion } from "framer-motion";
 
@@ -27,6 +27,7 @@ export const ThreeDViewer = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isZoomedIn, setIsZoomedIn] = useState(true);
 
   // Load model-viewer script
   useEffect(() => {
@@ -46,8 +47,16 @@ export const ThreeDViewer = ({
 
 
 
+  // Reset zoom state when variant changes
+  useEffect(() => {
+    setIsZoomedIn(true);
+  }, [variant?.id]);
+
   // Check for iframe URL first, then fall back to 3D model
-  const iframeUrl = variant?.iframeUrl;
+  const hasAltView = !!variant?.iframeUrlAlt;
+  const iframeUrl = variant?.iframeUrl
+    ? (isZoomedIn ? variant.iframeUrl : (variant.iframeUrlAlt || variant.iframeUrl))
+    : undefined;
   const modelUrl = variant?.model3d || '/models/placeholder-diamond.glb';
   const hasModel = variant?.model3d || variant?.iframeUrl;
 
@@ -138,8 +147,8 @@ export const ThreeDViewer = ({
 
 
       {/* Info Overlay */}
-      <div className="absolute bottom-4 left-4 right-4">
-        <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3">
+      <div className="absolute bottom-4 left-4 right-4 flex items-end gap-2">
+        <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 flex-1">
           <div className="text-sm font-medium">{variant?.title}</div>
           <div className="text-xs text-muted-foreground mt-1">
             {iframeUrl
@@ -147,6 +156,15 @@ export const ThreeDViewer = ({
               : "Click and drag to rotate • Scroll to zoom • Double-click to reset"}
           </div>
         </div>
+        {hasAltView && (
+          <button
+            onClick={() => setIsZoomedIn(!isZoomedIn)}
+            className="bg-background/90 backdrop-blur-sm rounded-lg p-3 hover:bg-accent/20 transition-colors shrink-0"
+            title={isZoomedIn ? "Zoom out" : "Zoom in"}
+          >
+            {isZoomedIn ? <ZoomOut className="w-5 h-5 text-foreground/70" /> : <ZoomIn className="w-5 h-5 text-foreground/70" />}
+          </button>
+        )}
       </div>
 
       {/* Loading State */}

@@ -8,14 +8,14 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/1',
       handle: 'diamond-stud-earrings',
-      title: 'Diamond Stud Earrings',
+      title: 'Round Solitaire Studs',
       description: 'Timeless elegance meets modern ethics. Our lab-grown diamond studs offer the same brilliance and fire as mined diamonds.',
       priceRange: {
-        minVariantPrice: { amount: '890.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '1490.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2960.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1200.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2500.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -23,7 +23,7 @@ class ShopifyClient {
             node: {
               id: 'gid://shopify/ProductImage/1',
               url: '/src/assets/earrings-hero.jpg',
-              altText: 'Diamond Stud Earrings - Round Brilliant',
+              altText: 'Round Solitaire Studs - Round Brilliant',
               width: 800,
               height: 600
             }
@@ -32,7 +32,7 @@ class ShopifyClient {
             node: {
               id: 'gid://shopify/ProductImage/2',
               url: '/src/assets/earrings-princess.jpg',
-              altText: 'Diamond Stud Earrings - Princess Cut',
+              altText: 'Round Solitaire Studs - Princess Cut',
               width: 800,
               height: 600
             }
@@ -50,8 +50,7 @@ class ShopifyClient {
                 { name: 'Metal', value: 'Sterling Silver' },
                 { name: 'Cut', value: 'Round Brilliant' }
               ],
-              price: { amount: '890.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '1200.00', currencyCode: 'CAD' },
+              price: { amount: '1954.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-STUD-SS-RB',
               model3d: '/models/earrings-silver-round.glb',
@@ -71,7 +70,7 @@ class ShopifyClient {
                 { name: 'Metal', value: '14K Gold' },
                 { name: 'Cut', value: 'Round Brilliant' }
               ],
-              price: { amount: '1490.00', currencyCode: 'CAD' },
+              price: { amount: '2047.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-STUD-14K-RB',
               model3d: '/models/earrings-gold-round.glb',
@@ -91,8 +90,7 @@ class ShopifyClient {
                 { name: 'Metal', value: 'Sterling Silver' },
                 { name: 'Cut', value: 'Princess' }
               ],
-              price: { amount: '920.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '1250.00', currencyCode: 'CAD' },
+              price: { amount: '1954.00', currencyCode: 'CAD' },
               quantityAvailable: 8,
               sku: 'NOORI-STUD-SS-PR',
               model3d: '/models/earrings-silver-princess.glb',
@@ -112,7 +110,7 @@ class ShopifyClient {
                 { name: 'Metal', value: '14K Gold' },
                 { name: 'Cut', value: 'Princess' }
               ],
-              price: { amount: '1520.00', currencyCode: 'CAD' },
+              price: { amount: '2047.00', currencyCode: 'CAD' },
               quantityAvailable: 3,
               sku: 'NOORI-STUD-14K-PR',
               model3d: '/models/earrings-gold-princess.glb',
@@ -142,14 +140,14 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/2',
       handle: 'bezel-necklace',
-      title: 'Bezel-less Necklace',
+      title: 'Solitaire Necklace',
       description: 'Refined minimalism showcasing a single lab-grown diamond in perfect suspension.',
       priceRange: {
-        minVariantPrice: { amount: '1200.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '2450.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '1944.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1600.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2200.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -157,7 +155,7 @@ class ShopifyClient {
             node: {
               id: 'gid://shopify/ProductImage/2',
               url: '/src/assets/necklace-hero.jpg',
-              altText: 'Bezel-less Necklace',
+              altText: 'Solitaire Necklace',
               width: 800,
               height: 600
             }
@@ -166,19 +164,157 @@ class ShopifyClient {
       },
       variants: {
         edges: [
+          // Round — Yellow Gold (default)
           {
             node: {
               id: 'gid://shopify/ProductVariant/3',
-              title: 'Sterling Silver / 1 ct',
+              title: '14K Gold / Round',
               availableForSale: true,
               selectedOptions: [
-                { name: 'Metal', value: 'Sterling Silver' },
-                { name: 'Size', value: '1 ct' }
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Cut', value: 'Round' }
               ],
-              price: { amount: '1200.00', currencyCode: 'CAD' },
+              price: { amount: '1748.00', currencyCode: 'CAD' },
               quantityAvailable: 8,
-              sku: 'NOORI-NECK-SS-1CT',
-              model3d: '/models/necklace-silver-1ct.glb'
+              sku: 'NOORI-NECK-14K-RND',
+              iframeUrl: 'https://akler1.github.io/round-y_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/round-y/'
+            }
+          },
+          // Round — White Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3b',
+              title: 'White Gold / Round',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'White Gold' },
+                { name: 'Cut', value: 'Round' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 6,
+              sku: 'NOORI-NECK-WG-RND',
+              iframeUrl: 'https://akler1.github.io/round-w_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/round-w/'
+            }
+          },
+          // Round — Rose Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3c',
+              title: 'Rose Gold / Round',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Rose Gold' },
+                { name: 'Cut', value: 'Round' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-NECK-RG-RND',
+              iframeUrl: 'https://akler1.github.io/round-r_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/round-r/'
+            }
+          },
+          // Emerald — Yellow Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3d',
+              title: '14K Gold / Emerald',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Cut', value: 'Emerald' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 4,
+              sku: 'NOORI-NECK-14K-EM',
+              iframeUrl: 'https://akler1.github.io/emerald-y_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/emerald-y/'
+            }
+          },
+          // Emerald — White Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3e',
+              title: 'White Gold / Emerald',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'White Gold' },
+                { name: 'Cut', value: 'Emerald' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 4,
+              sku: 'NOORI-NECK-WG-EM',
+              iframeUrl: 'https://akler1.github.io/emerald-w_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/emerald-w/'
+            }
+          },
+          // Emerald — Rose Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3f',
+              title: 'Rose Gold / Emerald',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Rose Gold' },
+                { name: 'Cut', value: 'Emerald' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 3,
+              sku: 'NOORI-NECK-RG-EM',
+              iframeUrl: 'https://akler1.github.io/emerald-r_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/emerald-r/'
+            }
+          },
+          // Princess — Yellow Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3g',
+              title: '14K Gold / Princess',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Cut', value: 'Princess' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 5,
+              sku: 'NOORI-NECK-14K-PR',
+              iframeUrl: 'https://akler1.github.io/princess-y_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/princess-y/'
+            }
+          },
+          // Princess — White Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3h',
+              title: 'White Gold / Princess',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'White Gold' },
+                { name: 'Cut', value: 'Princess' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 4,
+              sku: 'NOORI-NECK-WG-PR',
+              iframeUrl: 'https://akler1.github.io/princess-w_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/princess-w/'
+            }
+          },
+          // Princess — Rose Gold
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/3i',
+              title: 'Rose Gold / Princess',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Rose Gold' },
+                { name: 'Cut', value: 'Princess' }
+              ],
+              price: { amount: '1748.00', currencyCode: 'CAD' },
+              quantityAvailable: 3,
+              sku: 'NOORI-NECK-RG-PR',
+              iframeUrl: 'https://akler1.github.io/princess-r_zoomed/',
+              iframeUrlAlt: 'https://akler1.github.io/princess-r/'
             }
           }
         ]
@@ -187,15 +323,85 @@ class ShopifyClient {
         {
           id: 'gid://shopify/ProductOption/3',
           name: 'Metal',
-          values: ['Sterling Silver', '9K Gold']
+          values: ['14K Gold', 'White Gold', 'Rose Gold']
         },
         {
           id: 'gid://shopify/ProductOption/4',
-          name: 'Size',
-          values: ['1 ct', '2 ct']
+          name: 'Cut',
+          values: ['Round', 'Emerald', 'Princess']
         }
       ],
       reviews: { rating: 5, count: 89 }
+    },
+    // ── Pendant products (individual per cut) ──
+    {
+      id: 'gid://shopify/Product/pendant-round',
+      handle: 'pendant-round',
+      title: 'Round Solitaire Pendant',
+      description: 'A single round brilliant diamond suspended on a delicate chain. Pure light, nothing more.',
+      priceRange: {
+        minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '1944.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '2200.00', currencyCode: 'CAD' }
+      },
+      images: { edges: [{ node: { id: 'img-pend-rnd', url: '/src/assets/necklace-hero.jpg', altText: 'Round Solitaire Pendant', width: 800, height: 600 } }] },
+      variants: {
+        edges: [
+          { node: { id: 'pend-rnd-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-PEND-RND-Y', iframeUrl: 'https://akler1.github.io/round-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-y/' } },
+          { node: { id: 'pend-rnd-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PEND-RND-W', iframeUrl: 'https://akler1.github.io/round-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-w/' } },
+          { node: { id: 'pend-rnd-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-RND-R', iframeUrl: 'https://akler1.github.io/round-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-r/' } },
+        ]
+      },
+      options: [{ id: 'opt-pend-rnd-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      reviews: { rating: 5, count: 47 }
+    },
+    {
+      id: 'gid://shopify/Product/pendant-princess',
+      handle: 'pendant-princess',
+      title: 'Princess Solitaire Pendant',
+      description: 'A princess-cut diamond set in a clean, geometric pendant. Sharp lines, soft glow.',
+      priceRange: {
+        minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '1944.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '2200.00', currencyCode: 'CAD' }
+      },
+      images: { edges: [{ node: { id: 'img-pend-pr', url: '/src/assets/necklace-hero.jpg', altText: 'Princess Solitaire Pendant', width: 800, height: 600 } }] },
+      variants: {
+        edges: [
+          { node: { id: 'pend-pr-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-PR-Y', iframeUrl: 'https://akler1.github.io/princess-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-y/' } },
+          { node: { id: 'pend-pr-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-PR-W', iframeUrl: 'https://akler1.github.io/princess-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-w/' } },
+          { node: { id: 'pend-pr-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-PR-R', iframeUrl: 'https://akler1.github.io/princess-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-r/' } },
+        ]
+      },
+      options: [{ id: 'opt-pend-pr-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      reviews: { rating: 5, count: 42 }
+    },
+    {
+      id: 'gid://shopify/Product/pendant-emerald',
+      handle: 'pendant-emerald',
+      title: 'Emerald Solitaire Pendant',
+      description: 'An emerald-cut diamond in a modern pendant setting. Architectural clarity on a chain.',
+      priceRange: {
+        minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '1944.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '2200.00', currencyCode: 'CAD' }
+      },
+      images: { edges: [{ node: { id: 'img-pend-em', url: '/src/assets/necklace-hero.jpg', altText: 'Emerald Solitaire Pendant', width: 800, height: 600 } }] },
+      variants: {
+        edges: [
+          { node: { id: 'pend-em-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-Y', iframeUrl: 'https://akler1.github.io/emerald-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-y/' } },
+          { node: { id: 'pend-em-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-W', iframeUrl: 'https://akler1.github.io/emerald-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-w/' } },
+          { node: { id: 'pend-em-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-EM-R', iframeUrl: 'https://akler1.github.io/emerald-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-r/' } },
+        ]
+      },
+      options: [{ id: 'opt-pend-em-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      reviews: { rating: 5, count: 38 }
     },
     {
       id: 'gid://shopify/Product/3',
@@ -203,11 +409,11 @@ class ShopifyClient {
       title: 'Solitaire Bracelet',
       description: 'Modern heirloom design featuring single or five solitaire lab-grown diamonds.',
       priceRange: {
-        minVariantPrice: { amount: '1190.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '2890.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2528.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '3710.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1590.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '3200.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -233,10 +439,41 @@ class ShopifyClient {
                 { name: 'Metal', value: 'Sterling Silver' },
                 { name: 'Style', value: 'Single Solitaire' }
               ],
-              price: { amount: '1190.00', currencyCode: 'CAD' },
+              price: { amount: '2528.00', currencyCode: 'CAD' },
               quantityAvailable: 12,
               sku: 'NOORI-BRAC-SS-SINGLE',
-              model3d: '/models/bracelet-silver-single.glb'
+              model3d: '/models/bracelet-silver-single.glb',
+              iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html'
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/4b',
+              title: '14K Gold / Single Solitaire',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: '14K Gold' },
+                { name: 'Style', value: 'Single Solitaire' }
+              ],
+              price: { amount: '2738.00', currencyCode: 'CAD' },
+              quantityAvailable: 8,
+              sku: 'NOORI-BRAC-14K-SINGLE',
+              iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html'
+            }
+          },
+          {
+            node: {
+              id: 'gid://shopify/ProductVariant/4c',
+              title: 'Rose Gold / Single Solitaire',
+              availableForSale: true,
+              selectedOptions: [
+                { name: 'Metal', value: 'Rose Gold' },
+                { name: 'Style', value: 'Single Solitaire' }
+              ],
+              price: { amount: '2528.00', currencyCode: 'CAD' },
+              quantityAvailable: 6,
+              sku: 'NOORI-BRAC-RG-SINGLE',
+              iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html'
             }
           }
         ]
@@ -245,12 +482,12 @@ class ShopifyClient {
         {
           id: 'gid://shopify/ProductOption/5',
           name: 'Metal',
-          values: ['Sterling Silver', '9K Gold']
+          values: ['Sterling Silver', '14K Gold', 'Rose Gold']
         },
         {
           id: 'gid://shopify/ProductOption/6',
           name: 'Style',
-          values: ['Single Solitaire', 'Five-Solitaire']
+          values: ['Single Solitaire', 'Three-Stone']
         }
       ],
       reviews: { rating: 5, count: 67 }
@@ -258,14 +495,14 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/4',
       handle: 'stud-round-14k',
-      title: 'Round Brilliant Stud',
+      title: 'Round Solitaire Studs',
       description: 'Classic elegance in lab-grown diamonds. Available in gold, white gold, and rose gold with your choice of 2 ct. tw. or 4 ct. tw. total weight.',
       priceRange: {
-        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2960.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2500.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -273,7 +510,7 @@ class ShopifyClient {
             node: {
               id: 'gid://shopify/ProductImage/4',
               url: '/src/assets/earrings-hero.jpg',
-              altText: 'Round Brilliant Stud Earrings',
+              altText: 'Round Solitaire Studs Earrings',
               width: 800,
               height: 600
             }
@@ -291,15 +528,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
-              price: { amount: '1490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
+              price: { amount: '1954.00', currencyCode: 'CAD' },
               quantityAvailable: 15,
               sku: 'NOORI-STUD-GOLD-2CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Round Brilliant Stud - 2 ct. tw.'
+                altText: 'Yellow Gold Round Solitaire Studs - 2 ct. tw.'
               }
             }
           },
@@ -312,15 +548,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'Yellow Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
-              price: { amount: '2490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
+              price: { amount: '2831.00', currencyCode: 'CAD' },
               quantityAvailable: 8,
               sku: 'NOORI-STUD-GOLD-4CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Round Brilliant Stud - 4 ct. tw.'
+                altText: 'Yellow Gold Round Solitaire Studs - 4 ct. tw.'
               }
             }
           },
@@ -333,15 +568,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'White Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
-              price: { amount: '1590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
+              price: { amount: '1954.00', currencyCode: 'CAD' },
               quantityAvailable: 12,
               sku: 'NOORI-STUD-WGOLD-2CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Round Brilliant Stud - 2 ct. tw.'
+                altText: 'White Gold Round Solitaire Studs - 2 ct. tw.'
               }
             }
           },
@@ -354,15 +588,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'White Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
-              price: { amount: '2590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
+              price: { amount: '2831.00', currencyCode: 'CAD' },
               quantityAvailable: 6,
               sku: 'NOORI-STUD-WGOLD-4CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Round Brilliant Stud - 4 ct. tw.'
+                altText: 'White Gold Round Solitaire Studs - 4 ct. tw.'
               }
             }
           },
@@ -375,15 +608,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'Rose Gold' },
                 { name: 'Size', value: '2 ct. tw.' }
               ],
-              price: { amount: '1690.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
+              price: { amount: '1954.00', currencyCode: 'CAD' },
               quantityAvailable: 10,
               sku: 'NOORI-STUD-RGOLD-2CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Round Brilliant Stud - 2 ct. tw.'
+                altText: 'Rose Gold Round Solitaire Studs - 2 ct. tw.'
               }
             }
           },
@@ -396,15 +628,14 @@ class ShopifyClient {
                 { name: 'Material', value: 'Rose Gold' },
                 { name: 'Size', value: '4 ct. tw.' }
               ],
-              price: { amount: '2990.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
+              price: { amount: '2831.00', currencyCode: 'CAD' },
               quantityAvailable: 5,
               sku: 'NOORI-STUD-RGOLD-4CTTW',
               iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
               image: {
                 id: 'gid://shopify/ProductImage/4',
                 url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Round Brilliant Stud - 4 ct. tw.'
+                altText: 'Rose Gold Round Solitaire Studs - 4 ct. tw.'
               }
             }
           }
@@ -812,7 +1043,7 @@ class ShopifyClient {
                 title: variant.title,
                 product: {
                   id: 'gid://shopify/Product/1',
-                  title: 'Diamond Stud Earrings',
+                  title: 'Round Solitaire Studs',
                   handle: 'diamond-stud-earrings'
                 },
                 selectedOptions: variant.selectedOptions,

@@ -73,8 +73,8 @@ const ProductDetail = () => {
 
   // Get cross-sell products (other products in capsule)
   const crossSellProducts = [
-    { name: "Bezel-less Necklace", handle: "bezel-necklace", price: "CAD $1,450", image: "/src/assets/necklace-hero.jpg" },
-    { name: "Solitaire Bracelet", handle: "solitaire-bracelet", price: "CAD $1,190", image: "/src/assets/bracelet-hero.jpg" }
+    { name: "Solitaire Necklace", handle: "bezel-necklace", price: "CAD $1,748", image: "/src/assets/necklace-hero.jpg" },
+    { name: "Solitaire Bracelet", handle: "solitaire-bracelet", price: "CAD $2,528", image: "/src/assets/bracelet-hero.jpg" }
   ].filter(p => p.name !== product?.title);
 
   // Prepare images for carousel - update based on selected variant

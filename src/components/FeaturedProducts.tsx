@@ -11,17 +11,16 @@ import braceletImage from "@/assets/bracelet-hero.jpg";
 const products = [
   {
     id: "1",
-    name: "Diamond Stud Earrings",
-    price: "CAD $890",
-    originalPrice: "CAD $1,200",
+    name: "Round Solitaire Studs",
+    price: "CAD $1,954",
     image: earringsImage,
     rating: 5,
     reviewCount: 124,
   },
   {
     id: "2", 
-    name: "Bezel-less Necklace",
-    price: "CAD $1,450",
+    name: "Solitaire Necklace",
+    price: "CAD $1,748",
     image: necklaceImage,
     rating: 5,
     reviewCount: 89,
@@ -29,7 +28,7 @@ const products = [
   {
     id: "3",
     name: "Solitaire Bracelet",
-    price: "CAD $1,190",
+    price: "CAD $2,528",
     image: braceletImage,
     rating: 5,
     reviewCount: 67,

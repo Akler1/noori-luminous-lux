@@ -5,11 +5,11 @@ import { Solitaire3DCard } from "@/components/Solitaire3DCard";
 const PLACEHOLDER_IFRAME = "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html";
 
 const solitaireProducts = [
-  // Earrings (3)
+  // Earrings
   {
     id: "stud-round-14k",
-    name: "Round Brilliant Stud",
-    price: "$1,599",
+    name: "Round Solitaire Studs",
+    price: "$1,954",
     pdpUrl: "/product/stud-round-14k",
     iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
@@ -17,8 +17,8 @@ const solitaireProducts = [
   },
   {
     id: "earrings-emerald-gold",
-    name: "Emerald Earrings",
-    price: "$2,299",
+    name: "Emerald Solitaire Studs",
+    price: "$1,954",
     pdpUrl: "/product/earrings-emerald-gold",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
     rating: 5,
@@ -26,55 +26,55 @@ const solitaireProducts = [
   },
   {
     id: "earrings-princess",
-    name: "Princess Earrings",
-    price: "$1,899",
+    name: "Princess Solitaire Studs",
+    price: "$1,954",
     pdpUrl: "/product/earrings-princess-18k",
     iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
     rating: 5,
     reviewCount: 24
   },
-  // Pendants (3)
+  // Pendants — default view is zoomed, yellow gold
   {
     id: "pendant-round",
-    name: "Round Pendant",
-    price: "$2,599",
+    name: "Round Solitaire Pendant",
+    price: "$1,748",
     pdpUrl: "/product/pendant-round",
-    iframeUrl: PLACEHOLDER_IFRAME,
+    iframeUrl: "https://akler1.github.io/round-y_zoomed/",
     rating: 5,
     reviewCount: 47
   },
   {
     id: "pendant-princess",
-    name: "Princess Pendant",
-    price: "$3,299",
+    name: "Princess Solitaire Pendant",
+    price: "$1,748",
     pdpUrl: "/product/pendant-princess",
-    iframeUrl: PLACEHOLDER_IFRAME,
+    iframeUrl: "https://akler1.github.io/princess-y_zoomed/",
     rating: 5,
     reviewCount: 42
   },
   {
     id: "pendant-emerald",
-    name: "Emerald Pendant",
-    price: "$3,599",
+    name: "Emerald Solitaire Pendant",
+    price: "$1,748",
     pdpUrl: "/product/pendant-emerald",
-    iframeUrl: PLACEHOLDER_IFRAME,
+    iframeUrl: "https://akler1.github.io/emerald-y_zoomed/",
     rating: 5,
     reviewCount: 38
   },
-  // Bracelets (2)
+  // Bracelets — gold default, other metals on PDP
   {
     id: "bracelet-solitaire-1ct",
-    name: "Solitaire Bracelet 1ct",
-    price: "$2,499",
+    name: "Solitaire Bracelet",
+    price: "$2,528",
     pdpUrl: "/product/bracelet-solitaire-1ct",
-    iframeUrl: PLACEHOLDER_IFRAME,
+    iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",
     rating: 5,
     reviewCount: 29
   },
   {
     id: "bracelet-solitaire-2ct",
     name: "Solitaire Bracelet 2ct",
-    price: "$3,499",
+    price: "$3,466",
     pdpUrl: "/product/bracelet-solitaire-2ct",
     iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
