@@ -62,7 +62,7 @@ export const FeaturedProducts = () => {
               <ProductCard
                 name={product.name}
                 price={product.price}
-                originalPrice={product.originalPrice}
+                
                 image={product.image}
                 rating={product.rating}
                 reviewCount={product.reviewCount}
