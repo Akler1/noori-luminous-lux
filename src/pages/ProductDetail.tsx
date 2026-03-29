@@ -73,8 +73,8 @@ const ProductDetail = () => {
 
   // Get cross-sell products (other products in capsule)
   const crossSellProducts = [
-    { name: "Solitaire Necklace", handle: "bezel-necklace", price: "CAD $1,748", image: "/src/assets/necklace-hero.jpg" },
-    { name: "Solitaire Bracelet", handle: "solitaire-bracelet", price: "CAD $2,528", image: "/src/assets/bracelet-hero.jpg" }
+    { name: "Vela Necklace", handle: "bezel-necklace", price: "CAD $1,748", image: "/src/assets/necklace-hero.jpg" },
+    { name: "Vela Bracelet", handle: "solitaire-bracelet", price: "CAD $2,528", image: "/src/assets/bracelet-hero.jpg" }
   ].filter(p => p.name !== product?.title);
 
   // Prepare images for carousel - update based on selected variant
@@ -140,7 +140,7 @@ const ProductDetail = () => {
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-accent transition-colors">Home</Link>
           <span>/</span>
-          <Link to="/collections/solitaires" className="hover:text-accent transition-colors">Solitaires</Link>
+          <Link to="/collections/solitaires" className="hover:text-accent transition-colors">Vela</Link>
           <span>/</span>
           <span className="text-foreground">{product.title}</span>
         </nav>
@@ -224,12 +224,6 @@ const ProductDetail = () => {
                   ({product.reviews?.count || 0} reviews)
                 </span>
               </div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {product.description}
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Available in 14K and 18K Gold, White Gold, and Rose Gold.
-            </p>
             </div>
 
             {/* Price */}

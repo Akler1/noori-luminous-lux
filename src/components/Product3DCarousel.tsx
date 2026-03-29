@@ -13,7 +13,7 @@ interface GridProduct {
 const gridProducts: GridProduct[] = [
   {
     id: "stud-round-14k",
-    name: "Round Solitaire Studs",
+    name: "Round Vela Studs",
     price: "$1,954",
     pdpUrl: "/product/stud-round-14k",
     iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
@@ -21,7 +21,7 @@ const gridProducts: GridProduct[] = [
   },
   {
     id: "earrings-emerald-gold",
-    name: "Emerald Solitaire Studs",
+    name: "Emerald Vela Studs",
     price: "$1,954",
     pdpUrl: "/product/earrings-emerald-gold",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
@@ -29,7 +29,7 @@ const gridProducts: GridProduct[] = [
   },
   {
     id: "necklace-round",
-    name: "Round Solitaire Pendant",
+    name: "Round Vela Pendant",
     price: "$1,748",
     pdpUrl: "/product/necklace-round",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
@@ -37,7 +37,7 @@ const gridProducts: GridProduct[] = [
   },
   {
     id: "bracelet-solitaire",
-    name: "Solitaire Bracelet",
+    name: "Vela Bracelet",
     price: "$2,528",
     pdpUrl: "/product/bracelet-solitaire",
     iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",

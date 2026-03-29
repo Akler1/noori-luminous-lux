@@ -5,7 +5,7 @@ export const Footer = () => {
   const footerLinks = {
     Shop: [
       { label: "All Products", href: "/collections/solitaires" },
-      { label: "Solitaires", href: "/collections/solitaires" },
+      { label: "Vela", href: "/collections/solitaires" },
       { label: "Gift Cards", href: "#" },
     ],
     Support: [
