@@ -109,8 +109,8 @@ export const Header = () => {
             />
           </Link>
 
-          {/* Cart & Mobile Menu - Right */}
-          <div className="flex items-center gap-3 relative z-10">
+          {/* Right - Cart & Mobile Menu */}
+          <div className="flex items-center gap-3 justify-self-end">
             <Button
               variant="ghost"
               size="icon"
