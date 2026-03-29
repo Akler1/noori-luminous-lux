@@ -1,26 +1,23 @@
 
 
-## Redesign nav bar: edge-to-edge with centered logo
+## Tighten vertical spacing on three About page sections
 
-### Layout change
-Currently: Floating pill with rounded corners, inset from edges, logo on left, nav links centered, cart on right.
+### 1. "Real diamonds. Better origin." section (lines 166-205)
+- Reduce `py-28 md:py-36` → `py-16 md:py-20`
+- Reduce heading margin `mb-20` → `mb-12`
+- Reduce stat row padding `py-12 md:py-16` → `py-8 md:py-10`
 
-New layout: Full-width edge-to-edge bar pinned to top. Three-column layout:
-- **Left**: Nav links (Collections, About, FAQ, Contact)
-- **Center**: Noori logo
-- **Right**: Cart icon + mobile menu toggle
+### 2. "The 4Cs" section (lines 250-338)
+- Reduce `py-24 md:py-32` → `py-16 md:py-20`
+- Reduce heading margin `mb-16` → `mb-10`
+- Reduce row padding `py-10 md:py-14` → `py-6 md:py-8`
+- Reduce certification card top margin `mt-20` → `mt-12`
 
-### Changes in `src/components/Header.tsx`
+### 3. "What We Stand For" section (lines 88-126)
+- Reduce `py-32 md:py-40` → `py-16 md:py-20`
+- Reduce heading bottom margin `mb-24 md:mb-32` → `mb-12 md:mb-16`
+- Reduce value item padding `py-16 md:py-24` → `py-8 md:py-12`
 
-1. **Header positioning**: Replace `top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)]` with `top-0 left-0 right-0`. Remove `rounded-full` / `rounded-2xl` — no border-radius.
-
-2. **Inner container**: Use a 3-column grid (`grid grid-cols-3`) instead of `justify-between` so logo sits in the true center column.
-
-3. **Move nav links to left column**: Remove `absolute left-1/2 -translate-x-1/2` from the nav. Place it in the first grid column, left-aligned.
-
-4. **Logo to center column**: Move the logo `<Link>` to the middle grid column, centered with `justify-self-center`.
-
-5. **Cart stays in right column**: Right-aligned with `justify-self-end`.
-
-6. **Mobile**: On mobile, left column is hidden (nav links collapse into hamburger menu). Logo stays centered, cart+hamburger on right.
+### Files changed
+- `src/pages/About.tsx` — spacing adjustments only, no structural changes
 
