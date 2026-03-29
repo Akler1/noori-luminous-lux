@@ -8,7 +8,7 @@ const solitaireProducts = [
   // Earrings
   {
     id: "stud-round-14k",
-    name: "Round Solitaire Studs",
+    name: "Round Vela Studs",
     price: "$1,954",
     pdpUrl: "/product/stud-round-14k",
     iframeUrl: PLACEHOLDER_IFRAME,
@@ -17,7 +17,7 @@ const solitaireProducts = [
   },
   {
     id: "earrings-emerald-gold",
-    name: "Emerald Solitaire Studs",
+    name: "Emerald Vela Studs",
     price: "$1,954",
     pdpUrl: "/product/earrings-emerald-gold",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
@@ -26,17 +26,17 @@ const solitaireProducts = [
   },
   {
     id: "earrings-princess",
-    name: "Princess Solitaire Studs",
+    name: "Princess Vela Studs",
     price: "$1,954",
     pdpUrl: "/product/earrings-princess-18k",
     iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
     rating: 5,
     reviewCount: 24
   },
-  // Pendants — default view is zoomed, yellow gold
+  // Pendants
   {
     id: "pendant-round",
-    name: "Round Solitaire Pendant",
+    name: "Round Vela Pendant",
     price: "$1,748",
     pdpUrl: "/product/pendant-round",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
@@ -45,7 +45,7 @@ const solitaireProducts = [
   },
   {
     id: "pendant-princess",
-    name: "Princess Solitaire Pendant",
+    name: "Princess Vela Pendant",
     price: "$1,748",
     pdpUrl: "/product/pendant-princess",
     iframeUrl: "https://akler1.github.io/princess-y_zoomed/",
@@ -54,17 +54,17 @@ const solitaireProducts = [
   },
   {
     id: "pendant-emerald",
-    name: "Emerald Solitaire Pendant",
+    name: "Emerald Vela Pendant",
     price: "$1,748",
     pdpUrl: "/product/pendant-emerald",
     iframeUrl: "https://akler1.github.io/emerald-y_zoomed/",
     rating: 5,
     reviewCount: 38
   },
-  // Bracelets — gold default, other metals on PDP
+  // Bracelets
   {
     id: "bracelet-solitaire-1ct",
-    name: "Solitaire Bracelet",
+    name: "Vela Bracelet",
     price: "$2,528",
     pdpUrl: "/product/bracelet-solitaire-1ct",
     iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",
@@ -73,7 +73,7 @@ const solitaireProducts = [
   },
   {
     id: "bracelet-solitaire-2ct",
-    name: "Solitaire Bracelet 2ct",
+    name: "Vela Bracelet 2ct",
     price: "$3,466",
     pdpUrl: "/product/bracelet-solitaire-2ct",
     iframeUrl: PLACEHOLDER_IFRAME,
@@ -91,13 +91,13 @@ export default function Solitaires() {
         {/* Solitaires Hero Section */}
         <section className="pt-28 md:pt-36 pb-12">
           <h1 className="font-display text-4xl md:text-6xl font-normal text-center">
-            The Solitaires Collection
+            The Vela Collection
           </h1>
         </section>
 
         {/* Product Grid with 3D Viewers */}
         <section>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3 p-2 lg:p-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-2 lg:p-3">
             {solitaireProducts.map((product) => (
               <Solitaire3DCard
                 key={product.id}
