@@ -58,7 +58,7 @@ export const HeroSplitEditorial = () => {
             variants={itemVariants}
             className="text-stone-600 text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
           >
-            Introducing the inaugural Solitaires collection. Modern heirlooms
+            Introducing the inaugural Vela collection. Modern heirlooms
             crafted from light itself.
           </motion.p>
 

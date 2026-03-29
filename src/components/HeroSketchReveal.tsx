@@ -414,12 +414,12 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       {/* Base layer: Real photo */}
       <img
         src={heroRealMobile}
-        alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
+        alt="Noori Vela Collection - Lab-grown diamond jewelry"
         className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
       />
       <img
         src={heroReal}
-        alt="Noori Solitaires Collection - Lab-grown diamond jewelry"
+        alt="Noori Vela Collection - Lab-grown diamond jewelry"
         className="absolute inset-0 w-full h-full object-cover object-right hidden md:block"
       />
       
