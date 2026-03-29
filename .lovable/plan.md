@@ -1,25 +1,26 @@
 
 
-## Update homepage Best Sellers carousel with correct 3D renderings + fix build error
+## Redesign nav bar: edge-to-edge with centered logo
 
-### 1. Fix build error in `src/components/FeaturedProducts.tsx`
-- Line 65: Remove `originalPrice={product.originalPrice}` — the property doesn't exist in the product data.
+### Layout change
+Currently: Floating pill with rounded corners, inset from edges, logo on left, nav links centered, cart on right.
 
-### 2. Update `src/components/Product3DCarousel.tsx` product data
-Replace the `gridProducts` array with the correct iframe URLs matching the Solitaires collection page. The current carousel has 4 products with some using placeholder URLs. Update to use the actual 3D viewer URLs:
+New layout: Full-width edge-to-edge bar pinned to top. Three-column layout:
+- **Left**: Nav links (Collections, About, FAQ, Contact)
+- **Center**: Noori logo
+- **Right**: Cart icon + mobile menu toggle
 
-| Product | Current iframeUrl | Correct iframeUrl |
-|---|---|---|
-| Round Solitaire Studs | ✅ Already correct | (same) |
-| Emerald Solitaire Studs | ✅ Already correct | (same) |
-| Princess Solitaire Pendant → **Round Solitaire Pendant** | placeholder round URL | `https://akler1.github.io/round-y_zoomed/` |
-| Three-Stone Bracelet → **Solitaire Bracelet** | placeholder round URL | `https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html` |
+### Changes in `src/components/Header.tsx`
 
-Also update names/prices to match the collection:
-- "Princess Solitaire Pendant" ($1,748) → "Round Solitaire Pendant" ($1,748) with pendant-specific URL
-- "Three-Stone Bracelet" ($2,528) → "Solitaire Bracelet" ($2,528) with bracelet-specific URL
+1. **Header positioning**: Replace `top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)]` with `top-0 left-0 right-0`. Remove `rounded-full` / `rounded-2xl` — no border-radius.
 
-### Technical details
-- Both changes are single-file edits with no structural impact
-- The iframe URLs come directly from the Solitaires collection page data
+2. **Inner container**: Use a 3-column grid (`grid grid-cols-3`) instead of `justify-between` so logo sits in the true center column.
+
+3. **Move nav links to left column**: Remove `absolute left-1/2 -translate-x-1/2` from the nav. Place it in the first grid column, left-aligned.
+
+4. **Logo to center column**: Move the logo `<Link>` to the middle grid column, centered with `justify-self-center`.
+
+5. **Cart stays in right column**: Right-aligned with `justify-self-end`.
+
+6. **Mobile**: On mobile, left column is hidden (nav links collapse into hamburger menu). Logo stays centered, cart+hamburger on right.
 
