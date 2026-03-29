@@ -46,36 +46,23 @@ export const Header = () => {
       {/* No spacer - nav floats over hero */}
       <header
         className={cn(
-          "fixed top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:max-w-[1200px] md:w-[calc(100%-128px)] z-50",
+          "fixed top-0 left-0 right-0 z-50",
           "bg-[#111111]/85 backdrop-blur-xl",
-          "border border-white/[0.1]",
+          "border-b border-white/[0.1]",
           "shadow-lg shadow-black/20",
-          "transition-all duration-300",
-          isMobileMenuOpen ? "rounded-2xl" : "rounded-full"
+          "transition-all duration-300"
         )}
       >
         <div
           className={cn(
-            "flex items-center justify-between max-w-[1280px] mx-auto",
-            "px-6 md:px-8",
+            "grid grid-cols-3 items-center max-w-[1440px] mx-auto",
+            "px-4 md:px-8",
             "transition-all duration-300",
-            isScrolled ? "h-[60px] md:h-[70px]" : "h-[70px] md:h-20"
+            isScrolled ? "h-[52px] md:h-[60px]" : "h-[60px] md:h-[70px]"
           )}
         >
-          {/* Logo - Left */}
-          <Link to="/" className="relative z-10 flex-shrink-0">
-            <img
-              src={nooriLogo}
-              alt="Noori"
-              className={cn(
-                "w-auto transition-all duration-300",
-                isScrolled ? "h-9 md:h-10" : "h-11 md:h-12"
-              )}
-            />
-          </Link>
-
-          {/* Desktop Navigation - Absolute Center */}
-          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+          {/* Left - Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
             <div ref={collectionsRef} className="relative">
               <button
                 onClick={() => setIsCollectionsOpen(!isCollectionsOpen)}
@@ -85,7 +72,7 @@ export const Header = () => {
                 <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", isCollectionsOpen && "rotate-180")} />
               </button>
               {isCollectionsOpen && (
-                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#111111]/95 backdrop-blur-xl border border-white/[0.1] rounded-xl shadow-lg shadow-black/20 min-w-[180px] py-2 px-1 z-[60]">
+                <div className="absolute top-full mt-2 left-0 bg-[#111111]/95 backdrop-blur-xl border border-white/[0.1] rounded-xl shadow-lg shadow-black/20 min-w-[180px] py-2 px-1 z-[60]">
                   <Link
                     to="/collections/solitaires"
                     onClick={() => setIsCollectionsOpen(false)}
@@ -107,9 +94,23 @@ export const Header = () => {
               </Link>
             ))}
           </nav>
+          {/* Left - Mobile placeholder */}
+          <div className="md:hidden" />
 
-          {/* Cart & Mobile Menu - Right */}
-          <div className="flex items-center gap-3 relative z-10">
+          {/* Center - Logo */}
+          <Link to="/" className="justify-self-center">
+            <img
+              src={nooriLogo}
+              alt="Noori"
+              className={cn(
+                "w-auto transition-all duration-300",
+                isScrolled ? "h-8 md:h-9" : "h-9 md:h-10"
+              )}
+            />
+          </Link>
+
+          {/* Right - Cart & Mobile Menu */}
+          <div className="flex items-center gap-3 justify-self-end">
             <Button
               variant="ghost"
               size="icon"
