@@ -99,30 +99,28 @@ const About = () => {
             </h2>
           </motion.div>
 
-          {brandValues.map((value, index) => (
-            <div key={value.title}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {brandValues.map((value) => (
               <motion.div
+                key={value.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="max-w-4xl mx-auto py-8 md:py-12 text-center"
+                className="p-6 rounded-xl border border-border/40 text-center"
               >
-                <div className="text-accent mb-6 flex justify-center">
+                <div className="text-accent mb-4 flex justify-center">
                   <value.Icon className="w-8 h-8" />
                 </div>
-                <h3 className="font-display text-3xl md:text-5xl font-light text-foreground mb-6">
+                <h3 className="font-display text-2xl md:text-3xl font-light text-foreground mb-4">
                   {value.title}
                 </h3>
-                <p className="text-base md:text-lg text-foreground/60 leading-relaxed max-w-lg mx-auto">
+                <p className="text-base text-foreground/60 leading-relaxed">
                   {value.description}
                 </p>
               </motion.div>
-              {index < brandValues.length - 1 && (
-                <div className="w-12 h-px bg-accent/30 mx-auto" />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
 
         {/* ── Mission Section — UNTOUCHED ── */}
@@ -181,7 +179,7 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 { num: "40–60%", label: "Less expensive than mined diamonds" },
                 { num: "100%",   label: "Conflict-free and ethically sourced" },
@@ -193,13 +191,12 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: i * 0.12 }}
                   viewport={{ once: true }}
-                  className="border-t border-border/60 py-8 md:py-10"
+                  className="p-6 rounded-xl border border-border/40"
                 >
-                  <span className="font-display text-7xl md:text-9xl font-light text-accent leading-none tracking-tight block">{num}</span>
+                  <span className="font-display text-6xl md:text-7xl font-light text-accent leading-none tracking-tight block">{num}</span>
                   <span className="text-sm md:text-base text-foreground/50 mt-3 block uppercase tracking-widest">{label}</span>
                 </motion.div>
               ))}
-              <div className="border-t border-border/60" />
             </div>
           </div>
         </section>
@@ -261,8 +258,8 @@ const FourCsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Full-width editorial rows */}
-        <div>
+        {/* 2×2 grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {fourCs.map((c, index) => (
             <motion.div
               key={c.name}
@@ -270,21 +267,14 @@ const FourCsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.08 }}
               viewport={{ once: true }}
-              className="border-t border-border py-6 md:py-8 grid grid-cols-12 gap-6 md:gap-10 items-start"
+              className="p-6 rounded-xl border border-border/40"
             >
-              {/* Left: icon + name */}
-              <div className="col-span-12 md:col-span-3 flex items-center gap-3">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="text-accent">{c.icon}</div>
                 <h3 className="font-display text-2xl md:text-3xl text-foreground">{c.name}</h3>
               </div>
-
-              {/* Center: description */}
-              <div className="col-span-8 md:col-span-5">
-                <p className="text-base text-foreground/70 leading-relaxed">{c.description}</p>
-              </div>
-
-              {/* Right: pill stack or badge */}
-              <div className="col-span-4 md:col-span-3 flex justify-end">
+              <p className="text-base text-foreground/70 leading-relaxed mb-4">{c.description}</p>
+              <div className="flex justify-start">
                 {c.scale && c.nooriIndex !== null ? (
                   <GradeStack grades={c.scale} nooriIndex={c.nooriIndex} />
                 ) : (
@@ -295,7 +285,6 @@ const FourCsSection = () => {
               </div>
             </motion.div>
           ))}
-          <div className="border-t border-border" />
         </div>
 
         {/* Certification */}
