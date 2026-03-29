@@ -85,13 +85,13 @@ const About = () => {
         </section>
 
         {/* ── What We Stand For — Luxury Manifesto ── */}
-        <section className="py-32 md:py-40 bg-background px-4">
+        <section className="py-16 md:py-20 bg-background px-4">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-24 md:mb-32 max-w-3xl mx-auto"
+            className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
           >
             <p className="text-[11px] uppercase tracking-[0.3em] text-foreground/40 mb-4">Our Values</p>
             <h2 className="font-display text-4xl md:text-5xl font-light text-foreground">
@@ -106,7 +106,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="max-w-4xl mx-auto py-16 md:py-24 text-center"
+                className="max-w-4xl mx-auto py-8 md:py-12 text-center"
               >
                 <div className="text-accent mb-6 flex justify-center">
                   <value.Icon className="w-8 h-8" />
@@ -163,14 +163,14 @@ const About = () => {
         </section>
 
         {/* ── Why Lab-Grown — Dramatic Stats ── */}
-        <section className="py-28 md:py-36 bg-secondary/20 px-4">
+        <section className="py-16 md:py-20 bg-secondary/20 px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
-              className="mb-20"
+              className="mb-12"
             >
               <p className="text-[11px] uppercase tracking-[0.3em] text-foreground/40 mb-4">Why Lab-Grown</p>
               <h2 className="font-display text-5xl md:text-6xl font-light leading-snug mb-6">
@@ -193,7 +193,7 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: i * 0.12 }}
                   viewport={{ once: true }}
-                  className="border-t border-border/60 py-12 md:py-16"
+                  className="border-t border-border/60 py-8 md:py-10"
                 >
                   <span className="font-display text-7xl md:text-9xl font-light text-accent leading-none tracking-tight block">{num}</span>
                   <span className="text-sm md:text-base text-foreground/50 mt-3 block uppercase tracking-widest">{label}</span>
@@ -247,14 +247,14 @@ const FourCsSection = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 px-4 bg-background">
+    <section className="py-16 md:py-20 px-4 bg-background">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-10"
         >
           <h2 className="font-display text-3xl md:text-4xl font-light">
             The <span className="noor-glow">4Cs</span>
@@ -270,7 +270,7 @@ const FourCsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.08 }}
               viewport={{ once: true }}
-              className="border-t border-border py-10 md:py-14 grid grid-cols-12 gap-6 md:gap-10 items-start"
+              className="border-t border-border py-6 md:py-8 grid grid-cols-12 gap-6 md:gap-10 items-start"
             >
               {/* Left: icon + name */}
               <div className="col-span-12 md:col-span-3 flex items-center gap-3">
@@ -304,7 +304,7 @@ const FourCsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="border border-border rounded-xl p-8 max-w-2xl mx-auto mt-20"
+          className="border border-border rounded-xl p-8 max-w-2xl mx-auto mt-12"
         >
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             <div className="shrink-0 mx-auto md:mx-0">
