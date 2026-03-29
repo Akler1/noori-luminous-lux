@@ -78,7 +78,7 @@ export const Header = () => {
                     onClick={() => setIsCollectionsOpen(false)}
                     className="block px-4 py-2 text-sm text-white/80 hover:text-accent hover:bg-white/5 rounded-lg transition-colors"
                   >
-                    Solitaires
+                    Vela
                   </Link>
                 </div>
               )}
@@ -155,7 +155,7 @@ export const Header = () => {
                     className="block pl-4 py-2 text-sm text-white/60 hover:text-accent transition-colors"
                     onClick={() => { setIsMobileMenuOpen(false); setIsMobileCollectionsOpen(false); }}
                   >
-                    Solitaires
+                    Vela
                   </Link>
                 )}
               </div>
