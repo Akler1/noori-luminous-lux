@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Star } from "lucide-react";
+import { Star, Hand } from "lucide-react";
 
 interface Solitaire3DCardProps {
   id: string;
@@ -23,6 +23,16 @@ export const Solitaire3DCard = ({
   reviewCount,
 }: Solitaire3DCardProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showHint, setShowHint] = useState(true);
+
+  const dismissHint = useCallback(() => setShowHint(false), []);
+
+  useEffect(() => {
+    if (showHint) {
+      const timer = setTimeout(() => setShowHint(false), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showHint]);
 
   useEffect(() => {
     // Load model-viewer script if using GLB
@@ -41,7 +51,7 @@ export const Solitaire3DCard = ({
     <Link to={pdpUrl} className="group block">
         <div className="overflow-hidden">
         {/* 3D Viewer Container */}
-        <div className="aspect-square relative bg-[#e8e8e8]">
+        <div className="aspect-square relative bg-[#e8e8e8]" onPointerDown={dismissHint}>
           {iframeUrl ? (
             <iframe
               src={iframeUrl}
@@ -70,6 +80,16 @@ export const Solitaire3DCard = ({
           {!isLoaded && (iframeUrl || glb) && (
             <div className="absolute inset-0 flex items-center justify-center bg-background/50">
               <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+
+          {/* Drag hint overlay */}
+          {showHint && isLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700" style={{ opacity: showHint ? 1 : 0 }}>
+              <div className="flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-full text-xs">
+                <Hand className="h-3.5 w-3.5" />
+                Click & drag to rotate
+              </div>
             </div>
           )}
           
