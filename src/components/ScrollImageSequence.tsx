@@ -120,6 +120,13 @@ const ScrollImageSequence = ({
     ctx.drawImage(img, sx, 0, sw, img.naturalHeight, dx, dy, dw, dh);
   }, []);
 
+  /* ── Draw first frame as soon as it decodes ── */
+  useEffect(() => {
+    const first = imagesRef.current[0];
+    if (!first) return;
+    first.decode?.().then(() => drawFrame(0)).catch(() => {});
+  }, [drawFrame]);
+
   /* ── Scroll handler ── */
   useEffect(() => {
     const onScroll = () => {
@@ -151,7 +158,6 @@ const ScrollImageSequence = ({
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(() => { drawFrame(0); }, 100);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
