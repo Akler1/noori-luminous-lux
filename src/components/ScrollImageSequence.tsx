@@ -64,10 +64,14 @@ const ScrollImageSequence = ({
       imgs.push(img);
     }
     imagesRef.current = imgs;
+  }, [basePath, frameCount, ext, pad]);
 
-    // Draw first frame as soon as it decodes
-    imgs[0]?.decode?.().then(() => drawFrame(0)).catch(() => {});
-  }, [basePath, frameCount, ext, pad, drawFrame]);
+  /* ── Draw first frame as soon as it decodes ── */
+  useEffect(() => {
+    const first = imagesRef.current[0];
+    if (!first) return;
+    first.decode?.().then(() => drawFrame(0)).catch(() => {});
+  }, [drawFrame]);
 
   /* ── Draw a frame to the correct canvas ── */
   const drawFrame = useCallback((index: number) => {
