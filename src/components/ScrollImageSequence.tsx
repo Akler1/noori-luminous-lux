@@ -66,13 +66,6 @@ const ScrollImageSequence = ({
     imagesRef.current = imgs;
   }, [basePath, frameCount, ext, pad]);
 
-  /* ── Draw first frame as soon as it decodes ── */
-  useEffect(() => {
-    const first = imagesRef.current[0];
-    if (!first) return;
-    first.decode?.().then(() => drawFrame(0)).catch(() => {});
-  }, [drawFrame]);
-
   /* ── Draw a frame to the correct canvas ── */
   const drawFrame = useCallback((index: number) => {
     // Pick the active canvas — desktop if it has layout width, else mobile
@@ -126,6 +119,13 @@ const ScrollImageSequence = ({
     }
     ctx.drawImage(img, sx, 0, sw, img.naturalHeight, dx, dy, dw, dh);
   }, []);
+
+  /* ── Draw first frame as soon as it decodes ── */
+  useEffect(() => {
+    const first = imagesRef.current[0];
+    if (!first) return;
+    first.decode?.().then(() => drawFrame(0)).catch(() => {});
+  }, [drawFrame]);
 
   /* ── Scroll handler ── */
   useEffect(() => {
