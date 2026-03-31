@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 import { Truck, RotateCcw, Shield, Gem, Award } from "lucide-react";
+import { SpinSequenceViewer } from "@/components/SpinSequenceViewer";
 
 interface GridProduct {
   id: string;
   name: string;
   price: string;
   pdpUrl: string;
-  iframeUrl: string;
+  iframeUrl?: string;
+  spinSequenceBaseUrl?: string;
+  frameCount?: number;
   material: string;
 }
+
+const BRACELET_YELLOW_SEQUENCE = "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2";
 
 const gridProducts: GridProduct[] = [
   {
@@ -40,7 +45,8 @@ const gridProducts: GridProduct[] = [
     name: "Vela Bracelet",
     price: "$2,528",
     pdpUrl: "/product/bracelet-solitaire",
-    iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",
+    spinSequenceBaseUrl: BRACELET_YELLOW_SEQUENCE,
+    frameCount: 192,
     material: "Yellow gold",
   },
 ];
@@ -90,14 +96,22 @@ export default function Product3DCarousel() {
             >
               <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-[#e8e8e8]">
                 <div className="relative overflow-hidden aspect-square">
-                  <iframe
-                    src={product.iframeUrl}
-                    className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
-                    style={{ background: "#e8e8e8" }}
-                    allow="xr-spatial-tracking; fullscreen; autoplay"
-                    title={product.name}
-                    loading="lazy"
-                  />
+                  {product.spinSequenceBaseUrl ? (
+                    <SpinSequenceViewer
+                      baseUrl={product.spinSequenceBaseUrl}
+                      frameCount={product.frameCount ?? 192}
+                      title={product.name}
+                    />
+                  ) : (
+                    <iframe
+                      src={product.iframeUrl}
+                      className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
+                      style={{ background: "#e8e8e8" }}
+                      allow="xr-spatial-tracking; fullscreen; autoplay"
+                      title={product.name}
+                      loading="lazy"
+                    />
+                  )}
                 </div>
               </div>
 
