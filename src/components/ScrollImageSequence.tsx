@@ -64,7 +64,10 @@ const ScrollImageSequence = ({
       imgs.push(img);
     }
     imagesRef.current = imgs;
-  }, [basePath, frameCount, ext, pad]);
+
+    // Draw first frame as soon as it decodes
+    imgs[0]?.decode?.().then(() => drawFrame(0)).catch(() => {});
+  }, [basePath, frameCount, ext, pad, drawFrame]);
 
   /* ── Draw a frame to the correct canvas ── */
   const drawFrame = useCallback((index: number) => {
@@ -151,7 +154,6 @@ const ScrollImageSequence = ({
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(() => { drawFrame(0); }, 100);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
