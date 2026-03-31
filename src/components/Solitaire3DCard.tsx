@@ -51,11 +51,16 @@ export const Solitaire3DCard = ({
     <Link to={pdpUrl} className="group block">
         <div className="overflow-hidden">
         {/* 3D Viewer Container */}
-        <div className="aspect-square relative bg-[#e8e8e8]" onPointerDown={dismissHint}>
+        <div
+          className="aspect-square relative bg-[#e8e8e8]"
+          onPointerDown={dismissHint}
+          onWheel={(e) => e.preventDefault()}
+        >
           {iframeUrl ? (
             <iframe
               src={iframeUrl}
               className="w-full h-full border-0"
+              style={{ touchAction: "pan-x pan-y" }}
               allow="autoplay; fullscreen; xr-spatial-tracking"
               onLoad={() => setIsLoaded(true)}
               title={name}
