@@ -35,6 +35,7 @@ export const Header = () => {
 
 
   const navItems = [
+    { name: "Why Lab Diamonds", href: "/why-lab-diamonds" },
     { name: "About", href: "/policies" },
     { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/why-noori" },

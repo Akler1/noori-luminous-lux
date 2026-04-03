@@ -11,7 +11,7 @@ import braceletImage from "@/assets/bracelet-hero.jpg";
 const products = [
   {
     id: "1",
-    name: "Round Solitaire Studs",
+    name: "Round Vela Studs",
     price: "CAD $1,954",
     image: earringsImage,
     rating: 5,
@@ -19,7 +19,7 @@ const products = [
   },
   {
     id: "2", 
-    name: "Solitaire Necklace",
+    name: "Vela Necklace",
     price: "CAD $1,748",
     image: necklaceImage,
     rating: 5,
@@ -27,7 +27,7 @@ const products = [
   },
   {
     id: "3",
-    name: "Solitaire Bracelet",
+    name: "Vela Bracelet",
     price: "CAD $2,528",
     image: braceletImage,
     rating: 5,

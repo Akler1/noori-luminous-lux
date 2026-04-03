@@ -1,19 +1,14 @@
 import { Link } from "react-router-dom";
-import { Truck, RotateCcw, Shield, Gem, Award } from "lucide-react";
-import { SpinSequenceViewer } from "@/components/SpinSequenceViewer";
+import { Truck, RotateCcw, RotateCw, Shield, Gem, Award } from "lucide-react";
 
 interface GridProduct {
   id: string;
   name: string;
   price: string;
   pdpUrl: string;
-  iframeUrl?: string;
-  spinSequenceBaseUrl?: string;
-  frameCount?: number;
+  iframeUrl: string;
   material: string;
 }
-
-const BRACELET_YELLOW_SEQUENCE = "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2";
 
 const gridProducts: GridProduct[] = [
   {
@@ -36,17 +31,16 @@ const gridProducts: GridProduct[] = [
     id: "necklace-round",
     name: "Round Vela Pendant",
     price: "$1,748",
-    pdpUrl: "/product/necklace-round",
+    pdpUrl: "/product/pendant-round",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
     material: "Yellow gold",
   },
   {
-    id: "bracelet-solitaire",
+    id: "bracelet-solitaire-1ct",
     name: "Vela Bracelet",
     price: "$2,528",
-    pdpUrl: "/product/bracelet-solitaire",
-    spinSequenceBaseUrl: BRACELET_YELLOW_SEQUENCE,
-    frameCount: 192,
+    pdpUrl: "/product/bracelet-solitaire-1ct",
+    iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",
     material: "Yellow gold",
   },
 ];
@@ -96,22 +90,20 @@ export default function Product3DCarousel() {
             >
               <div className="overflow-hidden transition-all duration-300 group-hover:opacity-90 bg-[#e8e8e8]">
                 <div className="relative overflow-hidden aspect-square">
-                  {product.spinSequenceBaseUrl ? (
-                    <SpinSequenceViewer
-                      baseUrl={product.spinSequenceBaseUrl}
-                      frameCount={product.frameCount ?? 192}
-                      title={product.name}
-                    />
-                  ) : (
-                    <iframe
-                      src={product.iframeUrl}
-                      className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
-                      style={{ background: "#e8e8e8" }}
-                      allow="xr-spatial-tracking; fullscreen; autoplay"
-                      title={product.name}
-                      loading="lazy"
-                    />
-                  )}
+                  <iframe
+                    src={product.iframeUrl}
+                    className="w-full h-full border-0 pointer-events-none group-hover:pointer-events-auto"
+                    style={{ background: "#e8e8e8" }}
+                    allow="xr-spatial-tracking; fullscreen; autoplay"
+                    title={product.name}
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
+                    <div className="flex items-center gap-1.5 text-accent/70 text-[10px] tracking-wide">
+                      <RotateCw className="h-3 w-3" />
+                      Click & drag to rotate
+                    </div>
+                  </div>
                 </div>
               </div>
 

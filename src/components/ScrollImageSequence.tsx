@@ -110,11 +110,11 @@ const ScrollImageSequence = ({
         dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       }
     } else {
-      // Desktop: contain — fit inside the canvas column
+      // Desktop: cover — fill the canvas column, crop overflow
       if (croppedRatio > canvasRatio) {
-        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
-      } else {
         dh = h; dw = h * croppedRatio; dx = (w - dw) / 2; dy = 0;
+      } else {
+        dw = w; dh = w / croppedRatio; dx = 0; dy = (h - dh) / 2;
       }
     }
     ctx.drawImage(img, sx, 0, sw, img.naturalHeight, dx, dy, dw, dh);
@@ -189,7 +189,7 @@ const ScrollImageSequence = ({
           </div>
 
           {/* Right: sequential spec items */}
-          <div className="w-[320px] xl:w-[380px] shrink-0 flex flex-col justify-center gap-10 px-10 xl:px-14 h-full">
+          <div className="w-[320px] xl:w-[380px] shrink-0 flex flex-col justify-center gap-10 pl-8 pr-10 xl:pl-10 xl:pr-14 h-full bg-background">
 
             {/* Section eyebrow */}
             <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/55 -mb-4">
@@ -208,8 +208,6 @@ const ScrollImageSequence = ({
                       "opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)",
                   }}
                 >
-                  {/* Accent rule */}
-                  <div className="w-8 h-px bg-accent/40 mb-4" />
                   {/* Number + icon */}
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[10px] text-accent/55 font-sans tracking-[0.2em] uppercase">

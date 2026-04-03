@@ -137,7 +137,7 @@ const FAQ = () => {
         },
         {
           q: "Are lab-grown diamonds graded the same way?",
-          a: "Yes, lab-grown diamonds are graded using the same 4Cs (Cut, Color, Clarity, Carat) by independent gemological laboratories like IGI and GCal. Each Noori diamond comes with a certification."
+          a: "Yes, lab-grown diamonds are graded using the same 4Cs (Cut, Color, Clarity, Carat) by the International Gemological Institute (IGI). Every Noori diamond comes with a full IGI certification."
         },
         {
           q: "Why choose lab-grown over mined diamonds?",

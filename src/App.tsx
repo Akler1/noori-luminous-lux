@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Solitaires from "./pages/Solitaires";
 import FAQ from "./pages/FAQ";
 import WhyNoori from "./pages/WhyNoori";
+import WhyLabDiamonds from "./pages/WhyLabDiamonds";
 import NotFound from "./pages/NotFound";
 
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/collections/solitaires" element={<Solitaires />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/why-noori" element={<WhyNoori />} />
+          <Route path="/why-lab-diamonds" element={<WhyLabDiamonds />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

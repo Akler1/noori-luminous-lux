@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Star, Hand } from "lucide-react";
+import { Star, RotateCw } from "lucide-react";
 
 interface Solitaire3DCardProps {
   id: string;
@@ -23,16 +23,6 @@ export const Solitaire3DCard = ({
   reviewCount,
 }: Solitaire3DCardProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showHint, setShowHint] = useState(true);
-
-  const dismissHint = useCallback(() => setShowHint(false), []);
-
-  useEffect(() => {
-    if (showHint) {
-      const timer = setTimeout(() => setShowHint(false), 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [showHint]);
 
   useEffect(() => {
     // Load model-viewer script if using GLB
@@ -53,7 +43,6 @@ export const Solitaire3DCard = ({
         {/* 3D Viewer Container */}
         <div
           className="aspect-square relative bg-[#e8e8e8]"
-          onPointerDown={dismissHint}
           onWheel={(e) => e.preventDefault()}
         >
           {iframeUrl ? (
@@ -88,11 +77,11 @@ export const Solitaire3DCard = ({
             </div>
           )}
 
-          {/* Drag hint overlay */}
-          {showHint && isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700" style={{ opacity: showHint ? 1 : 0 }}>
-              <div className="flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-full text-xs">
-                <Hand className="h-3.5 w-3.5" />
+          {/* Persistent subtle hint at bottom */}
+          {isLoaded && (
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
+              <div className="flex items-center gap-1.5 text-accent/70 text-[10px] tracking-wide">
+                <RotateCw className="h-3 w-3" />
                 Click & drag to rotate
               </div>
             </div>

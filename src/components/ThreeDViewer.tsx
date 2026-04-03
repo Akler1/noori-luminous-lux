@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Eye, ZoomIn, ZoomOut } from "lucide-react";
+import { Eye, ZoomIn, ZoomOut, RotateCw } from "lucide-react";
 import { ShopifyVariant } from "@/types/shopify";
 import { motion } from "framer-motion";
 
@@ -102,6 +102,7 @@ export const ThreeDViewer = ({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
       className={`relative rounded-xl overflow-hidden shadow-elegant ${className}`}
+      onWheel={(e) => e.preventDefault()}
     >
       {/* 3D Viewer - Iframe or Model Viewer */}
       {iframeUrl ? (
@@ -146,26 +147,24 @@ export const ThreeDViewer = ({
 
 
 
-      {/* Info Overlay */}
-      <div className="absolute bottom-4 left-4 right-4 flex items-end gap-2">
-        <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 flex-1">
-          <div className="text-sm font-medium">{variant?.title}</div>
-          <div className="text-xs text-muted-foreground mt-1">
-            {iframeUrl
-              ? "Click and drag to rotate"
-              : "Click and drag to rotate • Scroll to zoom • Double-click to reset"}
-          </div>
+      {/* Rotate hint */}
+      <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
+        <div className="flex items-center gap-1.5 text-accent/70 text-xs tracking-wide">
+          <RotateCw className="h-3.5 w-3.5" />
+          Click & drag to rotate
         </div>
-        {hasAltView && (
-          <button
-            onClick={() => setIsZoomedIn(!isZoomedIn)}
-            className="bg-background/90 backdrop-blur-sm rounded-lg p-3 hover:bg-accent/20 transition-colors shrink-0"
-            title={isZoomedIn ? "Zoom out" : "Zoom in"}
-          >
-            {isZoomedIn ? <ZoomOut className="w-5 h-5 text-foreground/70" /> : <ZoomIn className="w-5 h-5 text-foreground/70" />}
-          </button>
-        )}
       </div>
+
+      {/* Zoom toggle */}
+      {hasAltView && (
+        <button
+          onClick={() => setIsZoomedIn(!isZoomedIn)}
+          className="absolute bottom-3 right-3 bg-background/90 backdrop-blur-sm rounded-lg p-2.5 hover:bg-accent/20 transition-colors"
+          title={isZoomedIn ? "Zoom out" : "Zoom in"}
+        >
+          {isZoomedIn ? <ZoomOut className="w-4 h-4 text-foreground/70" /> : <ZoomIn className="w-4 h-4 text-foreground/70" />}
+        </button>
+      )}
 
       {/* Loading State */}
       {!isLoaded && (

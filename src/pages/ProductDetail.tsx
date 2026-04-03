@@ -17,6 +17,123 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { SocialFeed } from "@/components/SocialFeed";
 
+/* ── Product-specific accordion content ── */
+function getProductType(handle: string): 'earring' | 'pendant' | 'bracelet' | 'necklace' {
+  if (handle.startsWith('stud-') || handle.startsWith('earrings-')) return 'earring';
+  if (handle.startsWith('pendant-')) return 'pendant';
+  if (handle.startsWith('bracelet-')) return 'bracelet';
+  return 'necklace';
+}
+
+const ACCORDION_CONTENT: Record<string, { diamond: { text: string; bullets: string[] }; metal: string; sizing: string }> = {
+  earring: {
+    diamond: {
+      text: "Each stud features a lab-grown diamond graded D–F colour and VS1–VVS1 clarity. Stones are precision-cut to ideal proportions for maximum brilliance and fire.",
+      bullets: [
+        "Type IIa lab-grown diamonds — the purest form",
+        "Certified by IGI with full grading report",
+        "Excellent cut grade for superior light performance",
+        "Conflict-free and ethically created",
+      ],
+    },
+    metal: "Available in 14K and 18K yellow gold, white gold, and rose gold. White gold is rhodium-plated for a bright, lasting finish. All settings feature a secure four-prong basket mount with push-back butterfly closures.",
+    sizing: "Standard push-back butterfly closure for secure, comfortable everyday wear. Available in 2 ct. tw. and 4 ct. tw. total weight options. Suitable for all standard ear piercings.",
+  },
+  pendant: {
+    diamond: {
+      text: "A single solitaire lab-grown diamond, graded D–F colour and VS1–VVS1 clarity. Cut for optimal brilliance whether viewed from the front or in motion.",
+      bullets: [
+        "Type IIa lab-grown diamond — the purest form",
+        "Certified by IGI with full grading report",
+        "Excellent cut grade for superior light return",
+        "Conflict-free and ethically created",
+      ],
+    },
+    metal: "Available in 14K and 18K yellow gold, white gold, and rose gold. White gold is rhodium-plated for a lasting bright finish. Pendant hangs from a 1.2mm diamond cut cable chain.",
+    sizing: "1.2mm diamond cut cable chain, 18 inches with adjustable jump rings at 16\" and 17\". Pendant drop: approximately 8 mm.",
+  },
+  bracelet: {
+    diamond: {
+      text: "Three precisely matched lab-grown diamonds, each graded D–F colour and VS1–VVS1 clarity. Stones are bezel-set for a sleek, snag-free profile.",
+      bullets: [
+        "Type IIa lab-grown diamonds — the purest form",
+        "Each stone certified by IGI",
+        "Matched for consistent colour and brilliance",
+        "Conflict-free and ethically created",
+      ],
+    },
+    metal: "Available in 14K and 18K yellow gold, white gold, and rose gold. White gold is rhodium-plated for a bright, durable finish. Diamond cut cable chain construction.",
+    sizing: "Diamond cut cable chain, 7 inches with adjustable rings. Sits comfortably on the wrist with a secure clasp.",
+  },
+  necklace: {
+    diamond: {
+      text: "A single solitaire lab-grown diamond in a bezel setting, graded D–F colour and VS1–VVS1 clarity. The bezel frame protects the stone while maximising light entry from above.",
+      bullets: [
+        "Type IIa lab-grown diamond — the purest form",
+        "Certified by IGI with full grading report",
+        "Excellent cut grade for maximum sparkle",
+        "Conflict-free and ethically created",
+      ],
+    },
+    metal: "Available in 14K and 18K yellow gold, white gold, and rose gold. White gold is rhodium-plated for a lasting bright finish. Cable chain with secure lobster-claw clasp.",
+    sizing: "Chain length: 18 inches (45 cm) with a 2-inch extender. Bezel pendant: approximately 6 mm diameter. Lightweight and comfortable for all-day wear.",
+  },
+};
+
+const ProductAccordions = ({ handle }: { handle: string }) => {
+  const type = getProductType(handle);
+  const content = ACCORDION_CONTENT[type];
+
+  return (
+    <div className="pt-6 border-t">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="diamonds">
+          <AccordionTrigger className="text-left font-medium">
+            Diamond & Certification
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground space-y-4">
+            <p>{content.diamond.text}</p>
+            <ul className="list-disc list-inside space-y-2">
+              {content.diamond.bullets.map((b) => <li key={b}>{b}</li>)}
+            </ul>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="materials">
+          <AccordionTrigger className="text-left font-medium">
+            Metal & Finish
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground">
+            <p>{content.metal}</p>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="sizing">
+          <AccordionTrigger className="text-left font-medium">
+            Sizing & Fit
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground">
+            <p>{content.sizing}</p>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="care">
+          <AccordionTrigger className="text-left font-medium">
+            Care & Warranty
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground">
+            <p>
+              Your Noori jewelry comes with a lifetime warranty against manufacturing defects.
+              Clean with warm soapy water and a soft brush. We recommend visiting a local jeweler
+              annually for professional cleaning and inspection.
+            </p>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  );
+};
+
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const [product, setProduct] = useState<ShopifyProduct | null>(null);
@@ -71,11 +188,35 @@ const ProductDetail = () => {
   };
 
 
-  // Get cross-sell products (other products in capsule)
-  const crossSellProducts = [
-    { name: "Vela Necklace", handle: "bezel-necklace", price: "CAD $1,748", image: "/src/assets/necklace-hero.jpg" },
-    { name: "Vela Bracelet", handle: "solitaire-bracelet", price: "CAD $2,528", image: "/src/assets/bracelet-hero.jpg" }
-  ].filter(p => p.name !== product?.title);
+  // Dynamic cross-sell based on product cut type
+  const getCutType = (h: string): string => {
+    if (h.includes('round')) return 'round';
+    if (h.includes('emerald')) return 'emerald';
+    if (h.includes('princess')) return 'princess';
+    return 'round'; // default
+  };
+
+  const CROSS_SELL_MAP: Record<string, { name: string; handle: string; price: string; iframeUrl: string }[]> = {
+    round: [
+      { name: "Round Vela Pendant", handle: "pendant-round", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/round-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Round Vela Studs", handle: "stud-round-14k", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html" },
+    ],
+    emerald: [
+      { name: "Emerald Vela Pendant", handle: "pendant-emerald", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/emerald-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Emerald Vela Studs", handle: "earrings-emerald-gold", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/" },
+    ],
+    princess: [
+      { name: "Princess Vela Pendant", handle: "pendant-princess", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/princess-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Princess Vela Studs", handle: "earrings-princess-18k", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html" },
+    ],
+  };
+
+  const cutType = getCutType(handle || '');
+  const crossSellProducts = (CROSS_SELL_MAP[cutType] || CROSS_SELL_MAP.round)
+    .filter(p => p.handle !== handle);
 
   // Prepare images for carousel - update based on selected variant
   const carouselImages = (() => {
@@ -242,12 +383,28 @@ const ProductDetail = () => {
             </div>
 
             {/* Diamond Quality Badge */}
-            <div className="flex items-center gap-1.5 mb-6">
-              <Gem className="h-3 w-3 text-accent" />
-              <span className="text-xs text-muted-foreground tracking-wide">
+            <div className="flex items-center gap-2 px-4 py-3 rounded-lg border border-accent/30 bg-accent/5 mb-6">
+              <Gem className="h-4 w-4 text-accent shrink-0" />
+              <span className="text-sm text-foreground font-medium tracking-wide">
                 Excellent Cut · D-F Colour · VS1-VVS1 Clarity
               </span>
             </div>
+
+            {/* Chain/sizing info for pendants and bracelets */}
+            {handle && (getProductType(handle) === 'pendant' || getProductType(handle) === 'necklace') && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border/50 bg-muted/30 mb-6">
+                <span className="text-sm text-foreground/80">
+                  1.2mm diamond cut cable chain · 18" <span className="text-foreground/50">(adjustable at 16" and 17")</span>
+                </span>
+              </div>
+            )}
+            {handle && getProductType(handle) === 'bracelet' && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border/50 bg-muted/30 mb-6">
+                <span className="text-sm text-foreground/80">
+                  Diamond cut cable chain · 7" <span className="text-foreground/50">(with adjustable rings)</span>
+                </span>
+              </div>
+            )}
 
             {/* Variant Selector */}
             <VariantSelector
@@ -307,7 +464,7 @@ const ProductDetail = () => {
             <div className="grid grid-cols-2 gap-4 pt-6 border-t">
               <div className="flex items-center gap-2 text-sm">
                 <Award className="h-4 w-4 text-accent" />
-                <span>GIA Certified</span>
+                <span>IGI Certified</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Shield className="h-4 w-4 text-accent" />
@@ -324,67 +481,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Product Details Accordion */}
-            <div className="pt-6 border-t">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="diamonds">
-                  <AccordionTrigger className="text-left font-medium">
-                    Diamond & Certification
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-4">
-                    <p>
-                      Our lab-grown diamonds are created using advanced technology that replicates the natural 
-                      diamond formation process. Each stone is certified by leading gemological institutes 
-                      including GIA, ensuring the same quality standards as mined diamonds.
-                    </p>
-                    <ul className="list-disc list-inside space-y-2">
-                      <li>Type IIa lab-grown diamonds (the purest form)</li>
-                      <li>Certified by GIA or equivalent institute</li>
-                      <li>Identical optical, physical, and chemical properties to mined diamonds</li>
-                      <li>Conflict-free and ethically sourced</li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="materials">
-                  <AccordionTrigger className="text-left font-medium">
-                    Metal & Finish
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    <p>
-                      Available in recycled sterling silver, 9K gold, and 14K gold. All metals are 
-                      responsibly sourced and finished with our signature brushed texture that 
-                      complements the diamond's natural brilliance.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="sizing">
-                  <AccordionTrigger className="text-left font-medium">
-                    Sizing & Fit
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    <p>
-                      Standard butterfly backing ensures secure, comfortable wear. Each earring measures 
-                      approximately 6mm in diameter (0.75 carat total weight). Suitable for all ear 
-                      piercings and comfortable for extended wear.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="care">
-                  <AccordionTrigger className="text-left font-medium">
-                    Care & Warranty
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    <p>
-                      Your Noori jewelry comes with a lifetime warranty against manufacturing defects. 
-                      Clean with warm soapy water and a soft brush. We recommend visiting a local jeweler 
-                      annually for professional cleaning and inspection.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
+            <ProductAccordions handle={handle || ''} />
           </motion.div>
         </div>
 
@@ -414,11 +511,14 @@ const ProductDetail = () => {
                   transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                   className="card-luxury p-6 group cursor-pointer"
                 >
-                  <div className="aspect-square bg-muted/10 rounded-lg mb-4 overflow-hidden">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  <div className="aspect-square bg-[#e8e8e8] rounded-lg mb-4 overflow-hidden relative" onWheel={(e) => e.preventDefault()}>
+                    <iframe
+                      src={(item as any).iframeUrl}
+                      className="w-full h-full border-0"
+                      style={{ touchAction: "pan-x pan-y" }}
+                      allow="xr-spatial-tracking; fullscreen; autoplay"
+                      title={item.name}
+                      loading="lazy"
                     />
                   </div>
                   <h3 className="font-display text-xl font-normal mb-2">{item.name}</h3>

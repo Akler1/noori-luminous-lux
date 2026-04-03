@@ -160,49 +160,29 @@ const About = () => {
           </div>
         </section>
 
-        {/* ── Why Lab-Grown — Dramatic Stats ── */}
+        {/* ── Lab-Grown Diamonds Link ── */}
         <section className="py-16 md:py-20 bg-secondary/20 px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
-              className="mb-12"
             >
-              <p className="text-[11px] uppercase tracking-[0.3em] text-foreground/40 mb-4">Why Lab-Grown</p>
-              <h2 className="font-display text-5xl md:text-6xl font-light leading-snug mb-6">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-foreground/40 mb-4">Our Diamonds</p>
+              <h2 className="font-display text-4xl md:text-5xl font-light leading-snug mb-6">
                 Real diamonds. <span className="italic">Better origin.</span>
               </h2>
-              <p className="text-base md:text-lg text-foreground/60 leading-relaxed max-w-lg">
+              <p className="text-base md:text-lg text-foreground/60 leading-relaxed max-w-lg mx-auto mb-8">
                 Chemically, physically, and optically identical to mined diamonds. Created using advanced CVD technology — same brilliance, fire, and durability.
               </p>
+              <a href="/why-lab-diamonds" className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-medium transition-colors">
+                Learn about our diamonds and the 4Cs
+                <span className="text-lg">→</span>
+              </a>
             </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                { num: "40–60%", label: "Less expensive than mined diamonds" },
-                { num: "100%",   label: "Conflict-free and ethically sourced" },
-                { num: "Zero",   label: "Mining required" },
-              ].map(({ num, label }, i) => (
-                <motion.div
-                  key={num}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.12 }}
-                  viewport={{ once: true }}
-                  className="p-6 rounded-xl border border-border/40"
-                >
-                  <span className="font-display text-6xl md:text-7xl font-light text-accent leading-none tracking-tight block">{num}</span>
-                  <span className="text-sm md:text-base text-foreground/50 mt-3 block uppercase tracking-widest">{label}</span>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </section>
-
-        {/* ── 4Cs — Editorial Rows ── */}
-        <FourCsSection />
 
         {/* ── Sourcing & Craftsmanship ── */}
         <SourcingSection />
@@ -303,7 +283,7 @@ const FourCsSection = () => {
               </div>
             </div>
             <div className="flex-1 text-center md:text-left">
-              <h4 className="font-display text-xl mb-2 text-foreground">IGI/GCal Certification</h4>
+              <h4 className="font-display text-xl mb-2 text-foreground">IGI Certification</h4>
               <p className="text-sm text-foreground/70 mb-4">
                 Every Noori diamond comes with independent certification verifying cut, color, clarity, and carat weight.
                 Each certificate includes a unique ID laser-inscribed on your diamond.
@@ -332,7 +312,7 @@ const FourCsSection = () => {
 const SourcingSection = () => {
   const steps = [
     { icon: <Factory className="w-5 h-5" />, title: "Lab Creation", description: "CVD/HPHT growth in a controlled environment" },
-    { icon: <ClipboardCheck className="w-5 h-5" />, title: "Quality Control", description: "IGI/GCal certification and grading" },
+    { icon: <ClipboardCheck className="w-5 h-5" />, title: "Quality Control", description: "IGI certification and grading" },
     { icon: <Palette className="w-5 h-5" />, title: "Studio Design", description: "Hand-set in 14K solid gold" },
     { icon: <Package className="w-5 h-5" />, title: "Packaging", description: "Sustainable luxury presentation" },
     { icon: <Truck className="w-5 h-5" />, title: "Delivery", description: "Insured shipping to your door" },

@@ -8,7 +8,7 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/1',
       handle: 'diamond-stud-earrings',
-      title: 'Round Solitaire Studs',
+      title: 'Round Vela Studs',
       description: 'Timeless elegance meets modern ethics. Our lab-grown diamond studs offer the same brilliance and fire as mined diamonds.',
       priceRange: {
         minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
@@ -140,7 +140,7 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/2',
       handle: 'bezel-necklace',
-      title: 'Solitaire Necklace',
+      title: 'Vela Necklace',
       description: 'Refined minimalism showcasing a single lab-grown diamond in perfect suspension.',
       priceRange: {
         minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
@@ -337,7 +337,7 @@ class ShopifyClient {
     {
       id: 'gid://shopify/Product/pendant-round',
       handle: 'pendant-round',
-      title: 'Round Solitaire Pendant',
+      title: 'Round Vela Pendant',
       description: 'A single round brilliant diamond suspended on a delicate chain. Pure light, nothing more.',
       priceRange: {
         minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
@@ -349,18 +349,27 @@ class ShopifyClient {
       images: { edges: [{ node: { id: 'img-pend-rnd', url: '/src/assets/necklace-hero.jpg', altText: 'Round Solitaire Pendant', width: 800, height: 600 } }] },
       variants: {
         edges: [
-          { node: { id: 'pend-rnd-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-PEND-RND-Y', iframeUrl: 'https://akler1.github.io/round-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-y/' } },
-          { node: { id: 'pend-rnd-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PEND-RND-W', iframeUrl: 'https://akler1.github.io/round-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-w/' } },
-          { node: { id: 'pend-rnd-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-RND-R', iframeUrl: 'https://akler1.github.io/round-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-r/' } },
+          // Yellow Gold variants
+          { node: { id: 'pend-rnd-y-14k', title: 'Yellow Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-PEND-RND-Y-14K', iframeUrl: 'https://akler1.github.io/round-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-y/' } },
+          { node: { id: 'pend-rnd-y-18k', title: 'Yellow Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PEND-RND-Y-18K', iframeUrl: 'https://akler1.github.io/round-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-y/' } },
+          // White Gold variants
+          { node: { id: 'pend-rnd-w-14k', title: 'White Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PEND-RND-W-14K', iframeUrl: 'https://akler1.github.io/round-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-w/' } },
+          { node: { id: 'pend-rnd-w-18k', title: 'White Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-RND-W-18K', iframeUrl: 'https://akler1.github.io/round-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-w/' } },
+          // Rose Gold variants
+          { node: { id: 'pend-rnd-r-14k', title: 'Rose Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-RND-R-14K', iframeUrl: 'https://akler1.github.io/round-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-r/' } },
+          { node: { id: 'pend-rnd-r-18k', title: 'Rose Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-RND-R-18K', iframeUrl: 'https://akler1.github.io/round-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/round-r/' } },
         ]
       },
-      options: [{ id: 'opt-pend-rnd-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      options: [
+        { id: 'opt-pend-rnd-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-pend-rnd-karat', name: 'Karat', values: ['14K', '18K'] }
+      ],
       reviews: { rating: 5, count: 47 }
     },
     {
       id: 'gid://shopify/Product/pendant-princess',
       handle: 'pendant-princess',
-      title: 'Princess Solitaire Pendant',
+      title: 'Princess Vela Pendant',
       description: 'A princess-cut diamond set in a clean, geometric pendant. Sharp lines, soft glow.',
       priceRange: {
         minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
@@ -372,18 +381,27 @@ class ShopifyClient {
       images: { edges: [{ node: { id: 'img-pend-pr', url: '/src/assets/necklace-hero.jpg', altText: 'Princess Solitaire Pendant', width: 800, height: 600 } }] },
       variants: {
         edges: [
-          { node: { id: 'pend-pr-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-PR-Y', iframeUrl: 'https://akler1.github.io/princess-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-y/' } },
-          { node: { id: 'pend-pr-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-PR-W', iframeUrl: 'https://akler1.github.io/princess-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-w/' } },
-          { node: { id: 'pend-pr-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-PR-R', iframeUrl: 'https://akler1.github.io/princess-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-r/' } },
+          // Yellow Gold variants
+          { node: { id: 'pend-pr-y-14k', title: 'Yellow Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PEND-PR-Y-14K', iframeUrl: 'https://akler1.github.io/princess-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-y/' } },
+          { node: { id: 'pend-pr-y-18k', title: 'Yellow Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-PR-Y-18K', iframeUrl: 'https://akler1.github.io/princess-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-y/' } },
+          // White Gold variants
+          { node: { id: 'pend-pr-w-14k', title: 'White Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-PR-W-14K', iframeUrl: 'https://akler1.github.io/princess-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-w/' } },
+          { node: { id: 'pend-pr-w-18k', title: 'White Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-PR-W-18K', iframeUrl: 'https://akler1.github.io/princess-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-w/' } },
+          // Rose Gold variants
+          { node: { id: 'pend-pr-r-14k', title: 'Rose Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-PR-R-14K', iframeUrl: 'https://akler1.github.io/princess-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-r/' } },
+          { node: { id: 'pend-pr-r-18k', title: 'Rose Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 2, sku: 'NOORI-PEND-PR-R-18K', iframeUrl: 'https://akler1.github.io/princess-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/princess-r/' } },
         ]
       },
-      options: [{ id: 'opt-pend-pr-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      options: [
+        { id: 'opt-pend-pr-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-pend-pr-karat', name: 'Karat', values: ['14K', '18K'] }
+      ],
       reviews: { rating: 5, count: 42 }
     },
     {
       id: 'gid://shopify/Product/pendant-emerald',
       handle: 'pendant-emerald',
-      title: 'Emerald Solitaire Pendant',
+      title: 'Emerald Vela Pendant',
       description: 'An emerald-cut diamond in a modern pendant setting. Architectural clarity on a chain.',
       priceRange: {
         minVariantPrice: { amount: '1748.00', currencyCode: 'CAD' },
@@ -395,19 +413,28 @@ class ShopifyClient {
       images: { edges: [{ node: { id: 'img-pend-em', url: '/src/assets/necklace-hero.jpg', altText: 'Emerald Solitaire Pendant', width: 800, height: 600 } }] },
       variants: {
         edges: [
-          { node: { id: 'pend-em-y', title: '14K Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: '14K Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-Y', iframeUrl: 'https://akler1.github.io/emerald-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-y/' } },
-          { node: { id: 'pend-em-w', title: 'White Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-W', iframeUrl: 'https://akler1.github.io/emerald-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-w/' } },
-          { node: { id: 'pend-em-r', title: 'Rose Gold', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-EM-R', iframeUrl: 'https://akler1.github.io/emerald-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-r/' } },
+          // Yellow Gold variants
+          { node: { id: 'pend-em-y-14k', title: 'Yellow Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-Y-14K', iframeUrl: 'https://akler1.github.io/emerald-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-y/' } },
+          { node: { id: 'pend-em-y-18k', title: 'Yellow Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-EM-Y-18K', iframeUrl: 'https://akler1.github.io/emerald-y_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-y/' } },
+          // White Gold variants
+          { node: { id: 'pend-em-w-14k', title: 'White Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PEND-EM-W-14K', iframeUrl: 'https://akler1.github.io/emerald-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-w/' } },
+          { node: { id: 'pend-em-w-18k', title: 'White Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-EM-W-18K', iframeUrl: 'https://akler1.github.io/emerald-w_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-w/' } },
+          // Rose Gold variants
+          { node: { id: 'pend-em-r-14k', title: 'Rose Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '1748.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PEND-EM-R-14K', iframeUrl: 'https://akler1.github.io/emerald-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-r/' } },
+          { node: { id: 'pend-em-r-18k', title: 'Rose Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '1944.00', currencyCode: 'CAD' }, quantityAvailable: 2, sku: 'NOORI-PEND-EM-R-18K', iframeUrl: 'https://akler1.github.io/emerald-r_zoomed/', iframeUrlAlt: 'https://akler1.github.io/emerald-r/' } },
         ]
       },
-      options: [{ id: 'opt-pend-em-metal', name: 'Metal', values: ['14K Gold', 'White Gold', 'Rose Gold'] }],
+      options: [
+        { id: 'opt-pend-em-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-pend-em-karat', name: 'Karat', values: ['14K', '18K'] }
+      ],
       reviews: { rating: 5, count: 38 }
     },
     {
       id: 'gid://shopify/Product/3',
-      handle: 'solitaire-bracelet',
-      title: 'Solitaire Bracelet',
-      description: 'Modern heirloom design featuring single or five solitaire lab-grown diamonds.',
+      handle: 'bracelet-solitaire-1ct',
+      title: 'Vela Bracelet',
+      description: 'A single solitaire lab-grown diamond on a delicate chain bracelet. Modern heirloom design.',
       priceRange: {
         minVariantPrice: { amount: '2528.00', currencyCode: 'CAD' },
         maxVariantPrice: { amount: '3710.00', currencyCode: 'CAD' }
@@ -430,72 +457,59 @@ class ShopifyClient {
       },
       variants: {
         edges: [
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/4',
-              title: 'Sterling Silver / Single Solitaire',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Metal', value: 'Sterling Silver' },
-                { name: 'Style', value: 'Single Solitaire' }
-              ],
-              price: { amount: '2528.00', currencyCode: 'CAD' },
-              quantityAvailable: 12,
-              sku: 'NOORI-BRAC-SS-SINGLE',
-              model3d: '/models/bracelet-silver-single.glb',
-              iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html'
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/4b',
-              title: '14K Gold / Single Solitaire',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Metal', value: '14K Gold' },
-                { name: 'Style', value: 'Single Solitaire' }
-              ],
-              price: { amount: '2738.00', currencyCode: 'CAD' },
-              quantityAvailable: 8,
-              sku: 'NOORI-BRAC-14K-SINGLE',
-              iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html'
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/4c',
-              title: 'Rose Gold / Single Solitaire',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Metal', value: 'Rose Gold' },
-                { name: 'Style', value: 'Single Solitaire' }
-              ],
-              price: { amount: '2528.00', currencyCode: 'CAD' },
-              quantityAvailable: 6,
-              sku: 'NOORI-BRAC-RG-SINGLE',
-              iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html'
-            }
-          }
+          // Yellow Gold variants
+          { node: { id: 'brac1-y-14k', title: 'Yellow Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '2528.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-BRAC1-Y-14K', iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html' } },
+          { node: { id: 'brac1-y-18k', title: 'Yellow Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '2738.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-BRAC1-Y-18K', iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html' } },
+          // White Gold variants
+          { node: { id: 'brac1-w-14k', title: 'White Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '2528.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-BRAC1-W-14K', iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html' } },
+          { node: { id: 'brac1-w-18k', title: 'White Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '2738.00', currencyCode: 'CAD' }, quantityAvailable: 7, sku: 'NOORI-BRAC1-W-18K', iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html' } },
+          // Rose Gold variants
+          { node: { id: 'brac1-r-14k', title: 'Rose Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '2528.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-BRAC1-R-14K', iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html' } },
+          { node: { id: 'brac1-r-18k', title: 'Rose Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '2738.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-BRAC1-R-18K', iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html' } },
         ]
       },
       options: [
-        {
-          id: 'gid://shopify/ProductOption/5',
-          name: 'Metal',
-          values: ['Sterling Silver', '14K Gold', 'Rose Gold']
-        },
-        {
-          id: 'gid://shopify/ProductOption/6',
-          name: 'Style',
-          values: ['Single Solitaire', 'Three-Stone']
-        }
+        { id: 'opt-brac1-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-brac1-karat', name: 'Karat', values: ['14K', '18K'] }
       ],
       reviews: { rating: 5, count: 67 }
     },
     {
+      id: 'gid://shopify/Product/bracelet-2ct',
+      handle: 'bracelet-solitaire-2ct',
+      title: 'Vela Bracelet 2ct',
+      description: 'The statement version — a larger 2ct solitaire lab-grown diamond on a delicate chain bracelet.',
+      priceRange: {
+        minVariantPrice: { amount: '3466.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '3710.00', currencyCode: 'CAD' }
+      },
+      compareAtPriceRange: {
+        minVariantPrice: { amount: '4200.00', currencyCode: 'CAD' }
+      },
+      images: { edges: [{ node: { id: 'img-brac2', url: '/src/assets/bracelet-hero.jpg', altText: 'Vela Bracelet 2ct', width: 800, height: 600 } }] },
+      variants: {
+        edges: [
+          // Yellow Gold variants
+          { node: { id: 'brac2-y-14k', title: 'Yellow Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '3466.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-BRAC2-Y-14K', iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html' } },
+          { node: { id: 'brac2-y-18k', title: 'Yellow Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '3710.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-BRAC2-Y-18K', iframeUrl: 'https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html' } },
+          // White Gold variants
+          { node: { id: 'brac2-w-14k', title: 'White Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '3466.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-BRAC2-W-14K', iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html' } },
+          { node: { id: 'brac2-w-18k', title: 'White Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '3710.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-BRAC2-W-18K', iframeUrl: 'https://akler1.github.io/bracelet1White/Bracelet1%20White.3.html' } },
+          // Rose Gold variants
+          { node: { id: 'brac2-r-14k', title: 'Rose Gold / 14K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }], price: { amount: '3466.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-BRAC2-R-14K', iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html' } },
+          { node: { id: 'brac2-r-18k', title: 'Rose Gold / 18K', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }], price: { amount: '3710.00', currencyCode: 'CAD' }, quantityAvailable: 2, sku: 'NOORI-BRAC2-R-18K', iframeUrl: 'https://akler1.github.io/Bracelet1Rose/Bracelet1%20Rose.1.html' } },
+        ]
+      },
+      options: [
+        { id: 'opt-brac2-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-brac2-karat', name: 'Karat', values: ['14K', '18K'] }
+      ],
+      reviews: { rating: 5, count: 22 }
+    },
+    {
       id: 'gid://shopify/Product/4',
       handle: 'stud-round-14k',
-      title: 'Round Solitaire Studs',
+      title: 'Round Vela Studs',
       description: 'Classic elegance in lab-grown diamonds. Available in gold, white gold, and rose gold with your choice of 2 ct. tw. or 4 ct. tw. total weight.',
       priceRange: {
         minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
@@ -519,153 +533,41 @@ class ShopifyClient {
       },
       variants: {
         edges: [
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/5',
-              title: 'Yellow Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1954.00', currencyCode: 'CAD' },
-              quantityAvailable: 15,
-              sku: 'NOORI-STUD-GOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Round Solitaire Studs - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/6',
-              title: 'Yellow Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2831.00', currencyCode: 'CAD' },
-              quantityAvailable: 8,
-              sku: 'NOORI-STUD-GOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Round Solitaire Studs - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/7',
-              title: 'White Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1954.00', currencyCode: 'CAD' },
-              quantityAvailable: 12,
-              sku: 'NOORI-STUD-WGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Round Solitaire Studs - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/8',
-              title: 'White Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2831.00', currencyCode: 'CAD' },
-              quantityAvailable: 6,
-              sku: 'NOORI-STUD-WGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Round Solitaire Studs - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/9',
-              title: 'Rose Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1954.00', currencyCode: 'CAD' },
-              quantityAvailable: 10,
-              sku: 'NOORI-STUD-RGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Round Solitaire Studs - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/10',
-              title: 'Rose Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2831.00', currencyCode: 'CAD' },
-              quantityAvailable: 5,
-              sku: 'NOORI-STUD-RGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html',
-              image: {
-                id: 'gid://shopify/ProductImage/4',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Round Solitaire Studs - 4 ct. tw.'
-              }
-            }
-          }
+          // Yellow Gold variants
+          { node: { id: 'v-rnd-y-14k-2ct', title: 'Yellow Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 15, sku: 'NOORI-STUD-Y-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html' } },
+          { node: { id: 'v-rnd-y-14k-4ct', title: 'Yellow Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-STUD-Y-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html' } },
+          { node: { id: 'v-rnd-y-18k-2ct', title: 'Yellow Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-STUD-Y-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html' } },
+          { node: { id: 'v-rnd-y-18k-4ct', title: 'Yellow Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-STUD-Y-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html' } },
+          // White Gold variants
+          { node: { id: 'v-rnd-w-14k-2ct', title: 'White Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 12, sku: 'NOORI-STUD-W-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html' } },
+          { node: { id: 'v-rnd-w-14k-4ct', title: 'White Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-STUD-W-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html' } },
+          { node: { id: 'v-rnd-w-18k-2ct', title: 'White Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-STUD-W-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html' } },
+          { node: { id: 'v-rnd-w-18k-4ct', title: 'White Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-STUD-W-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Rounds-White.1/XR%20Rounds%20White.1.html' } },
+          // Rose Gold variants
+          { node: { id: 'v-rnd-r-14k-2ct', title: 'Rose Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-STUD-R-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html' } },
+          { node: { id: 'v-rnd-r-14k-4ct', title: 'Rose Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-STUD-R-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html' } },
+          { node: { id: 'v-rnd-r-18k-2ct', title: 'Rose Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 7, sku: 'NOORI-STUD-R-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html' } },
+          { node: { id: 'v-rnd-r-18k-4ct', title: 'Rose Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-STUD-R-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Round-RoseGold.1/XR%20Rounds%20Rose.2.html' } },
         ]
       },
       options: [
-        {
-          id: 'gid://shopify/ProductOption/7',
-          name: 'Material',
-          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
-        },
-        {
-          id: 'gid://shopify/ProductOption/8',
-          name: 'Size',
-          values: ['2 ct. tw.', '4 ct. tw.']
-        }
+        { id: 'opt-rnd-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-rnd-karat', name: 'Karat', values: ['14K', '18K'] },
+        { id: 'opt-rnd-size', name: 'Size', values: ['2 ct. tw.', '4 ct. tw.'] }
       ],
       reviews: { rating: 5, count: 156 }
     },
     {
       id: 'gid://shopify/Product/5',
       handle: 'earrings-emerald-gold',
-      title: 'Emerald Cut Earring',
+      title: 'Emerald Vela Studs',
       description: 'Elegant emerald cut lab-grown diamonds in premium metals. A timeless design that showcases the emerald cut\'s unique step-cut faceting.',
       priceRange: {
-        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2960.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2500.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -682,159 +584,41 @@ class ShopifyClient {
       },
       variants: {
         edges: [
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/11',
-              title: 'Yellow Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
-              quantityAvailable: 12,
-              sku: 'NOORI-EMERALD-GOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Emerald Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/12',
-              title: 'Yellow Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
-              quantityAvailable: 7,
-              sku: 'NOORI-EMERALD-GOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Yellow Gold Emerald Cut Earrings - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/13',
-              title: 'White Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
-              quantityAvailable: 10,
-              sku: 'NOORI-EMERALD-WGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-White.1/XR%20Emerald%20White.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Emerald Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/14',
-              title: 'White Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
-              quantityAvailable: 5,
-              sku: 'NOORI-EMERALD-WGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-White.1/XR%20Emerald%20White.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'White Gold Emerald Cut Earrings - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/15',
-              title: 'Rose Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1690.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
-              quantityAvailable: 9,
-              sku: 'NOORI-EMERALD-RGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Emerald Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/16',
-              title: 'Rose Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2990.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
-              quantityAvailable: 4,
-              sku: 'NOORI-EMERALD-RGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/5',
-                url: '/src/assets/earrings-hero.jpg',
-                altText: 'Rose Gold Emerald Cut Earrings - 4 ct. tw.'
-              }
-            }
-          }
+          // Yellow Gold variants
+          { node: { id: 'v-em-y-14k-2ct', title: 'Yellow Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 12, sku: 'NOORI-EM-Y-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/' } },
+          { node: { id: 'v-em-y-14k-4ct', title: 'Yellow Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 7, sku: 'NOORI-EM-Y-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/' } },
+          { node: { id: 'v-em-y-18k-2ct', title: 'Yellow Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-EM-Y-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/' } },
+          { node: { id: 'v-em-y-18k-4ct', title: 'Yellow Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-EM-Y-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-gold.1/' } },
+          // White Gold variants
+          { node: { id: 'v-em-w-14k-2ct', title: 'White Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-EM-W-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-WhiteGold.1/XR%20Emerald%20White.1.html' } },
+          { node: { id: 'v-em-w-14k-4ct', title: 'White Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-EM-W-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-WhiteGold.1/XR%20Emerald%20White.1.html' } },
+          { node: { id: 'v-em-w-18k-2ct', title: 'White Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-EM-W-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-WhiteGold.1/XR%20Emerald%20White.1.html' } },
+          { node: { id: 'v-em-w-18k-4ct', title: 'White Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-EM-W-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-WhiteGold.1/XR%20Emerald%20White.1.html' } },
+          // Rose Gold variants
+          { node: { id: 'v-em-r-14k-2ct', title: 'Rose Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 9, sku: 'NOORI-EM-R-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html' } },
+          { node: { id: 'v-em-r-14k-4ct', title: 'Rose Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-EM-R-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html' } },
+          { node: { id: 'v-em-r-18k-2ct', title: 'Rose Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 7, sku: 'NOORI-EM-R-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html' } },
+          { node: { id: 'v-em-r-18k-4ct', title: 'Rose Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-EM-R-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Emerald-RoseGold.1/XR%20Emerald%20Rose.1.html' } },
         ]
       },
       options: [
-        {
-          id: 'gid://shopify/ProductOption/9',
-          name: 'Material',
-          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
-        },
-        {
-          id: 'gid://shopify/ProductOption/10',
-          name: 'Size',
-          values: ['2 ct. tw.', '4 ct. tw.']
-        }
+        { id: 'opt-em-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-em-karat', name: 'Karat', values: ['14K', '18K'] },
+        { id: 'opt-em-size', name: 'Size', values: ['2 ct. tw.', '4 ct. tw.'] }
       ],
       reviews: { rating: 5, count: 142 }
     },
     {
       id: 'gid://shopify/Product/6',
       handle: 'earrings-princess-18k',
-      title: 'Princess Cut Earring',
+      title: 'Princess Vela Studs',
       description: 'Classic princess cut lab-grown diamonds in premium metals. The square silhouette offers a modern twist on timeless elegance.',
       priceRange: {
-        minVariantPrice: { amount: '1490.00', currencyCode: 'CAD' },
-        maxVariantPrice: { amount: '2990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '1954.00', currencyCode: 'CAD' },
+        maxVariantPrice: { amount: '2960.00', currencyCode: 'CAD' }
       },
       compareAtPriceRange: {
-        minVariantPrice: { amount: '1990.00', currencyCode: 'CAD' }
+        minVariantPrice: { amount: '2500.00', currencyCode: 'CAD' }
       },
       images: {
         edges: [
@@ -851,145 +635,27 @@ class ShopifyClient {
       },
       variants: {
         edges: [
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/17',
-              title: 'Yellow Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '1990.00', currencyCode: 'CAD' },
-              quantityAvailable: 14,
-              sku: 'NOORI-PRINCESS-GOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'Yellow Gold Princess Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/18',
-              title: 'Yellow Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Yellow Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2490.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3290.00', currencyCode: 'CAD' },
-              quantityAvailable: 8,
-              sku: 'NOORI-PRINCESS-GOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'Yellow Gold Princess Cut Earrings - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/19',
-              title: 'White Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2090.00', currencyCode: 'CAD' },
-              quantityAvailable: 11,
-              sku: 'NOORI-PRINCESS-WGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'White Gold Princess Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/20',
-              title: 'White Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'White Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2590.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3390.00', currencyCode: 'CAD' },
-              quantityAvailable: 6,
-              sku: 'NOORI-PRINCESS-WGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'White Gold Princess Cut Earrings - 4 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/21',
-              title: 'Rose Gold / 2 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '2 ct. tw.' }
-              ],
-              price: { amount: '1690.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '2190.00', currencyCode: 'CAD' },
-              quantityAvailable: 10,
-              sku: 'NOORI-PRINCESS-RGOLD-2CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'Rose Gold Princess Cut Earrings - 2 ct. tw.'
-              }
-            }
-          },
-          {
-            node: {
-              id: 'gid://shopify/ProductVariant/22',
-              title: 'Rose Gold / 4 ct. tw.',
-              availableForSale: true,
-              selectedOptions: [
-                { name: 'Material', value: 'Rose Gold' },
-                { name: 'Size', value: '4 ct. tw.' }
-              ],
-              price: { amount: '2990.00', currencyCode: 'CAD' },
-              compareAtPrice: { amount: '3890.00', currencyCode: 'CAD' },
-              quantityAvailable: 5,
-              sku: 'NOORI-PRINCESS-RGOLD-4CTTW',
-              iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html',
-              image: {
-                id: 'gid://shopify/ProductImage/6',
-                url: '/src/assets/earrings-princess.jpg',
-                altText: 'Rose Gold Princess Cut Earrings - 4 ct. tw.'
-              }
-            }
-          }
+          // Yellow Gold variants
+          { node: { id: 'v-pr-y-14k-2ct', title: 'Yellow Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 14, sku: 'NOORI-PR-Y-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html' } },
+          { node: { id: 'v-pr-y-14k-4ct', title: 'Yellow Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-PR-Y-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html' } },
+          { node: { id: 'v-pr-y-18k-2ct', title: 'Yellow Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-PR-Y-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html' } },
+          { node: { id: 'v-pr-y-18k-4ct', title: 'Yellow Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Yellow Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PR-Y-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html' } },
+          // White Gold variants
+          { node: { id: 'v-pr-w-14k-2ct', title: 'White Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 11, sku: 'NOORI-PR-W-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html' } },
+          { node: { id: 'v-pr-w-14k-4ct', title: 'White Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 6, sku: 'NOORI-PR-W-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html' } },
+          { node: { id: 'v-pr-w-18k-2ct', title: 'White Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 8, sku: 'NOORI-PR-W-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html' } },
+          { node: { id: 'v-pr-w-18k-4ct', title: 'White Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'White Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 4, sku: 'NOORI-PR-W-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-White.1/XR%20Princess%20White%20.1.html' } },
+          // Rose Gold variants
+          { node: { id: 'v-pr-r-14k-2ct', title: 'Rose Gold / 14K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '1954.00', currencyCode: 'CAD' }, quantityAvailable: 10, sku: 'NOORI-PR-R-14K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html' } },
+          { node: { id: 'v-pr-r-14k-4ct', title: 'Rose Gold / 14K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '14K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2831.00', currencyCode: 'CAD' }, quantityAvailable: 5, sku: 'NOORI-PR-R-14K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html' } },
+          { node: { id: 'v-pr-r-18k-2ct', title: 'Rose Gold / 18K / 2 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '2 ct. tw.' }], price: { amount: '2047.00', currencyCode: 'CAD' }, quantityAvailable: 7, sku: 'NOORI-PR-R-18K-2CT', iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html' } },
+          { node: { id: 'v-pr-r-18k-4ct', title: 'Rose Gold / 18K / 4 ct. tw.', availableForSale: true, selectedOptions: [{ name: 'Metal', value: 'Rose Gold' }, { name: 'Karat', value: '18K' }, { name: 'Size', value: '4 ct. tw.' }], price: { amount: '2960.00', currencyCode: 'CAD' }, quantityAvailable: 3, sku: 'NOORI-PR-R-18K-4CT', iframeUrl: 'https://akler1.github.io/XR-Princess-RoseGold.1/XR%20Princess%20Rose.1.html' } },
         ]
       },
       options: [
-        {
-          id: 'gid://shopify/ProductOption/11',
-          name: 'Material',
-          values: ['Yellow Gold', 'White Gold', 'Rose Gold']
-        },
-        {
-          id: 'gid://shopify/ProductOption/12',
-          name: 'Size',
-          values: ['2 ct. tw.', '4 ct. tw.']
-        }
+        { id: 'opt-pr-metal', name: 'Metal', values: ['Yellow Gold', 'White Gold', 'Rose Gold'] },
+        { id: 'opt-pr-karat', name: 'Karat', values: ['14K', '18K'] },
+        { id: 'opt-pr-size', name: 'Size', values: ['2 ct. tw.', '4 ct. tw.'] }
       ],
       reviews: { rating: 5, count: 128 }
     }
@@ -1043,7 +709,7 @@ class ShopifyClient {
                 title: variant.title,
                 product: {
                   id: 'gid://shopify/Product/1',
-                  title: 'Round Solitaire Studs',
+                  title: 'Round Vela Studs',
                   handle: 'diamond-stud-earrings'
                 },
                 selectedOptions: variant.selectedOptions,
