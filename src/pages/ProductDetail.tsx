@@ -218,32 +218,32 @@ const ProductDetail = () => {
   const crossSellProducts = (CROSS_SELL_MAP[cutType] || CROSS_SELL_MAP.round)
     .filter(p => p.handle !== handle);
 
-  // Prepare images for carousel - update based on selected variant
+  // Prepare images for carousel — use variantImages filtered by selected metal if available
   const carouselImages = (() => {
+    // Check if product has metal-specific variant images
+    if (product?.variantImages && selectedVariant) {
+      const selectedMetal = selectedVariant.selectedOptions.find(o => o.name === 'Metal')?.value;
+      if (selectedMetal && product.variantImages[selectedMetal]) {
+        return product.variantImages[selectedMetal];
+      }
+    }
+
+    // Fallback: variant-specific image + product images
     if (selectedVariant?.image) {
-      // Show variant-specific image first, then other product images
       const variantImage = {
         id: selectedVariant.image.id,
         url: selectedVariant.image.url,
         altText: selectedVariant.image.altText
       };
-      
       const otherImages = product?.images.edges
         .filter(({ node }) => node.id !== selectedVariant.image?.id)
-        .map(({ node }) => ({
-          id: node.id,
-          url: node.url,
-          altText: node.altText
-        })) || [];
-      
+        .map(({ node }) => ({ id: node.id, url: node.url, altText: node.altText })) || [];
       return [variantImage, ...otherImages];
     }
-    
-    // Fallback to all product images
+
+    // Fallback: all product images
     return product?.images.edges.map(({ node }) => ({
-      id: node.id,
-      url: node.url,
-      altText: node.altText
+      id: node.id, url: node.url, altText: node.altText
     })) || [];
   })();
 

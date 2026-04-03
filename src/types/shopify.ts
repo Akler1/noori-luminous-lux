@@ -46,6 +46,11 @@ export interface ShopifyProduct {
     rating: number;
     count: number;
   };
+  variantImages?: Record<string, Array<{
+    id: string;
+    url: string;
+    altText: string;
+  }>>;
 }
 
 export interface ShopifyVariant {
