@@ -7,19 +7,19 @@ const PLACEHOLDER_IFRAME = "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds
 const solitaireProducts = [
   // Earrings
   {
-    id: "stud-round-14k",
+    id: "round-vela-studs",
     name: "Round Vela Studs",
-    price: "$1,954",
-    pdpUrl: "/product/stud-round-14k",
+    price: "$1,950",
+    pdpUrl: "/product/round-vela-studs",
     iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 31
   },
   {
-    id: "earrings-emerald-gold",
+    id: "emerald-vela-studs",
     name: "Emerald Vela Studs",
-    price: "$1,954",
-    pdpUrl: "/product/earrings-emerald-gold",
+    price: "$1,950",
+    pdpUrl: "/product/emerald-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
     rating: 5,
     reviewCount: 18
@@ -27,55 +27,55 @@ const solitaireProducts = [
   {
     id: "earrings-princess",
     name: "Princess Vela Studs",
-    price: "$1,954",
-    pdpUrl: "/product/earrings-princess-18k",
+    price: "$1,950",
+    pdpUrl: "/product/princess-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
     rating: 5,
     reviewCount: 24
   },
   // Pendants
   {
-    id: "pendant-round",
+    id: "round-vela-pendant",
     name: "Round Vela Pendant",
-    price: "$1,748",
-    pdpUrl: "/product/pendant-round",
+    price: "$1,750",
+    pdpUrl: "/product/round-vela-pendant",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
     rating: 5,
     reviewCount: 47
   },
   {
-    id: "pendant-princess",
+    id: "princess-vela-pendant",
     name: "Princess Vela Pendant",
-    price: "$1,748",
-    pdpUrl: "/product/pendant-princess",
+    price: "$1,750",
+    pdpUrl: "/product/princess-vela-pendant",
     iframeUrl: "https://akler1.github.io/princess-y_zoomed/",
     rating: 5,
     reviewCount: 42
   },
   {
-    id: "pendant-emerald",
+    id: "emerald-vela-pendant",
     name: "Emerald Vela Pendant",
-    price: "$1,748",
-    pdpUrl: "/product/pendant-emerald",
+    price: "$1,750",
+    pdpUrl: "/product/emerald-vela-pendant",
     iframeUrl: "https://akler1.github.io/emerald-y_zoomed/",
     rating: 5,
     reviewCount: 38
   },
   // Bracelets
   {
-    id: "bracelet-solitaire-1ct",
+    id: "vela-bracelet",
     name: "Vela Bracelet",
-    price: "$2,528",
-    pdpUrl: "/product/bracelet-solitaire-1ct",
+    price: "$2,525",
+    pdpUrl: "/product/vela-bracelet",
     iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html",
     rating: 5,
     reviewCount: 29
   },
   {
-    id: "bracelet-solitaire-2ct",
+    id: "vela-bracelet-2ct",
     name: "Vela Bracelet 2ct",
-    price: "$3,466",
-    pdpUrl: "/product/bracelet-solitaire-2ct",
+    price: "$3,475",
+    pdpUrl: "/product/vela-bracelet-2ct",
     iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
     reviewCount: 22

@@ -20,9 +20,9 @@ interface CarouselConfig {
 
 // XR viewer URL mapping
 const XR_VIEWER_URLS: Record<string, string> = {
-  "stud-round-14k": "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
-  "earrings-emerald-gold": "https://akler1.github.io/XR-Emerald-gold.1/",
-  "earrings-princess-18k": "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
+  "round-vela-studs": "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
+  "emerald-vela-studs": "https://akler1.github.io/XR-Emerald-gold.1/",
+  "princess-vela-studs": "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
 };
 
 // Placeholder for products without specific viewers

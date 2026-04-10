@@ -11,12 +11,12 @@
       "camera": { "azimuthDeg": -18, "elevationDeg": 10, "fov": 35 }
     },
     {
-      "slug": "stud-round-14k",
+      "slug": "round-vela-studs",
       "title": "Round Vela Studs",
       "subtitle": "Heirloom-Quality Lab Diamond",
-      "pdpUrl": "/product/stud-round-14k",
+      "pdpUrl": "/product/round-vela-studs",
       "camera": { "azimuthDeg": -22, "elevationDeg": 12, "fov": 35 },
-      "glb": "/models/stud-round-14k.glb"
+      "glb": "/models/round-vela-studs.glb"
     },
     {
       "slug": "bracelet-five-9k",
@@ -26,17 +26,17 @@
       "camera": { "azimuthDeg": -15, "elevationDeg": 9, "fov": 38 }
     },
     {
-      "slug": "earrings-princess-18k",
+      "slug": "princess-vela-studs",
       "title": "Princess Vela Studs",
       "subtitle": "Classic Elegance",
-      "pdpUrl": "/product/earrings-princess-18k",
+      "pdpUrl": "/product/princess-vela-studs",
       "camera": { "azimuthDeg": -20, "elevationDeg": 11, "fov": 36 }
     },
     {
-      "slug": "earrings-emerald-gold",
+      "slug": "emerald-vela-studs",
       "title": "Emerald Vela Studs",
       "subtitle": "Timeless Beauty",
-      "pdpUrl": "/product/earrings-emerald-gold",
+      "pdpUrl": "/product/emerald-vela-studs",
       "camera": { "azimuthDeg": -16, "elevationDeg": 8, "fov": 37 }
     }
   ]

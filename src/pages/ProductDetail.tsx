@@ -19,9 +19,9 @@ import { SocialFeed } from "@/components/SocialFeed";
 
 /* ── Product-specific accordion content ── */
 function getProductType(handle: string): 'earring' | 'pendant' | 'bracelet' | 'necklace' {
-  if (handle.startsWith('stud-') || handle.startsWith('earrings-')) return 'earring';
-  if (handle.startsWith('pendant-')) return 'pendant';
-  if (handle.startsWith('bracelet-')) return 'bracelet';
+  if (handle.includes('studs')) return 'earring';
+  if (handle.includes('pendant')) return 'pendant';
+  if (handle.includes('bracelet')) return 'bracelet';
   return 'necklace';
 }
 
@@ -198,19 +198,19 @@ const ProductDetail = () => {
 
   const CROSS_SELL_MAP: Record<string, { name: string; handle: string; price: string; iframeUrl: string }[]> = {
     round: [
-      { name: "Round Vela Pendant", handle: "pendant-round", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/round-y_zoomed/" },
-      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Round Vela Studs", handle: "stud-round-14k", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html" },
+      { name: "Round Vela Pendant", handle: "round-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/round-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Round Vela Studs", handle: "round-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html" },
     ],
     emerald: [
-      { name: "Emerald Vela Pendant", handle: "pendant-emerald", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/emerald-y_zoomed/" },
-      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Emerald Vela Studs", handle: "earrings-emerald-gold", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/" },
+      { name: "Emerald Vela Pendant", handle: "emerald-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/emerald-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Emerald Vela Studs", handle: "emerald-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/" },
     ],
     princess: [
-      { name: "Princess Vela Pendant", handle: "pendant-princess", price: "CAD $1,748", iframeUrl: "https://akler1.github.io/princess-y_zoomed/" },
-      { name: "Vela Bracelet", handle: "bracelet-solitaire-1ct", price: "CAD $2,528", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Princess Vela Studs", handle: "earrings-princess-18k", price: "CAD $1,954", iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html" },
+      { name: "Princess Vela Pendant", handle: "princess-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/princess-y_zoomed/" },
+      { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
+      { name: "Princess Vela Studs", handle: "princess-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html" },
     ],
   };
 
