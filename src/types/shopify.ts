@@ -65,6 +65,10 @@ export interface ShopifyVariant {
     amount: string;
     currencyCode: string;
   };
+  cadPrice?: {
+    amount: string;
+    currencyCode: string;
+  };
   compareAtPrice?: {
     amount: string;
     currencyCode: string;

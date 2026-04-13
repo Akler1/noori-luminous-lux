@@ -14,7 +14,7 @@ const gridProducts: GridProduct[] = [
   {
     id: "round-vela-studs",
     name: "Round Vela Studs",
-    price: "$1,950",
+    price: "$1,750",
     pdpUrl: "/product/round-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html",
     material: "Yellow gold",
@@ -22,7 +22,7 @@ const gridProducts: GridProduct[] = [
   {
     id: "emerald-vela-studs",
     name: "Emerald Vela Studs",
-    price: "$1,950",
+    price: "$1,750",
     pdpUrl: "/product/emerald-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
     material: "Yellow gold",
@@ -30,7 +30,7 @@ const gridProducts: GridProduct[] = [
   {
     id: "necklace-round",
     name: "Round Vela Pendant",
-    price: "$1,750",
+    price: "$1,575",
     pdpUrl: "/product/round-vela-pendant",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
     material: "Yellow gold",

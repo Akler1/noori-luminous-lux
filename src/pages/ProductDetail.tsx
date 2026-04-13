@@ -198,19 +198,19 @@ const ProductDetail = () => {
 
   const CROSS_SELL_MAP: Record<string, { name: string; handle: string; price: string; iframeUrl: string }[]> = {
     round: [
-      { name: "Round Vela Pendant", handle: "round-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/round-y_zoomed/" },
+      { name: "Round Vela Pendant", handle: "round-vela-pendant", price: "CAD $1,575", iframeUrl: "https://akler1.github.io/round-y_zoomed/" },
       { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Round Vela Studs", handle: "round-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html" },
+      { name: "Round Vela Studs", handle: "round-vela-studs", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html" },
     ],
     emerald: [
-      { name: "Emerald Vela Pendant", handle: "emerald-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/emerald-y_zoomed/" },
+      { name: "Emerald Vela Pendant", handle: "emerald-vela-pendant", price: "CAD $1,575", iframeUrl: "https://akler1.github.io/emerald-y_zoomed/" },
       { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Emerald Vela Studs", handle: "emerald-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/" },
+      { name: "Emerald Vela Studs", handle: "emerald-vela-studs", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/" },
     ],
     princess: [
-      { name: "Princess Vela Pendant", handle: "princess-vela-pendant", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/princess-y_zoomed/" },
+      { name: "Princess Vela Pendant", handle: "princess-vela-pendant", price: "CAD $1,575", iframeUrl: "https://akler1.github.io/princess-y_zoomed/" },
       { name: "Vela Bracelet", handle: "vela-bracelet", price: "CAD $2,525", iframeUrl: "https://akler1.github.io/Bracelet1Yellow/Bracelet1%20Yellow.2.html" },
-      { name: "Princess Vela Studs", handle: "princess-vela-studs", price: "CAD $1,950", iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html" },
+      { name: "Princess Vela Studs", handle: "princess-vela-studs", price: "CAD $1,750", iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html" },
     ],
   };
 
@@ -370,15 +370,20 @@ const ProductDetail = () => {
             {/* Price */}
             <div className="border-t border-b border-border py-6">
               <div className="text-4xl md:text-5xl font-display font-medium text-accent mb-2 tracking-tight">
-                CAD ${selectedVariant?.price.amount}
+                USD ${selectedVariant?.price.amount}
               </div>
+              {selectedVariant?.cadPrice && (
+                <div className="text-lg text-muted-foreground mb-2">
+                  CAD ${selectedVariant.cadPrice.amount}
+                </div>
+              )}
               {selectedVariant?.compareAtPrice && (
                 <div className="text-xl text-muted-foreground line-through mb-2">
-                  CAD ${selectedVariant.compareAtPrice.amount}
+                  USD ${selectedVariant.compareAtPrice.amount}
                 </div>
               )}
               <div className="text-sm text-muted-foreground">
-                Free shipping across Canada • 30-day returns
+                Free shipping across Canada & the US • 30-day returns
               </div>
             </div>
 

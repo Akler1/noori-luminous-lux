@@ -9,7 +9,7 @@ const solitaireProducts = [
   {
     id: "round-vela-studs",
     name: "Round Vela Studs",
-    price: "$1,950",
+    price: "$1,750",
     pdpUrl: "/product/round-vela-studs",
     iframeUrl: PLACEHOLDER_IFRAME,
     rating: 5,
@@ -18,7 +18,7 @@ const solitaireProducts = [
   {
     id: "emerald-vela-studs",
     name: "Emerald Vela Studs",
-    price: "$1,950",
+    price: "$1,750",
     pdpUrl: "/product/emerald-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Emerald-gold.1/",
     rating: 5,
@@ -27,7 +27,7 @@ const solitaireProducts = [
   {
     id: "earrings-princess",
     name: "Princess Vela Studs",
-    price: "$1,950",
+    price: "$1,750",
     pdpUrl: "/product/princess-vela-studs",
     iframeUrl: "https://akler1.github.io/XR-Princess-Gold.1/XR%20Princess%20Yellow.2.html",
     rating: 5,
@@ -37,7 +37,7 @@ const solitaireProducts = [
   {
     id: "round-vela-pendant",
     name: "Round Vela Pendant",
-    price: "$1,750",
+    price: "$1,575",
     pdpUrl: "/product/round-vela-pendant",
     iframeUrl: "https://akler1.github.io/round-y_zoomed/",
     rating: 5,
@@ -46,7 +46,7 @@ const solitaireProducts = [
   {
     id: "princess-vela-pendant",
     name: "Princess Vela Pendant",
-    price: "$1,750",
+    price: "$1,575",
     pdpUrl: "/product/princess-vela-pendant",
     iframeUrl: "https://akler1.github.io/princess-y_zoomed/",
     rating: 5,
@@ -55,7 +55,7 @@ const solitaireProducts = [
   {
     id: "emerald-vela-pendant",
     name: "Emerald Vela Pendant",
-    price: "$1,750",
+    price: "$1,575",
     pdpUrl: "/product/emerald-vela-pendant",
     iframeUrl: "https://akler1.github.io/emerald-y_zoomed/",
     rating: 5,

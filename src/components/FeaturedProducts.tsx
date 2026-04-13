@@ -12,7 +12,7 @@ const products = [
   {
     id: "1",
     name: "Round Vela Studs",
-    price: "CAD $1,950",
+    price: "CAD $1,750",
     image: earringsImage,
     rating: 5,
     reviewCount: 124,
@@ -20,7 +20,7 @@ const products = [
   {
     id: "2", 
     name: "Vela Necklace",
-    price: "CAD $1,750",
+    price: "CAD $1,575",
     image: necklaceImage,
     rating: 5,
     reviewCount: 89,
