@@ -26,31 +26,33 @@ export const useCart = () => {
   return context;
 };
 
-// Hook for cart functionality without context
+// Hook for cart functionality
 export const useCartActions = () => {
   const [cart, setCart] = useState<ShopifyCart | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Initialize cart on mount
+  // Initialize cart on mount — recover existing or create new
   useEffect(() => {
     const initCart = async () => {
       try {
         const existingCartId = localStorage.getItem('noori-cart-id');
+
         if (existingCartId) {
-          // In real implementation, fetch existing cart
-          // For now, create new cart
-          const newCart = await shopify.createCart();
-          setCart(newCart);
-          localStorage.setItem('noori-cart-id', newCart.id);
-        } else {
-          const newCart = await shopify.createCart();
-          setCart(newCart);
-          localStorage.setItem('noori-cart-id', newCart.id);
+          // Try to recover existing cart from Shopify
+          const existingCart = await shopify.getCart(existingCartId);
+          if (existingCart) {
+            setCart(existingCart);
+            return;
+          }
         }
+
+        // No existing cart or cart expired — create new
+        const newCart = await shopify.createCart();
+        setCart(newCart);
+        localStorage.setItem('noori-cart-id', newCart.id);
       } catch (error) {
         console.error('Failed to initialize cart:', error);
-        toast.error('Failed to initialize cart');
       }
     };
 
@@ -59,13 +61,14 @@ export const useCartActions = () => {
 
   const addToCart = async (variantId: string, quantity = 1) => {
     if (!cart) return;
-    
+
     setIsLoading(true);
     try {
       const updatedCart = await shopify.addToCart(cart.id, variantId, quantity);
       setCart(updatedCart);
+      localStorage.setItem('noori-cart-id', updatedCart.id);
       setIsCartOpen(true);
-      toast.success(`Added to cart! Continue shopping or view your cart.`);
+      toast.success('Added to cart!');
     } catch (error) {
       console.error('Failed to add to cart:', error);
       toast.error('Failed to add item to cart');
@@ -76,11 +79,11 @@ export const useCartActions = () => {
 
   const removeFromCart = async (lineId: string) => {
     if (!cart) return;
-    
+
     setIsLoading(true);
     try {
-      // Mock implementation - in real app, call Shopify API
-      await new Promise(resolve => setTimeout(resolve, 300));
+      const updatedCart = await shopify.removeFromCart(cart.id, [lineId]);
+      setCart(updatedCart);
       toast.success('Item removed from cart');
     } catch (error) {
       console.error('Failed to remove from cart:', error);
@@ -92,11 +95,11 @@ export const useCartActions = () => {
 
   const updateCartLine = async (lineId: string, quantity: number) => {
     if (!cart) return;
-    
+
     setIsLoading(true);
     try {
-      // Mock implementation
-      await new Promise(resolve => setTimeout(resolve, 300));
+      const updatedCart = await shopify.updateCartLine(cart.id, lineId, quantity);
+      setCart(updatedCart);
       toast.success('Cart updated');
     } catch (error) {
       console.error('Failed to update cart:', error);
@@ -108,7 +111,7 @@ export const useCartActions = () => {
 
   const clearCart = async () => {
     if (!cart) return;
-    
+
     setIsLoading(true);
     try {
       const newCart = await shopify.createCart();

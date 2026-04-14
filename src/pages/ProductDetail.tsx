@@ -3,18 +3,18 @@ import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Star, ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box, Sparkles, Gem } from "lucide-react";
+import { ShoppingBag, ArrowLeft, Truck, RotateCcw, Shield, Award, ArrowRight, Image as ImageIcon, Box, Sparkles, Gem } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ThreeDViewer } from "@/components/ThreeDViewer";
 import { VariantSelector } from "@/components/VariantSelector";
-import { ReviewsStub } from "@/components/ReviewsStub";
 import { shopify } from "@/lib/shopify";
 import { ShopifyProduct, ShopifyVariant } from "@/types/shopify";
 import { useCartActions } from "@/hooks/useCart";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { SocialFeed } from "@/components/SocialFeed";
+import { ReviewsStub } from "@/components/ReviewsStub";
 
 /* ── Product-specific accordion content ── */
 function getProductType(handle: string): 'earring' | 'pendant' | 'bracelet' | 'necklace' {
@@ -354,22 +354,12 @@ const ProductDetail = () => {
               <h1 className="font-display text-3xl md:text-4xl font-normal mb-4">
                 {product.title}
               </h1>
-              <div className="flex items-center gap-2 mb-6">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-                  ))}
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  ({product.reviews?.count || 0} reviews)
-                </span>
-              </div>
             </div>
 
             {/* Price */}
             <div className="border-t border-b border-border py-6">
               <div className="text-4xl md:text-5xl font-display font-medium text-accent mb-2 tracking-tight">
-                USD ${selectedVariant?.price.amount}
+                USD ${selectedVariant?.price.amount ? parseFloat(selectedVariant.price.amount).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : ''}
               </div>
               {selectedVariant?.cadPrice && (
                 <div className="text-lg text-muted-foreground mb-2">
@@ -454,13 +444,17 @@ const ProductDetail = () => {
                 </>
               )}
               
-              <Button 
+              <Button
                 onClick={handleAddToCart}
                 disabled={!selectedVariant?.availableForSale || cartLoading}
-                className="w-full bg-accent text-accent-foreground px-10 py-6 text-xl font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_hsl(var(--accent)/0.4)]"
+                className={`w-full px-10 py-6 text-xl font-medium rounded-lg transition-all duration-300 ${
+                  selectedVariant?.availableForSale
+                    ? "bg-accent text-accent-foreground hover:scale-[1.02] hover:shadow-[0_0_30px_hsl(var(--accent)/0.4)]"
+                    : "bg-muted text-muted-foreground cursor-not-allowed"
+                }`}
               >
                 <ShoppingBag className="mr-3 h-6 w-6" />
-                {cartLoading ? "Adding..." : "Add to Cart"}
+                {cartLoading ? "Adding..." : selectedVariant?.availableForSale ? "Add to Cart" : "Out of Stock"}
               </Button>
             </div>
 
@@ -541,20 +535,20 @@ const ProductDetail = () => {
           </motion.section>
         )}
 
+        {/* Reviews */}
+        {handle && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mb-20"
+          >
+            <ReviewsStub productHandle={handle} />
+          </motion.section>
+        )}
+
         <SocialFeed />
 
-        {/* Reviews */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <ReviewsStub
-            productId={product.id}
-            averageRating={product.reviews?.rating || 5}
-            totalReviews={product.reviews?.count || 124}
-          />
-        </motion.div>
       </main>
 
       <Footer />

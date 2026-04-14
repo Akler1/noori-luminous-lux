@@ -132,30 +132,21 @@ export const VariantSelector = ({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        whileHover={{ scale: isAvailable ? 1.02 : 1 }}
-                        whileTap={{ scale: isAvailable ? 0.98 : 1 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         <Button
                           variant={isSelected ? "default" : "outline"}
                           className={`
                             relative transition-all duration-200
                             ${isSelected ? "btn-hero" : "btn-ghost-luxury"}
-                            ${!isAvailable ? "opacity-50 cursor-not-allowed" : ""}
                           `}
-                          onClick={() => isAvailable && handleOptionChange(option.name, value)}
-                          disabled={!isAvailable}
+                          onClick={() => handleOptionChange(option.name, value)}
                         >
                           {metalImg && (
                             <img src={metalImg} alt="" className="w-4 h-4 rounded-full object-cover inline-block mr-2 shrink-0" />
                           )}
                           {value}
-
-                          {/* Out of stock indicator */}
-                          {!isAvailable && (
-                            <div className="absolute inset-0 bg-background/80 flex items-center justify-center rounded-lg">
-                              <span className="text-xs text-muted-foreground">Out of Stock</span>
-                            </div>
-                          )}
                         </Button>
                       </motion.div>
                     );
