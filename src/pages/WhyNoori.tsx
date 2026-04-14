@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, breadcrumbs } from "@/components/JsonLd";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -34,6 +36,12 @@ const WhyNoori = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="Contact Noori | Lab-Grown Diamond Jewelry Support"
+        description="Questions about Noori's lab-grown diamond jewelry? Reach out to our team — we're here to help with sizing, orders, and custom requests."
+        path="/why-noori"
+      />
+      <JsonLd data={breadcrumbs([{ name: "Home", url: "/" }, { name: "Contact", url: "/why-noori" }])} />
       <Header />
 
       <main className="pt-28 md:pt-36">

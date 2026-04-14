@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { SocialFeed } from "@/components/SocialFeed";
 import { ReviewsStub } from "@/components/ReviewsStub";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, productSchema, breadcrumbs } from "@/components/JsonLd";
 
 /* ── Product-specific accordion content ── */
 function getProductType(handle: string): 'earring' | 'pendant' | 'bracelet' | 'necklace' {
@@ -273,8 +275,33 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title={`${product.title} | Noori — Lab-Grown Diamond Jewelry`}
+        description={product.description || `Shop the ${product.title} by Noori. IGI-certified lab-grown diamond in 14K and 18K gold. Ethically sourced luxury jewelry.`}
+        path={`/product/${handle}`}
+        image={product.images.edges[0]?.node.url}
+      />
+      <JsonLd data={[
+        productSchema({
+          name: product.title,
+          description: product.description || `${product.title} by Noori — luxury lab-grown diamond jewelry`,
+          handle: handle || '',
+          price: selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount,
+          currency: selectedVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
+          sku: selectedVariant?.sku,
+          image: product.images.edges[0]?.node.url,
+          rating: product.reviews?.rating,
+          reviewCount: product.reviews?.count,
+          available: selectedVariant?.availableForSale,
+        }),
+        breadcrumbs([
+          { name: "Home", url: "/" },
+          { name: "Vela Collection", url: "/collections/solitaires" },
+          { name: product.title, url: `/product/${handle}` },
+        ]),
+      ]} />
       <Header />
-      
+
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 pt-24 pb-8">
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground">

@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, breadcrumbs } from "@/components/JsonLd";
 import { Link } from "react-router-dom";
 import { Sparkles, Palette, Microscope, Scale, FileCheck, Download, ArrowRight, Flame, Zap, ShieldCheck, Leaf, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
@@ -43,6 +45,12 @@ export default function WhyLabDiamonds() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <PageMeta
+        title="Why Lab-Grown Diamonds? | Noori — The Science Behind the Sparkle"
+        description="Lab-grown diamonds are chemically, physically, and optically identical to mined diamonds — at 40-60% less cost. Learn about CVD technology, IGI certification, and why Noori chooses lab-grown."
+        path="/why-lab-diamonds"
+      />
+      <JsonLd data={breadcrumbs([{ name: "Home", url: "/" }, { name: "Why Lab-Grown Diamonds", url: "/why-lab-diamonds" }])} />
       <Header />
       <main className="flex-1">
 

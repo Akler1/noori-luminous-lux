@@ -1,0 +1,29 @@
+# Noori — Luxury Lab-Grown Diamond Jewelry
+
+> Noori creates heirloom-quality lab-grown diamond jewelry — pendants, earrings, and bracelets — in 14K and 18K gold. Every diamond is IGI-certified, ethically sourced via Chemical Vapor Deposition (CVD), and graded D–F colour / VS1–VVS1 clarity. Modern luxury, finally within reach. Founded in Canada, Noori partners with UNICEF to give back with every purchase.
+
+## About Noori
+- [Our Story](https://noori.design/policies): Brand mission, values, UNICEF partnership, and sourcing philosophy
+- [Why Lab-Grown Diamonds](https://noori.design/why-lab-diamonds): CVD process, 4Cs grading, lab-grown vs mined comparison
+- [FAQ](https://noori.design/faq): Care, shipping, returns, warranty, and diamond education
+- [Contact](https://noori.design/why-noori): Customer support and inquiries
+
+## Collections
+- [Vela Solitaire Collection](https://noori.design/collections/solitaires): Full catalog of pendants, studs, and bracelets
+
+## Products — Pendants
+- [Round Vela Pendant](https://noori.design/product/round-vela-pendant): Round brilliant solitaire pendant, 14K/18K gold, from $2,175
+- [Princess Vela Pendant](https://noori.design/product/princess-vela-pendant): Princess-cut solitaire pendant, 14K/18K gold
+- [Emerald Vela Pendant](https://noori.design/product/emerald-vela-pendant): Emerald-cut solitaire pendant, 14K/18K gold
+
+## Products — Earrings
+- [Round Vela Studs](https://noori.design/product/round-vela-studs): Round brilliant stud earrings, 14K/18K gold
+- [Princess Vela Studs](https://noori.design/product/princess-vela-studs): Princess-cut stud earrings, 14K/18K gold
+- [Emerald Vela Studs](https://noori.design/product/emerald-vela-studs): Emerald-cut stud earrings, 14K/18K gold
+
+## Products — Bracelets
+- [Vela Bracelet](https://noori.design/product/vela-bracelet): Diamond cable chain bracelet, 14K/18K gold
+- [Vela Bracelet 2ct](https://noori.design/product/vela-bracelet-2ct): 2ct diamond cable chain bracelet, 14K/18K gold
+
+## Extended Information
+- [Full brand context for AI systems](https://noori.design/llms-full.txt)

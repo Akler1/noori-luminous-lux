@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, faqSchema, breadcrumbs } from "@/components/JsonLd";
 import { Gem, Truck, RotateCcw, Shield, CreditCard, HelpCircle, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -164,8 +166,17 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="FAQ | Noori — Lab-Grown Diamond Jewelry Questions Answered"
+        description="Find answers about Noori's lab-grown diamond jewelry — care, shipping, returns, warranty, payments, and what makes lab-grown diamonds real diamonds."
+        path="/faq"
+      />
+      <JsonLd data={[
+        faqSchema(faqSections.flatMap(s => s.questions)),
+        breadcrumbs([{ name: "Home", url: "/" }, { name: "FAQ", url: "/faq" }]),
+      ]} />
       <Header />
-      
+
       <main className="pt-28 md:pt-36">
         {/* Hero Section */}
         <section className="py-16 md:py-24 px-4 text-center">

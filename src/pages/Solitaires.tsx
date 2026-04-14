@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, breadcrumbs } from "@/components/JsonLd";
 import { Solitaire3DCard } from "@/components/Solitaire3DCard";
 
 const PLACEHOLDER_IFRAME = "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html";
@@ -85,6 +87,12 @@ const solitaireProducts = [
 export default function Solitaires() {
   return (
     <div className="min-h-screen flex flex-col">
+      <PageMeta
+        title="Vela Solitaire Collection | Noori — Lab-Grown Diamond Pendants, Earrings & Bracelets"
+        description="Shop Noori's Vela Solitaire Collection — IGI-certified lab-grown diamond pendants, studs, and bracelets in 14K and 18K gold. Starting from $1,750."
+        path="/collections/solitaires"
+      />
+      <JsonLd data={breadcrumbs([{ name: "Home", url: "/" }, { name: "Vela Collection", url: "/collections/solitaires" }])} />
       <Header />
       
       <main className="flex-1">

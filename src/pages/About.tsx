@@ -1,4 +1,6 @@
 import { Header } from "@/components/Header";
+import { PageMeta } from "@/components/PageMeta";
+import { JsonLd, NOORI_ORG, breadcrumbs } from "@/components/JsonLd";
 import ourStoryPurse from "@/assets/our-story-purse.png";
 
 import { Footer } from "@/components/Footer";
@@ -35,6 +37,12 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <PageMeta
+        title="Our Story | Noori — Ethical Lab-Grown Diamond Jewelry"
+        description="Noori was founded on the belief that luxury shouldn't come at someone else's expense. Learn about our mission, IGI-certified lab-grown diamonds, and our partnership with UNICEF."
+        path="/policies"
+      />
+      <JsonLd data={[NOORI_ORG, breadcrumbs([{ name: "Home", url: "/" }, { name: "Our Story", url: "/policies" }])]} />
       <Header />
 
       <main>
