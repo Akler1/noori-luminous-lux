@@ -134,7 +134,38 @@ const generateShardPath = (
   ctx.restore();
 };
 
-export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
+// Mobile hero: smooth cross-fade from sketch to real photo on mount.
+// Kept as its own component so hook count stays consistent with the
+// desktop canvas implementation.
+const HeroMobileReveal = ({ className = "" }: HeroSketchRevealProps) => {
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setRevealed(true), 700);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <div className={`absolute inset-0 ${className}`}>
+      <img
+        src={heroRealMobile}
+        alt="Noori Vela Collection — lab-grown diamond jewelry"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
+      <img
+        src={heroSketchMobile}
+        alt=""
+        aria-hidden="true"
+        className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2500ms] ease-out ${
+          revealed ? "opacity-0" : "opacity-100"
+        }`}
+      />
+    </div>
+  );
+};
+
+// Desktop canvas-based interactive reveal (unchanged logic).
+const HeroDesktopReveal = ({ className = "" }: HeroSketchRevealProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const maskCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -148,40 +179,9 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [mobileRevealed, setMobileRevealed] = useState(false);
 
-  const isMobile = useIsMobile();
+  const isMobile = false;
 
-  // Mobile: auto-reveal the real photo with a smooth fade instead of broken drag
-  useEffect(() => {
-    if (!isMobile) return;
-    const t = setTimeout(() => setMobileRevealed(true), 700);
-    return () => clearTimeout(t);
-  }, [isMobile]);
-
-  // Mobile renders a simple CSS-based cross-fade — no canvas, no pointer events
-  if (isMobile) {
-    return (
-      <div ref={containerRef} className={`absolute inset-0 ${className}`}>
-        {/* Real photo underneath */}
-        <img
-          src={heroRealMobile}
-          alt="Noori Vela Collection — lab-grown diamond jewelry"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        {/* Sketch on top, fades out */}
-        <img
-          src={heroSketchMobile}
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2500ms] ease-out ${
-            mobileRevealed ? "opacity-0" : "opacity-100"
-          }`}
-        />
-      </div>
-    );
-  }
-  
   // Initialize canvases and load images
   useEffect(() => {
     const sketchSrc = isMobile ? heroSketchMobile : heroSketch;
@@ -473,4 +473,18 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
       )}
     </div>
   );
+};
+
+// Wrapper: picks the right implementation based on viewport.
+// Rendering different components (not early-returning inside one)
+// keeps React hooks consistent across re-renders.
+export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
+  const isMobile = useIsMobile();
+
+  // useIsMobile returns undefined on first render — render mobile version
+  // as the safe default since it has no heavy canvas work.
+  if (isMobile || isMobile === undefined) {
+    return <HeroMobileReveal className={className} />;
+  }
+  return <HeroDesktopReveal className={className} />;
 };
