@@ -149,7 +149,7 @@
   }
   
   .hero-text {
-    @apply text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight;
+    @apply text-[2.5rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight;
     font-family: var(--font-display);
   }
   

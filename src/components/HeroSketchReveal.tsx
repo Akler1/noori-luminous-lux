@@ -144,12 +144,43 @@ export const HeroSketchReveal = ({ className = "" }: HeroSketchRevealProps) => {
   const isActiveRef = useRef<boolean>(false);
   const dprRef = useRef<number>(1);
   const imageOffsetRef = useRef<ImageOffset>({ x: 0, y: 0, width: 0, height: 0 });
-  
+
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  
+  const [mobileRevealed, setMobileRevealed] = useState(false);
+
   const isMobile = useIsMobile();
+
+  // Mobile: auto-reveal the real photo with a smooth fade instead of broken drag
+  useEffect(() => {
+    if (!isMobile) return;
+    const t = setTimeout(() => setMobileRevealed(true), 700);
+    return () => clearTimeout(t);
+  }, [isMobile]);
+
+  // Mobile renders a simple CSS-based cross-fade — no canvas, no pointer events
+  if (isMobile) {
+    return (
+      <div ref={containerRef} className={`absolute inset-0 ${className}`}>
+        {/* Real photo underneath */}
+        <img
+          src={heroRealMobile}
+          alt="Noori Vela Collection — lab-grown diamond jewelry"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        {/* Sketch on top, fades out */}
+        <img
+          src={heroSketchMobile}
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2500ms] ease-out ${
+            mobileRevealed ? "opacity-0" : "opacity-100"
+          }`}
+        />
+      </div>
+    );
+  }
   
   // Initialize canvases and load images
   useEffect(() => {

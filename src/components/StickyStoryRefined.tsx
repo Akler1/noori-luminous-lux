@@ -29,7 +29,7 @@ export const StickyStoryRefined = () => {
           <img
             src={unicefBackpacks}
             alt="Children with UNICEF backpacks heading to school"
-            className="w-full max-h-[600px] object-cover"
+            className="w-full max-h-[420px] md:max-h-[600px] object-cover"
           />
         </motion.div>
 

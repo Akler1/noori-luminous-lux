@@ -28,7 +28,7 @@ export const HeroSplitEditorial = () => {
 
       {/* Text content */}
       {/* Text content - positioned at left edge with minimal padding */}
-      <div className="relative z-10 h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-16 md:pb-24 px-5 md:px-8 pointer-events-none">
+      <div className="relative z-10 h-full min-h-[100svh] md:min-h-0 md:absolute md:inset-0 flex items-end pb-14 md:pb-24 px-6 md:px-8 pointer-events-none">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -38,7 +38,7 @@ export const HeroSplitEditorial = () => {
           {/* Eyebrow */}
           <motion.p
             variants={itemVariants}
-            className="text-accent text-xs md:text-sm tracking-[0.3em] uppercase mb-4 md:mb-6"
+            className="text-accent text-[11px] md:text-sm tracking-[0.3em] uppercase mb-3 md:mb-6"
           >
             Lab-Grown Diamonds
           </motion.p>
@@ -56,7 +56,7 @@ export const HeroSplitEditorial = () => {
           {/* Subhead */}
           <motion.p
             variants={itemVariants}
-            className="text-stone-600 text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
+            className="text-stone-600 text-base md:text-xl leading-relaxed mb-7 md:mb-10 max-w-[90%]"
           >
             Introducing the inaugural Vela collection. Modern heirlooms
             crafted from light itself.
@@ -65,11 +65,11 @@ export const HeroSplitEditorial = () => {
           {/* CTAs */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto"
           >
             <Button
               asChild
-              className="btn-magnetic bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-6 text-base font-medium rounded-lg"
+              className="btn-magnetic bg-accent text-accent-foreground hover:bg-accent/90 px-7 py-5 sm:px-8 sm:py-6 text-base font-medium rounded-lg w-full sm:w-auto"
             >
               <Link to="/collections/solitaires">Shop the Collection</Link>
             </Button>

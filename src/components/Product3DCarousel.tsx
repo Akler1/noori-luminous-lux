@@ -60,20 +60,25 @@ export default function Product3DCarousel() {
       </div>
 
       {/* Trust Bar */}
-      <div className="w-full px-4 py-5 md:py-6 border-b border-border/40">
-        <div className="grid grid-cols-5 gap-2 md:gap-8 text-center max-w-[1280px] mx-auto">
+      <div className="w-full px-4 py-6 md:py-6 border-b border-border/40">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-4 gap-y-5 md:gap-8 text-center max-w-[1280px] mx-auto">
           {[
             { Icon: Truck, label: "Free Shipping", sub: "On all orders" },
             { Icon: RotateCcw, label: "30-Day Returns", sub: "Easy exchanges" },
             { Icon: Shield, label: "Lifetime Warranty", sub: "Crafted to last" },
             { Icon: Gem, label: "Ethical Diamonds", sub: "Lab-grown" },
             { Icon: Award, label: "IGI Certified", sub: "Every diamond" },
-          ].map(({ Icon, label, sub }) => (
-            <div key={label} className="flex flex-col items-center gap-1 md:gap-2">
-              <Icon className="h-5 w-5 md:h-7 md:w-7 text-accent" />
+          ].map(({ Icon, label, sub }, i) => (
+            <div
+              key={label}
+              className={`flex flex-col items-center gap-2 ${
+                i === 4 ? "col-span-2 sm:col-span-1" : ""
+              }`}
+            >
+              <Icon className="h-6 w-6 md:h-7 md:w-7 text-accent" />
               <div>
-                <p className="font-medium text-[10px] md:text-sm text-foreground">{label}</p>
-                <p className="text-[9px] md:text-xs text-muted-foreground">{sub}</p>
+                <p className="font-medium text-xs md:text-sm text-foreground leading-tight">{label}</p>
+                <p className="text-[11px] md:text-xs text-muted-foreground leading-tight mt-0.5">{sub}</p>
               </div>
             </div>
           ))}
@@ -98,7 +103,7 @@ export default function Product3DCarousel() {
                     title={product.name}
                     loading="lazy"
                   />
-                  <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
+                  <div className="hidden md:flex absolute bottom-2 left-0 right-0 justify-center pointer-events-none">
                     <div className="flex items-center gap-1.5 text-accent/70 text-[10px] tracking-wide">
                       <RotateCw className="h-3 w-3" />
                       Click & drag to rotate
@@ -107,7 +112,7 @@ export default function Product3DCarousel() {
                 </div>
               </div>
 
-              <div className="px-4 pt-4 pb-5 md:px-6 md:pt-6 md:pb-6 bg-background">
+              <div className="px-3 pt-3 pb-4 md:px-6 md:pt-6 md:pb-6 bg-background">
                 <p className="text-xs text-muted-foreground/80 uppercase tracking-wider mb-1">
                   {product.material}
                 </p>

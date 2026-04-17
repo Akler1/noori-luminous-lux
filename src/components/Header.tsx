@@ -115,12 +115,13 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="relative text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Open cart"
+              className="relative h-11 w-11 text-white/80 hover:text-white hover:bg-white/10 transition-colors"
               onClick={openCart}
             >
               <ShoppingBag className="h-5 w-5" />
               {cart && cart.totalQuantity > 0 && (
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-accent text-accent-foreground text-[10px] rounded-full flex items-center justify-center font-medium">
+                <span className="absolute top-1 right-1 h-5 min-w-[20px] px-1 bg-accent text-accent-foreground text-[11px] rounded-full flex items-center justify-center font-semibold">
                   {cart.totalQuantity}
                 </span>
               )}
@@ -130,10 +131,11 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white/80 hover:text-white hover:bg-white/10"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              className="md:hidden h-11 w-11 text-white/80 hover:text-white hover:bg-white/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
