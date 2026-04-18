@@ -70,6 +70,17 @@ export const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
       value,
       currency,
     });
+    window.ttq?.track("InitiateCheckout", {
+      contents: items.map((i) => ({
+        content_id: i.productId,
+        content_name: i.title,
+        content_type: "product",
+        quantity: i.quantity,
+        price: parseFloat(i.price),
+      })),
+      value,
+      currency,
+    });
 
     window.open(cart.checkoutUrl, "_blank");
   };

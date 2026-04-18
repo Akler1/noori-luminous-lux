@@ -177,6 +177,7 @@ const ProductDetail = () => {
 
   // Fire Klaviyo "Viewed Product" once when a product + variant are loaded.
   // Klaviyo uses this to power Browse Abandonment flows and Recently Viewed.
+  // Also fire ViewContent on Meta Pixel + TikTok for ad retargeting audiences.
   useEffect(() => {
     if (!product || !selectedVariant || !handle) return;
     klaviyoViewedProduct({
@@ -187,6 +188,28 @@ const ProductDetail = () => {
       sku: selectedVariant.sku,
       image: product.images.edges[0]?.node.url,
       compareAtPrice: selectedVariant.compareAtPrice?.amount,
+    });
+
+    const price = parseFloat(selectedVariant.price.amount);
+    const currency = selectedVariant.price.currencyCode;
+    const id = selectedVariant.sku ?? product.id;
+
+    window.fbq?.("track", "ViewContent", {
+      content_name: product.title,
+      content_ids: [id],
+      content_type: "product",
+      value: price,
+      currency,
+    });
+    window.ttq?.track("ViewContent", {
+      contents: [{
+        content_id: id,
+        content_name: product.title,
+        content_type: "product",
+        price,
+      }],
+      value: price,
+      currency,
     });
   }, [product, selectedVariant, handle]);
 
@@ -232,6 +255,17 @@ const ProductDetail = () => {
           content_name: product.title,
           content_ids: [selectedVariant.sku ?? product.id],
           content_type: "product",
+          value,
+          currency: selectedVariant.price.currencyCode,
+        });
+        window.ttq?.track("AddToCart", {
+          contents: [{
+            content_id: selectedVariant.sku ?? product.id,
+            content_name: product.title,
+            content_type: "product",
+            quantity,
+            price: parseFloat(selectedVariant.price.amount),
+          }],
           value,
           currency: selectedVariant.price.currencyCode,
         });

@@ -88,9 +88,10 @@ export const EmailCaptureModal = () => {
       setIsOpen(false);
       localStorage.setItem('noori-newsletter-subscriber', 'true');
 
-      // Fire analytics events — marks a qualified lead in GA4 and Meta Pixel
+      // Fire analytics events — qualified lead in GA4, Meta Pixel, and TikTok
       window.gtag?.("event", "sign_up", { method: "email_popup" });
       window.fbq?.("track", "Lead", { content_name: "Email Capture Popup" });
+      window.ttq?.track("SubmitForm", { content_name: "Email Capture Popup" });
     } catch (error) {
       console.error("Klaviyo subscribe error:", error);
       toast.error("Something went wrong. Please try again.");

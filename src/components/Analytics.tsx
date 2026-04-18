@@ -6,12 +6,18 @@ type FbqFn = ((command: string, event: string, params?: Record<string, unknown>)
   callMethod?: unknown;
   queue?: unknown[];
 };
+type TtqFn = {
+  page: () => void;
+  track: (event: string, params?: Record<string, unknown>) => void;
+  identify: (params: Record<string, unknown>) => void;
+};
 
 declare global {
   interface Window {
     gtag?: GtagFn;
     dataLayer?: unknown[];
     fbq?: FbqFn;
+    ttq?: TtqFn;
   }
 }
 
@@ -50,6 +56,10 @@ export const Analytics = () => {
 
     if (typeof window.fbq === "function") {
       window.fbq("track", "PageView");
+    }
+
+    if (window.ttq && typeof window.ttq.page === "function") {
+      window.ttq.page();
     }
   }, [pathname, search]);
 
