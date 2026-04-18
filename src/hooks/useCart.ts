@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 interface CartContextType {
   cart: ShopifyCart | null;
   isLoading: boolean;
-  addToCart: (variantId: string, quantity?: number) => Promise<void>;
+  addToCart: (variantId: string, quantity?: number) => Promise<ShopifyCart | null>;
   removeFromCart: (lineId: string) => Promise<void>;
   updateCartLine: (lineId: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -59,8 +59,8 @@ export const useCartActions = () => {
     initCart();
   }, []);
 
-  const addToCart = async (variantId: string, quantity = 1) => {
-    if (!cart) return;
+  const addToCart = async (variantId: string, quantity = 1): Promise<ShopifyCart | null> => {
+    if (!cart) return null;
 
     setIsLoading(true);
     try {
@@ -69,9 +69,11 @@ export const useCartActions = () => {
       localStorage.setItem('noori-cart-id', updatedCart.id);
       setIsCartOpen(true);
       toast.success('Added to cart!');
+      return updatedCart;
     } catch (error) {
       console.error('Failed to add to cart:', error);
       toast.error('Failed to add item to cart');
+      return null;
     } finally {
       setIsLoading(false);
     }

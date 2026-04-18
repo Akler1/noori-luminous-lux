@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useCartActions } from "@/hooks/useCart";
 import { motion, AnimatePresence } from "framer-motion";
+import { klaviyoStartedCheckout } from "@/lib/klaviyo-tracking";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -30,9 +31,47 @@ export const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
   };
 
   const handleCheckout = () => {
-    if (cart?.checkoutUrl) {
-      window.open(cart.checkoutUrl, '_blank');
-    }
+    if (!cart?.checkoutUrl) return;
+
+    // Fire Klaviyo "Started Checkout" — triggers Abandoned Cart flow
+    // and gives the item list for email personalization
+    const items = cart.lines.edges.map(({ node }) => ({
+      productId: node.merchandise.product.id,
+      title: node.merchandise.product.title,
+      handle: node.merchandise.product.handle,
+      price: node.cost.totalAmount.amount,
+      quantity: node.quantity,
+      image: node.merchandise.image?.url,
+    }));
+    klaviyoStartedCheckout({
+      cartTotalValue: parseFloat(cart.cost.totalAmount.amount),
+      itemNames: items.map((i) => i.title),
+      checkoutUrl: cart.checkoutUrl,
+      items,
+    });
+
+    // GA4 + Meta Pixel begin_checkout / InitiateCheckout
+    const value = parseFloat(cart.cost.totalAmount.amount);
+    const currency = cart.cost.totalAmount.currencyCode;
+    window.gtag?.("event", "begin_checkout", {
+      currency,
+      value,
+      items: items.map((i) => ({
+        item_id: i.productId,
+        item_name: i.title,
+        price: parseFloat(i.price),
+        quantity: i.quantity,
+      })),
+    });
+    window.fbq?.("track", "InitiateCheckout", {
+      content_ids: items.map((i) => i.productId),
+      content_type: "product",
+      num_items: cart.totalQuantity,
+      value,
+      currency,
+    });
+
+    window.open(cart.checkoutUrl, "_blank");
   };
 
   const cartLines = cart?.lines.edges || [];

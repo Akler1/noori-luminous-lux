@@ -39,10 +39,7 @@
       fbq('init', '1668658824143891');
       fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1668658824143891&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- End Meta Pixel Code (noscript img fallback lives in <body>) -->
 
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -52,6 +49,10 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "wdq1pu8qot");
     </script>
+
+    <!-- Klaviyo Onsite JS (_learnq) — enables Viewed Product, Added to Cart,
+         Started Checkout tracking + browse/cart abandonment flows -->
+    <script async type="application/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=XGWREq"></script>
 
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/823f9473-112c-4d32-9a92-be5a53d1f811/id-preview-141b0c37--11eaedaa-af7f-4c5f-b6f4-d9f0c80de3a9.lovable.app-1773436025890.png">
@@ -67,6 +68,10 @@
 </head>
 
   <body>
+    <!-- Meta Pixel noscript fallback (valid here, not in <head>) -->
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1668658824143891&ev=PageView&noscript=1"
+      alt="" /></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

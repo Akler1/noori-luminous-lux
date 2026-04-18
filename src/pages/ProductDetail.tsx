@@ -17,6 +17,7 @@ import { SocialFeed } from "@/components/SocialFeed";
 import { ReviewsStub } from "@/components/ReviewsStub";
 import { PageMeta } from "@/components/PageMeta";
 import { JsonLd, productSchema, breadcrumbs } from "@/components/JsonLd";
+import { klaviyoViewedProduct, klaviyoAddedToCart } from "@/lib/klaviyo-tracking";
 
 /* ── Product-specific accordion content ── */
 function getProductType(handle: string): 'earring' | 'pendant' | 'bracelet' | 'necklace' {
@@ -144,18 +145,18 @@ const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'3d' | 'images'>('3d');
   const [showSparkles, setShowSparkles] = useState(false);
-  const { addToCart, isLoading: cartLoading } = useCartActions();
+  const { addToCart, isLoading: cartLoading, cart } = useCartActions();
 
   // Load product data
   useEffect(() => {
     const loadProduct = async () => {
       if (!handle) return;
-      
+
       setIsLoading(true);
       try {
         const productData = await shopify.getProduct(handle);
         setProduct(productData);
-        
+
         // Set first available variant as default
         if (productData?.variants.edges.length) {
           const firstVariant = productData.variants.edges.find(
@@ -174,15 +175,67 @@ const ProductDetail = () => {
     loadProduct();
   }, [handle]);
 
+  // Fire Klaviyo "Viewed Product" once when a product + variant are loaded.
+  // Klaviyo uses this to power Browse Abandonment flows and Recently Viewed.
+  useEffect(() => {
+    if (!product || !selectedVariant || !handle) return;
+    klaviyoViewedProduct({
+      id: product.id,
+      handle,
+      title: product.title,
+      price: selectedVariant.price.amount,
+      sku: selectedVariant.sku,
+      image: product.images.edges[0]?.node.url,
+      compareAtPrice: selectedVariant.compareAtPrice?.amount,
+    });
+  }, [product, selectedVariant, handle]);
+
   const handleAddToCart = async () => {
-    if (!selectedVariant) return;
-    
+    if (!selectedVariant || !product || !handle) return;
+
     // Trigger sparkles animation
     setShowSparkles(true);
     setTimeout(() => setShowSparkles(false), 700);
-    
+
     try {
-      await addToCart(selectedVariant.id, quantity);
+      const updatedCart = await addToCart(selectedVariant.id, quantity);
+
+      if (updatedCart) {
+        // Klaviyo "Added to Cart" — powers Cart Abandonment flow
+        klaviyoAddedToCart({
+          productId: product.id,
+          productHandle: handle,
+          productTitle: product.title,
+          variantId: selectedVariant.id,
+          variantSku: selectedVariant.sku,
+          variantPrice: selectedVariant.price.amount,
+          variantImage: selectedVariant.image?.url ?? product.images.edges[0]?.node.url,
+          quantity,
+          cartTotalValue: parseFloat(updatedCart.cost.totalAmount.amount),
+          cartItemNames: updatedCart.lines.edges.map(({ node }) => node.merchandise.product.title),
+          checkoutUrl: updatedCart.checkoutUrl,
+        });
+
+        // GA4 + Meta Pixel add_to_cart events
+        const value = parseFloat(selectedVariant.price.amount) * quantity;
+        window.gtag?.("event", "add_to_cart", {
+          currency: selectedVariant.price.currencyCode,
+          value,
+          items: [{
+            item_id: selectedVariant.sku ?? product.id,
+            item_name: product.title,
+            price: parseFloat(selectedVariant.price.amount),
+            quantity,
+          }],
+        });
+        window.fbq?.("track", "AddToCart", {
+          content_name: product.title,
+          content_ids: [selectedVariant.sku ?? product.id],
+          content_type: "product",
+          value,
+          currency: selectedVariant.price.currencyCode,
+        });
+      }
     } catch (error) {
       toast.error('Failed to add to cart');
     }

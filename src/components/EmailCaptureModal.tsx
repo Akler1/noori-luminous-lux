@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { subscribeToKlaviyo } from "@/lib/klaviyo";
+import { klaviyoIdentify } from "@/lib/klaviyo-tracking";
 
 export const EmailCaptureModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,6 +75,10 @@ export const EmailCaptureModal = () => {
 
     try {
       await subscribeToKlaviyo({ email, source: "Website Popup" });
+
+      // Cookie-tie this email to their Klaviyo profile so all future
+      // behavior (Viewed Product, Added to Cart, etc.) attaches to them
+      klaviyoIdentify(email);
 
       toast.success("Welcome to Noori! Check your inbox for a confirmation.", {
         duration: 5000,

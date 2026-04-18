@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PageMeta } from "@/components/PageMeta";
 import { JsonLd, breadcrumbs } from "@/components/JsonLd";
 import { Solitaire3DCard } from "@/components/Solitaire3DCard";
+import { klaviyoViewedCategory } from "@/lib/klaviyo-tracking";
 
 const PLACEHOLDER_IFRAME = "https://akler1.github.io/XR-Round-Gold.1/XR%20Rounds%20Yellow.1.html";
 
@@ -85,6 +87,10 @@ const solitaireProducts = [
 ];
 
 export default function Solitaires() {
+  useEffect(() => {
+    klaviyoViewedCategory("Vela Solitaire Collection");
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <PageMeta
