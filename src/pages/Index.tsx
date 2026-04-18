@@ -1,14 +1,31 @@
+import { Suspense, lazy } from "react";
 import { Header } from "@/components/Header";
 import { PageMeta } from "@/components/PageMeta";
 import { JsonLd, NOORI_ORG, NOORI_WEBSITE, breadcrumbs } from "@/components/JsonLd";
 import { HeroSplitEditorial } from "@/components/HeroSplitEditorial";
-import { StickyStoryRefined } from "@/components/StickyStoryRefined";
-import Product3DCarousel from "@/components/Product3DCarousel";
-import ScrollImageSequence from "@/components/ScrollImageSequence";
-import { SocialFeed } from "@/components/SocialFeed";
-import { FinalCTAForm } from "@/components/FinalCTAForm";
 import { Footer } from "@/components/Footer";
-import { EmailCaptureModal } from "@/components/EmailCaptureModal";
+
+// Above-the-fold components stay eager. Everything below the fold is split
+// into its own chunk and rendered under Suspense so the hero paints fast.
+const Product3DCarousel = lazy(() => import("@/components/Product3DCarousel"));
+const ScrollImageSequence = lazy(() => import("@/components/ScrollImageSequence"));
+const StickyStoryRefined = lazy(() =>
+  import("@/components/StickyStoryRefined").then((m) => ({ default: m.StickyStoryRefined }))
+);
+const SocialFeed = lazy(() =>
+  import("@/components/SocialFeed").then((m) => ({ default: m.SocialFeed }))
+);
+const FinalCTAForm = lazy(() =>
+  import("@/components/FinalCTAForm").then((m) => ({ default: m.FinalCTAForm }))
+);
+const EmailCaptureModal = lazy(() =>
+  import("@/components/EmailCaptureModal").then((m) => ({ default: m.EmailCaptureModal }))
+);
+
+// Placeholder with enough height to avoid layout shift while chunks stream in
+const SectionSkeleton = ({ h = "60vh" }: { h?: string }) => (
+  <div style={{ height: h }} aria-hidden="true" />
+);
 
 const Index = () => {
   return (
@@ -22,19 +39,31 @@ const Index = () => {
       <Header />
       <main>
         <HeroSplitEditorial />
-        <Product3DCarousel />
-        <ScrollImageSequence
-          basePath="/earing_frames_final"
-          frameCount={46}
-          ext="webp"
-          scrollVh={250}
-        />
-        <StickyStoryRefined />
-        <SocialFeed />
-        <FinalCTAForm />
+        <Suspense fallback={<SectionSkeleton h="80vh" />}>
+          <Product3DCarousel />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton h="100vh" />}>
+          <ScrollImageSequence
+            basePath="/earing_frames_final"
+            frameCount={46}
+            ext="webp"
+            scrollVh={250}
+          />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton h="60vh" />}>
+          <StickyStoryRefined />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton h="40vh" />}>
+          <SocialFeed />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton h="40vh" />}>
+          <FinalCTAForm />
+        </Suspense>
       </main>
       <Footer />
-      <EmailCaptureModal />
+      <Suspense fallback={null}>
+        <EmailCaptureModal />
+      </Suspense>
     </div>
   );
 };
