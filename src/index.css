@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Mier A (Typotheque) — used for product prices ── */
+@font-face {
+  font-family: "Mier A";
+  src: url("/fonts/MierA-Regular.woff2") format("woff2"),
+       url("/fonts/MierA-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mier A";
+  src: url("/fonts/MierA-DemiBold.woff2") format("woff2"),
+       url("/fonts/MierA-DemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mier A";
+  src: url("/fonts/MierA-Bold.woff2") format("woff2"),
+       url("/fonts/MierA-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Utility: apply Mier A to any element (use on price displays) */
+.font-mier {
+  font-family: "Mier A", "Inter", system-ui, sans-serif;
+  font-feature-settings: "tnum" 1; /* tabular numbers for aligned prices */
+}
+
 /* Noori Design System V1 - Premium Editorial */
 
 @layer base {

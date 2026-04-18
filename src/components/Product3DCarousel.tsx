@@ -119,7 +119,7 @@ export default function Product3DCarousel() {
                 <h3 className="font-medium text-foreground text-sm md:text-base mb-1 group-hover:text-accent transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-sm md:text-base text-foreground group-hover:text-accent transition-colors">
+                <p className="font-mier text-sm md:text-base text-foreground group-hover:text-accent transition-colors">
                   {product.price}
                 </p>
               </div>

@@ -472,16 +472,16 @@ const ProductDetail = () => {
 
             {/* Price */}
             <div className="border-t border-b border-border py-6">
-              <div className="text-4xl md:text-5xl font-display font-medium text-accent mb-2 tracking-tight">
+              <div className="font-mier text-4xl md:text-5xl font-semibold text-accent mb-2 tracking-tight">
                 USD ${selectedVariant?.price.amount ? parseFloat(selectedVariant.price.amount).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : ''}
               </div>
               {selectedVariant?.cadPrice && (
-                <div className="text-lg text-muted-foreground mb-2">
+                <div className="font-mier text-lg text-muted-foreground mb-2">
                   CAD ${selectedVariant.cadPrice.amount}
                 </div>
               )}
               {selectedVariant?.compareAtPrice && (
-                <div className="text-xl text-muted-foreground line-through mb-2">
+                <div className="font-mier text-xl text-muted-foreground line-through mb-2">
                   USD ${selectedVariant.compareAtPrice.amount}
                 </div>
               )}
@@ -635,7 +635,7 @@ const ProductDetail = () => {
                   </div>
                   <h3 className="font-display text-xl font-normal mb-2">{item.name}</h3>
                   <div className="flex items-center justify-between">
-                    <span className="text-accent font-medium">{item.price}</span>
+                    <span className="font-mier text-accent font-semibold">{item.price}</span>
                     <Button size="sm" className="btn-hero group" asChild>
                       <Link to={`/product/${(item as any).handle}`}>
                         View Details

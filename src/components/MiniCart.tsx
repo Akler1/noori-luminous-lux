@@ -204,7 +204,7 @@ export const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
                             </div>
                             
                             <div className="text-right">
-                              <div className="text-sm font-medium text-accent">
+                              <div className="font-mier text-sm font-semibold text-accent">
                                 CAD ${line.cost.totalAmount.amount}
                               </div>
                             </div>
@@ -242,7 +242,7 @@ export const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
-                <span>CAD ${cart?.cost.subtotalAmount.amount}</span>
+                <span className="font-mier">CAD ${cart?.cost.subtotalAmount.amount}</span>
               </div>
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Shipping</span>
@@ -250,7 +250,7 @@ export const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
               </div>
               <div className="flex justify-between font-medium text-lg border-t border-border pt-2">
                 <span>Total</span>
-                <span className="text-accent">CAD ${cart?.cost.totalAmount.amount}</span>
+                <span className="font-mier font-semibold text-accent">CAD ${cart?.cost.totalAmount.amount}</span>
               </div>
             </div>
 

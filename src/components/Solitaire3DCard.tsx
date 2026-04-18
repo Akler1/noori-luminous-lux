@@ -108,7 +108,7 @@ export const Solitaire3DCard = ({
           <h3 className="font-medium text-foreground group-hover:text-accent transition-colors">
             {name}
           </h3>
-          <p className="text-lg font-semibold text-foreground">{price}</p>
+          <p className="font-mier text-lg font-semibold text-foreground">{price}</p>
         </div>
       </div>
     </Link>
