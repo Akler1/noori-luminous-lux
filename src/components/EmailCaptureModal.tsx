@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { subscribeToKlaviyo } from "@/lib/klaviyo";
 
 export const EmailCaptureModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,21 +71,23 @@ export const EmailCaptureModal = () => {
     if (!email) return;
 
     setIsSubmitting(true);
-    
+
     try {
-      // Simulate newsletter signup
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast.success("Welcome to Noori! You'll receive early access to our next capsule.", {
+      await subscribeToKlaviyo({ email, source: "Website Popup" });
+
+      toast.success("Welcome to Noori! Check your inbox for a confirmation.", {
         duration: 5000,
       });
-      
+
       setEmail("");
       setIsOpen(false);
-      
-      // Store successful signup
       localStorage.setItem('noori-newsletter-subscriber', 'true');
+
+      // Fire analytics events — marks a qualified lead in GA4 and Meta Pixel
+      window.gtag?.("event", "sign_up", { method: "email_popup" });
+      window.fbq?.("track", "Lead", { content_name: "Email Capture Popup" });
     } catch (error) {
+      console.error("Klaviyo subscribe error:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
