@@ -11,8 +11,8 @@ import earringsHero from "@/assets/earrings-hero.jpg";
 import earringsPrincess from "@/assets/earrings-princess.jpg";
 import braceletHero from "@/assets/bracelet-hero.jpg";
 import necklaceHero from "@/assets/necklace-hero.jpg";
-import heroProductShot from "@/assets/hero-product-shot.png";
-import heroLifestyle from "@/assets/hero-lifestyle.png";
+import heroProductShot from "@/assets/hero-product-shot-1280.webp";
+import heroLifestyle from "@/assets/hero-lifestyle-1280.webp";
 
 const socialPosts = [
   { src: earringsHero, handle: "@noori.diamonds" },

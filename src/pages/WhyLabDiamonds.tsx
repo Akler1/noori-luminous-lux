@@ -5,7 +5,9 @@ import { JsonLd, breadcrumbs } from "@/components/JsonLd";
 import { Link } from "react-router-dom";
 import { Sparkles, Palette, Microscope, Scale, FileCheck, Download, ArrowRight, Flame, Zap, ShieldCheck, Leaf, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
-import cvdDiamonds from "@/assets/cvd-diamonds.png";
+import cvdDiamonds640 from "@/assets/cvd-diamonds-640.webp";
+import cvdDiamonds1280 from "@/assets/cvd-diamonds-1280.webp";
+import cvdDiamonds1920 from "@/assets/cvd-diamonds-1920.webp";
 import { Button } from "@/components/ui/button";
 
 /* ── Grade Pill Stack (shared with About.tsx) ── */
@@ -88,11 +90,18 @@ export default function WhyLabDiamonds() {
               </div>
             </motion.div>
             <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }}>
-              <img
-                src={cvdDiamonds}
-                alt="Raw CVD lab-grown diamond plates alongside cut brilliant diamonds"
-                className="w-full rounded-2xl object-cover aspect-[3/2]"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={`${cvdDiamonds640} 640w, ${cvdDiamonds1280} 1280w, ${cvdDiamonds1920} 1920w`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <img
+                  src={cvdDiamonds1280}
+                  alt="Raw CVD lab-grown diamond plates alongside cut brilliant diamonds"
+                  className="w-full rounded-2xl object-cover aspect-[3/2]"
+                />
+              </picture>
               <p className="text-xs text-foreground/40 mt-3 text-center">
                 Raw CVD diamond plates before cutting, alongside finished brilliant-cut stones.
               </p>

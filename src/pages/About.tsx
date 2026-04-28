@@ -1,7 +1,9 @@
 import { Header } from "@/components/Header";
 import { PageMeta } from "@/components/PageMeta";
 import { JsonLd, NOORI_ORG, breadcrumbs } from "@/components/JsonLd";
-import ourStoryPurse from "@/assets/our-story-purse.png";
+import ourStoryPurse640 from "@/assets/our-story-purse-640.webp";
+import ourStoryPurse1280 from "@/assets/our-story-purse-1280.webp";
+import ourStoryPurse1920 from "@/assets/our-story-purse-1920.webp";
 
 import { Footer } from "@/components/Footer";
 import { Mountain, HeartHandshake, GraduationCap, Sparkles, Heart, Gem, Leaf, Users, Microscope, Scale, Palette, FileCheck, Download, Factory, ClipboardCheck, Package, Truck } from "lucide-react";
@@ -86,7 +88,14 @@ const About = () => {
                 viewport={{ once: true }}
                 className="md:col-span-5 flex items-start justify-center"
               >
-                <img src={ourStoryPurse} alt="Noori luxury jewelry" className="w-full scale-[1.4] origin-center object-contain drop-shadow-xl" />
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={`${ourStoryPurse640} 640w, ${ourStoryPurse1280} 1280w, ${ourStoryPurse1920} 1920w`}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <img src={ourStoryPurse1280} alt="Noori luxury jewelry" className="w-full scale-[1.4] origin-center object-contain drop-shadow-xl" />
+                </picture>
               </motion.div>
             </div>
           </div>

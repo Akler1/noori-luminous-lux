@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import heroReal from "@/assets/hero-real.png";
-import heroSketch from "@/assets/hero-sketch.png";
-import heroRealMobile from "@/assets/hero-real-mobile.png";
-import heroSketchMobile from "@/assets/hero-sketch-mobile.png";
+// Hero base photo — desktop sizes (via srcset)
+import heroReal640 from "@/assets/hero-real-640.webp";
+import heroReal1280 from "@/assets/hero-real-1280.webp";
+import heroReal1920 from "@/assets/hero-real-1920.webp";
+// Hero sketch — loaded into <canvas>, so we just need one high-res source
+import heroSketch from "@/assets/hero-sketch-1920.webp";
+// Mobile hero base photo (used by HeroMobileReveal)
+import heroRealMobile480 from "@/assets/hero-real-mobile-480.webp";
+import heroRealMobile960 from "@/assets/hero-real-mobile-960.webp";
+// Legacy mobile sketch — referenced inside HeroDesktopReveal in dead branch,
+// kept only so the import doesn't break that file
+import heroSketchMobile from "@/assets/hero-sketch-mobile-960.webp";
 
 interface HeroSketchRevealProps {
   className?: string;
@@ -140,11 +148,18 @@ const generateShardPath = (
 const HeroMobileReveal = ({ className = "" }: HeroSketchRevealProps) => {
   return (
     <div className={`absolute inset-0 ${className}`}>
-      <img
-        src={heroRealMobile}
-        alt="Noori Vela Collection — lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-center"
-      />
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={`${heroRealMobile480} 480w, ${heroRealMobile960} 960w`}
+          sizes="100vw"
+        />
+        <img
+          src={heroRealMobile960}
+          alt="Noori Vela Collection — lab-grown diamond jewelry"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      </picture>
     </div>
   );
 };
@@ -427,17 +442,19 @@ const HeroDesktopReveal = ({ className = "" }: HeroSketchRevealProps) => {
       onPointerLeave={handlePointerLeave}
       onClick={handleTap}
     >
-      {/* Base layer: Real photo */}
-      <img
-        src={heroRealMobile}
-        alt="Noori Vela Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
-      />
-      <img
-        src={heroReal}
-        alt="Noori Vela Collection - Lab-grown diamond jewelry"
-        className="absolute inset-0 w-full h-full object-cover object-right hidden md:block"
-      />
+      {/* Base layer: Real photo (desktop only — mobile uses HeroMobileReveal) */}
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={`${heroReal640} 640w, ${heroReal1280} 1280w, ${heroReal1920} 1920w`}
+          sizes="100vw"
+        />
+        <img
+          src={heroReal1920}
+          alt="Noori Vela Collection - Lab-grown diamond jewelry"
+          className="absolute inset-0 w-full h-full object-cover object-right"
+        />
+      </picture>
       
       {/* Sketch overlay canvas */}
       <canvas

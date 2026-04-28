@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShopifyProduct, ShopifyVariant } from "@/types/shopify";
 import { motion, AnimatePresence } from "framer-motion";
-import metalGold from '@/assets/metal-gold.png';
-import metalSilver from '@/assets/metal-silver.png';
-import metalRose from '@/assets/metal-rose.png';
+import metalGold from '@/assets/metal-gold-96.webp';
+import metalSilver from '@/assets/metal-silver-96.webp';
+import metalRose from '@/assets/metal-rose-96.webp';
 
 interface VariantSelectorProps {
   product: ShopifyProduct;
