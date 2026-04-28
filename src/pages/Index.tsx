@@ -54,7 +54,7 @@ const Index = () => {
           <Suspense fallback={<SectionSkeleton h="100vh" />}>
             <ScrollImageSequence
               basePath="/earing_frames_final"
-              frameCount={46}
+              frameCount={45}
               ext="webp"
               scrollVh={250}
             />
