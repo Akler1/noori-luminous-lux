@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted Inter + Cormorant Garamond — replaces the render-blocking
+ * Google Fonts CSS. @fontsource ships per-weight WOFF2 files (~30 KB each)
+ * that load with the rest of our CSS, no extra DNS/TLS round-trip. */
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/cormorant-garamond/300.css";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+
 /* ── Mier A (Typotheque) — used for product prices ── */
 @font-face {
   font-family: "Mier A";

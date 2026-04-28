@@ -10,19 +10,21 @@ import sharp from "sharp";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ASSETS = resolve(__dirname, "..", "src", "assets");
 const FORCE = process.argv.includes("--force");
-const QUALITY = 85;
+const DEFAULT_QUALITY = 85;
+const HERO_QUALITY = 92; // visually pristine for the LCP hero set
 const EFFORT = 6; // 0-6, higher = slower encode + smaller file
 
-// [sourceFile, [outputWidths]] — see plan for tier rationale
+// [sourceFile, [outputWidths], quality?] — see plan for tier rationale
 const JOBS = [
-  // Tier A: viewport-sized hero/content
-  ["hero-real.png", [640, 1280, 1920]],
-  ["hero-sketch.png", [640, 1280, 1920]],
+  // Tier A: viewport-sized hero/content — hero set bumped to quality 92 so the
+  // LCP image is visually indistinguishable from the source PNG
+  ["hero-real.png", [640, 1280, 1920], HERO_QUALITY],
+  ["hero-sketch.png", [640, 1280, 1920], HERO_QUALITY],
   ["cvd-diamonds.png", [640, 1280, 1920]],
   ["our-story-purse.png", [640, 1280, 1920]],
-  // Tier B: mobile-only hero
-  ["hero-real-mobile.png", [480, 960]],
-  ["hero-sketch-mobile.png", [480, 960]],
+  // Tier B: mobile-only hero — also bumped to high quality
+  ["hero-real-mobile.png", [480, 960], HERO_QUALITY],
+  ["hero-sketch-mobile.png", [480, 960], HERO_QUALITY],
   // Tier C: card-sized content
   ["hero-lifestyle.png", [1280]],
   ["hero-product-shot.png", [1280]],
@@ -42,7 +44,7 @@ const fmt = (n) => {
   return `${n} B`;
 };
 
-async function convertOne(filename, widths) {
+async function convertOne(filename, widths, quality = DEFAULT_QUALITY) {
   const srcPath = resolve(ASSETS, filename);
   const srcExists = await exists(srcPath);
   if (!srcExists) {
@@ -72,11 +74,11 @@ async function convertOne(filename, widths) {
 
     const outBuf = await sharp(srcBuf)
       .resize({ width: targetWidth, withoutEnlargement: true })
-      .webp({ quality: QUALITY, effort: EFFORT })
+      .webp({ quality, effort: EFFORT })
       .toBuffer();
 
     await writeFile(outPath, outBuf);
-    outputs.push(`${outName}: ${fmt(outBuf.length)}`);
+    outputs.push(`${outName}: ${fmt(outBuf.length)} @q${quality}`);
     totalOut += outBuf.length;
   }
 
@@ -88,10 +90,10 @@ async function convertOne(filename, widths) {
 }
 
 async function main() {
-  console.log(`Converting ${JOBS.length} images at quality ${QUALITY}, effort ${EFFORT}${FORCE ? " (force)" : ""}\n`);
+  console.log(`Converting ${JOBS.length} images, effort ${EFFORT}${FORCE ? " (force)" : ""}\n`);
   let totalSaved = 0;
-  for (const [filename, widths] of JOBS) {
-    const { saved } = await convertOne(filename, widths);
+  for (const [filename, widths, quality] of JOBS) {
+    const { saved } = await convertOne(filename, widths, quality);
     totalSaved += saved;
   }
   console.log(`\nTotal saved: ${fmt(totalSaved)}`);

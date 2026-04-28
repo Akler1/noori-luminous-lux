@@ -158,6 +158,7 @@ const HeroMobileReveal = ({ className = "" }: HeroSketchRevealProps) => {
           src={heroRealMobile960}
           alt="Noori Vela Collection — lab-grown diamond jewelry"
           className="absolute inset-0 w-full h-full object-cover object-center"
+          fetchPriority="high"
         />
       </picture>
     </div>
@@ -453,6 +454,7 @@ const HeroDesktopReveal = ({ className = "" }: HeroSketchRevealProps) => {
           src={heroReal1920}
           alt="Noori Vela Collection - Lab-grown diamond jewelry"
           className="absolute inset-0 w-full h-full object-cover object-right"
+          fetchPriority="high"
         />
       </picture>
       

@@ -8,65 +8,91 @@
     <meta name="author" content="Noori" />
     <link rel="icon" href="/favicon.png" type="image/png">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Inter + Cormorant Garamond are self-hosted via @fontsource (see src/index.css)
+         to avoid a render-blocking external Google Fonts request -->
 
     <!-- Warm up Shopify + Judge.me connections so API calls start instantly -->
     <link rel="preconnect" href="https://noori-design-2.myshopify.com" crossorigin>
     <link rel="preconnect" href="https://judge.me" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.shopify.com">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WRT4F0QL8X"></script>
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Analytics queue stubs (synchronous, ~1 KB)
+
+         These define dataLayer/gtag, fbq, ttq, clarity, and _learnq queues
+         immediately so React code can call them at any time without errors.
+         Calls get queued in arrays. The actual SDK <script> tags are loaded
+         later (see deferred loader below) — when each SDK boots, it drains
+         its queue and processes the buffered calls. This keeps the main
+         thread free during initial render → big PageSpeed/LCP/TBT win.
+    ───────────────────────────────────────────────────────────────────── -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      window.gtag = function(){ dataLayer.push(arguments); };
       gtag('js', new Date());
       gtag('config', 'G-WRT4F0QL8X');
-    </script>
 
-    <!-- Meta Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      // Meta Pixel queue stub
+      !function(f,b,e,v,n){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}
+      (window,document);
       fbq('init', '1668658824143891');
       fbq('track', 'PageView');
-    </script>
-    <!-- End Meta Pixel Code (noscript img fallback lives in <body>) -->
 
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "wdq1pu8qot");
-    </script>
-
-    <!-- Klaviyo Onsite JS (_learnq) — enables Viewed Product, Added to Cart,
-         Started Checkout tracking + browse/cart abandonment flows -->
-    <script async type="application/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=XGWREq"></script>
-
-    <!-- TikTok Pixel Code Start -->
-    <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-      ttq.load('D7HSK33C77UBV63HRL7G');
+      // TikTok Pixel queue stub
+      !function (w, d, t) {
+        w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+        ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+        ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+        for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+      }(window, document, 'ttq');
       ttq.page();
-    }(window, document, 'ttq');
+
+      // Klaviyo queue stub (so klaviyo-tracking.ts can push immediately)
+      window._learnq = window._learnq || [];
+
+      // Microsoft Clarity queue stub
+      (function(c,l,a){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};})
+      (window, document, "clarity");
     </script>
-    <!-- TikTok Pixel Code End -->
+
+    <!-- Deferred analytics SDK loader — fires after the page is idle so
+         the user-facing render isn't blocked by parsing tracker scripts.
+         All earlier gtag()/fbq()/ttq()/clarity()/_learnq pushes are queued
+         and replayed when each SDK initializes. -->
+    <script>
+      (function(){
+        function load(src, attrs){
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = src;
+          if (attrs) for (var k in attrs) s.setAttribute(k, attrs[k]);
+          document.head.appendChild(s);
+        }
+        function boot(){
+          load('https://www.googletagmanager.com/gtag/js?id=G-WRT4F0QL8X');
+          load('https://connect.facebook.net/en_US/fbevents.js');
+          load('https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=D7HSK33C77UBV63HRL7G&lib=ttq');
+          load('https://www.clarity.ms/tag/wdq1pu8qot');
+          load('https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=XGWREq', { type: 'application/javascript' });
+        }
+        // Wait for the page to be interactive, then idle, then load the SDKs.
+        // Fallback: 2.5s timeout in case requestIdleCallback never fires.
+        function schedule(){
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(boot, { timeout: 3000 });
+          } else {
+            setTimeout(boot, 2500);
+          }
+        }
+        if (document.readyState === 'complete') {
+          schedule();
+        } else {
+          window.addEventListener('load', schedule, { once: true });
+        }
+      })();
+    </script>
 
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/823f9473-112c-4d32-9a92-be5a53d1f811/id-preview-141b0c37--11eaedaa-af7f-4c5f-b6f4-d9f0c80de3a9.lovable.app-1773436025890.png">
@@ -74,11 +100,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@noori_diamonds" />
     <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/823f9473-112c-4d32-9a92-be5a53d1f811/id-preview-141b0c37--11eaedaa-af7f-4c5f-b6f4-d9f0c80de3a9.lovable.app-1773436025890.png">
-  <meta property="og:title" content="Noori | Light, Made Forever - Lab-Grown Diamond Jewelry">
-  <meta name="twitter:title" content="Noori | Light, Made Forever - Lab-Grown Diamond Jewelry">
-  <meta property="og:description" content="Refined luxury, finally within reach. Heirloom-quality lab-grown diamonds. Certified. Responsible. Modern heirlooms built to be worn for life.">
-  <meta name="twitter:description" content="Refined luxury, finally within reach. Heirloom-quality lab-grown diamonds. Certified. Responsible. Modern heirlooms built to be worn for life.">
-</head>
+    <meta property="og:title" content="Noori | Light, Made Forever - Lab-Grown Diamond Jewelry">
+    <meta name="twitter:title" content="Noori | Light, Made Forever - Lab-Grown Diamond Jewelry">
+    <meta property="og:description" content="Refined luxury, finally within reach. Heirloom-quality lab-grown diamonds. Certified. Responsible. Modern heirlooms built to be worn for life.">
+    <meta name="twitter:description" content="Refined luxury, finally within reach. Heirloom-quality lab-grown diamonds. Certified. Responsible. Modern heirlooms built to be worn for life.">
+  </head>
 
   <body>
     <!-- Meta Pixel noscript fallback (valid here, not in <head>) -->
