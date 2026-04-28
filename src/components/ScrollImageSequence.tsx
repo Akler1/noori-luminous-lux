@@ -133,6 +133,13 @@ const ScrollImageSequence = ({
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.scale(dpr, dpr);
+      // High-quality smoothing dramatically improves perceived sharpness
+      // when scaling source frames down to the canvas. Default is "low",
+      // which is why the rendered earring looked softer than the raw WebP.
+      // Setting these here (inside the resize block) is required because
+      // canvas state resets every time canvas.width/height is assigned.
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
     }
 
     ctx.clearRect(0, 0, w, h);
