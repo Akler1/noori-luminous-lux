@@ -134,31 +134,16 @@ const generateShardPath = (
   ctx.restore();
 };
 
-// Mobile hero: smooth cross-fade from sketch to real photo on mount.
-// Kept as its own component so hook count stays consistent with the
-// desktop canvas implementation.
+// Mobile hero: just the real photo, no sketch overlay or fade.
+// The cursor-drag canvas reveal isn't meaningful on touch, and even the
+// auto-fade adds visual noise without payoff. Static photo is the right call.
 const HeroMobileReveal = ({ className = "" }: HeroSketchRevealProps) => {
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setRevealed(true), 700);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <div className={`absolute inset-0 ${className}`}>
       <img
         src={heroRealMobile}
         alt="Noori Vela Collection — lab-grown diamond jewelry"
         className="absolute inset-0 w-full h-full object-cover object-center"
-      />
-      <img
-        src={heroSketchMobile}
-        alt=""
-        aria-hidden="true"
-        className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2500ms] ease-out ${
-          revealed ? "opacity-0" : "opacity-100"
-        }`}
       />
     </div>
   );

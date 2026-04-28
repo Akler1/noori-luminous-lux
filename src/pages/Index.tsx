@@ -27,6 +27,14 @@ const SectionSkeleton = ({ h = "60vh" }: { h?: string }) => (
   <div style={{ height: h }} aria-hidden="true" />
 );
 
+// Synchronous mobile detection — runs at module eval, before first render,
+// so mobile users never load the ScrollImageSequence chunk or its 46 frames.
+// Doesn't react to live resize, but a homepage section flipping mid-session
+// is fine to skip.
+const isMobileViewport =
+  typeof window !== "undefined" &&
+  window.matchMedia("(max-width: 767px)").matches;
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -42,14 +50,16 @@ const Index = () => {
         <Suspense fallback={<SectionSkeleton h="80vh" />}>
           <Product3DCarousel />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton h="100vh" />}>
-          <ScrollImageSequence
-            basePath="/earing_frames_final"
-            frameCount={46}
-            ext="webp"
-            scrollVh={250}
-          />
-        </Suspense>
+        {!isMobileViewport && (
+          <Suspense fallback={<SectionSkeleton h="100vh" />}>
+            <ScrollImageSequence
+              basePath="/earing_frames_final"
+              frameCount={46}
+              ext="webp"
+              scrollVh={250}
+            />
+          </Suspense>
+        )}
         <Suspense fallback={<SectionSkeleton h="60vh" />}>
           <StickyStoryRefined />
         </Suspense>
