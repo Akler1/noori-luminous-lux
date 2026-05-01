@@ -7,19 +7,11 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
-import earringsHero from "@/assets/earrings-hero.jpg";
-import earringsPrincess from "@/assets/earrings-princess.jpg";
-import braceletHero from "@/assets/bracelet-hero.jpg";
-import necklaceHero from "@/assets/necklace-hero.jpg";
 import heroProductShot from "@/assets/hero-product-shot-1280.webp";
 import heroLifestyle from "@/assets/hero-lifestyle-1280.webp";
 
 const socialPosts = [
-  { src: earringsHero, handle: "@noori.diamonds" },
   { src: heroLifestyle, handle: "@sarah.styles" },
-  { src: braceletHero, handle: "@noori.diamonds" },
-  { src: earringsPrincess, handle: "@emma.luxe" },
-  { src: necklaceHero, handle: "@noori.diamonds" },
   { src: heroProductShot, handle: "@jewelry.daily" },
 ];
 
